@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Netcars - Cadastro</title>
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
-    <script src="assets/js/loginApi.js" defer></script>
+    <script src="assets/js/login-api.js" defer></script>
 </head>
 
 <body>
@@ -24,23 +24,26 @@
     </header>
 
     <main class="main">
-        <div class="container-login">
+        <form class="container-login" id="formCadastroUsuario">
             <h1 class="title">Crie uma conta com seu email</h1>
             <a class="fechar" href="index.html">&times;</a>
             <div class="div-input">
                 <label for="input">Nome completo</label>
-                <input class="input" name="input" type="text"/>
+                <input class="input" name="nome_completo" type="text"/>
             </div>
             <div class="div-input">
                 <label for="input">Email</label>
-                <input class="input" name="input" type="text"/>
+                <input class="input" name="email" type="text"/>
             </div>
             <div class="div-input">
                 <label for="input">Senha</label>
-                <input class="input" name="input" type="password"/>
+                <input class="input" name="senha_hash" type="password"/>
             </div>
-            <button class="btn-acao">Criar conta</button>
-        </div>
+            <div class="divButtonSubmit">
+                <button class="btn-acao" type="submit">Criar conta</button>
+                <p id="mensagemError"></p>
+            </div>
+        </form>
         <p class="texto-pergunta">Já possui uma conta? <span class="link-redirect"><a href="login.html">Faça login</a></span></p>
     </main>
 

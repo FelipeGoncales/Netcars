@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Netcars - Login</title>
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
-    <script src="assets/js/loginApi.js" defer></script>
+    <script src="assets/js/login-api.js" defer></script>
 </head>
 
 <body>
@@ -24,19 +24,22 @@
     </header>
 
     <main class="main">
-        <div class="container-login">
+        <form class="container-login" id="formLoginUsuario">
             <h1 class="title">Digite o seu e-mail e senha</h1>
             <a class="fechar" href="index.html">&times;</a>
             <div class="div-input">
                 <label for="input">Email</label>
-                <input name="input" type="text"/>
+                <input name="email" type="text"/>
             </div>
             <div class="div-input">
                 <label for="input">Senha</label>
-                <input name="input" type="password"/>
+                <input name="senha_hash" type="password"/>
             </div>
-            <button class="btn-acao">Entrar</button>
-        </div>
+            <div class="divButtonSubmit">
+                <button class="btn-acao" type="submit">Entrar</button>
+                <p id="mensagemError"></p>
+            </div>
+        </form>
         <p class="texto-pergunta">Não tem uma conta? <span class="link-redirect"><a href="cadastro.html">Crie a sua</a></span></p>
     </main>
 
@@ -67,7 +70,6 @@
             <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
         </div>
     </footer>
-
     
     <script>
         $('.div-input').each(function() {

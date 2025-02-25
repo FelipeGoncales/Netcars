@@ -7,6 +7,7 @@
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
     <script src="assets/js/usuario-editar.js" defer></script>
     <title>NetCars - Perfil</title>
+    <link rel="icon" href="assets/img/logo-icon-navegador.png">
 </head>
 <body>
     <header>
@@ -36,30 +37,35 @@
     <section class="container-informacoes">
         <div class="informacoes-usuario">
             <h3>Campos com  asteriscos ( * ) são obrigatórios </h3>
-            <form action="">
+            <form action="" id="formEditarUsuario">
                 <div class="container-input">
                     <label class="text" for="input">E-mail*</label>
-                    <input class="input" required name="input" type="email" />
+                    <input class="input" required name="email" type="email" />
                 </div>
                 <div class="container-input">
                     <label class="text" for="input">Nome Completo*</label>
-                    <input class="input" required name="input" type="text" />
-                </div>
-                <div class="container-input">
-                    <label class="text" for="input">Senha*</label>
-                    <input class="input" name="input" type="password" />
+                    <input class="input" required name="nome_completo" type="text" />
                 </div>
                 <div class="container-input">
                     <label class="text" for="input">Data de nascimento*</label>
-                    <input class="input" name="input" type="text" id="date-input" placeholder=""/>
+                    <input class="input" name="input" type="data_nascimento" id="date-input" placeholder=""/>
                 </div>
                 <div class="container-input">
                     <label class="text" for="input">CPF ou CNPJ*</label>
-                    <input class="input" required name="input" type="text" id="cpf" />
+                    <input class="input" required name="cpf_cnpj" type="text" id="cpf" />
                 </div>
                 <div class="container-input">
                     <label class="text" for="input">Telefone*</label>
-                    <input class="input" required name="input" type="tel" id="telefone" />
+                    <input class="input" required name="telefone" type="tel" id="telefone" />
+                </div>
+                <h3>Atualizar senha</h3>
+                <div class="container-input">
+                    <label class="text" for="input">Senha atual*</label>
+                    <input class="input" name="senha_hash" type="password" />
+                </div>
+                <div class="container-input">
+                    <label class="text" for="input">Senha nova*</label>
+                    <input class="input" name="senha_nova" type="password" />
                 </div>
                 <button type="submit">Atualizar os dados</button>
             </form>
