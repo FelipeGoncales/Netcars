@@ -1,101 +1,94 @@
 // Função para trocar pesquisa entre carro e moto
 
-let tipoVeiculoMoto = document.getElementById('veiculo-moto');
-let tipoVeiculoCarro = document.getElementById('veiculo-carro');
-let divInputPesquisarCarro = document.getElementById('div-input-pesquisar-carro');
-let divInputPesquisarMoto = document.getElementById('div-input-pesquisar-moto');
+const tipoVeicMoto = $("#veiculo-moto");
+const tipoVeicCarro = $("#veiculo-carro")
+const divInputPesquisarMoto = $('#div-input-pesquisar-moto');
+const divInputPesquisarCarro = $('#div-input-pesquisar-carro');
 
-tipoVeiculoMoto.addEventListener('click', function() {
-    if (tipoVeiculoMoto.classList.contains('veiculo-nao-selecionado')) {
-        tipoVeiculoMoto.classList.replace('veiculo-nao-selecionado', 'veiculo-selecionado');
-        divInputPesquisarMoto.style.display = 'flex';
-        
-        divInputPesquisarCarro.style.display = 'none';
-        tipoVeiculoCarro.classList.replace('veiculo-selecionado', 'veiculo-nao-selecionado');
+function mudarVeiculoSelecionado(veic1, veic2, div1, div2) {
+    if (veic1.hasClass('veiculo-nao-selecionado')) {
+        veic1.removeClass("veiculo-nao-selecionado").addClass('veiculo-selecionado');
+        div1.css('display', 'flex')
+        div2.css('display', 'none')
+        veic2.removeClass('veiculo-selecionado').addClass('veiculo-nao-selecionado')
     }
+}
+
+tipoVeicMoto.click(() => {
+    mudarVeiculoSelecionado(tipoVeicMoto, tipoVeicCarro, divInputPesquisarMoto, divInputPesquisarCarro);
 });
 
-tipoVeiculoCarro.addEventListener('click', function() {
-    if (tipoVeiculoCarro.classList.contains('veiculo-nao-selecionado')) {
-        tipoVeiculoCarro.classList.replace('veiculo-nao-selecionado', 'veiculo-selecionado');
-        divInputPesquisarCarro.style.display = 'flex';
-        
-        divInputPesquisarMoto.style.display = 'none';
-        tipoVeiculoMoto.classList.replace('veiculo-selecionado', 'veiculo-nao-selecionado');
-    }
+tipoVeicCarro.click(() => {
+    mudarVeiculoSelecionado(tipoVeicCarro, tipoVeicMoto, divInputPesquisarCarro, divInputPesquisarMoto);
 });
 
 // Abrir modal veículos
 
-let itemNavVeiculos = document.getElementById('nav-veiculos');
-let modalNavVeiculos = document.getElementById('modal-nav-veiculos');
+const itemNavVeiculos = $('#nav-veiculos');
+const modalNavVeiculos = $('#modal-nav-veiculos');
 
-itemNavVeiculos.addEventListener('mouseenter', function() {
-    modalNavVeiculos.style.display = 'flex';
-});
+function abrirModalVeiculos(div) {
+    div.on('mouseenter', () => {
+        modalNavVeiculos.css('display', 'flex');
+    }).on('mouseleave', () => {
+        modalNavVeiculos.css('display', 'none');
+    })
+}
 
-modalNavVeiculos.addEventListener('mouseenter', function() {
-    modalNavVeiculos.style.display = 'flex';
-});
-
-itemNavVeiculos.addEventListener('mouseleave', function() {
-    modalNavVeiculos.style.display = 'none';
-});
-
-modalNavVeiculos.addEventListener('mouseleave', function() {
-    modalNavVeiculos.style.display = 'none';
-});
+abrirModalVeiculos(itemNavVeiculos);
+abrirModalVeiculos(modalNavVeiculos);
 
 // Abrir e fechar modal login
 
-let closeModalLogin = document.getElementById('closeModalLogin');
-let modalLogin = document.getElementById('modal-login');
+const closeModalLogin = $("#closeModalLogin");
+const modalLogin = $('#modal-login')
 
-closeModalLogin.addEventListener('click', function() {
-
-    let displayModal = window.getComputedStyle(modalLogin).display;
+closeModalLogin.click(() => {
+    const displayModal = modalLogin.css('display');
 
     if (displayModal === 'flex') {
-        modalLogin.style.display = 'none';
+        modalLogin.css('display', 'none');
     }
 });
 
-let divEntrar = document.getElementById('divEntrar');
+const divEntrar = $('#divEntrar');
 
-divEntrar.addEventListener('click', function() {
-
-    let displayModal = window.getComputedStyle(modalLogin).display;
+divEntrar.click(() => {
+    const displayModal = modalLogin.css('display');
 
     if (displayModal === 'flex') {
-        modalLogin.style.display = 'none';
+        modalLogin.css('display', 'none');
     }
 
     if (displayModal === 'none') {
-        modalLogin.style.display = 'flex';
+        modalLogin.css('display', 'flex');
     }
 });
 
 // Abrir e fechar barra lateral
 
-const sanduiche = document.getElementById('sanduicheHeader');
-const barraLateral = document.getElementById('barra-lateral');
-const overlayBg = document.getElementById('overlay-bg');
-const closeBarraLateral = document.getElementById('fecharBarraLateral');
+const sanduiche = $("#sanduicheHeader");
+const barraLateral = $('#barra-lateral');
+const overlayBg = $('#overlay-bg');
+const closeBarraLateral = $('#fecharBarraLateral');
 
-sanduiche.addEventListener('click', function() {
-    barraLateral.style.animation = 'abrirBarraLateral 0.5s';
-    overlayBg.style.animation = 'aparecerOverlay 0.5s';
+sanduiche.click(() => {
+    barraLateral.css({
+        'animation': 'abrirBarraLateral 0.5s',
+        'display': 'flex'
+    });
+    overlayBg.css({
+        'animation': 'aparecerOverlay 0.5s',
+        'display': 'flex'
+    });
+});
 
-    barraLateral.style.display = 'flex';
-    overlayBg.style.display = 'flex';
+closeBarraLateral.click(() => {
+    barraLateral.css('animation', 'fecharBarraLateral 0.5s');
+    overlayBg.css('animation', 'sumirOverlay 0.5s');
 
-})
-
-closeBarraLateral.addEventListener('click', function() {
-    barraLateral.style.animation = 'fecharBarraLateral 0.5s';
-    overlayBg.style.animation = 'sumirOverlay 0.5s';
     setTimeout(() => {
-        barraLateral.style.display = 'none';
-        overlayBg.style.display = 'none';
-    }, 499)
-})
+        barraLateral.css('display', 'none');
+        overlayBg.css('display', 'none');
+    }, 499);
+});
