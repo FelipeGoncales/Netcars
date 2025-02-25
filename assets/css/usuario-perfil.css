@@ -111,14 +111,12 @@ main {
         height: 100vh;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
         background: var(--cor-bg-sec);
-
         & nav {
             padding: 40px 0;
             display: flex;
             flex-direction: column;
             gap: 25px;
             border-top: 1px solid rgba(0, 0, 0, 0.15);
-
             & span {
                 border-left: solid 4px var(--roxo);
                 border-radius: -10px;
@@ -128,7 +126,6 @@ main {
                     color: var(--cor-texto);
                 }
             }
-
             & a {
                 padding-left: 15px;
                 display: flex;
@@ -136,10 +133,9 @@ main {
                 gap: 10px;
                 color: var(--cor-titles);
                 font-size: 1.1em;
-                transition: 0.15s;
-
+                transition: 0.1s;
                 &:hover {
-                    border-left: solid 4px var(--cor-titles);
+                    border-left: solid 3px var(--cor-titles);
                 }
             }
         }
