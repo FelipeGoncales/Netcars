@@ -452,6 +452,14 @@ ESCREVA O SEU CSS A PARTIR DAQUI
     box-shadow: 0 0 20px rgba(0,0,0,0.25);
 }
 
+.div-title-venda {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 0 0 50px;
+}
+
 .div-content-vendas-pai{
     height: 100%;
     display: flex;
@@ -502,10 +510,12 @@ ESCREVA O SEU CSS A PARTIR DAQUI
     margin: 0;
 }
 
-.itemcss-content {
+.input-info {
     font-size: 18px;
     font-weight: bold;
     color: #333;
+    background: transparent;
+    border: none;
 }
 
 .item-1{
@@ -514,10 +524,6 @@ ESCREVA O SEU CSS A PARTIR DAQUI
 
 .div-content2{
     padding: 50px 50px;
-}
-
-.vehicleTitle{
-    padding:30px 25px 0 50px;
 }
 
 main {
@@ -587,12 +593,28 @@ main {
 
 .vehicleTitle{
     font-size: 35px;
-   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.fa-pencil {
+    background-color: #ECEDF2;
+    color: var(--roxo);
+    font-size: 25px;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+        scale: 1.1;
+    }
 }
 
 .vehicleSub{
     color: #686976;
-    font-weight: lighter;
+    font-weight: 400;
     display: block;
 }
 
