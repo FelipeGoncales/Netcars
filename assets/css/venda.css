@@ -15,9 +15,9 @@
     --roxo: #6C1DE9;
     --hover-roxo: #5a19c1;
     --cor-bg: #ECEDF2;
+    --cor-bg-sec: #FFFFFF; 
     --cor-texto: #262627;
     --cor-texto-apagado: #AEAEBA;
-    --cor-bg-sec: #FFFFFF;
     --cor-titles: #696977;
 }
 
@@ -25,10 +25,9 @@ body {
     background-color: var(--cor-bg);
 }
 
-
 /* Header */
 header {
-    z-index: 999;
+    z-index: 100;
     position: fixed;
     top: 0;
     width: 100%;
@@ -38,6 +37,41 @@ header {
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
     align-items: center;
     justify-content: space-between;
+}
+
+
+/* Barra lateral */
+
+#barra-lateral {
+    display: flex;
+    background-color: var(--cor-bg-sec);
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    & .div-usuario {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        & i {
+            font-size: 1.8rem;
+            color: var(--cor-texto);
+        }
+        & p {
+            font-size: 1.2rem;
+            color: var(--cor-texto);
+            font-weight: 600;
+        }
+    }
+    & #fecharBarraLateral {
+        display: none;
+        position: absolute;
+        cursor: pointer;
+        top: 2px;
+        right: 15px;
+        font-size: 2.3rem;
+    }
     & nav {
         position: absolute;
         top: 50%;
@@ -60,24 +94,88 @@ header {
     }
 }
 
-.div-usuario {
-    cursor: pointer;
+.div-logo {
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    padding: 0 0 0 50px;
-    border-left: 1px solid rgba(0,0,0,0.15);
-    & i {
-        font-size: 1.8rem;
-        color: var(--cor-texto);
+    & img {
+        width: auto;
+        height: 25px;
     }
-    & p {
-        font-size: 1.2rem;
-        color: var(--cor-texto);
-        font-weight: 600;
+    & p, span {
+        font-size: 2rem;
+        font-family: "Racing Sans One", serif;
+    }
+    & span {
+        color: var(--roxo);
+    }
+    &.hidden {
+        display: none;
     }
 }
+
+.sanduiche {
+    display: none;
+    width: 30px;
+    flex-direction: column;
+    gap: 5px;
+    & .linha1, .linha2, .linha3 {
+        border-radius: 10px;
+        width: 100%;
+        height: 4px;
+        background-color: var(--cor-texto);
+    }
+}
+
+.overlay-bg {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.45);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 200;
+    display: none;
+}
+
+@keyframes abrirBarraLateral {
+    0% {
+        right: -100%;
+    }
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes fecharBarraLateral {
+    0% {
+        right: 0;
+    }
+    100% {
+        right: -100%;
+    }
+}
+
+@keyframes aparecerOverlay {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes sumirOverlay {
+    0% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0%;
+    }
+}
+
+/* Fim da barra lateral */
 
 /* Fim do Header */
 
@@ -96,7 +194,7 @@ header {
     left: 50%;
     transform: translateX(-50%);
     position: fixed;
-    z-index: 990;
+    z-index: 95;
     & div {
         display: flex;
         align-items: center;
@@ -114,7 +212,7 @@ header {
 
 #modal-login {
     position: fixed;
-    z-index: 1000;
+    z-index: 5;
     top: 75px;
     right: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
@@ -172,23 +270,160 @@ header {
 
 /* Fim dos modais */
 
-.div-logo {
+/* Footer */
+footer {
     display: flex;
-    gap: 5px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    & img {
-        width: auto;
-        height: 25px;
+    width: 100%;
+    margin-top: 80px;
+    & .div-contato {
+        background-color: var(--roxo);
+        padding: 40px 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 100px;
+        width: inherit;
+        & div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 5px;
+            & .footer-title {
+                color: var(--cor-bg-sec);
+                font-weight: 600;
+            }
+            & .footer-text {
+                color: var(--cor-bg-sec);
+                font-weight: 300;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: 0.1s;
+                padding: 10px 0;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
     }
-    & p, span {
-        font-size: 2rem;
-        font-family: "Racing Sans One", serif;
+    & .div-logo {
+        padding: 15px 0;
+        background-color: var(--cor-bg-sec);
+        width: inherit;
     }
-    & span {
-        color: var(--roxo);
+    & .div-direitos-reservados {
+        padding: 10px 0;
+        width: inherit;
+        background-color: var(--cor-texto);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        & p {
+            color: var(--cor-bg-sec);
+            font-size: 0.85rem;
+        }
+        & .net {
+            color: var(--roxo);
+            font-family: "Racing Sans One", serif;
+
+        }
+        & .cars {
+            color: var(--cor-bg-sec);
+            font-family: "Racing Sans One", serif;
+        }
     }
 }
+/* Fim do Footer */
+
+/* Responsivo Header - Footer */
+
+@media (max-width: 768px) {
+    header {
+        & .sanduiche {
+            display: flex;
+        }
+    }
+
+    .div-logo.hidden {
+        display: flex;
+    }
+
+    #barra-lateral {
+        display: none;
+        position: fixed;
+        width: 230px;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        flex-direction: column-reverse;
+        z-index: 999;
+        justify-content: center;
+        gap: 40px;
+        & nav {
+            position: static;
+            top: 0;
+            left: 0;
+            transform: none;
+            & ul {
+                padding-left: 24px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+                & a {
+                    padding: 15px 0;
+                }
+                & li {
+                    padding: 0;
+                }
+            }
+        }
+        &  #fecharBarraLateral {
+            display: flex;
+        }
+        & .div-logo {
+            scale: 0.8;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    * {
+        font-size: 14px;
+    }
+
+    header {
+        height: 64px;
+        padding: 12px 25px;
+    }
+
+    footer {
+        & .div-contato {
+            align-items: center;
+            gap: 50px;
+            flex-direction: column;
+            & div {
+                align-items: center;
+            }
+        }
+    }
+}
+
+/* Fim do responsivo */
+
+
+/* 
+COPIAR ATÉ AQUI!!!
+TODAS AS PÁGINAS DEVEM SEGUIR O MESMO PADRÃO DE HTML E CSS
+COPIE O CÓDIGO ACIMA E INSIRA NO SEU DOCUMENTO JUNTAMENTE COM O TRECHO HTML CORRESPONDENTE
+ESCREVA O SEU CSS A PARTIR DAQUI
+*/
+
+
 
 
 .container{
@@ -395,8 +630,7 @@ main {
     gap: 20px;
     align-items: flex-start;
     justify-content: center;
-    margin-top: -85px;
-    & .div-carrossel-veiculos {
+    & .div-marcas {
         display: flex;
         gap: 20px;
         & div {
@@ -421,21 +655,17 @@ main {
     }
 }
 
-.sec-categorias {
+.sec-modelos {
     display: flex;
     gap: 20px;
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    & .div-categorias {
+    & .div-modelos {
         display: flex;
         gap: 20px;
         align-items: center;
         justify-content: center;
-        & div {
-            position: relative;
-            overflow: hidden;
-        }
         
         & div::before {
             content: "";
@@ -453,6 +683,7 @@ main {
         & div:hover::before {
             transform: scale(1.1);
         }
+
         & div {
             cursor: pointer;
             width: 218px;
@@ -463,6 +694,7 @@ main {
             justify-content: flex-start;
             padding: 20px;
             position: relative;
+            overflow: hidden;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -520,74 +752,6 @@ main {
 
 /* Fim do Main */
 
-/* Footer */
-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 80px;
-    & .div-contato {
-        background-color: var(--roxo);
-        padding: 40px 0;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 100px;
-        width: inherit;
-        & div {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 5px;
-            & .footer-title {
-                color: var(--cor-bg-sec);
-                font-weight: 600;
-            }
-            & .footer-text {
-                color: var(--cor-bg-sec);
-                font-weight: 300;
-                font-size: 0.85rem;
-                cursor: pointer;
-                transition: 0.1s;
-                padding: 10px 0;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-    }
-    & .div-logo {
-        padding: 15px 0;
-        background-color: var(--cor-bg-sec);
-        width: inherit;
-    }
-    & .div-direitos-reservados {
-        padding: 10px 0;
-        width: inherit;
-        background-color: var(--cor-texto);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        & p {
-            color: var(--cor-bg-sec);
-            font-size: 0.85rem;
-        }
-        & .net {
-            color: var(--roxo);
-            font-family: "Racing Sans One", serif;
-
-        }
-        & .cars {
-            color: var(--cor-bg-sec);
-            font-family: "Racing Sans One", serif;
-        }
-    }
-}
-/* Fim do Footer */
 
 .svg{
     position: relative;
@@ -600,3 +764,66 @@ footer {
 .svg:hover{
     scale: 1.07;
 }
+
+@media(max-width: 1240px){
+    .sec-marcas {
+        position: relative;
+        left: -20px;
+        width: 100%;
+        & h4 {
+            padding-left: 20px;
+        }
+        .div-carrossel {
+            width: calc(100% + 20px);
+            overflow: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        & .div-marcas {
+            padding: 15px;
+            width: fit-content;
+        }
+    }
+    .sec-modelos {
+        width: 100%;
+        .div-carrossel {
+            width: 100%;
+            overflow: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        & .div-modelos {
+            width: fit-content;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .sec-marcas {
+        & .div-marcas {
+            & div {
+                width: 110px;
+                height: 110px;
+                & img {
+                    width: 75px;
+                    height: auto;
+                }
+            }
+        }
+    }
+
+    .sec-modelos {
+        & .div-modelos {
+            & div {
+                width: 140px;
+                height: 177px;
+                & p {
+                    font-size: 1.15rem;
+                }
+            }
+        }
+    }
+}
+    
