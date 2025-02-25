@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    <title>Netcars - Login</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Netcars - Cadastro</title>
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
 </head>
 
@@ -71,15 +72,15 @@
     </footer>
 
     <script>
-        document.querySelectorAll('.div-input').forEach(container => {
-            const input = container.querySelector('input');
-            const label = container.querySelector('label');
+        $('.div-input').each(function() {
+            const $input = $(this).find('input');
+            const $label = $(this).find('label');
 
-            input.addEventListener('input', function() {
-                if (this.value.trim() !== "") {
-                    label.classList.add('active');
+            $input.on('input', function() {
+                if ($input.val().trim() !== "") {
+                    $label.addClass('active');
                 } else {
-                    label.classList.remove('active');
+                    $label.removeClass('active');
                 }
             });
         });
