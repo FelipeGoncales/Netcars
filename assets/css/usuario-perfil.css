@@ -20,6 +20,16 @@
     --cor-bg-sec: #FFFFFF;
     --cor-titles: #696977;
 }
+/* validação form */
+.input {
+    transition: border-color 0.3s ease;
+}
+.input.valido {
+    border-color: #00ff00 !important;
+}
+.input.invalido {
+    border-color: #ff0000 !important;
+}
 
 body {
     background-color: var(--cor-bg);
