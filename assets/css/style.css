@@ -216,7 +216,7 @@ header {
     top: 75px;
     right: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 15px;
     background-color: var(--cor-bg-sec);

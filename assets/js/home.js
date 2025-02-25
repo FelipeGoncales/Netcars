@@ -22,48 +22,24 @@ tipoVeicCarro.click(() => {
     mudarVeiculoSelecionado(tipoVeicCarro, tipoVeicMoto, divInputPesquisarCarro, divInputPesquisarMoto);
 });
 
-// Abrir modal veículos
 
-const itemNavVeiculos = $('#nav-veiculos');
-const modalNavVeiculos = $('#modal-nav-veiculos');
+if ($(window).width() >= 768) {
+    // Abrir modal veículos
 
-function abrirModalVeiculos(div) {
-    div.on('mouseenter', () => {
-        modalNavVeiculos.css('display', 'flex');
-    }).on('mouseleave', () => {
-        modalNavVeiculos.css('display', 'none');
-    })
+    const itemNavVeiculos = $('#nav-veiculos');
+    const modalNavVeiculos = $('#modal-nav-veiculos');
+
+    function abrirModalVeiculos(div) {
+        div.on('mouseenter', () => {
+            modalNavVeiculos.css('display', 'flex');
+        }).on('mouseleave', () => {
+            modalNavVeiculos.css('display', 'none');
+        })
+    }
+
+    abrirModalVeiculos(itemNavVeiculos);
+    abrirModalVeiculos(modalNavVeiculos);
 }
-
-abrirModalVeiculos(itemNavVeiculos);
-abrirModalVeiculos(modalNavVeiculos);
-
-// Abrir e fechar modal login
-
-const closeModalLogin = $("#closeModalLogin");
-const modalLogin = $('#modal-login')
-
-closeModalLogin.click(() => {
-    const displayModal = modalLogin.css('display');
-
-    if (displayModal === 'flex') {
-        modalLogin.css('display', 'none');
-    }
-});
-
-const divEntrar = $('#divEntrar');
-
-divEntrar.click(() => {
-    const displayModal = modalLogin.css('display');
-
-    if (displayModal === 'flex') {
-        modalLogin.css('display', 'none');
-    }
-
-    if (displayModal === 'none') {
-        modalLogin.css('display', 'flex');
-    }
-});
 
 // Abrir e fechar barra lateral
 
@@ -92,3 +68,54 @@ closeBarraLateral.click(() => {
         overlayBg.css('display', 'none');
     }, 499);
 });
+
+// Mudar perfil quando usuário estiver logado
+
+$(document).ready(function() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    if (dadosUser) {
+        $('#nomeUsuario').text(dadosUser.nome_completo) 
+        
+        const tipoUser = dadosUser.tipo_usuario;
+
+        if (tipoUser === 3) {
+            $('#aDivEntrar').attr('href', 'usuario-perfil.html')
+        } else if (tipoUser === 2) {
+            $('#aDivEntrar').attr('href', 'vendedor-perfil.html')
+        } else if (tipoUser === 3) {
+            $('#aDivEntrar').attr('href', 'administrador-perfil.html')
+        }
+
+    } else {  
+
+        // Abrir e fechar modal login
+
+        const closeModalLogin = $("#closeModalLogin");
+        const modalLogin = $('#modal-login');
+
+        modalLogin.css('display', 'flex');
+
+        closeModalLogin.click(() => {
+            const displayModal = modalLogin.css('display');
+
+            if (displayModal === 'flex') {
+                modalLogin.css('display', 'none');
+            }
+        });
+
+        const divEntrar = $('#divEntrar');
+
+        divEntrar.click(() => {
+            const displayModal = modalLogin.css('display');
+
+            if (displayModal === 'flex') {
+                modalLogin.css('display', 'none');
+            }
+
+            if (displayModal === 'none') {
+                modalLogin.css('display', 'flex');
+            }
+        });
+    }
+})

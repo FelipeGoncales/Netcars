@@ -151,9 +151,8 @@ main {
                 font-size: 1.2rem;
                 font-weight: normal;
             }
-
             & p {
-                font-size: 1rem;
+                font-size: 0.8rem;
                 font-weight: 300;
             }
         }
@@ -198,7 +197,7 @@ main {
                     &:focus-within label {
                         top: 0;
                         color: var(--roxo);
-                        font-size: 0.7rem;
+                        font-size: 0.75rem;
                         background-color: var(--cor-bg-sec);
                         z-index: 3;
                         padding: 0 3px;
@@ -220,6 +219,7 @@ main {
                         top: 0;
                         font-size: 0.75rem;
                         z-index: 3;
+                        padding: 0 3px;
                     }
                 }
 

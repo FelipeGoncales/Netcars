@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/usuario-perfil.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
+    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/js/usuario-perfil.js" defer></script>
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
@@ -13,10 +14,12 @@
 <body>
     <header>
         <div class="div-logo-title">
-            <div class="div-logo">
-                <img src="assets/img/logo.png" alt="Logo Netcars">
-                <p><span>NET</span>CARS</p>
-            </div>
+            <a href="index.html">
+                <div class="div-logo">
+                    <img src="assets/img/logo.png" alt="Logo Netcars">
+                    <p><span>NET</span>CARS</p>
+                </div>
+            </a>
             <h1>Minha Garagem</h1>
         </div>
     </header>
@@ -24,15 +27,15 @@
     <section class="container-perfil"> 
         <div class="perfil-usuario">
             <i class="fa-solid fa-circle-user"></i>
-            <h2>Nome Completo</h2>
-            <p>email@gmail.com</p>
+            <h2 id="nomeNav">Nome Completo</h2>
+            <p id="emailNav">email@gmail.com</p>
         </div>
         <nav>
             <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
             <span><a href=""><i class="fa-solid fa-user"></i>Minha Conta</a></span>
             <a href=""><i class="fa-solid fa-calendar-days"></i>Reservas</a>
             <a href=""><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
-            <a href=""><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
+            <a href="" id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
         </nav>
     </section>  
     <section class="container-informacoes">

@@ -1,29 +1,56 @@
 
 let isValidCPF_CNPJ = false; 
 
-$(document).ready(function() {
-    let dadosUser = localStorage.getItem('dadosUser');
-    dadosUser = JSON.parse(dadosUser);
+// Função para preencher as informações nos inputs ao entrar na página
 
-    $("#email_input").val(dadosUser?.email || '');
-    $("#nome_completo_input").val(dadosUser?.nome_completo || '');
-    $("#data_nascimento_input").val(dadosUser?.data_nascimento || '');
-    $("#cpf_cnpj_input").val(dadosUser?.cpf_cnpj || '');
-    $("#telefone_input").val(dadosUser?.telefone || '');
+$(document).ready(function() {
+    let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    if (!dadosUser) {
+        window.location.href = 'login.html';
+    }
+
+    var data = new Date(dadosUser.data_nascimento);
+    let ano = data.getFullYear();
+    let mes = data.getMonth()+1;
+    let dia = data.getDate()+1;
+
+    if (mes < 10) {
+        mes = `0${mes}`;
+    }
+
+    let dataAjustada = `${ano}-${mes}-${dia}`;
+
+    // Preencher os inputs do formulário
+    $("#email_input").val(dadosUser.email);
+    $("#nome_completo_input").val(dadosUser.nome_completo);
+    $("#data_nascimento_input").val(dataAjustada);
+    $("#cpf_cnpj_input").val(dadosUser.cpf_cnpj);
+    $("#telefone_input").val(dadosUser.telefone);
+
+    // Preencher as informações do menu nav
+    $("#nomeNav").text(dadosUser.nome_completo)
+    $("#emailNav").text(dadosUser.email)
 
     // Verifica CPF/CNPJ ao carregar a página
-    const cpfCnpjInput = document.getElementById("cpf_cnpj_input");
-    if (cpfCnpjInput.value.trim() !== "") {
+    if ($('#cpf_cnpj_input').val().trim() !== "") {
         validarCPF_CNPJ(cpfCnpjInput);
     }
 });
+
+// Função para deslogar da conta ao clicar em sair
+$('#deslogarConta').click(function(e) {
+    e.preventDefault()
+
+    localStorage.clear();
+    window.location.href = 'login.html';
+})
 
 function validarCPF_CNPJ(input) {
     let value = input.value.replace(/\D/g, '');
     isValidCPF_CNPJ = value.length === 11 ? validarCPF(value) : 
                       value.length === 14 ? validarCNPJ(value) : false;
 
-    // Feedback visual
     if (value.length >= 11 && !isValidCPF_CNPJ) {
         input.style.borderColor = '#ff0000';
     } else {
@@ -53,42 +80,6 @@ document.getElementById("cpf_cnpj_input").addEventListener("input", function(e) 
 
 
 // Função para auxiliar na animação dos inputs quando preenchidos
-document.querySelectorAll('.container-input').forEach(container => {
-    const input = container.querySelector('input');
-    const label = container.querySelector('label');
-
-    input.addEventListener('input', function() {
-        if (this.value.trim() !== "") {
-            label.classList.add('active');
-        } else {
-            label.classList.remove('active');
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const inputData = document.getElementById('data_nascimento_input');
-    const date = new Date(inputData.value);
-
-    // Opção 1: Usando toLocaleDateString com a localidade "pt-BR"
-    const formattedDate = date.toLocaleDateString('pt-BR'); // ex: "22/10/2007"
-    console.log(formattedDate);
-
-    // Opção 2: Formatação manual
-    function formatDate(date) {
-    let day = date.getDate();
-    let month = date.getMonth() + 1; // meses começam em 0
-    const year = date.getFullYear();
-
-    // Adiciona zero à esquerda se necessário
-    day = day < 10 ? '0' + day : day;
-    month = month < 10 ? '0' + month : month;
-
-    return `${day}/${month}/${year}`;
-    }
-
-    inputData.value = formatDate(date);
-})
 
 $(document).ready(function() {
     $('.container-input').each(function() {
@@ -102,6 +93,19 @@ $(document).ready(function() {
     }
 });
 });
+
+$(document).find('.container-input').each((_, container) => {
+    const input = $(container).find('input');
+    const label = $(container).find('label');
+
+    input.on('input', function() {
+        if ($(this).val().trim() !== '') {
+            label.addClass('active');
+        } else {
+            label.removeClass('active');
+        }
+    })
+})
 
 
 // Formatação do input de telefone
@@ -221,7 +225,6 @@ $("#formEditarUsuario").on("submit", function(e) {
         return;
     }
 
-
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     const id = dadosUser.id_usuario;
 
@@ -242,7 +245,7 @@ $("#formEditarUsuario").on("submit", function(e) {
 
     $.ajax({
         method: "put",
-        url: `http://192.168.1.126:5000/user/${id}`,
+        url: `http://192.168.1.4:5000/user/${id}`,
         data: editar,
         contentType: "application/json",
         success: function(response) {

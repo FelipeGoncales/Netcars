@@ -16,14 +16,15 @@ $("#formCadastroUsuario").on("submit", function(e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.126:5000/user",
+        url: "http://192.168.1.4:5000/user",
         data: envia,
         contentType: "application/json",
         success: function(response) {
             let dados = {
                 id_usuario: response.dados.id_usuario,
                 email: response.dados.email,
-                nome_completo: response.dados.nome_completo
+                nome_completo: response.dados.nome_completo,
+                tipo_usuario: response.dados.tipo_usuario
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
@@ -50,7 +51,7 @@ $("#formLoginUsuario").on('submit', function(e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.126:5000/login",
+        url: "http://192.168.1.4:5000/login",
         data: envia,
         contentType: "application/json",
         success: function(response) {
@@ -61,6 +62,7 @@ $("#formLoginUsuario").on('submit', function(e) {
                 data_nascimento: response.dados.data_nascimento,
                 cpf_cnpj: response.dados.cpf_cnpj,
                 telefone: response.dados.telefone,
+                tipo_usuario: response.dados.tipo_usuario
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
