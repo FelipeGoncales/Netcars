@@ -27,9 +27,6 @@
 .input.valido {
     border-color: #00ff00 !important;
 }
-.input.invalido {
-    border-color: #ff0000 !important;
-}
 
 body {
     background-color: var(--cor-bg);
@@ -161,7 +158,6 @@ main {
             }
         }
     }
-
     .container-informacoes {
         display: flex;
         flex-direction: column;
@@ -175,28 +171,24 @@ main {
             font-size: 1.7rem;
             font-weight: 400;
         }
-
         & .informacoes-usuario {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
             background: var(--cor-bg-sec);
-            padding: 40px 60px;
+            padding: 30px 40PX;
             border-radius: 20px;
-
             & h3 {
                 font-size: 1.15rem;
                 font-weight: 400;
             }
-
             & form {
                 padding-top: 20px;
                 display: flex;
                 flex-direction: column;
                 position: relative;
                 gap: 20px;
-
                 & .container-input {
                     display: flex;
                     flex-direction: column;
@@ -212,7 +204,6 @@ main {
                         padding: 0 3px;
                     }
                 }
-
                 & label {
                     font-size: 0.9rem;
                     position: absolute;
@@ -224,13 +215,11 @@ main {
                     transition: all 0.2s ease-in-out;
                     z-index: 1;
                     color: var(--cor-titles);
-
-                    &.active {
+                    &.active, &.date {
+                        color: var(--cor-texto-apagado);
                         top: 0;
-                        font-size: 0.7rem;
-                        background-color: var(--cor-bg-sec);
+                        font-size: 0.75rem;
                         z-index: 3;
-                        padding: 0 3px;
                     }
                 }
 
@@ -268,6 +257,24 @@ main {
 
         }
     }
+}
+
+#divAlertMessage {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 30px;
+    right: 30px;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.alertMessage {
+    padding: 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
 }
 
 /* Footer */

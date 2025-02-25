@@ -19,11 +19,17 @@ $("#formCadastroUsuario").on("submit", function(e) {
         url: "http://192.168.1.126:5000/user",
         data: envia,
         contentType: "application/json",
-        success: function() {
+        success: function(response) {
+            let dados = {
+                id_usuario: response.dados.id_usuario,
+                email: response.dados.email,
+                nome_completo: response.dados.nome_completo
+            }
+            localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
         },
         error: function(response) {
-            $("#mensagemError").text(response.responseJSON.message).css('display', 'block')
+            $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
         }
     })
 })
@@ -47,12 +53,21 @@ $("#formLoginUsuario").on('submit', function(e) {
         url: "http://192.168.1.126:5000/login",
         data: envia,
         contentType: "application/json",
-        success: function() {
+        success: function(response) {
+            let dados = {
+                id_usuario: response.dados.id_usuario,
+                email: response.dados.email,
+                nome_completo: response.dados.nome_completo,
+                data_nascimento: response.dados.data_nascimento,
+                cpf_cnpj: response.dados.cpf_cnpj,
+                telefone: response.dados.telefone,
+            }
+            localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
         },
         error: function(response) {
             console.log(response)
-            $("#mensagemError").text(response.responseJSON.message).css('display', 'block')
+            $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
         }
     })
 })
