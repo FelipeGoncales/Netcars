@@ -16,21 +16,35 @@
 </head>
 <body>
     <header>
-        <div class="div-logo">
+        <div class="div-logo hidden">
             <img src="assets/img/logo.png" alt="Logo Netcars">
             <p><span>NET</span>CARS</p>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li id="nav-veiculos"><a>Veículos</a></li>
-                <li><a href="#footer">Contato</a></li>
-            </ul>
-        </nav>
-        <div class="div-usuario" id="divEntrar">
-            <i class="fa-solid fa-circle-user"></i>
-            <p>Entrar</p>
+        <div class="sanduiche" id="sanduicheHeader">
+            <div class="linha1"></div>
+            <div class="linha2"></div>
+            <div class="linha3"></div>
         </div>
+        
+        <div id="barra-lateral">
+            <div class="div-logo">
+                <img src="assets/img/logo.png" alt="Logo Netcars">
+                <p><span>NET</span>CARS</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li id="nav-veiculos"><a href="">Veículos</a></li>
+                    <li><a href="#footer">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="div-usuario" id="divEntrar">
+                <i class="fa-solid fa-circle-user"></i>
+                <p>Entrar</p>
+            </div>
+            <p id="fecharBarraLateral">&times;</p>
+        </div>
+        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
 
     <main>
@@ -143,53 +157,57 @@
         
     <section class="sec-marcas">
         <h4>Marcas ofertadas - Carros</h4>
-        <div class="div-carrossel-veiculos">
-            <div>
-                <img src="assets/img/bmw.png" alt="BMW Logo">
-            </div>
-            <div>
-                <img src="assets/img/byd.png" alt="BYD Logo">
-            </div>
-            <div>
-                <img src="assets/img/toyota.png" alt="Toyota Logo">
-            </div>
-            <div>
-                <img src="assets/img/volkswagem.png" alt="Volkswagem Logo">
-            </div>
-            <div>
-                <img src="assets/img/fiat.png" alt="Fiat Logo">
-            </div>
-            <div>
-                <img src="assets/img/ford.png" alt="Ford Logo">
-            </div>
-            <div>
-                <img src="assets/img/nissan.png" alt="Nissan Logo">
+        <div class="div-carrossel">
+            <div class="div-marcas">
+                <div>
+                    <img src="assets/img/bmw.png" alt="BMW Logo">
+                </div>
+                <div>
+                    <img src="assets/img/byd.png" alt="BYD Logo">
+                </div>
+                <div>
+                    <img src="assets/img/toyota.png" alt="Toyota Logo">
+                </div>
+                <div>
+                    <img src="assets/img/volkswagem.png" alt="Volkswagem Logo">
+                </div>
+                <div>
+                    <img src="assets/img/fiat.png" alt="Fiat Logo">
+                </div>
+                <div>
+                    <img src="assets/img/ford.png" alt="Ford Logo">
+                </div>
+                <div>
+                    <img src="assets/img/nissan.png" alt="Nissan Logo">
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="sec-categorias">
-        <h4>Modelos - Carros</h4>
-        <div class="div-categorias">
-            <div class="eletricos">
-                <p>Elétricos</p>
-                <div class="overlay"></div>
-            </div>
-            <div class="populares">
-                <p>Populares</p>
-                <div class="overlay"></div>
-            </div>
-            <div class="picapes">
-                <p>Picapes</p>
-                <div class="overlay"></div>
-            </div>
-            <div class="sedans">
-                <p>Sedans</p>
-                <div class="overlay"></div>
-            </div>
-            <div class="suvs">
-                <p>SUVs</p>
-                <div class="overlay"></div>
+    <section class="sec-modelos">
+        <h4> Principais modelos - Carros</h4>
+        <div class="div-carrossel">
+            <div class="div-modelos">
+                <div class="eletricos">
+                    <p>Elétricos</p>
+                    <div class="overlay"></div>
+                </div>
+                <div class="populares">
+                    <p>Populares</p>
+                    <div class="overlay"></div>
+                </div>
+                <div class="picapes">
+                    <p>Picapes</p>
+                    <div class="overlay"></div>
+                </div>
+                <div class="sedans">
+                    <p>Sedans</p>
+                    <div class="overlay"></div>
+                </div>
+                <div class="suvs">
+                    <p>SUVs</p>
+                    <div class="overlay"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -239,7 +257,7 @@
                 nav: false,
                 responsive: {
                     0: { items: 1 },
-                    600: { items: 3 },
+                    600: { items: 2 },
                     1000: { items: 3 }
                 }
             });
