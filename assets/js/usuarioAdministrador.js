@@ -2,10 +2,10 @@ let isValidCPF_CNPJ = false;
 
 // Fazer o nav funcionar
 $(document).ready(function() {
-    $('#conteudo').load('com-Administrador/minhaConta');
+    $('#conteudo').load('com-Administrador/minha-conta.html');
 
     $("#link_minhaConta").on("click", function() {
-        $('#conteudo').load('com-Administrador/minhaConta.html');
+        $('#conteudo').load('com-Administrador/minha-conta.html');
     })
     $("#link_relatorios").on("click", function() {
         $('#conteudo').load('com-Administrador/relatorios.html');

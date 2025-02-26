@@ -80,10 +80,10 @@ $(document).ready(function() {
         const tipoUser = dadosUser.tipo_usuario;
 
         if (tipoUser === 3) {
-            $('#aDivEntrar').attr('href', 'usuario-perfil.html')
+            $('#aDivEntrar').attr('href', 'cliente-perfil.html')
         } else if (tipoUser === 2) {
             $('#aDivEntrar').attr('href', 'vendedor-perfil.html')
-        } else if (tipoUser === 3) {
+        } else if (tipoUser === 1) {
             $('#aDivEntrar').attr('href', 'administrador-perfil.html')
         }
 

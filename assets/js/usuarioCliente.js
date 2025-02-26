@@ -1,21 +1,19 @@
-
 let isValidCPF_CNPJ = false; 
 
 // Fazer o nav funcionar
 $(document).ready(function() {
-    $('#conteudo').load('com-Cliente/minhaConta');
+    $('#conteudo').load('com-Cliente/minha-conta.html');
 
     $("#link_minhaConta").on("click", function() {
-        $('#conteudo').load('com-Cliente/minhaConta.html');
+        $('#conteudo').load('com-Cliente/minha-conta.html');
     })
     $("#link_reservas").on("click", function() {
         $('#conteudo').load('com-Cliente/reservas.html');
     })
     $("#link_hCompras").on("click", function() {
-        $('#conteudo').load('com-Cliente/hCompras.html');
+        $('#conteudo').load('com-Cliente/historico-compras.html');
     })
 });
-
 
 // Função para preencher as informações nos inputs ao entrar na página
 
