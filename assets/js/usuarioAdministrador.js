@@ -1,5 +1,16 @@
-
 let isValidCPF_CNPJ = false; 
+
+// Fazer o nav funcionar
+$(document).ready(function() {
+    $('#conteudo').load('com-Administrador/minhaConta');
+
+    $("#link_minhaConta").on("click", function() {
+        $('#conteudo').load('com-Administrador/minhaConta.html');
+    })
+    $("#link_relatorios").on("click", function() {
+        $('#conteudo').load('com-Administrador/relatorios.html');
+    })
+});
 
 // Função para preencher as informações nos inputs ao entrar na página
 

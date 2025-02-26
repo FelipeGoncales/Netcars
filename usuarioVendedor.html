@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/usuario-perfil.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
-    <script src="assets/js/usuario-editar.js" defer></script>
-    <title>NetCars - Perfil</title>
+
+    <link rel="icon" href="assets/img/logo-icon-navegador.png">
+    <title> NetCars - Perfil </title>
+    <!-- TERMINAR ( OLHAR O FIGMA) -->
+    <script src="assets/js/usuarioVendedor.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -30,16 +34,14 @@
         </div>
         <nav>
             <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
-            <span><a href=""><i class="fa-solid fa-user"></i>Minha Conta</a></span>
-            <a href=""><i class="fa-solid fa-calendar-days"></i>Reservas</a>
-            <a href=""><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
-            <a href=""><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
+            <a id="link_minhaConta"><i class="fa-solid fa-user"></i>Minha Conta</a>
+            <a id="link_anuncios"><i class="fa-solid fa-calendar-days"></i>Anuncios</a>
+            <a href="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
         </nav>
         
     </section>  
     
     <section class="container-informacoes" id="conteudo"></section>
-
 
     </main>
     <footer id="footer">

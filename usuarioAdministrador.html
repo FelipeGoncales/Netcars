@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/usuario-perfil.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="assets/js/usuario-perfil.js" defer></script>
+
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
-    <title>NetCars - Perfil</title>
+    <title> NetCars - Perfil </title>
+    <!-- TERMINAR ( OLHAR O FIGMA) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="assets/js/usuarioAdministrador.js" defer></script>
 </head>
 <body>
     <header>
         <div class="div-logo-title">
-            <a href="index.html">
-                <div class="div-logo">
-                    <img src="assets/img/logo.png" alt="Logo Netcars">
-                    <p><span>NET</span>CARS</p>
-                </div>
-            </a>
+            <div class="div-logo">
+                <img src="assets/img/logo.png" alt="Logo Netcars">
+                <p><span>NET</span>CARS</p>
+            </div>
             <h1>Minha Garagem</h1>
         </div>
     </header>
@@ -27,17 +26,17 @@
     <section class="container-perfil"> 
         <div class="perfil-usuario">
             <i class="fa-solid fa-circle-user"></i>
-            <h2 id="nomeNav">Nome Completo</h2>
-            <p id="emailNav">email@gmail.com</p>
+            <h2>Nome Completo</h2>
+            <p>email@gmail.com</p>
         </div>
         <nav>
-            <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
-            <span><a href=""><i class="fa-solid fa-user"></i>Minha Conta</a></span>
-            <a href=""><i class="fa-solid fa-calendar-days"></i>Reservas</a>
-            <a href=""><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
-            <a href="" id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
+            <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Anúncio</a>
+            <a id="link_minhaConta"><i class="fa-solid fa-user"></i>Minha Conta</a>
+            <a href=""><i class="fa-solid fa-calendar-days"></i>Adiconar Veiculo</a>
+            <a id="link_relatorios"><i class="fa-solid fa-clock-rotate-left"></i>Relatórios</a>
+            <a href=""><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
         </nav>
-    </section>  
+    </section> 
     <section class="container-informacoes">
         <div class="informacoes-usuario">
             <h3>Campos com  asteriscos ( * ) são obrigatórios </h3>
@@ -77,6 +76,11 @@
 
         <div id="divAlertMessage"></div>
     </section>
+    
+    <section class="container-informacoes" id="conteudo-cli-reservas"></section>
+    <section class="container-informacoes" id="conteudo-cli-buscarAnuncio"></section>
+    <section class="container-informacoes" id="conteudo-cli-historico"></section>
+
     </main>
     <footer id="footer">
         <div class="div-contato">
