@@ -104,8 +104,8 @@ h1 {
     min-height: 100vh;
     width: 100%;
     display: flex;
-    justify-content: start;
-    align-items: center; 
+    justify-content: center;
+    align-items: start;
 }
 
 main {
@@ -264,6 +264,31 @@ main {
     }
 }
 
+
+.container-relatorios{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 40px;
+    & .relatorios,a{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        background: var(--cor-bg-sec);
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 10px;
+        color: var(--cor-texto);
+        transition: 0.2s ease-in;
+        &:hover{
+            background-color: var(--roxo);
+            color: var(--cor-bg-sec);
+        }
+    }
+}
+
 #divAlertMessage {
     display: none;
     position: fixed;
@@ -281,53 +306,6 @@ main {
     color: var(--cor-bg-sec);
     border-radius: 10px;
 }
-/* Main - historico e reservas*/
-
-& .card{
-    background: var(--cor-bg-sec);
-    width: 300px;
-    height: 470px;
-    border-radius: 10px;
-    margin: 0px 20px;
-    & img{
-        width: 100%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    } & .itens-card{
-        display: flex;
-        flex-direction: column;
-        padding: 0px 15px;
-        gap: 15px;
-        h3{
-            font-size: 1.5rem;
-            font-weight: 600;
-        } & p{
-            font-size: 0.8rem;
-            color: var(--cor-titles);
-            font-weight: 400;
-        } & button{
-            background: var(--cor-texto);
-            color: var(--cor-bg-sec);
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-        }& .container-info-card{
-            color: var(--cor-titles);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            & .info-card{
-                display: flex;
-                gap: 10px;
-                align-items: center;
-            }
-        }
-    }
-}
-
-
-
 
 /* Footer */
 footer {
