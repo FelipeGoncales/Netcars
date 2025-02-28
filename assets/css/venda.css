@@ -216,7 +216,7 @@ header {
     top: 75px;
     right: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 15px;
     background-color: var(--cor-bg-sec);
@@ -424,32 +424,28 @@ ESCREVA O SEU CSS A PARTIR DAQUI
 */
 
 
-
-
-.container{
-    margin-top: 64px;
-    width: 100%;
-}
-
-
 .div-contents-pai {
     display: flex;
-    gap: 35px;
-    height: 600px;
+    gap: 20px;
+    height: 450px;
     position: relative;
-    top: -120px;
+    top: -70px;
 }
 
 .div-content-venda {
     display: flex;
+    justify-content: center;
+    align-items: left;
     text-align: left;
     flex-direction: column;
-    width: 953px;
+    width: fit-content;
     background-color: #fff;
     border-radius: 12px;
     height: 100%;
     z-index: 2;
     box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    gap: 40px;
+    padding: 55px;
 }
 
 .div-title-venda {
@@ -457,14 +453,44 @@ ESCREVA O SEU CSS A PARTIR DAQUI
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    padding: 40px 0 0 50px;
+}
+
+/* ul */
+.itens-details {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    & li, input {
+        width: 190px;
+    }
+}
+
+.itemcss-title {
+    font-size: 13px;
+    color: #686976;
+    font-weight: 400;
+    margin: 0;
+}
+
+.input-info {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background: transparent;
+    border: none;
+}
+
+.item-1{
+    width: 100%;
 }
 
 .div-content-vendas-pai{
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 35px;
+    gap: 20px;
 }
 
 .div-content-venda-filho {
@@ -473,7 +499,7 @@ ESCREVA O SEU CSS A PARTIR DAQUI
     text-align: left;
     background-color: #fff;
     border-radius: 12px;
-    height: 56%;
+    gap: 20px;
     z-index: 2;
     padding: 30px;
     width: 399px;
@@ -495,50 +521,27 @@ ESCREVA O SEU CSS A PARTIR DAQUI
     align-items: center;
 }
 
-.itens-details {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-.itemcss-title {
-    font-size: 14px;
-    color: #686976;
-    font-weight: 400;
-    margin: 0;
-}
-
-.input-info {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    background: transparent;
-    border: none;
-}
-
-.item-1{
-    width: 100%;
-}
-
-.div-content2{
-    padding: 50px 50px;
-}
 
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 70px;
+    gap: 20px;
 }
 
-.lixo-btn{
-    width: 70px;
-    height: 70px;
-    border-radius: 12px ;
-    border: none;
+.div-pai-banner-venda {
+    display: flex;
+    flex-direction: column;
+    margin-top: 64px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
+
+.container{
+    width: 100vw;
+}
+
 .div-content-venda-filho h3{
     font-size: 30px;
     font-weight: 500;
@@ -549,11 +552,11 @@ main {
     width: 100%;
     gap: 10px;
     & .salvar-btn{
-        width: 79%;
-        height: 70px;
+        width: 82%;
+        height: 60px;
         border-radius: 12px ;
         border: none;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 700;
         color: #fff;
         background-color: #6C1DE9;
@@ -561,13 +564,13 @@ main {
         transition: 0.2s;
     }
     & .salvar-btn:hover{
-        scale: 1.07;
+        scale: 1.03;
     }
     & .icon-trash {
         font-size: 2.1rem;
         color: var(--roxo);
         background-color: #ECEDF2;
-        width: 21%;
+        width: 18%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -602,7 +605,7 @@ main {
 .fa-pencil {
     background-color: #ECEDF2;
     color: var(--roxo);
-    font-size: 25px;
+    font-size: 20px;
     padding: 8px;
     border-radius: 50%;
     cursor: pointer;
@@ -678,6 +681,7 @@ main {
 }
 
 .sec-modelos {
+    margin-top: 65px;
     display: flex;
     gap: 20px;
     align-items: flex-start;
@@ -787,7 +791,48 @@ main {
     scale: 1.07;
 }
 
-@media(max-width: 1240px){
+@media (max-width:1420px) {
+    .div-content-venda {
+        padding-right: 0;
+        padding-left: 45px;
+    }
+    .itens-details {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .li-vazia-1 {
+        display: none;
+    }
+}
+
+
+@media (max-width: 1240px) {
+    .div-contents-pai {
+        flex-direction: column;
+        height: fit-content;
+    }
+
+    .div-content-vendas-pai {
+        flex-direction: row;
+        height: 236px;
+        & .div-content-venda-filho {
+            width: 65%;
+        }
+        & .div-content-venda-filho2 {
+            width: 35%;
+            height: 100%;
+        }
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    main {
+        width: 90vw;
+    }
     .sec-marcas {
         position: relative;
         left: -20px;
@@ -848,4 +893,63 @@ main {
         }
     }
 }
+
+@media (max-width: 450px) {
+    .div-content-venda {
+        padding-right: 0;
+        padding-left: 45px;
+    }
+    .itens-details {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        & li {
+            width: 100%;
+            & input {
+                width: 100% !important;
+            }
+        }
+    }
+    
+    .li-vazia-2 {
+        display: none;
+    }
+
+    .div-pai-banner-venda {
+        width: 95vw;
+        height: fit-content;
+    }
+
+    .div-contents-pai {
+        width: 100%;
+    }
+
+    .div-content-vendas-pai {
+        flex-direction: column;
+        & .div-content-venda-filho {
+            width: 100%;
+        }
+        & .div-content-venda-filho2 {
+            width: 100%;
+            padding: 25px 0;
+        }
+    }
+
+    .sec-marcas {
+        margin-top: 220px;
+    }
+    .sec-modelos {
+        margin-top: 45px;
+    }
+}
+
+@media (max-width: 375px) {
+    .div-content-venda {
+        padding: 35px 20px;
+    }
+}
+
+/* Fim do responsivo */
     
