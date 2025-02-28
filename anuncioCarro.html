@@ -3,16 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width= , initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/venda.css">
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
-    <title> NetCars - Anuncio </title>
+    <title>NetCars - Anúncio</title>
     <!-- TERMINAR ( OLHAR O FIGMA) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <script src="assets/js/home.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- jQuery (Necessário para o Owl Carousel funcionar) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- Scripts das funções essenciais do Header -->
+    <script src="assets/js/header.js" defer></script>
+    <!-- CSS do Footer, Header e Responsivo de ambos  -->
+    <link rel="stylesheet" href="assets/css/header-footer.css">
 </head>
 
 <body>
@@ -56,12 +66,12 @@
         <div class="div-pai-banner-venda">
             <div class="container">
                 <div class="owl-carousel">
-                    <div> <img src="assets/img/img1.png" alt="Imagem 1"> </div>
-                    <div> <img src="assets/img/img2.png" alt="Imagem 2"> </div>
-                    <div> <img src="assets/img/img3.jpg" alt="Imagem 3"> </div>
-                    <div> <img src="assets/img/img4.jpg" alt="Imagem 4"> </div>
-                    <div> <img src="assets/img/img5.jpg" alt="Imagem 5"> </div>
-                    <div> <img src="assets/img/img6.jpg" alt="Imagem 6"> </div>
+                    <div> <img src="assets/img/fiesta/img1.png" alt="Imagem 1"> </div>
+                    <div> <img src="assets/img/fiesta/img2.png" alt="Imagem 2"> </div>
+                    <div> <img src="assets/img/fiesta/img3.jpg" alt="Imagem 3"> </div>
+                    <div> <img src="assets/img/fiesta/img4.jpg" alt="Imagem 4"> </div>
+                    <div> <img src="assets/img/fiesta/img5.jpg" alt="Imagem 5"> </div>
+                    <div> <img src="assets/img/fiesta/img6.jpg" alt="Imagem 6"> </div>
                 </div>
             </div>
             <div class="div-contents-pai">
@@ -78,46 +88,46 @@
                             <p class="itemcss-title">Cidade</p>
                             <input class="input-info" type="text" value="Araçatuba-SP" disabled>
                         </li>
-    
+
                         <li class="li-vazia-1"></li>
                         <li class="li-vazia-2"></li>
                         <li class="li-vazia-3"></li>
-    
+
                         <li>
                             <p class="itemcss-title">Ano</p>
                             <input class="input-info" value="2012/2012" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Quilometragem</p>
                             <input class="input-info" value="328.703" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Câmbio</p>
                             <input class="input-info" value="Manual" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Modelo</p>
                             <input class="input-info" value="Sedã" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Combustível</p>
                             <input class="input-info" value="Gasolina e Álcool" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Cor</p>
                             <input class="input-info" value="Prata" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Licenciado</p>
                             <input class="input-info" value="Não" disabled />
                         </li>
-    
+
                         <li>
                             <p class="itemcss-title">Final da Placa</p>
                             <input class="input-info" value="3" disabled />
@@ -129,11 +139,11 @@
                         <h3>
                             R$ 21.900
                         </h3>
-    
+
                         <p>
                             Gostou do veículo? Reserve já!
                         </p>
-    
+
                         <div class="div-buttons">
                             <button class="salvar-btn">
                                 Salvar alterações
@@ -237,11 +247,26 @@
         </div>
     </footer>
 
-    <!-- jQuery (Necessário para o Owl Carousel funcionar) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Modais -->
+    <!-- Talvez os modais não serão necessários para todas as páginas -->
+    <div id="modal-nav-veiculos">
+        <div>
+            <i class="fa-solid fa-car"></i>
+            <p>Comprar carros</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-motorcycle"></i>
+            <p>Comprar motos</p>
+        </div>
+    </div>
 
-    <!-- Owl Carousel JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <div id="modal-login">
+        <p class="title">Faça login para uma experiência
+            ainda melhor! ;D</p>
+        <a href="login.html" class="btn-login">Fazer login</a>
+        <p class="subtitle">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+        <p id="closeModalLogin">&times;</p>
+    </div>
 
     <!-- Script de inicialização -->
     <script>
