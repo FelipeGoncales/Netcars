@@ -895,20 +895,18 @@ main {
 }
 
 @media (max-width: 450px) {
-    .div-content-venda {
-        padding-right: 0;
-        padding-left: 45px;
-    }
     .itens-details {
-        list-style: none;
-        padding: 0;
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
         & li {
             width: 100%;
+            & .itemcss-title {
+                font-size: 12px;
+            }
             & input {
                 width: 100% !important;
+                height: fit-content;
+                font-size: 14px;
             }
         }
     }
@@ -926,10 +924,20 @@ main {
         width: 100%;
     }
 
+    .div-content-venda {
+        padding: 35px;
+    }
+
     .div-content-vendas-pai {
         flex-direction: column;
         & .div-content-venda-filho {
             width: 100%;
+            & p {
+                font-size: 17px;
+            }
+            & .salvar-btn {
+                font-size: 14px;
+            }
         }
         & .div-content-venda-filho2 {
             width: 100%;
@@ -938,16 +946,41 @@ main {
     }
 
     .sec-marcas {
-        margin-top: 220px;
+        margin-top: 180px;
     }
     .sec-modelos {
         margin-top: 45px;
+    }
+    
+    .vehicleTitle, .color-1{
+        font-size: 23px;
+    }
+    .vehicleSub {
+        font-size: 13px;
+    }
+    .circleLogo {
+        width: 120px;
+        height: 120px;
+        & img {
+            width: 90px;
+            height: auto;
+        }
     }
 }
 
 @media (max-width: 375px) {
     .div-content-venda {
-        padding: 35px 20px;
+        padding: 20px 25px;
+    }
+    .itens-details {
+        & li {
+            & .itemcss-title {
+                font-size: 11px;
+            }
+            & input {
+                font-size: 13px;
+            }
+        }
     }
 }
 
