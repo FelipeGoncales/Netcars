@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- jQuery (Necessário para o Owl Carousel funcionar) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Owl Carousel JS -->
@@ -22,8 +23,6 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
-
-    <script src="assets/js/anuncio.js" defer></script>
 </head>
 
 <body>
@@ -54,12 +53,10 @@
                     <li><a href="#footer">Contato</a></li>
                 </ul>
             </nav>
-            <a href="" id="aDivEntrar">
-                <div class="div-usuario" id="divEntrar">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <p id="nomeUsuario">Entrar</p>
-                </div>
-            </a>
+            <div class="div-usuario" id="divEntrar">
+                <i class="fa-solid fa-circle-user"></i>
+                <p>Entrar</p>
+            </div>
             <p id="fecharBarraLateral">&times;</p>
         </div>
         <div class="overlay-bg" id="overlay-bg"></div>
@@ -69,32 +66,26 @@
         <div class="div-pai-banner-venda">
             <div class="container">
                 <div class="owl-carousel">
-                    <div> <img src="assets/img/fiesta/img1.png" alt="Imagem 1"> </div>
-                    <div> <img src="assets/img/fiesta/img2.png" alt="Imagem 2"> </div>
-                    <div> <img src="assets/img/fiesta/img3.jpg" alt="Imagem 3"> </div>
-                    <div> <img src="assets/img/fiesta/img4.jpg" alt="Imagem 4"> </div>
-                    <div> <img src="assets/img/fiesta/img5.jpg" alt="Imagem 5"> </div>
-                    <div> <img src="assets/img/fiesta/img6.jpg" alt="Imagem 6"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img1.jpg" alt="Imagem 1"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img2.jpg" alt="Imagem 2"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img3.jpg" alt="Imagem 3"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img4.jpg" alt="Imagem 4"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img5.jpg" alt="Imagem 5"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img6.jpg" alt="Imagem 6"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img7.jpg" alt="Imagem 7"> </div>
+                    <div> <img src="assets/img/bmwS1000RR/img8.jpg" alt="Imagem 8"> </div>
                 </div>
             </div>
             <div class="div-contents-pai">
                 <div class="div-content-venda">
-                    <div class="div-title-venda">  
-                        <div class="div-title">
-                            <input class="vehicleTitle marca" value="FORD" id="input-marca" disabled></input>
-                            <p class="input-mirror" id="mirror-input-marca"></p>
-                            <input class="vehicleTitle modelo" value="FIESTA" id="input-modelo-title" disabled></input>
-                            <p class="input-mirror" id="mirror-input-modelo-title"></p>
-                            <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
-                        </div>
-                        <input class="vehicleSub" value="1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL" id="input-subtitle" disabled></input>
-                        <p class="input-mirror" id="mirror-input-subtitle"></p>
+                    <div class="div-title-venda">
+                        <input class="vehicleTitle" value="BMW S 1000 RR" disabled></input>
+                        <i class="fa-solid fa-pencil" id="editarAnuncio" disabled></i>
                     </div>
-                    <form class="itens-details">
+                    <ul class="itens-details">
                         <li>
                             <p class="itemcss-title">Cidade</p>
-                            <input class="input-info" type="text" value="Araçatuba-SP" id="input-cidade" disabled>
-                            <p class="input-mirror" id="mirror-input-cidade"></p>
+                            <input class="input-info" type="text" value="Birigui-SP" disabled>
                         </li>
 
                         <li class="li-vazia-1"></li>
@@ -103,52 +94,62 @@
 
                         <li>
                             <p class="itemcss-title">Ano</p>
-                            <input class="input-info" value="2012/2012" id="input-ano" disabled />
-                            <p class="input-mirror" id="mirror-input-ano"></p>
+                            <input class="input-info" value="2023/2023" disabled />
                         </li>
-
+                        <li>
+                            <p class="itemcss-title">Marchas</p>
+                            <input class="input-info" value="6" disabled />
+                        </li>
                         <li>
                             <p class="itemcss-title">Quilometragem</p>
-                            <input class="input-info" value="328.703" id="input-quilometragem" disabled />
-                            <p class="input-mirror" id="mirror-input-quilometragem"></p>
+                            <input class="input-info" value="16.000" disabled />
                         </li>
 
                         <li>
-                            <p class="itemcss-title">Câmbio</p>
-                            <input class="input-info" value="Manual" id="input-cambio" disabled />
-                            <p class="input-mirror" id="mirror-input-cambio"></p>
-                        </li>
-
-                        <li>
-                            <p class="itemcss-title">Modelo</p>
-                            <input class="input-info" value="Sedã" id="input-modelo" disabled />
-                            <p class="input-mirror" id="mirror-input-modelo"></p>
-                        </li>
-
-                        <li>
-                            <p class="itemcss-title">Combustível</p>
-                            <input class="input-info" value="Gasolina e Álcool" id="input-combustivel" disabled/>
-                            <p class="input-mirror" id="mirror-input-combustivel"></p>
+                            <p class="itemcss-title">Tipo de motor</p>
+                            <input class="input-info" value="4 tempos" disabled />
                         </li>
 
                         <li>
                             <p class="itemcss-title">Cor</p>
-                            <input class="input-info" value="Prata" id="input-cor" disabled />
-                            <p class="input-mirror" id="mirror-input-cor"></p>
+                            <input class="input-info" value="Preto-Laranja" disabled />
                         </li>
 
                         <li>
-                            <p class="itemcss-title">Licenciado</p>
-                            <input class="input-info" value="Não" id="input-licenciado" disabled />
-                            <p class="input-mirror" id="mirror-input-licenciado"></p>
+                            <p class="itemcss-title">Refrigeração</p>
+                            <input class="input-info" value="Líquida" disabled />
+                        </li>
+
+                        <li>
+                            <p class="itemcss-title">Estilo</p>
+                            <input class="input-info" value="Esportiva" disabled />
+                        </li>
+
+                        <li>
+                            <p class="itemcss-title">Cilindrada</p>
+                            <input class="input-info" value="1000" disabled />
+                        </li>
+
+                        <li>
+                            <p class="itemcss-title">Partida</p>
+                            <input class="input-info" value="Elétrica" disabled />
+                        </li>
+
+                        <li>
+                            <p class="itemcss-title">Freio dianteiro/traseiro</p>
+                            <input class="input-info" value="disco/disco" disabled />
+                        </li>
+
+                        <li>
+                            <p class="itemcss-title">Alimentação</p>
+                            <input class="input-info" value="Injeção eletrônica" disabled />
                         </li>
 
                         <li>
                             <p class="itemcss-title">Final da Placa</p>
-                            <input class="input-info" value="3" id="input-placa" disabled />
-                            <p class="input-mirror" id="mirror-input-placa"></p>
+                            <input class="input-info" value="6" disabled />
                         </li>
-                    </form>
+                    </ul>
                 </div>
                 <div class="div-content-vendas-pai">
                     <div class="div-content-venda-filho">
@@ -161,7 +162,7 @@
                         </p>
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
-                            <button class="salvar-btn" id="salvar-alteracoes">
+                            <button class="salvar-btn">
                                 Salvar alterações
                             </button>
                             <i class="fa-solid fa-trash icon-trash"></i>
@@ -182,56 +183,56 @@
         </div>
 
         <section class="sec-marcas">
-            <h4>Marcas ofertadas - Carros</h4>
+            <h4>Marcas ofertadas - Motos</h4>
             <div class="div-carrossel">
                 <div class="div-marcas">
                     <div>
                         <img src="assets/img/bmw.png" alt="BMW Logo">
                     </div>
                     <div>
-                        <img src="assets/img/byd.png" alt="BYD Logo">
+                        <img src="assets/img/yamaha.png" alt="Yamaha Logo">
                     </div>
                     <div>
-                        <img src="assets/img/toyota.png" alt="Toyota Logo">
+                        <img src="assets/img/honda.png" alt="Honda Logo">
                     </div>
                     <div>
-                        <img src="assets/img/volkswagem.png" alt="Volkswagem Logo">
+                        <img src="assets/img/ducati.png" alt="Ducati Logo">
                     </div>
                     <div>
-                        <img src="assets/img/fiat.png" alt="Fiat Logo">
+                        <img src="assets/img/kawasaki.png" alt="Kawasaki Logo">
                     </div>
                     <div>
-                        <img src="assets/img/ford.png" alt="Ford Logo">
+                        <img src="assets/img/suzuki.png" alt="Suzuki Logo">
                     </div>
                     <div>
-                        <img src="assets/img/nissan.png" alt="Nissan Logo">
+                        <img src="assets/img/harley-davidson.png" alt="Harley Davidson Logo">
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="sec-modelos">
-            <h4> Principais modelos - Carros</h4>
+            <h4>Principais modelos - Motos</h4>
             <div class="div-carrossel">
                 <div class="div-modelos">
-                    <div class="eletricos">
-                        <p>Elétricos</p>
+                    <div class="esportivas">
+                        <p>Esportivas</p>
                         <div class="overlay"></div>
                     </div>
-                    <div class="populares">
+                    <div class="populares-motos">
                         <p>Populares</p>
                         <div class="overlay"></div>
                     </div>
-                    <div class="picapes">
-                        <p>Picapes</p>
+                    <div class="trail">
+                        <p>Trail</p>
                         <div class="overlay"></div>
                     </div>
-                    <div class="sedans">
-                        <p>Sedans</p>
+                    <div class="big-trail">
+                        <p>Big Trail</p>
                         <div class="overlay"></div>
                     </div>
-                    <div class="suvs">
-                        <p>SUVs</p>
+                    <div class="supermoto">
+                        <p>Supermoto</p>
                         <div class="overlay"></div>
                     </div>
                 </div>

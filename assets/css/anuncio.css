@@ -29,6 +29,58 @@
     flex-direction: column;
 }
 
+.div-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.vehicleTitle, #mirror-input-marca, #mirror-input-modelo-title{
+    background-color: transparent;
+    border: none;
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--roxo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    &.marca {
+        color: var(--cor-texto);
+    }
+}
+#mirror-input-marca { 
+    color: var(--cor-texto);
+}
+
+
+#editarAnuncio { 
+    display: none;
+}
+
+.fa-pencil {
+    background-color: #ECEDF2;
+    color: var(--roxo);
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+        scale: 1.1;
+    }
+}
+
+.vehicleSub, #mirror-input-subtitle{
+    background-color: transparent;
+    border: none;
+    color: #686976;
+    font-weight: 400;
+    display: block;
+    width: 320px;
+}
+
 /* ul */
 .itens-details {
     list-style: none;
@@ -48,12 +100,22 @@
     margin: 0;
 }
 
-.input-info {
+.input-info, .input-mirror {
     font-size: 16px;
     font-weight: bold;
     color: #333;
     background: transparent;
     border: none;
+    margin-bottom: 3px;
+}
+
+input:not(:disabled) {
+    margin-bottom: 2px;
+    border-bottom: 1px solid var(--cor-texto-apagado);
+}
+
+.input-mirror {
+    display: none;
 }
 
 .item-1{
@@ -122,7 +184,7 @@ main {
 }
 
 .div-buttons {
-    display: flex;
+    display: none;
     width: 100%;
     gap: 10px;
     & .salvar-btn{
@@ -157,6 +219,15 @@ main {
     }
 }
 
+.div-buttons.cliente {
+    display: flex;
+    & .salvar-btn {
+        width: 100% !important;
+    }
+}
+
+
+
 .div-content-venda-filho p{
     font-size: 20px;
     color: #6C1DE9;
@@ -166,33 +237,6 @@ main {
 .color-1{
     color: #6C1DE9;
     font-size: 35px;
-}
-
-.vehicleTitle{
-    font-size: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.fa-pencil {
-    background-color: #ECEDF2;
-    color: var(--roxo);
-    font-size: 20px;
-    padding: 8px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-    &:hover {
-        scale: 1.1;
-    }
-}
-
-.vehicleSub{
-    color: #686976;
-    font-weight: 400;
-    display: block;
 }
 
 .circleLogo{
@@ -477,11 +521,26 @@ main {
             & .itemcss-title {
                 font-size: 12px;
             }
-            & input {
+            & input, .input-mirror {
                 width: 100% !important;
                 height: fit-content;
                 font-size: 14px;
             }
+        }
+    }
+
+    #editarAnuncio {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .div-title {
+        gap: 0;
+        align-items: flex-start;
+        flex-direction: column;
+        .vehicleTitle, .input-mirror{
+            font-size: 23px !important;
         }
     }
     
@@ -499,6 +558,8 @@ main {
     }
 
     .div-content-venda {
+        width: 100%;
+        position: relative;
         padding: 35px;
     }
 
@@ -526,10 +587,7 @@ main {
         margin-top: 45px;
     }
     
-    .vehicleTitle, .color-1{
-        font-size: 23px;
-    }
-    .vehicleSub {
+    .vehicleSub, #mirror-input-subtitle {
         font-size: 13px;
     }
     .circleLogo {
@@ -555,6 +613,9 @@ main {
                 font-size: 13px;
             }
         }
+    }
+    #mirror-input-subtitle {
+        max-width: 100%;
     }
 }
 
