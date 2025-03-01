@@ -247,6 +247,40 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
+// Função para a barra lateral
+
+// Abrir e fechar barra lateral
+const sanduiche = $("#sanduicheHeader");
+const barraLateral = $('#barra-lateral');
+const overlayBg = $('#overlay-bg');
+const closeBarraLateral = $('#fecharBarraLateral');
+
+sanduiche.click(() => {
+    barraLateral.css({
+        'animation': 'abrirBarraLateral 0.5s',
+        'display': 'flex'
+    });
+    overlayBg.css({
+        'animation': 'aparecerOverlay 0.5s',
+        'display': 'flex'
+    });
+});
+
+// Fechar barra lateral
+function fecharBarraLateral() {
+    barraLateral.css('animation', 'fecharBarraLateral 0.7s');
+    overlayBg.css('animation', 'sumirOverlay 0.7s');
+
+    setTimeout(() => {
+        barraLateral.css('display', 'none');
+        overlayBg.css('display', 'none');
+    }, 699);
+}
+
+closeBarraLateral.click(() => {
+    fecharBarraLateral()
+});
+
 // Lógica para envio do formulário de editar perfil
 $("#formEditarUsuario").on("submit", function(e) {
     e.preventDefault();
@@ -258,6 +292,7 @@ $("#formEditarUsuario").on("submit", function(e) {
 
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     const id = dadosUser.id_usuario;
+    const tipoUser = dadosUser.tipo_usuario;
 
     let dados = new FormData(this);
 
@@ -269,7 +304,8 @@ $("#formEditarUsuario").on("submit", function(e) {
         cpf_cnpj: dados.get('cpf_cnpj').replace(/[./-]/g, ''), // Função .replace para retirar caractéres "-", "." e "/"
         telefone: dados.get('telefone').replace(/[\s()-]/g, ''), // Função .replace para retirar caractéres "(", ")" e "-"
         senha_hash: dados.get('senha_hash'),
-        senha_nova: dados.get('senha_nova')
+        senha_nova: dados.get('senha_nova'),
+        tipo_usuario: tipoUser
     };
     
     editar = JSON.stringify(editar);

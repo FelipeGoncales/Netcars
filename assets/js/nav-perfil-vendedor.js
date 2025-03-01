@@ -31,6 +31,10 @@ $(document).ready(function() {
 
         $('#minha-conta').css('display', 'flex');
         $('#anuncios').css('display', 'none');
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
     })
     $("#link_anuncios").on("click", function() {
         const elementoClicado = this;
@@ -38,5 +42,20 @@ $(document).ready(function() {
 
         $('#minha-conta').css('display', 'none');
         $('#anuncios').css('display', 'flex');
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
     })
 });
+
+// Fechar barra lateral
+function fecharBarraLateral() {
+    barraLateral.css('animation', 'fecharBarraLateral 0.7s');
+    overlayBg.css('animation', 'sumirOverlay 0.7s');
+
+    setTimeout(() => {
+        barraLateral.css('display', 'none');
+        overlayBg.css('display', 'none');
+    }, 699);
+}

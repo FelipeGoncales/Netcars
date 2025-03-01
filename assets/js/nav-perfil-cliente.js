@@ -33,6 +33,10 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'flex');
         $('#reservas').css('display', 'none');
         $('#historico-compras').css('display', 'none');
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
     })
     $("#link_reservas").on("click", function() {
         const elementoClicado = this;
@@ -41,6 +45,10 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'flex');
         $('#historico-compras').css('display', 'none');
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
     })
     $("#link_hCompras").on("click", function() {
         const elementoClicado = this;
@@ -49,5 +57,20 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#historico-compras').css('display', 'flex');
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
     })
 });
+
+// Fechar barra lateral
+function fecharBarraLateral() {
+    barraLateral.css('animation', 'fecharBarraLateral 0.7s');
+    overlayBg.css('animation', 'sumirOverlay 0.7s');
+
+    setTimeout(() => {
+        barraLateral.css('display', 'none');
+        overlayBg.css('display', 'none');
+    }, 699);
+}

@@ -17,13 +17,13 @@ sanduiche.click(() => {
 });
 
 closeBarraLateral.click(() => {
-    barraLateral.css('animation', 'fecharBarraLateral 0.5s');
-    overlayBg.css('animation', 'sumirOverlay 0.5s');
+    barraLateral.css('animation', 'fecharBarraLateral 0.7s');
+    overlayBg.css('animation', 'sumirOverlay 0.7s');
 
     setTimeout(() => {
         barraLateral.css('display', 'none');
         overlayBg.css('display', 'none');
-    }, 499);
+    }, 699);
 });
 
 

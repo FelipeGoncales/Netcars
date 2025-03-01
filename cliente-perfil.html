@@ -23,26 +23,33 @@
             </div>
             <h1>Minha Garagem</h1>
         </div>
-    </header>
-    <div class="container-perfil">
-        <div class="perfil-usuario">
-            <i class="fa-solid fa-circle-user"></i>
-            <h2 id="nomeNav">Nome Completo</h2>
-            <p id="emailNav">email@gmail.com</p>
+        
+        <div class="sanduiche" id="sanduicheHeader">
+            <div class="linha1"></div>
+            <div class="linha2"></div>
+            <div class="linha3"></div>
         </div>
-        <nav>
-            <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
-            <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
-            <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
-            <a id="link_hCompras" ><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
-            <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
-        </nav>
-    </div>
+        <div class="container-perfil" id="barra-lateral">
+            <div class="perfil-usuario">
+                <i class="fa-solid fa-circle-user"></i>
+                <h2 id="nomeNav">Nome Completo</h2>
+                <p id="emailNav">email@gmail.com</p>
+            </div>
+            <nav>
+                <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
+                <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
+                <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
+                <a id="link_hCompras" ><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
+                <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
+            </nav>
+            <p id="fecharBarraLateral">&times;</p>
+        </div> 
+        <div class="overlay-bg" id="overlay-bg"></div>
+    </header>
     <main>
         <section class="container" id="conteudo">
-
             <!-- Div Minha Conta -->
-            <div class="container-informacoes" id="minha-conta">
+            <div class="container-minha-conta" id="minha-conta">
                 <div class="informacoes-usuario">
                    <h3>Campos com  asteriscos ( * ) são obrigatórios </h3>
                    <form action="" id="formEditarUsuario">
@@ -99,7 +106,23 @@
                                     </div>
                                 </div>
                                 <h3>R$21.900 </h3>
-                                <button id="link_carro">Informações</button>
+                                <button id="link_carro">Ver detalhes</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="../assets/img/fiesta/img1.png" alt="">
+                            <div class="itens-card">
+                                <h3>Ford Fiesta</h3>
+                                <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                                <div class="container-info-card">
+                                    <div class="info-card">
+                                        <i class="fa-solid fa-calendar-days"></i><p>2012</p>
+                                        <i class="fa-solid fa-gauge-high"></i><p>128.763 Km</p>
+                                        <i class="fa-solid fa-location-dot"></i><p>Birigui (SP)</p>    
+                                    </div>
+                                </div>
+                                <h3>R$21.900 </h3>
+                                <button id="link_carro">Ver detalhes</button>
                             </div>
                         </div>
                         <!-- Fim dos cards -->
@@ -126,7 +149,23 @@
                                     </div>
                                 </div>
                                 <h3>R$21.900 </h3>
-                                <button id="link_carro">Informações</button>
+                                <button id="link_carro">Ver detalhes</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="../assets/img/fiesta/img1.png" alt="">
+                            <div class="itens-card">
+                                <h3>Ford Fiesta</h3>
+                                <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                                <div class="container-info-card">
+                                    <div class="info-card">
+                                        <i class="fa-solid fa-calendar-days"></i><p>2012</p>
+                                        <i class="fa-solid fa-gauge-high"></i><p>128.763 Km</p>
+                                        <i class="fa-solid fa-location-dot"></i><p>Birigui (SP)</p>    
+                                    </div>
+                                </div>
+                                <h3>R$21.900 </h3>
+                                <button id="link_carro">Ver detalhes</button>
                             </div>
                         </div>
                         <!-- Fim dos cards -->
