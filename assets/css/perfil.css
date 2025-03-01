@@ -616,9 +616,15 @@ footer {
 
 @media (max-width: 660px) {
     header {
+        height: 64px;
+        padding: 12px 25px;
         & .div-logo {
+            margin: 0;
             border: none;
             padding: 0;
+            & p, span {
+                font-size: 28px;
+            }
         }
         & h1 {
             display: none;
