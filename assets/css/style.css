@@ -295,7 +295,7 @@ h4 {
         & h4 {
             padding-left: 20px;
         }
-        .div-carrossel {
+        & .div-carrossel {
             width: calc(100% + 20px);
             overflow: auto;
             display: flex;
@@ -309,7 +309,7 @@ h4 {
     }
     .sec-modelos {
         width: 100%;
-        .div-carrossel {
+        & .div-carrossel {
             width: 100%;
             overflow: auto;
             display: flex;

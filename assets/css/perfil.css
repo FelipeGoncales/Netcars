@@ -42,6 +42,8 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    z-index: 2;
 }
 
 .div-usuario {
@@ -68,7 +70,7 @@ header {
     gap: 5px;
     align-items: center;
     justify-content: center;
-    width: 244px;
+    width: 270px;
     box-sizing: border-box;
     border-right: 1px solid rgba(0, 0, 0, 0.15);
     & img {
@@ -98,71 +100,86 @@ h1 {
     gap: 35px;
 }
 
-/* Main - minha conta*/
+/* Menu NAV */
 
-.container {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    align-items: center; 
+.container-perfil {
+    position: absolute;
+    left: 0;
+    top: 64px;
+    width: 282px;
+    height: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    background: var(--cor-bg-sec);
+    & nav {
+        padding: 40px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        border-top: 1px solid rgba(0, 0, 0, 0.15);
+        & a {
+            cursor: pointer;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--cor-titles);
+            font-size: 1.1em;
+            transition: 0.1s;
+            &.selecionado {
+                border-left: solid 4px var(--roxo);
+                & i, a {
+                    cursor: pointer;
+                    color: var(--cor-texto);
+                }
+                &:hover {
+                    border-left: solid 4px var(--roxo);
+                }
+            }
+            &:hover {
+                border-left: solid 4px var(--cor-titles);
+            }
+        }
+    }
+
+    & .perfil-usuario {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 180px;
+        & i {
+            font-size: 50px;
+        }
+
+        & h2 {
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+        & p {
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+    }
 }
+
+/* Main - minha conta*/
 
 main {
     display: flex;
     height: 87vh;
-    & .container-perfil {
-        width: 310px;
+    /* Section */
+    & .container {
         height: 100vh;
-        border-top: 1px solid rgba(0, 0, 0, 0.15);
-        background: var(--cor-bg-sec);
-        & nav {
-            padding: 40px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            border-top: 1px solid rgba(0, 0, 0, 0.15);
-            & span {
-                border-left: solid 4px var(--roxo);
-                & i,a {
-                    color: var(--cor-texto);
-                }
-            }
-            & a {
-                padding-left: 15px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                color: var(--cor-titles);
-                font-size: 1.1em;
-                transition: 0.1s;
-                &:hover {
-                    border-left: solid 3px var(--cor-titles);
-                }
-            }
-        }
-
-        & .perfil-usuario {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 180px;
-            & i {
-                font-size: 50px;
-            }
-
-            & h2 {
-                font-size: 1.2rem;
-                font-weight: normal;
-            }
-            & p {
-                font-size: 0.8rem;
-                font-weight: 300;
-            }
-        }
+        width: calc(100% - 282px);
+        position: absolute;
+        right: 0;
+        top: 52%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .container-informacoes {
+    & .container-informacoes {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -264,31 +281,44 @@ main {
     }
 }
 
-#divAlertMessage {
+/* Fim do CSS da div Minha Conta (Que é a mesma para todos os usuários) */
+
+
+/* DIVS PERFIL CLIENTE */
+
+#minha-conta {
+    display: flex;
+}
+
+#historico-compras, #reservas {
     display: none;
-    position: fixed;
-    z-index: 9999;
-    top: 30px;
-    right: 30px;
-    gap: 20px;
     flex-direction: column;
+    gap: 20px;
+    width: 84%;
+    & h3 {
+        font-size: 1.4rem;
+    }
+    & .div-carrossel {
+        width: calc(100%);
+        overflow: auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    & .conteudo {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        justify-content: center;
+    }
 }
 
-.alertMessage {
-    padding: 15px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--cor-bg-sec);
-    border-radius: 10px;
-}
-/* Main - historico e reservas*/
-
-& .card{
+/* Card Padrão */
+.card{
     background: var(--cor-bg-sec);
     width: 300px;
     height: 470px;
     border-radius: 10px;
-    margin: 0px 20px;
     & img{
         width: 100%;
         border-top-left-radius: 10px;
@@ -326,11 +356,73 @@ main {
     }
 }
 
+/* END DIVS PERFIL CLIENTE */
 
 
+
+/* DIVS PERFIL VENDEDOR */
+
+/* 
+
+POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
+
+*/
+
+/* END DIVS PERFIL VENDEDOR */
+
+
+
+/* DIVS ADMINISTRADOR */
+
+.container-relatorios{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 40px;
+    & .relatorios {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        background: var(--cor-bg-sec);
+        cursor: pointer;
+        padding: 20px;
+        border-radius: 10px;
+        color: var(--cor-texto);
+        transition: 0.2s ease-in;
+        &:hover{
+            background-color: var(--roxo);
+            color: var(--cor-bg-sec);
+        }
+    }
+}
+
+/* END DIVS ADMINISTRADOR */
+
+
+#divAlertMessage {
+    display: none;
+    position: fixed;
+    z-index: 9999999;
+    top: 30px;
+    right: 30px;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.alertMessage {
+    padding: 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+}
 
 /* Footer */
 footer {
+    position: relative;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     align-items: center;

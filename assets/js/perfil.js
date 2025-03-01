@@ -1,24 +1,13 @@
-
-let isValidCPF_CNPJ = false; 
-
-// Fazer o nav funcionar
-$(document).ready(function() {
-    $('#conteudo').load('com-Vendedor/minha-conta.html');
-
-    $("#link_minhaConta").on("click", function() {
-        $('#conteudo').load('com-Vendedor/minha-conta.html');
-    })
-    $("#link_anuncios").on("click", function() {
-        $('#conteudo').load('com-Vendedor/anuncios.html');
-    })
-});
-
 // Função para preencher as informações nos inputs ao entrar na página
 
 $(document).ready(function() {
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     if (!dadosUser) {
+        localStorage.setItem('mensagem', JSON.stringify({
+            error: 'Sessão não iniciada.'
+        }))
+
         window.location.href = 'login.html';
     }
 
@@ -55,6 +44,11 @@ $('#deslogarConta').click(function(e) {
     e.preventDefault()
 
     localStorage.clear();
+
+    localStorage.setItem('mensagem', JSON.stringify({
+        success: 'Usuário deslogado com sucesso!'
+    }))
+
     window.location.href = 'login.html';
 })
 
@@ -294,6 +288,3 @@ $("#formEditarUsuario").on("submit", function(e) {
         }
     })
 })
-
-
-   

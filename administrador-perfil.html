@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/usuario-adm.css">
+    <link rel="stylesheet" href="assets/css/perfil.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
 
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
     <title> NetCars - Perfil </title>
     <!-- TERMINAR ( OLHAR O FIGMA) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="assets/js/usuarioAdministrador.js" defer></script>
+    <!-- JS do NAV específico dessa página -->
+    <script src="assets/js/nav-perfil-adm.js" defer></script>
+    <!-- Arquivo JS padrão para todas as páginas de perfil -->
+    <script src="assets/js/perfil.js" defer></script>
 </head>
 <body>
     <header>
@@ -22,24 +25,81 @@
             <h1>Minha Garagem</h1>
         </div>
     </header>
-    <main>
-    <section class="container-perfil"> 
+    <div class="container-perfil">
         <div class="perfil-usuario">
             <i class="fa-solid fa-circle-user"></i>
-            <h2>Nome Completo</h2>
-            <p>email@gmail.com</p>
+            <h2 id="nomeNav">Nome Completo</h2>
+            <p id="emailNav">email@gmail.com</p>
         </div>
         <nav>
             <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Anúncio</a>
-            <a id="link_minhaConta"><i class="fa-solid fa-user"></i>Minha Conta</a>
+            <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
             <a id="link_relatorios"><i class="fas fa-file-alt"></i>Relatórios</a>
             <a href=""><i class="fa-solid fa-car"></i>Adiconar Veiculo</a>
             <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
         </nav>
-    </section> 
+    </div>
+    <main>
+        <section class="container" id="conteudo">
 
-    <section class="container" style="width: 100%" id="conteudo"></section></section>
-    
+            <!-- Div Minha Conta -->
+            <div class="container-informacoes" id="minha-conta">
+                <div class="informacoes-usuario">
+                   <h3>Campos com  asteriscos ( * ) são obrigatórios </h3>
+                   <form action="" id="formEditarUsuario">
+                       <div class="container-input">
+                           <label class="text" for="input">E-mail*</label>
+                           <input class="input" required name="email" type="email" id="email_input"/>
+                       </div>
+                       <div class="container-input">
+                           <label class="text" for="input">Nome Completo*</label>
+                           <input class="input" required name="nome_completo" type="text" id="nome_completo_input"/>
+                       </div>
+                       <div class="container-input">
+                           <label class="text date" for="input">Data de nascimento*</label>
+                           <input class="input" required name="data_nascimento" type="date" id="data_nascimento_input"/>
+                       </div>
+                       <div class="container-input">
+                           <label class="text" for="input">CPF ou CNPJ*</label>
+                           <input class="input" required name="cpf_cnpj" type="text" id="cpf_cnpj_input"/>
+                       </div>
+                       <div class="container-input">
+                           <label class="text" for="input">Telefone*</label>
+                           <input class="input" required name="telefone" type="tel" id="telefone_input"/>
+                       </div>
+                       <h3>Atualizar senha</h3>
+                       <div class="container-input">
+                           <label class="text" for="input">Senha atual*</label>
+                           <input class="input" name="senha_hash" type="password"/>
+                       </div>
+                       <div class="container-input">
+                           <label class="text" for="input">Senha nova*</label>
+                           <input class="input" name="senha_nova" type="password"/>
+                       </div>
+                       <button type="submit">Atualizar os dados</button>
+                   </form>
+               </div>
+            </div>
+            
+            <!-- Div Relatórios -->
+            <div class="container-relatorios" id="relatorios">
+                <a class="relatorios" href="baixar o arquivo pdf">
+                    <h3>Movimentação</h3>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </a>
+                <a class="relatorios" href="baixar o arquivo pdf">
+                    <h3>Veículos</h3>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+                <a class="relatorios" href="baixar o arquivo pdf">
+                    <h3>Clientes</h3>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </a>
+            </div>
+
+        </section>
+
+        <!-- Div Alert Message -->
+        <div id="divAlertMessage"></div>   
     </main>
     <footer id="footer">
         <div class="div-contato">

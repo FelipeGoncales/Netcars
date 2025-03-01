@@ -1,3 +1,49 @@
+// Função para exibir mensagem (se existir) logo ao abrir a página
+
+
+
+const mensagem = JSON.parse(localStorage.getItem('mensagem'));
+
+if (mensagem) {
+    console.log(mensagem)
+    if (mensagem.error) {
+        $('#divAlertMessage').css('display', 'flex')
+
+        $('<p>')
+        .addClass('alertMessage')
+        .text(mensagem.error)
+        .css({
+            'background-color': '#f71445'
+        })
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+
+        localStorage.clear();
+    }
+    
+    if (mensagem.success) {
+        $('#divAlertMessage').css('display', 'flex')
+
+        $('<p>')
+        .addClass('alertMessage')
+        .text(mensagem.success)
+        .css({
+            'background-color': '#0bd979'
+        })
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+
+        localStorage.clear();
+    }
+}
+
+
 // Rota para cadastrar clientes
 
 $("#formCadastroUsuario").on("submit", function(e) {
