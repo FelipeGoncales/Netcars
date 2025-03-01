@@ -30,8 +30,9 @@
 }
 
 .div-title {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }
@@ -98,6 +99,11 @@
     color: #686976;
     font-weight: 400;
     margin: 0;
+}
+
+/* Tirando borda preta de todos os inputs quando */
+input {
+    outline: none;
 }
 
 .input-info, .input-mirror {
@@ -174,19 +180,32 @@ main {
     align-items: center;
 }
 
-.container{
-    width: 100vw;
+.div-preco {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    & p, input{
+        color: var(--cor-texto) !important;
+        font-size: 30px !important;
+        font-weight: 500 !important;
+        max-width: 200px;
+    }
 }
 
-.div-content-venda-filho h3{
-    font-size: 30px;
-    font-weight: 500;
+.container{
+    width: 100vw;
 }
 
 .div-buttons {
     display: none;
     width: 100%;
     gap: 10px;
+    &.cliente {
+        display: flex;
+        & .salvar-btn {
+            width: 100% !important;
+        }
+    }
     & .salvar-btn{
         width: 82%;
         height: 60px;
@@ -219,17 +238,12 @@ main {
     }
 }
 
-.div-buttons.cliente {
-    display: flex;
-    & .salvar-btn {
-        width: 100% !important;
-    }
+
+#mensagem-adm {
+    display: none;
 }
-
-
-
-.div-content-venda-filho p{
-    font-size: 20px;
+.div-content-venda-filho .mensagem{
+    font-size: 15px;
     color: #6C1DE9;
     font-weight: 500;
 }
@@ -430,6 +444,12 @@ main {
         height: fit-content;
     }
 
+    .div-title {
+        & input {    
+            width: 45%;
+        }
+    }
+
     .div-content-vendas-pai {
         flex-direction: row;
         height: 236px;
@@ -513,6 +533,18 @@ main {
 }
 
 @media (max-width: 450px) {
+    .div-title {
+        & input {    
+            width: 100%;
+        }
+    }
+
+    .div-buttons {
+        .icon-trash {
+            min-width: 60px;
+        }
+    }
+
     .itens-details {
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
@@ -540,7 +572,7 @@ main {
         align-items: flex-start;
         flex-direction: column;
         .vehicleTitle, .input-mirror{
-            font-size: 23px !important;
+            font-size: 28px !important;
         }
     }
     
@@ -567,9 +599,6 @@ main {
         flex-direction: column;
         & .div-content-venda-filho {
             width: 100%;
-            & p {
-                font-size: 17px;
-            }
             & .salvar-btn {
                 font-size: 14px;
             }
@@ -591,10 +620,10 @@ main {
         font-size: 13px;
     }
     .circleLogo {
-        width: 120px;
-        height: 120px;
+        width: 110px;
+        height: 110px;
         & img {
-            width: 90px;
+            width: 75px;
             height: auto;
         }
     }

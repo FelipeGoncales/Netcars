@@ -1,23 +1,31 @@
 // Mudar perfil quando usuário estiver logado
 
-$(document).ready(function() {
+$(document).ready(function () {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     if (dadosUser) {
         const tipoUser = dadosUser.tipo_usuario;
 
         if (tipoUser === 2 || tipoUser === 1) {
-           $('#div-button-vendedor').css('display', 'flex');
-           $('#div-button-cliente').css('display', 'none');
+            $('#div-button-vendedor').css('display', 'flex');
+            $('#div-button-cliente').css('display', 'none');
 
-           $('#editarAnuncio').css('display', 'flex');
+            // Função para mudar a frase que aparece caso seja cliente ou usuário
+            $('#mensagem-user').css('display', 'none');
+            $('#mensagem-adm').css('display', 'flex');
+
+            $('#editarAnuncio').css('display', 'flex');
         } else {
-           $('#div-button-vendedor').css('display', 'none');
-           $('#div-button-cliente').css('display', 'flex');
+            $('#div-button-vendedor').css('display', 'none');
+            $('#div-button-cliente').css('display', 'flex');
 
-           $('#editarAnuncio').css('display', 'none');
+            // Função para mudar a frase que aparece caso seja cliente ou usuário
+            $('#mensagem-user').css('display', 'flex');
+            $('#mensagem-adm').css('display', 'none');
+
+            $('#editarAnuncio').css('display', 'none');
         }
-    } else { 
+    } else {
         $('#div-button-vendedor').css('display', 'none');
         $('#div-button-cliente').css('display', 'flex');
 
@@ -25,58 +33,58 @@ $(document).ready(function() {
     }
 })
 
-$('input').each(function() { 
-        const id = $(this).attr('id');
-        const spanMirror = $(`#mirror-${id}`)
+$('input').each(function () {
+    const id = $(this).attr('id');
+    const spanMirror = $(`#mirror-${id}`)
 
-        $(this).css('display', 'none');
-        spanMirror.text($(this).val()).css('display', 'flex');
-    }
+    $(this).css('display', 'none');
+    spanMirror.text($(this).val()).css('display', 'flex');
+}
 )
 
 // Funções para editar
 let editarOn = false;
 
-$('#editarAnuncio').click(function() {
+$('#editarAnuncio').click(function () {
     if (editarOn === false) {
         editarOn = true;
 
-        $('input').each(function() { 
+        $('input').each(function () {
             const id = $(this).attr('id');
             const spanMirror = $(`#mirror-${id}`)
-    
+
             $(this).css('display', 'flex').attr('disabled', false);
             spanMirror.css('display', 'none');
         })
     } else {
         editarOn = false;
 
-        
+
         // Lógica para salvar no banco
 
 
-        $('input').each(function() { 
+        $('input').each(function () {
             const id = $(this).attr('id');
             const spanMirror = $(`#mirror-${id}`)
-    
+
             $(this).css('display', 'none');
             spanMirror.text($(this).val()).css('display', 'flex');
         })
     }
 });
 
-$('#salvar-alteracoes').click(function() {
+$('#salvar-alteracoes').click(function () {
     if (editarOn === true) {
         editarOn = false;
 
-        
+
         // Lógica para salvar no banco
 
 
-        $('input').each(function() { 
+        $('input').each(function () {
             const id = $(this).attr('id');
             const spanMirror = $(`#mirror-${id}`)
-    
+
             $(this).css('display', 'none');
             spanMirror.text($(this).val()).css('display', 'flex');
         })

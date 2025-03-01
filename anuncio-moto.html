@@ -23,6 +23,8 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
+
+    <script src="assets/js/anuncio.js" defer></script>
 </head>
 
 <body>
@@ -53,10 +55,12 @@
                     <li><a href="#footer">Contato</a></li>
                 </ul>
             </nav>
-            <div class="div-usuario" id="divEntrar">
-                <i class="fa-solid fa-circle-user"></i>
-                <p>Entrar</p>
-            </div>
+            <a href="" id="aDivEntrar">
+                <div class="div-usuario" id="divEntrar">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p id="nomeUsuario">Entrar</p>
+                </div>
+            </a>
             <p id="fecharBarraLateral">&times;</p>
         </div>
         <div class="overlay-bg" id="overlay-bg"></div>
@@ -78,14 +82,20 @@
             </div>
             <div class="div-contents-pai">
                 <div class="div-content-venda">
-                    <div class="div-title-venda">
-                        <input class="vehicleTitle" value="BMW S 1000 RR" disabled></input>
-                        <i class="fa-solid fa-pencil" id="editarAnuncio" disabled></i>
+                    <div class="div-title-venda">  
+                        <div class="div-title">
+                            <input class="vehicleTitle marca" value="BMW" id="input-marca" disabled></input>
+                            <p class="input-mirror" id="mirror-input-marca"></p>
+                            <input class="vehicleTitle modelo" value="S 1000 RR" id="input-modelo-title" disabled></input>
+                            <p class="input-mirror" id="mirror-input-modelo-title"></p>
+                            <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
+                        </div>
                     </div>
-                    <ul class="itens-details">
+                    <form class="itens-details">
                         <li>
                             <p class="itemcss-title">Cidade</p>
-                            <input class="input-info" type="text" value="Birigui-SP" disabled>
+                            <input class="input-info" type="text" value="Birigui-SP" id="input-cidade" disabled>
+                            <p class="input-mirror" id="mirror-input-cidade"></p>
                         </li>
 
                         <li class="li-vazia-1"></li>
@@ -94,72 +104,85 @@
 
                         <li>
                             <p class="itemcss-title">Ano</p>
-                            <input class="input-info" value="2023/2023" disabled />
+                            <input class="input-info" value="2023/2023" id="input-ano" disabled />
+                            <p class="input-mirror" id="mirror-input-ano"></p>
                         </li>
                         <li>
                             <p class="itemcss-title">Marchas</p>
-                            <input class="input-info" value="6" disabled />
+                            <input class="input-info" value="6" id="input-marchas" disabled />
+                            <p class="input-mirror" id="mirror-input-marchas"></p>
                         </li>
                         <li>
                             <p class="itemcss-title">Quilometragem</p>
-                            <input class="input-info" value="16.000" disabled />
+                            <input class="input-info" value="16.000" id="input-km" disabled />
+                            <p class="input-mirror" id="mirror-input-km"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Tipo de motor</p>
-                            <input class="input-info" value="4 tempos" disabled />
+                            <input class="input-info" value="4 tempos" id="input-tipo-motor" disabled />
+                            <p class="input-mirror" id="mirror-input-tipo-motor"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Cor</p>
-                            <input class="input-info" value="Preto-Laranja" disabled />
+                            <input class="input-info" value="Preto-Laranja" id="input-cor" disabled />
+                            <p class="input-mirror" id="mirror-input-cor"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Refrigeração</p>
-                            <input class="input-info" value="Líquida" disabled />
+                            <input class="input-info" value="Líquida" id="input-refrigeracao" disabled />
+                            <p class="input-mirror" id="mirror-input-refrigeracao"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Estilo</p>
-                            <input class="input-info" value="Esportiva" disabled />
+                            <input class="input-info" value="Esportiva" id="input-estilo" disabled />
+                            <p class="input-mirror" id="mirror-input-estilo"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Cilindrada</p>
-                            <input class="input-info" value="1000" disabled />
+                            <input class="input-info" value="1000" id="input-cilindrada" disabled />
+                            <p class="input-mirror" id="mirror-input-cilindrada"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Partida</p>
-                            <input class="input-info" value="Elétrica" disabled />
+                            <input class="input-info" value="Elétrica" id="input-partida" disabled />
+                            <p class="input-mirror" id="mirror-input-partida"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Freio dianteiro/traseiro</p>
-                            <input class="input-info" value="disco/disco" disabled />
+                            <input class="input-info" value="disco/disco" id="input-freio" disabled />
+                            <p class="input-mirror" id="mirror-input-freio"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Alimentação</p>
-                            <input class="input-info" value="Injeção eletrônica" disabled />
+                            <input class="input-info" value="Injeção eletrônica" id="input-alimentacao" disabled />
+                            <p class="input-mirror" id="mirror-input-alimentacao"></p>
                         </li>
 
                         <li>
                             <p class="itemcss-title">Final da Placa</p>
-                            <input class="input-info" value="6" disabled />
+                            <input class="input-info" value="6" disabled id="input-placa" />
+                            <p class="input-mirror" id="input-placa"></p>
                         </li>
-                    </ul>
+                    </form>
                 </div>
                 <div class="div-content-vendas-pai">
                     <div class="div-content-venda-filho">
-                        <h3>
-                            R$ 21.900
-                        </h3>
+                        <div class="div-preco">
+                            <p>R$</p>
+                            <input class="input-info" type="text" value="94.000" id="input-preco-venda">
+                            <p class="input-mirror" id="mirror-input-preco-venda"></p>
+                        </div>
 
-                        <p>
-                            Gostou do veículo? Reserve já!
-                        </p>
+                        <p class="mensagem" id="mensagem-user">Gostou do veículo? Reserve já!</p>
+                        <p class="mensagem" id="mensagem-adm">Editou seu anúncio? Salve suas alterações!</p>
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
                             <button class="salvar-btn">
@@ -175,7 +198,7 @@
                     </div>
                     <div class="div-content-venda-filho2">
                         <div class="circleLogo">
-                            <img src="assets/img/ford.png" alt="Ford Logo">
+                            <img src="assets/img/bmw.png" alt="Ford Logo">
                         </div>
                     </div>
                 </div>
