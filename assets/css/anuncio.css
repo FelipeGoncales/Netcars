@@ -193,7 +193,7 @@ main {
 }
 
 .container{
-    width: 100vw;
+    width: 100%;
 }
 
 .div-buttons {
@@ -273,8 +273,8 @@ main {
     cursor: pointer;
 }   
 
-.owl-next{
-    font-size: 30px;
+.owl-carousel {
+    width: 100%;
 }
 
 .circleLogo:hover{
