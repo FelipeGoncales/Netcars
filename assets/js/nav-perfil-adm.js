@@ -1,4 +1,15 @@
-let isValidCPF_CNPJ = false; 
+// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+
+const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+const tipoUser = dadosUser.tipo_usuario;
+
+if (tipoUser === 2) {
+    window.location.href = 'vendedor-perfil.html';
+}
+if (tipoUser === 3) {
+    window.location.href = 'cliente-perfil.html';
+}
 
 // Fazer o nav funcionar
 

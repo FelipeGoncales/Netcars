@@ -272,7 +272,6 @@ main {
                     transition: 0.2s;
                     &:hover {
                         background-color: var(--hover-roxo);
-                        text-decoration: underline;
                     }
                 }
             }
@@ -336,12 +335,17 @@ main {
             color: var(--cor-titles);
             font-weight: 400;
         } & button{
-            background: var(--cor-texto);
+            background: var(--roxo);
             color: var(--cor-bg-sec);
             padding: 12px;
+            font-weight: 40000;
             border-radius: 10px;
             border: none;
             cursor: pointer;
+            transition: 0.2s;
+            &:hover {
+                background-color: var(--hover-roxo);
+            }
         }& .container-info-card{
             color: var(--cor-titles);
             display: flex;

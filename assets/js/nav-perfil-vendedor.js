@@ -1,14 +1,42 @@
+// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
-let isValidCPF_CNPJ = false; 
+const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+const tipoUser = dadosUser.tipo_usuario;
+
+if (tipoUser === 1) {
+    window.location.href = 'administrador-perfil.html';
+}
+if (tipoUser === 3) {
+    window.location.href = 'cliente-perfil.html';
+}
 
 // Fazer o nav funcionar
-$(document).ready(function() {
-    $('#conteudo').load('com-Vendedor/minha-conta.html');
 
+// Função para trocar a borda roxa do A que for clicado
+function selecionarA(clicado) {
+    $('nav').find('a').each(function(_, a) {
+        if (a !== clicado) {
+            $(a).removeClass('selecionado')
+        } else {
+            $(a).addClass('selecionado')
+        }
+    })
+}
+
+$(document).ready(function() {
     $("#link_minhaConta").on("click", function() {
-        $('#conteudo').load('com-Vendedor/minha-conta.html');
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#minha-conta').css('display', 'flex');
+        $('#anuncios').css('display', 'none');
     })
     $("#link_anuncios").on("click", function() {
-        $('#conteudo').load('com-Vendedor/anuncios.html');
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#minha-conta').css('display', 'none');
+        $('#anuncios').css('display', 'flex');
     })
 });

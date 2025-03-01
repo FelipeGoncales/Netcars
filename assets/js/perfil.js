@@ -1,3 +1,5 @@
+let isValidCPF_CNPJ = false; 
+
 // Função para preencher as informações nos inputs ao entrar na página
 
 $(document).ready(function() {
