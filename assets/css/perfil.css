@@ -404,7 +404,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* END DIVS ADMINISTRADOR */
 
-
 #divAlertMessage {
     display: none;
     justify-content: center;
@@ -427,15 +426,12 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* Footer */
 footer {
-    position: relative;
-    z-index: 9999;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     margin-top: 80px;
-
     & .div-contato {
         background-color: var(--roxo);
         padding: 40px 0;
@@ -444,34 +440,34 @@ footer {
         justify-content: center;
         gap: 100px;
         width: inherit;
-
         & div {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            gap: 15px;
-
+            gap: 5px;
             & .footer-title {
                 color: var(--cor-bg-sec);
                 font-weight: 600;
             }
-
             & .footer-text {
                 color: var(--cor-bg-sec);
                 font-weight: 300;
                 font-size: 0.85rem;
                 cursor: pointer;
+                transition: 0.1s;
+                padding: 10px 0;
+                &:hover {
+                    text-decoration: underline;
+                }
             }
         }
     }
-
     & .div-logo {
         padding: 15px 0;
         background-color: var(--cor-bg-sec);
         width: inherit;
     }
-
     & .div-direitos-reservados {
         padding: 10px 0;
         width: inherit;
@@ -480,21 +476,95 @@ footer {
         align-items: center;
         justify-content: center;
         text-align: center;
-
         & p {
             color: var(--cor-bg-sec);
             font-size: 0.85rem;
         }
-
         & .net {
             color: var(--roxo);
             font-family: "Racing Sans One", serif;
 
         }
-
         & .cars {
             color: var(--cor-bg-sec);
             font-family: "Racing Sans One", serif;
         }
     }
 }
+/* Fim do Footer */
+
+/* Responsivo Header - Footer */
+
+@media (max-width: 768px) {
+    header {
+        & .sanduiche {
+            display: flex;
+        }
+    }
+
+    .div-logo.hidden {
+        display: flex;
+    }
+
+    #barra-lateral {
+        display: none;
+        position: fixed;
+        width: 230px;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        flex-direction: column-reverse;
+        z-index: 999;
+        justify-content: center;
+        gap: 40px;
+        & nav {
+            position: static;
+            top: 0;
+            left: 0;
+            transform: none;
+            & ul {
+                padding-left: 24px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+                & a {
+                    padding: 15px 0;
+                }
+                & li {
+                    padding: 0;
+                }
+            }
+        }
+        &  #fecharBarraLateral {
+            display: flex;
+        }
+        & .div-logo {
+            scale: 0.8;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    * {
+        font-size: 14px;
+    }
+
+    header {
+        height: 64px;
+        padding: 12px 25px;
+    }
+
+    footer {
+        & .div-contato {
+            align-items: center;
+            gap: 50px;
+            flex-direction: column;
+            & div {
+                align-items: center;
+            }
+        }
+    }
+}
+
+/* Fim do responsivo */

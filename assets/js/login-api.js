@@ -30,6 +30,18 @@ if (mensagem) {
     }
 }
 
+// Função para mostrar senha quando clicar no olho
+
+$('#mostrarSenha').click(function() {
+    if ($('#input-senha').attr('type') === 'password') {
+        $('#mostrarSenha').removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho
+        $('#input-senha').attr('type', 'text') // Trocando o tipo de input
+    } else {
+        $('#mostrarSenha').removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
+        $('#input-senha').attr('type', 'password') // Trocando o tipo de input
+    }
+})
+
 
 // Rota para cadastrar clientes
 

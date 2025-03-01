@@ -31,15 +31,16 @@
             <a class="fechar" href="index.html">&times;</a>
             <div class="div-input">
                 <label for="input">Nome completo</label>
-                <input class="input" name="nome_completo" type="text"/>
+                <input class="input" name="nome_completo" type="text" required/>
             </div>
             <div class="div-input">
                 <label for="input">Email</label>
-                <input class="input" name="email" type="text"/>
+                <input class="input" name="email" type="text" required/>
             </div>
             <div class="div-input">
                 <label for="input">Senha</label>
-                <input class="input" name="senha_hash" type="password"/>
+                <input name="senha_hash" type="password" id="input-senha" required/>
+                <i class="fa-solid fa-eye-slash" id="mostrarSenha"></i>
             </div>
             <div class="divButtonSubmit">
                 <button class="btn-acao" type="submit">Criar conta</button>
