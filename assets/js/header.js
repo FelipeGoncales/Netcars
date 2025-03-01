@@ -79,18 +79,26 @@ $(document).ready(function() {
             }
         });
 
-        const divEntrar = $('#divEntrar');
+        const aDivEntrar = $('#aDivEntrar');
 
-        divEntrar.click(() => {
-            const displayModal = modalLogin.css('display');
+        aDivEntrar.click(function(e) {
+            if ($(window).width() <= 768) {
+                aDivEntrar.attr('href', 'login.html');
+                return;
+            } else {
+                // Evitar o recarregamento da página
+                e.preventDefault();
+                
+                const displayModal = modalLogin.css('display');
 
-            if (displayModal === 'flex') {
-                modalLogin.css('display', 'none');
+                if (displayModal === 'flex') {
+                    modalLogin.css('display', 'none');
+                }
+
+                if (displayModal === 'none') {
+                    modalLogin.css('display', 'flex');
+                }
             }
-
-            if (displayModal === 'none') {
-                modalLogin.css('display', 'flex');
-            }
-        });
+        })
     }
 })
