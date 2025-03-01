@@ -253,7 +253,7 @@ $("#formEditarUsuario").on("submit", function(e) {
 
     $.ajax({
         method: "put",
-        url: `http://192.168.1.4:5000/user/${id}`,
+        url: `https://netcars-api-render.onrender.com/user/${id}`,
         data: editar,
         contentType: "application/json",
         success: function(response) {
