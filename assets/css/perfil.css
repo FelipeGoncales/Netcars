@@ -81,6 +81,7 @@ header {
     span {
         font-size: 2rem;
         font-family: "Racing Sans One", serif;
+        color: var(--cor-texto);
 
     }
     & span {
