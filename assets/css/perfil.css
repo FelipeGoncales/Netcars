@@ -407,6 +407,8 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 #divAlertMessage {
     display: none;
+    justify-content: center;
+    align-items: flex-end;
     position: fixed;
     z-index: 9999999;
     top: 30px;

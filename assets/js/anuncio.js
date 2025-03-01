@@ -29,10 +29,15 @@ $(document).ready(function () {
         $('#div-button-vendedor').css('display', 'none');
         $('#div-button-cliente').css('display', 'flex');
 
+        // Função para mudar a frase que aparece caso seja cliente ou usuário
+        $('#mensagem-user').css('display', 'flex');
+        $('#mensagem-adm').css('display', 'none');
+
         $('#editarAnuncio').css('display', 'none');
     }
 })
 
+// Função para pegar a informação dos inputs e colocar no espelho logo ao carregar o site
 $('input').each(function () {
     const id = $(this).attr('id');
     const spanMirror = $(`#mirror-${id}`)
@@ -43,8 +48,28 @@ $('input').each(function () {
 )
 
 // Funções para editar
+
+// Função de exibir alerta para evitar repetir código
+function alertMessage(text, type) {
+    $('#divAlertMessage').css('display', 'flex')
+
+    let bgColor = type === 'success' ? '#0bd979' : '#f71445';
+
+    $('<p>')
+        .addClass('alertMessage')
+        .text(text)
+        .css('background-color', bgColor)
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+}
+
+// Variável para saber se a edição está ativa ou não
 let editarOn = false;
 
+// Lógica do botão da caneta de editar
 $('#editarAnuncio').click(function () {
     if (editarOn === false) {
         editarOn = true;
@@ -58,6 +83,8 @@ $('#editarAnuncio').click(function () {
         })
     } else {
         editarOn = false;
+
+        alertMessage('Alterações salvas com sucesso!', 'success');
 
 
         // Lógica para salvar no banco
@@ -73,9 +100,12 @@ $('#editarAnuncio').click(function () {
     }
 });
 
+// Lógica do botão salvar alterações
 $('#salvar-alteracoes').click(function () {
     if (editarOn === true) {
         editarOn = false;
+
+        alertMessage('Alterações salvas com sucesso!', 'success');
 
 
         // Lógica para salvar no banco

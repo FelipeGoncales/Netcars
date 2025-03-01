@@ -1,52 +1,39 @@
+// Função de exibir a mensagem para evitar repetir código
+function alertMessage(text, type) {
+    $('#divAlertMessage').css('display', 'flex')
+
+    let bgColor = type === 'success' ? '#0bd979' : '#f71445';
+
+    $('<p>')
+        .addClass('alertMessage')
+        .text(text)
+        .css('background-color', bgColor)
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+
+        // Limpar o local storage para evitar que a mensagem de novo ao recarregar a página
+        localStorage.clear();
+}
+
 // Função para exibir mensagem (se existir) logo ao abrir a página
-
-
-
 const mensagem = JSON.parse(localStorage.getItem('mensagem'));
 
 if (mensagem) {
-    console.log(mensagem)
     if (mensagem.error) {
-        $('#divAlertMessage').css('display', 'flex')
-
-        $('<p>')
-        .addClass('alertMessage')
-        .text(mensagem.error)
-        .css({
-            'background-color': '#f71445'
-        })
-        .appendTo('#divAlertMessage')
-        .hide()
-        .fadeIn(400)
-        .delay(3500)
-        .fadeOut(400);
-
-        localStorage.clear();
+        alertMessage(mensagem.error, 'error');
     }
-    
     if (mensagem.success) {
-        $('#divAlertMessage').css('display', 'flex')
-
-        $('<p>')
-        .addClass('alertMessage')
-        .text(mensagem.success)
-        .css({
-            'background-color': '#0bd979'
-        })
-        .appendTo('#divAlertMessage')
-        .hide()
-        .fadeIn(400)
-        .delay(3500)
-        .fadeOut(400);
-
-        localStorage.clear();
+        alertMessage(mensagem.success, 'success');
     }
 }
 
 
 // Rota para cadastrar clientes
 
-$("#formCadastroUsuario").on("submit", function(e) {
+$("#formCadastroUsuario").on("submit", function (e) {
     e.preventDefault();
 
     let dados = new FormData(this);
@@ -62,10 +49,10 @@ $("#formCadastroUsuario").on("submit", function(e) {
 
     $.ajax({
         method: "post",
-        url: "https://netcars-api-render.onrender.com/user",
+        url: "https://netcars-api-render.onrender.com/user", // URL da API na Web
         data: envia,
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
             let dados = {
                 id_usuario: response.dados.id_usuario,
                 email: response.dados.email,
@@ -75,7 +62,7 @@ $("#formCadastroUsuario").on("submit", function(e) {
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
         },
-        error: function(response) {
+        error: function (response) {
             $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
         }
     })
@@ -83,7 +70,7 @@ $("#formCadastroUsuario").on("submit", function(e) {
 
 // Rota para fazer login
 
-$("#formLoginUsuario").on('submit', function(e) {
+$("#formLoginUsuario").on('submit', function (e) {
     e.preventDefault();
 
     let dados = new FormData(this);
@@ -97,10 +84,10 @@ $("#formLoginUsuario").on('submit', function(e) {
 
     $.ajax({
         method: "post",
-        url: "https://netcars-api-render.onrender.com/login",
+        url: "https://netcars-api-render.onrender.com/login", // URL da API na Web
         data: envia,
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
             let dados = {
                 id_usuario: response.dados.id_usuario,
                 email: response.dados.email,
@@ -113,7 +100,7 @@ $("#formLoginUsuario").on('submit', function(e) {
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
         },
-        error: function(response) {
+        error: function (response) {
             console.log(response)
             $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
         }

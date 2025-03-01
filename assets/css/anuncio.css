@@ -171,6 +171,26 @@ main {
     gap: 20px;
 }
 
+/* Mensagens de alerta */
+
+#divAlertMessage {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 30px;
+    right: 30px;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.alertMessage {
+    padding: 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+}
+
 .div-pai-banner-venda {
     display: flex;
     flex-direction: column;
