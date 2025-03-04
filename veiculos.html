@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
+    
+    <!-- Scripts das funções essenciais do Header -->
+    <script src="assets/js/header.js" defer></script>
+    <!-- CSS do Footer, Header e Responsivo de ambos  -->
+    <link rel="stylesheet" href="assets/css/header-footer.css">
+
+    <link rel="stylesheet" href="assets/css/veiculos.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>NetCars - Veículos</title>
+    <link rel="icon" href="assets/img/logo-icon-navegador.png">
+    <!-- Script específico da página -->
+    <script src="assets/js/veiculos.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <a href="index.html">
+            <div class="div-logo hidden">
+                <img src="assets/img/logo.png" alt="Logo Netcars">
+                <p><span>NET</span>CARS</p>
+            </div>
+        </a>
+        <div class="sanduiche" id="sanduicheHeader">
+            <div class="linha1"></div>
+            <div class="linha2"></div>
+            <div class="linha3"></div>
+        </div>
+
+        <div id="barra-lateral">
+            <a href="index.html">
+                <div class="div-logo">
+                    <img src="assets/img/logo.png" alt="Logo Netcars">
+                    <p><span>NET</span>CARS</p>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li id="nav-veiculos"><a href="">Veículos</a></li>
+                    <li><a href="#footer">Contato</a></li>
+                </ul>
+            </nav>
+            <a href="" id="aDivEntrar">
+                <div class="div-usuario" id="divEntrar">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p id="nomeUsuario">Entrar</p>
+                </div>
+            </a>
+            <p id="fecharBarraLateral">&times;</p>
+        </div>
+        <div class="overlay-bg" id="overlay-bg"></div>
+    </header>
+
+    <main>
+        <section class="sec-filtro">
+            <div class="div-fluxo-filtro">
+                <a href="index.html">Home</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="">Carros</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="">SP</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="" class="active">Birigui</a>
+            </div>
+            <h2>Carros semi-novos e usados</h2>
+            <div class="div-pai-filtro">
+                <div class="div-filtro-title">
+                    <div class="div-filtro-aplic">
+                        <h2>Filtros aplicados</h2>
+                        <p id="num-filtros-aplic">1</p>
+                    </div>
+                    <p id="limpar-filtros">Limpar filtros</p>
+                    <div class="filtros-aplic">
+                        <div class="filtro">
+                            <p>São Paulo</p>
+                            <i class="fa-solid fa-x"></i>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+                
+                    <div class="div-tipo-veic">
+                        <div class="active" id="tipo-veic-carro">
+                            <i class="fa-solid fa-car"></i>
+                            <p>Carros</p>
+                        </div>
+                        <div id="tipo-veic-moto">
+                            <i class="fa-solid fa-motorcycle"></i>
+                            <p>Motos</p>
+                        </div>
+                        <div id="tipo-veic-bg-selecionado"></div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+
+                </div>
+            </div>
+        </section>
+        <section class="sec-veiculos">
+            <p>asdas</p>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div class="div-contato">
+            <div>
+                <p class="footer-title">Cidades</p>
+                <a class="footer-text">Birigui - SP</a>
+                <a class="footer-text">Araçatuba - SP</a>
+            </div>
+            <div>
+                <p class="footer-title">Comprar</p>
+                <a class="footer-text">Carros usados</a>
+                <a class="footer-text">Motos usadas</a>
+                <a class="footer-text">Todos</a>
+            </div>
+            <div>
+                <p class="footer-title">Contato</p>
+                <a class="footer-text">(18) 99999-9999</a>
+                <a class="footer-text">contato@netcars.com</a>
+            </div>
+        </div>
+        <div class="div-logo">
+            <img src="assets/img/logo.png" alt="Logo Netcars">
+            <p><span>NET</span>CARS</p>
+        </div>
+        <div class="div-direitos-reservados">
+            <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modais -->
+    <!-- Talvez os modais não serão necessários para todas as páginas -->
+    <div id="modal-nav-veiculos">
+        <div>
+            <i class="fa-solid fa-car"></i>
+            <p>Comprar carros</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-motorcycle"></i>
+            <p>Comprar motos</p>
+        </div>
+    </div>
+
+    <div id="modal-login">
+        <p class="title">Faça login para uma experiência
+            ainda melhor! ;D</p>
+        <a href="login.html" class="btn-login">Fazer login</a>
+        <p class="subtitle">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+        <p id="closeModalLogin">&times;</p>
+    </div>
+</body>
+
+</html>

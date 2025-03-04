@@ -38,6 +38,9 @@ $(document).ready(function () {
 })
 
 // Função para pegar a informação dos inputs e colocar no espelho logo ao carregar o site
+
+// Antes disso deve vir a função de inserir a informações da API para os inputs
+
 $('input').each(function () {
     const id = $(this).attr('id');
     const spanMirror = $(`#mirror-${id}`)
@@ -120,3 +123,9 @@ $('#salvar-alteracoes').click(function () {
         })
     }
 });
+
+// Função para aparecer tela de confirmação
+
+// $('#reservar-btn').click(function() {
+
+// })
