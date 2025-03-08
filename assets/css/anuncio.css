@@ -37,7 +37,7 @@
     gap: 10px;
 }
 
-.vehicleTitle, #mirror-input-marca, #mirror-input-modelo-title{
+.vehicleTitle, #mirror-input-marca, #mirror-input-modelo{
     background-color: transparent;
     border: none;
     font-size: 35px;

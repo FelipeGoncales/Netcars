@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/adicionar_veiculo.css">
+    <link rel="stylesheet" href="assets/css/adicionar-veiculo.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
 
-     <!-- Scripts das funções essenciais do Header -->
-     <script src="assets/js/header.js" defer></script>
-     <!-- CSS do Footer, Header e Responsivo de ambos  -->
-     <link rel="stylesheet" href="assets/css/header-footer.css">
-     
+    <!-- Scripts das funções essenciais do Header -->
+    <script src="assets/js/header.js" defer></script>
+    <!-- CSS do Footer, Header e Responsivo de ambos  -->
+    <link rel="stylesheet" href="assets/css/header-footer.css">
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <title>NetCars - Adicionar veículo</title>
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="assets/script/add-veic.js"></script>
+    <script src="assets/js/add-veic.js" defer></script>
 </head>
 
 <body>
@@ -58,218 +61,208 @@
         <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
-        <div class="container-branco" id="fase-1">
-            <p class="titulo">Preencha a placa do veículo</p>
-            <div class="placa">
-                <div class="div-azul">
-                    <div class="logo-brazil"></div>
-                </div>
-                <input type="text" name="" id="" placeholder="ABC1D23" maxlength="7">
-                <div class="linha"></div>
-            </div>
-            <div class="aviso">
-                <div class="escudo-aviso"></div>
-                <p class="texto-aviso">Não vamos divulgar sua placa! Ela será usada apenas para completar seu anúncio e realizar verificações de segurança.</p>
-            </div>
-            <button class="voltar"><i class="fa-solid fa-arrow-left"></i>Voltar</button>
-            <div class="continuar">
-                <p>Continuar</p>
-                <i class="fa-solid fa-arrow-right"></i>   
-            </div>
-        </div>
+        <form action="" id="form-add-veic">
+            <div class="container-branco">
 
-        <div class="container-branco" id="fase-2">
-            <p class="titulo2">Selecione o tipo de veículo</p>
-            <div class="veiculo">
-                <div class="icon-veiculo">
-                    <img src="assets/img/image26.svg" alt="">
-                </div>
-                <p>Moto</p>
-            </div>
-            <div class="veiculo">
-                <div class="icon-veiculo">
-                    <img src="assets/img/image25.svg" alt="">
-                </div>
-                <p>Carro</p>
-            </div>
-            <button class="voltar"><i class="fa-solid fa-arrow-left"></i>Voltar</button>
-            <div class="continuar">
-                <p>Continuar</p>
-                <i class="fa-solid fa-arrow-right"></i>   
-            </div>
-        </div>
-        
-        <div class="container-branco" id="fase-3">
-            <p class="titulo3">Preencha os dados do veículo</p>
-            <form action="">
-                <div class="div-input">
-                    <label for="marca">Marca</label>
-                    <select id="marca" name="marca">
-                        <option value=""></option>
-                        <option value="chevrolet">Chevrolet</option>
-                        <option value="ford">Ford</option>
-                        <option value="fiat">Fiat</option>
-                    </select>
-                </div>
-            
-                <div class="div-input">
-                    <label for="modelo">Modelo</label>
-                    <select id="modelo" name="modelo">
-                        <option value=""></option>
-                        <option value="onix">Onix</option>
-                        <option value="fiesta">Fiesta</option>
-                        <option value="uno">Uno</option>
-                    </select>
-                </div>
-        
-                <div class="container-2labels">
-                    <div class="div-input">
-                      <label for="ano-modelo">Ano do modelo</label>
-                      <input id="ano-modelo" name="ano-modelo" type="number" placeholder="" />
+                <!-- Fase 1 -->
+                <div id="fase-1">
+                    <p class="titulo">Preencha a placa do veículo</p>
+                    <div class="placa">
+                        <div class="div-azul">
+                            <div class="logo-brazil"></div>
+                        </div>
+                        <input type="text" name="" id="placa" placeholder="ABC1D23" maxlength="7">
+                        <div class="linha"></div>
                     </div>
-                  
-                    <div class="div-input">
-                      <label for="ano-fabricacao">Ano de fabricação</label>
-                      <input id="ano-fabricacao" name="ano-fabricacao" type="number" placeholder="" />
-                    </div>
-                  </div>
-        
-                <div class="div-input">
-                    <label for="versao">Versão</label>
-                    <input id="versao" name="versao" type="text" placeholder="" />
-                </div>
-        
-                <div class="container-2labels">
-                    <div class="div-input">
-                        <label for="cor">Cor</label>
-                        <input id="cor" name="cor" type="text" placeholder="" />
-                    </div>
-                
-                    <div class="div-input">
-                        <label for="renavam">Renavam</label>
-                        <input id="renavam" name="renavam" type="number" placeholder="" />
-                    </div>
-                </div>
-            </form>
-            
-            <button class="voltar">
-                <i class="fa-solid fa-arrow-left"></i>Voltar
-            </button>
-            <div class="continuar">
-                <p>Continuar</p>
-                <i class="fa-solid fa-arrow-right"></i>
-            </div>
-        </div>
-
-        <div class="container-branco" id="fase-4">
-            <p class="titulo3">Complemente as informações do seu veículo</p>
-            <form action="">
-        
-                <div class="container-2labels">
-                    <div class="div-input">
-                        <label for="cambio">Câmbio*</label>
-                        <select id="cambio" name="cambio">
-                            <option value=""></option>
-                            <option value="manual">Câmbio Manual</option>
-                            <option value="automatico">Câmbio Automático</option>
-                            <option value="sequen">Câmbio Sequencial</option>
-                            <option value="cvt">Câmbio CVT (Transmissão Variável Contínua)</option>
-                            <option value="dupla">Câmbio Dupla Embreagem</option>
-                        </select>
-                    </div>
-                
-                    <div class="div-input">
-                        <label for="combustivel">Combustível*</label>
-                        <select id="combustivel" name="combustivel">
-                            <option value=""></option>
-                            <option value="gasolina">Gasolina</option>
-                            <option value="etanol">Etanol</option>
-                            <option value="diesel">Diesel</option>
-                            <option value="gnv">GNV (Gás Natural Veicular)</option>
-                            <option value="eletrico">Elétrico</option>
-                            <option value="hibrido">Híbrido</option>
-                        </select>                        
-                    </div>
-                </div>
-                <div class="container-2labels">
-                    <div class="div-input">
-                        <label for="categoria">Categoria*</label>
-                        <select id="categoria" name="categoria">
-                            <option value=""></option>
-                            <option value="suv">SUV (Veículo Utilitário Esportivo)</option>
-                            <option value="sedan">Sedã</option>
-                            <option value="hatch">Hatchback</option>
-                            <option value="picape">Picape</option>
-                            <option value="crossover">Crossover</option>
-                            <option value="minivan">Minivan</option>
-                            <option value="esportivo">Esportivo</option>
-                            <option value="luxo">Luxo</option>
-                            <option value="compacto">Compacto</option>
-                            <option value="elétrico">Elétrico</option>
-                            <option value="híbrido">Híbrido</option>
-                        </select>
-                    </div>
-                
-                    <div class="div-input">
-                        <label for="quilometragem">Quilometragem*</label>
-                        <input id="quilometragem" name="quilometragem" type="number" placeholder="" />
-                    </div>
-                </div>
-                        
-                <div class="container-2labels">
-                    <div class="div-input">
-                        <label for="estado">Estado*</label>
-                        <select id="estado" name="estado">
-                            <option value=""></option>
-                        </select>
-                    </div>
-                
-                    <div class="div-input">
-                        <label for="cidade">Cidade*</label>
-                        <select id="cidade" name="cidade" disabled></select>
+                    <div class="aviso">
+                        <i class="fa-solid fa-shield-halved escudo-aviso"></i>
+                        <p class="texto-aviso">Não vamos divulgar sua placa! Ela será usada apenas para completar seu
+                            anúncio e realizar verificações de segurança.</p>
                     </div>
                 </div>
 
-                <div class="container-2labels">
-                    <div class="div-input">
-                        <label for="preco_c">Preço de Compra*</label>
-                        <input id="preco_c" name="preco_c" type="number" placeholder="" />
+                <!-- Fase 2 -->
+                <div id="fase-2">
+                    <p class="titulo2">Selecione o tipo de veículo</p>
+                    <div class="veiculo active" id="tipo-carro">
+                        <div class="icon-veiculo">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <p>Carro</p>
                     </div>
-                
-                    <div class="div-input">
-                        <label for="preco_v">Preço de Venda*</label>
-                        <input id="preco_v" name="preco_v" type="number" placeholder="" />
+                    <div class="veiculo" id="tipo-moto">
+                        <div class="icon-veiculo">
+                            <i class="fa-solid fa-motorcycle"></i>
+                        </div>
+                        <p>Moto</p>
                     </div>
                 </div>
-            </form>
-            
-            <button class="voltar">
-                <i class="fa-solid fa-arrow-left"></i>Voltar
-            </button>
-            <div class="continuar">
-                <p>Continuar</p>
-                <i class="fa-solid fa-arrow-right"></i>
-            </div>
-        </div>
 
-        <div class="container-branco" id="fase-5">
-            <p class="titulo2">Por fim, insira as imagens do veículo</p>
-            <p class="subtitulo">Insira no mínimo 3 fotos</p>
-            
-            <!-- Input de upload de imagem -->
-            <label for="upload-imagem" class="upload-label">
-                <img id="preview-imagem" src="assets/img/image29.svg" alt="Clique para adicionar uma imagem">
-            </label>
-            <input type="file" id="upload-imagem" accept="image/*" multiple>
-        
-            <button class="voltar"><i class="fa-solid fa-arrow-left"></i>Voltar</button>
-            <div class="continuar">
-                <p>Continuar</p>
-                <i class="fa-solid fa-arrow-right"></i>   
+                <!-- Fase 3 -->
+                <div id="fase-3">
+                    <p class="titulo3">Preencha os dados do veículo</p>
+                    <div class="pai-div-input">
+                        <div class="div-input">
+                            <label for="marca">Marca</label>
+                            <select id="marca" name="marca">
+                                <option value=""></option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="ford">Ford</option>
+                                <option value="fiat">Fiat</option>
+                            </select>
+                        </div>
+
+                        <div class="div-input">
+                            <label for="modelo">Modelo</label>
+                            <select id="modelo" name="modelo">
+                                <option value=""></option>
+                                <option value="onix">Onix</option>
+                                <option value="fiesta">Fiesta</option>
+                                <option value="uno">Uno</option>
+                            </select>
+                        </div>
+
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="ano-modelo">Ano do modelo</label>
+                                <input id="ano-modelo" name="ano-modelo" type="number" placeholder="" />
+                            </div>
+
+                            <div class="div-input">
+                                <label for="ano-fabricacao">Ano de fabricação</label>
+                                <input id="ano-fabricacao" name="ano-fabricacao" type="number" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="div-input">
+                            <label for="versao">Versão</label>
+                            <input id="versao" name="versao" type="text" placeholder="" />
+                        </div>
+
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="cor">Cor</label>
+                                <input id="cor" name="cor" type="text" placeholder="" />
+                            </div>
+
+                            <div class="div-input">
+                                <label for="renavam">Renavam</label>
+                                <input id="renavam" name="renavam" type="number" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase 4 -->
+                <div id="fase-4">
+                    <p class="titulo3">Complemente as informações do seu veículo</p>
+                    <div class="pai-div-input">
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="cambio">Câmbio*</label>
+                                <select id="cambio" name="cambio">
+                                    <option value=""></option>
+                                    <option value="manual">Câmbio Manual</option>
+                                    <option value="automatico">Câmbio Automático</option>
+                                    <option value="sequen">Câmbio Sequencial</option>
+                                    <option value="cvt">Câmbio CVT (Transmissão Variável Contínua)</option>
+                                    <option value="dupla">Câmbio Dupla Embreagem</option>
+                                </select>
+                            </div>
+
+                            <div class="div-input">
+                                <label for="combustivel">Combustível*</label>
+                                <select id="combustivel" name="combustivel">
+                                    <option value=""></option>
+                                    <option value="gasolina">Gasolina</option>
+                                    <option value="etanol">Etanol</option>
+                                    <option value="diesel">Diesel</option>
+                                    <option value="gnv">GNV (Gás Natural Veicular)</option>
+                                    <option value="eletrico">Elétrico</option>
+                                    <option value="hibrido">Híbrido</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="categoria">Categoria*</label>
+                                <select id="categoria" name="categoria">
+                                    <option value=""></option>
+                                    <option value="suv">SUV (Veículo Utilitário Esportivo)</option>
+                                    <option value="sedan">Sedã</option>
+                                    <option value="hatch">Hatchback</option>
+                                    <option value="picape">Picape</option>
+                                    <option value="crossover">Crossover</option>
+                                    <option value="minivan">Minivan</option>
+                                    <option value="esportivo">Esportivo</option>
+                                    <option value="luxo">Luxo</option>
+                                    <option value="compacto">Compacto</option>
+                                    <option value="elétrico">Elétrico</option>
+                                    <option value="híbrido">Híbrido</option>
+                                </select>
+                            </div>
+
+                            <div class="div-input">
+                                <label for="quilometragem">Quilometragem*</label>
+                                <input id="quilometragem" name="quilometragem" type="number" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="estado">Estado*</label>
+                                <select id="estado" name="estado">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="div-input">
+                                <label for="cidade">Cidade*</label>
+                                <select id="cidade" name="cidade" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="preco_c">Preço de Compra*</label>
+                                <input id="preco_c" name="preco_c" type="number" placeholder="" />
+                            </div>
+
+                            <div class="div-input">
+                                <label for="preco_v">Preço de Venda*</label>
+                                <input id="preco_v" name="preco_v" type="number" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase 5 -->
+                <div id="fase-5">
+                    <p class="titulo2">Por fim, insira as imagens do veículo</p>
+                    <p class="subtitulo">Insira no mínimo 3 imagens</p>
+
+                    <!-- Input de upload de imagem -->
+                    <label for="upload-imagem" class="upload-label">
+                        <img id="preview-imagem" src="assets/img/image29.svg" alt="Clique para adicionar uma imagem">
+                    </label>
+                    <input type="file" id="upload-imagem" accept="image/*" name="files" multiple>
+
+                    <!-- Container onde as imagens serão exibidas -->
+                    <div class="div-preview-container-pai">
+                        <div id="preview-container"></div>
+                    </div>
+                </div>
+
+                <!-- Botões voltar e continuar -->
+                <button class="voltar" type="button" id="btn-voltar"><i class="fa-solid fa-arrow-left"></i>Voltar</button>
+                <button type="button" class="continuar" id="btn-continuar">
+                    <p>Continuar</p>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
             </div>
-        </div>
-        
-        
+        </form>
+
+        <div id="divAlertMessage"></div>
     </main>
 
     <footer id="footer">
@@ -299,6 +292,33 @@
             <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <!-- <script>
+        // Função JS para salvar as imagens no banco
+
+        // document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        //   e.preventDefault();
+        //   const input = document.getElementById('filesInput');
+        //   if (input.files.length < 3) {
+        //     alert('Selecione pelo menos 3 arquivos.');
+        //     return;
+        //   }
+        //   const formData = new FormData();
+        //   for (let i = 0; i < input.files.length; i++) {
+        //     formData.append('files', input.files[i]);
+        //   }
+        //   fetch('http://192.168.1.7:5000/upload', { // URL da sua API
+        //     method: 'POST',
+        //     body: formData
+        //   })
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     console.log('Pasta criada:', data.folder);
+        //     // Aqui você pode enviar o id ou caminho da pasta para onde precisar
+        //   })
+        //   .catch(error => console.error('Erro:', error));
+        // });
+    </script> -->
 </body>
 
 </html>
