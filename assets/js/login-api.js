@@ -61,7 +61,7 @@ $("#formCadastroUsuario").on("submit", function (e) {
 
     $.ajax({
         method: "post",
-        url: "https://netcars-api-render.onrender.com/user", // URL da API na Web
+        url: "http://192.168.1.7:5000/cadastro", // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
@@ -96,7 +96,7 @@ $("#formLoginUsuario").on('submit', function (e) {
 
     $.ajax({
         method: "post",
-        url: "https://netcars-api-render.onrender.com/login", // URL da API na Web
+        url: "http://192.168.1.7:5000/login", // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
