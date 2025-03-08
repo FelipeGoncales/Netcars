@@ -291,6 +291,20 @@ main {
                         z-index: 3;
                         padding: 0 3px;
                     }
+                    & i {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 22px;
+                        position: absolute;
+                        right: 20px;
+                        top: 54%;
+                        transform: translateY(-50%);
+                        cursor: pointer;
+                        z-index: 99;
+                        font-size: 1.1rem;
+                        color: var(--cor-texto-apagado);
+                    }
                 }
                 & label {
                     font-size: 0.9rem;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,14 @@
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
     <title>NetCars - Perfil</title>
     <!-- TERMINAR ( OLHAR O FIGMA) -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <!-- JS do NAV específico dessa página -->
-        <script src="assets/js/nav-perfil-cliente.js" defer></script>
-        <!-- Arquivo JS padrão para todas as páginas de perfil -->
-        <script src="assets/js/perfil.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- JS do NAV específico dessa página -->
+    <script src="assets/js/nav-perfil-cliente.js" defer></script>
+    <!-- Arquivo JS padrão para todas as páginas de perfil -->
+    <script src="assets/js/perfil-api.js" defer></script>
 </head>
+
 <body>
     <header>
         <a href="index.html" id="aDivLogo">
@@ -25,7 +28,7 @@
                 <h1>Minha Garagem</h1>
             </div>
         </a>
-        
+
         <div class="sanduiche" id="sanduicheHeader">
             <div class="linha1"></div>
             <div class="linha2"></div>
@@ -41,11 +44,11 @@
                 <a href=""><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
                 <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
                 <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
-                <a id="link_hCompras" ><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
+                <a id="link_hCompras"><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
             <p id="fecharBarraLateral">&times;</p>
-        </div> 
+        </div>
         <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
@@ -53,44 +56,47 @@
             <!-- Div Minha Conta -->
             <div class="container-minha-conta" id="minha-conta">
                 <div class="informacoes-usuario">
-                   <h3>Campos com  asteriscos ( * ) são obrigatórios </h3>
-                   <form action="" id="formEditarUsuario">
-                       <div class="container-input">
-                           <label class="text" for="input">E-mail*</label>
-                           <input class="input" required name="email" type="email" id="email_input"/>
-                       </div>
-                       <div class="container-input">
-                           <label class="text" for="input">Nome Completo*</label>
-                           <input class="input" required name="nome_completo" type="text" id="nome_completo_input"/>
-                       </div>
-                       <div class="container-input">
-                           <label class="text date" for="input">Data de nascimento*</label>
-                           <input class="input" required name="data_nascimento" type="date" id="data_nascimento_input"/>
-                       </div>
-                       <div class="container-input">
-                           <label class="text" for="input">CPF ou CNPJ*</label>
-                           <input class="input" required name="cpf_cnpj" type="text" id="cpf_cnpj_input"/>
-                       </div>
-                       <div class="container-input">
-                           <label class="text" for="input">Telefone*</label>
-                           <input class="input" required name="telefone" type="tel" id="telefone_input"/>
-                       </div>
-                       <h3>Atualizar senha</h3>
-                       <div class="container-input">
-                           <label class="text" for="input">Senha atual*</label>
-                           <input class="input" name="senha_hash" type="password"/>
-                       </div>
-                       <div class="container-input">
-                           <label class="text" for="input">Senha nova*</label>
-                           <input class="input" name="senha_nova" type="password"/>
-                       </div>
-                       <button type="submit">Atualizar os dados</button>
-                   </form>
-               </div>
+                    <h3>Campos com asteriscos ( * ) são obrigatórios </h3>
+                    <form action="" id="formEditarUsuario">
+                        <div class="container-input">
+                            <label class="text" for="input">E-mail*</label>
+                            <input class="input" required name="email" type="email" id="email_input" />
+                        </div>
+                        <div class="container-input">
+                            <label class="text" for="input">Nome Completo*</label>
+                            <input class="input" required name="nome_completo" type="text" id="nome_completo_input" />
+                        </div>
+                        <div class="container-input">
+                            <label class="text date" for="input">Data de nascimento*</label>
+                            <input class="input" required name="data_nascimento" type="date"
+                                id="data_nascimento_input" />
+                        </div>
+                        <div class="container-input">
+                            <label class="text" for="input">CPF ou CNPJ*</label>
+                            <input class="input" required name="cpf_cnpj" type="text" id="cpf_cnpj_input" />
+                        </div>
+                        <div class="container-input">
+                            <label class="text" for="input">Telefone*</label>
+                            <input class="input" required name="telefone" type="tel" id="telefone_input" />
+                        </div>
+                        <h3>Atualizar senha</h3>
+                        <div class="container-input">
+                            <label class="text" for="input">Senha atual*</label>
+                            <input class="input" name="senha_hash" type="password" id="input-senha-atual" />
+                            <i class="fa-solid fa-eye" id="mostrarSenhaAtual"></i>
+                        </div>
+                        <div class="container-input">
+                            <label class="text" for="input">Senha nova*</label>
+                            <input class="input" name="senha_nova" type="password" id="input-senha-nova" />
+                            <i class="fa-solid fa-eye" id="mostrarSenhaNova"></i>
+                        </div>
+                        <button type="submit">Atualizar os dados</button>
+                    </form>
+                </div>
             </div>
-            
-           <!-- Div Histórico de Compras -->
-           <div id="historico-compras">
+
+            <!-- Div Histórico de Compras -->
+            <div id="historico-compras">
                 <h3>Histórico de compras</h3>
                 <div class="div-carrossel">
                     <div class="conteudo">
@@ -102,9 +108,12 @@
                                 <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
                                 <div class="container-info-card">
                                     <div class="info-card">
-                                        <i class="fa-solid fa-calendar-days"></i><p>2012</p>
-                                        <i class="fa-solid fa-gauge-high"></i><p>128.763 Km</p>
-                                        <i class="fa-solid fa-location-dot"></i><p>Birigui (SP)</p>    
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <p>2012</p>
+                                        <i class="fa-solid fa-gauge-high"></i>
+                                        <p>128.763 Km</p>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <p>Birigui (SP)</p>
                                     </div>
                                 </div>
                                 <h3>R$21.900 </h3>
@@ -118,9 +127,12 @@
                                 <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
                                 <div class="container-info-card">
                                     <div class="info-card">
-                                        <i class="fa-solid fa-calendar-days"></i><p>2012</p>
-                                        <i class="fa-solid fa-gauge-high"></i><p>128.763 Km</p>
-                                        <i class="fa-solid fa-location-dot"></i><p>Birigui (SP)</p>    
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <p>2012</p>
+                                        <i class="fa-solid fa-gauge-high"></i>
+                                        <p>128.763 Km</p>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <p>Birigui (SP)</p>
                                     </div>
                                 </div>
                                 <h3>R$21.900 </h3>
@@ -145,9 +157,12 @@
                                 <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
                                 <div class="container-info-card">
                                     <div class="info-card">
-                                        <i class="fa-solid fa-calendar-days"></i><p>2012</p>
-                                        <i class="fa-solid fa-gauge-high"></i><p>128.763 Km</p>
-                                        <i class="fa-solid fa-location-dot"></i><p>Birigui (SP)</p>    
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <p>2012</p>
+                                        <i class="fa-solid fa-gauge-high"></i>
+                                        <p>128.763 Km</p>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <p>Birigui (SP)</p>
                                     </div>
                                 </div>
                                 <h3>R$21.900 </h3>
@@ -161,9 +176,12 @@
                                 <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
                                 <div class="container-info-card">
                                     <div class="info-card">
-                                        <i class="fa-solid fa-calendar-days"></i><p>2012</p>
-                                        <i class="fa-solid fa-gauge-high"></i><p>128.763 Km</p>
-                                        <i class="fa-solid fa-location-dot"></i><p>Birigui (SP)</p>    
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <p>2012</p>
+                                        <i class="fa-solid fa-gauge-high"></i>
+                                        <p>128.763 Km</p>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <p>Birigui (SP)</p>
                                     </div>
                                 </div>
                                 <h3>R$21.900 </h3>
@@ -178,7 +196,7 @@
         </section>
 
         <!-- Div Alert Message -->
-        <div id="divAlertMessage"></div>   
+        <div id="divAlertMessage"></div>
     </main>
     <footer id="footer">
         <div class="div-contato">
@@ -208,4 +226,5 @@
         </div>
     </footer>
 </body>
+
 </html>

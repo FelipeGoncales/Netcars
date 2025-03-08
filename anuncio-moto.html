@@ -137,9 +137,9 @@
                         </li>
 
                         <li>
-                            <p class="itemcss-title">Modelo</p>
-                            <input class="input-info" value="Esportiva" id="input-modelo" disabled />
-                            <p class="input-mirror" id="mirror-input-modelo"></p>
+                            <p class="itemcss-title">Categoria</p>
+                            <input class="input-info" value="Esportiva" id="input-categoria" disabled />
+                            <p class="input-mirror" id="mirror-input-categoria"></p>
                         </li>
 
                         <li>
@@ -169,7 +169,7 @@
                         <li>
                             <p class="itemcss-title">Final da Placa</p>
                             <input class="input-info" value="6" disabled id="input-placa" />
-                            <p class="input-mirror" id="input-placa"></p>
+                            <p class="input-mirror" id="mirror-input-placa"></p>
                         </li>
                     </form>
                 </div>
@@ -185,20 +185,16 @@
                         <p class="mensagem" id="mensagem-adm">Editou seu anúncio? Salve suas alterações!</p>
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
-                            <button class="salvar-btn">
-                                Salvar alterações
-                            </button>
+                            <button class="salvar-btn" id="salvar-alteracoes">Salvar alterações</button>
                             <i class="fa-solid fa-trash icon-trash"></i>
                         </div>
                         <div class="div-buttons cliente" id="div-button-cliente">
-                            <button class="salvar-btn">
-                                Reservar agora
-                            </button>
+                            <button class="salvar-btn" id="reservar-btn">Reservar agora</button>
                         </div>
                     </div>
                     <div class="div-content-venda-filho2">
                         <div class="circleLogo">
-                            <img src="assets/img/bmw.png" alt="Ford Logo">
+                            <img src="assets/img/ford.png" alt="Ford Logo">
                         </div>
                     </div>
                 </div>
@@ -262,6 +258,7 @@
             </div>
         </section>
 
+        <div id="divAlertMessage"></div>
     </main>
 
     <footer id="footer">

@@ -160,6 +160,23 @@ $("#cpf_cnpj_input").on("input", function(e) {
     }
 });
 
+
+// Função para mostrar senha quando clicar no olho
+function mostrarSenha(olho, input) {
+    if (input.attr('type') === 'password') {
+        olho.removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
+        input.attr('type', 'text') // Trocando o tipo de input
+    } else {
+        olho.removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho 
+        input.attr('type', 'password') // Trocando o tipo de input
+    }
+}
+
+// Adicionando a função ao ícone de olho no evento clique
+$('#mostrarSenhaAtual').click(() => mostrarSenha($('#mostrarSenhaAtual'), $('#input-senha-atual') ));
+$('#mostrarSenhaNova').click( () => mostrarSenha($('#mostrarSenhaNova'), $('#input-senha-nova') ));
+
+
 // Função unificada de formatação
 function formatarDocumento(value) {
     const numeros = value.replace(/\D/g, '');
@@ -313,7 +330,7 @@ $("#formEditarUsuario").on("submit", function(e) {
     // Rota para editar perfil
     $.ajax({
         method: "put",
-        url: `https://netcars-api-render.onrender.com/user/${id}`, // URL da API na Web
+        url: `http://192.168.1.7:5000/cadastro/${id}`, // URL da API na Web
         data: editar,
         contentType: "application/json",
         success: function(response) {
