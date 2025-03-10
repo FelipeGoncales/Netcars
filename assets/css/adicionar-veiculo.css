@@ -1,6 +1,7 @@
 /* Main */
 
 main {
+    margin-top: 16px;
     min-height: 100vh;
     display: flex;
     align-items: center;
