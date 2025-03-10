@@ -26,7 +26,7 @@ form {
 }
 
 #fase-2, #fase-3, #fase-4, #fase-5 {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -58,7 +58,8 @@ form {
 /* Classes universais para todas as etapas */
 .container-branco {
     width: 1434px;
-    height: 600px;
+    /* height: 600px; */
+    gap: 100px;
     border-radius: 12px;
     border: 1px solid #D0CFDA;
     background: #FFF;

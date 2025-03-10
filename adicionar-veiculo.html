@@ -153,14 +153,14 @@
                     </div>
                 </div>
 
-                <!-- Fase 4 -->
-                <div id="fase-4">
+                <!-- Fase 4 Carro-->
+                <div id="fase-4-carro">
                     <p class="titulo3">Complemente as informações do seu veículo</p>
                     <div class="pai-div-input">
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="cambio">Câmbio*</label>
-                                <select id="cambio" name="cambio">
+                                <select id="cambio" name="cambio-carro">
                                     <option value=""></option>
                                     <option value="manual">Câmbio Manual</option>
                                     <option value="automatico">Câmbio Automático</option>
@@ -172,7 +172,7 @@
 
                             <div class="div-input">
                                 <label for="combustivel">Combustível*</label>
-                                <select id="combustivel" name="combustivel">
+                                <select id="combustivel" name="combustivel-carro">
                                     <option value=""></option>
                                     <option value="gasolina">Gasolina</option>
                                     <option value="etanol">Etanol</option>
@@ -186,7 +186,7 @@
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="categoria">Categoria*</label>
-                                <select id="categoria" name="categoria">
+                                <select id="categoria" name="categoria-carro">
                                     <option value=""></option>
                                     <option value="suv">SUV (Veículo Utilitário Esportivo)</option>
                                     <option value="sedan">Sedã</option>
@@ -204,33 +204,110 @@
 
                             <div class="div-input">
                                 <label for="quilometragem">Quilometragem*</label>
-                                <input id="quilometragem" name="quilometragem" type="number" placeholder="" />
+                                <input id="quilometragem" name="quilometragem-carro" type="number" placeholder="" />
                             </div>
                         </div>
 
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="estado">Estado*</label>
-                                <select id="estado" name="estado">
+                                <select id="estado" name="estado-carro">
                                     <option value=""></option>
                                 </select>
                             </div>
 
                             <div class="div-input">
                                 <label for="cidade">Cidade*</label>
-                                <select id="cidade" name="cidade" disabled></select>
+                                <select id="cidade" name="cidade-carro" disabled></select>
                             </div>
                         </div>
 
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="preco_c">Preço de Compra*</label>
-                                <input id="preco_c" name="preco_c" type="number" placeholder="" />
+                                <input id="preco_c" name="preco_c-carro" type="number" placeholder="" />
                             </div>
 
                             <div class="div-input">
                                 <label for="preco_v">Preço de Venda*</label>
-                                <input id="preco_v" name="preco_v" type="number" placeholder="" />
+                                <input id="preco_v" name="preco_v-carro" type="number" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase 4 Moto-->
+                <div id="fase-4-moto">
+                    <p class="titulo3">Complemente as informações do seu veículo</p>
+                    <div class="pai-div-input">
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="marchas">Marchas*</label>
+                                <input id="marchas-moto" name="marchas-moto" type="number" placeholder="Informe a quantidade de marchas" />
+                                <select id="cambio" name="cambio-moto">
+                            </div>
+
+                            <div class="div-input">
+                                <label for="combustivel">Combustível*</label>
+                                <select id="combustivel" name="combustivel-moto">
+                                    <option value=""></option>
+                                    <option value="gasolina">Gasolina</option>
+                                    <option value="etanol">Etanol</option>
+                                    <option value="diesel">Diesel</option>
+                                    <option value="gnv">GNV (Gás Natural Veicular)</option>
+                                    <option value="eletrico">Elétrico</option>
+                                    <option value="hibrido">Híbrido</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="categoria">Categoria*</label>
+                                <select id="categoria" name="categoria-moto">
+                                    <option value=""></option>
+                                    <option value="suv">SUV (Veículo Utilitário Esportivo)</option>
+                                    <option value="sedan">Sedã</option>
+                                    <option value="hatch">Hatchback</option>
+                                    <option value="picape">Picape</option>
+                                    <option value="crossover">Crossover</option>
+                                    <option value="minivan">Minivan</option>
+                                    <option value="esportivo">Esportivo</option>
+                                    <option value="luxo">Luxo</option>
+                                    <option value="compacto">Compacto</option>
+                                    <option value="elétrico">Elétrico</option>
+                                    <option value="híbrido">Híbrido</option>
+                                </select>
+                            </div>
+
+                            <div class="div-input">
+                                <label for="quilometragem">Quilometragem*</label>
+                                <input id="quilometragem" name="quilometragem-moto" type="number" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="estado">Estado*</label>
+                                <select id="estado" name="estado-moto">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="div-input">
+                                <label for="cidade">Cidade*</label>
+                                <select id="cidade" name="cidade-moto" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="container-2labels">
+                            <div class="div-input">
+                                <label for="preco_c">Preço de Compra*</label>
+                                <input id="preco_c" name="preco_c-moto" type="number" placeholder="" />
+                            </div>
+
+                            <div class="div-input">
+                                <label for="preco_v">Preço de Venda*</label>
+                                <input id="preco_v" name="preco_v-moto" type="number" placeholder="" />
                             </div>
                         </div>
                     </div>
