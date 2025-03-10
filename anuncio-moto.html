@@ -79,6 +79,8 @@
                     <div> <img src="assets/img/bmwS1000RR/img7.jpg" alt="Imagem 7"> </div>
                     <div> <img src="assets/img/bmwS1000RR/img8.jpg" alt="Imagem 8"> </div>
                 </div>
+                <button id="nextSlide" class="botao-carrossel right"><i class="fa-solid fa-arrow-right"></i></button>
+                <button id="prevSlide" class="botao-carrossel left"><i class="fa-solid fa-arrow-left"></i></button>
             </div>
             <div class="div-contents-pai">
                 <div class="div-content-venda">
@@ -312,16 +314,26 @@
 
     <!-- Script de inicialização -->
     <script>
-        $(document).ready(function () {
-            $('.owl-carousel').owlCarousel({
+       document.addEventListener("DOMContentLoaded", function () {
+            var owl = $(".owl-carousel");
+
+            owl.owlCarousel({
                 loop: false,
-                margin: 10,
                 nav: false,
+                margin: 10,
                 responsive: {
                     0: { items: 1 },
                     600: { items: 2 },
                     1000: { items: 3 }
                 }
+            });
+
+            document.getElementById("nextSlide").addEventListener("click", function () {
+                owl.trigger("next.owl.carousel");
+            });
+
+            document.getElementById("prevSlide").addEventListener("click", function () {
+                owl.trigger("prev.owl.carousel");
             });
         });
     </script>
