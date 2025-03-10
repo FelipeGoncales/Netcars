@@ -11,6 +11,14 @@ if (tipoUser === 3) {
     window.location.href = 'cliente-perfil.html';
 }
 
+// Aparecer mensagem caso cadastrar veículo dê certo
+
+const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+
+if (mensagemCadVeic) {
+    alertMessage(mensagemCadVeic, 'success');
+};
+
 // Fazer o nav funcionar
 
 // Função para trocar a borda roxa do A que for clicado

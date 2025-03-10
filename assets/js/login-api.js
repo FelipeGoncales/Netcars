@@ -113,7 +113,6 @@ $("#formLoginUsuario").on('submit', function (e) {
             window.location.href = 'index.html';
         },
         error: function (response) {
-            console.log(response)
             $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
         }
     })

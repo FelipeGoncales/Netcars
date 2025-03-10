@@ -25,8 +25,8 @@ form {
     position: relative;
 }
 
-#fase-2, #fase-3, #fase-4, #fase-5 {
-    display: flex;
+#fase-2, #fase-3-carro, #fase-3-moto, #fase-4-carro, #fase-4-moto, #fase-5-moto, #fase-5 {
+    display: none;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -58,8 +58,7 @@ form {
 /* Classes universais para todas as etapas */
 .container-branco {
     width: 1434px;
-    /* height: 600px; */
-    gap: 100px;
+    height: 600px;
     border-radius: 12px;
     border: 1px solid #D0CFDA;
     background: #FFF;
@@ -137,6 +136,11 @@ form {
     /* Ajustado para 125% */
     text-align: center;
     margin-bottom: 30px;
+}
+
+/* Input placa em caixa alta */
+#placa {
+    text-transform: uppercase;
 }
 
 .placa {
@@ -298,7 +302,6 @@ form {
     margin-bottom: 35px;
 }
 
-
 /* Fim da fase 2 */
 
 /* Fase 3 */
@@ -319,7 +322,7 @@ form {
 .pai-div-input {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
     width: 800px;
     margin-bottom: 40px;
 }
@@ -379,7 +382,7 @@ form {
 
 .container-2labels {
     display: flex;
-    gap: 16px;
+    gap: 24px;
     flex-wrap: wrap;
     justify-content: space-between;
 }
@@ -389,6 +392,63 @@ form {
     display: flex;
     flex-direction: column;
     min-width: 200px;
+}
+
+.radio-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; /* Espaço entre o label principal e os rádios */
+    & label {
+        color: var(--cor-texto);
+    }
+    & span {
+        color: var(--cor-texto);
+        font-weight: 600;
+    }
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaço entre o “bolinha” e o texto “Sim”/“Não” */
+    cursor: pointer;
+}
+
+/* Esconde o input original e cria um “bolinha” customizado */
+.radio-group input[type="radio"] {
+    /* Remove o estilo padrão do rádio */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Cria um círculo branco com borda */
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--cor-texto-apagado);
+    border-radius: 50%;
+    background-color: var(--cor-bg-sec);
+    position: relative;
+    cursor: pointer;
+}
+
+/* Quando o rádio está marcado */
+.radio-group input[type="radio"]:checked {
+    border-color: var(--roxo); /* Borda roxa */
+}
+
+/* Bolinha roxa dentro do círculo quando está marcado */
+.radio-group input[type="radio"]:checked::before {
+    content: "";
+    display: block;
+    background-color: var(--roxo);
+    width: 10px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Fim da fase 3 */
@@ -413,10 +473,9 @@ form {
     overflow: hidden;
 }
 
-.upload-label img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.upload-label i {
+    font-size: 2.3rem;
+    color: var(--cor-texto-apagado);
 }
 
 .preview-item {
@@ -463,15 +522,14 @@ form {
     height: fit-content;
     overflow: auto;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 #preview-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 }
-
 
 /* Fim do Main */

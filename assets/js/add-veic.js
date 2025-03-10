@@ -39,7 +39,7 @@ function validarPlaca() {
 }
 
 // Chama a função ao sair do campo de texto (evento blur)
-$('#placa').blur(function() {
+$('#placa').blur(function () {
     validarPlaca();
 });
 
@@ -110,58 +110,67 @@ document.querySelectorAll("#ano-modelo, #ano-fabricacao").forEach(input => {
 // FUNÇÃO API DO IBGE
 // Utiliza jQuery para popular selects de estados e cidades usando a API do IBGE
 $(document).ready(function () {
-    const estadoSelect = $("#estado");   // Seleciona o elemento select de estados
-    const cidadeSelect = $("#cidade");     // Seleciona o elemento select de cidades
+    const estadoCarroSelect = $("#estado-carro");  
+    const cidadeCarroSelect = $("#cidade-carro"); 
+
+    const estadoMotoSelect = $("#estado-moto");  
+    const cidadeMotoSelect = $("#cidade-moto"); 
 
     // Função para carregar os estados do IBGE
-    function carregarEstados() {
+    function carregarEstados(select) {
         $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
             // Ordena os estados por nome
             estados.sort((a, b) => a.nome.localeCompare(b.nome));
 
             // Para cada estado, adiciona uma opção no select
             $.each(estados, function (index, estado) {
-                estadoSelect.append(`<option value="${estado.id}">${estado.nome}</option>`);
+                select.append(`<option value="${estado.id}">${estado.nome}</option>`);
             });
-        }).fail(function () {
-            console.error("Erro ao carregar estados.");
         });
     }
 
     // Função para carregar as cidades com base no estado selecionado
-    function carregarCidades(estadoId) {
+    function carregarCidades(estadoId, select) {
         $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`, function (cidades) {
-            cidadeSelect.empty(); // Limpa as opções anteriores do select de cidades
+            select.empty(); // Limpa as opções anteriores do select de cidades
 
             // Adiciona cada cidade como opção
             $.each(cidades, function (index, cidade) {
-                cidadeSelect.append(`<option value="${cidade.id}">${cidade.nome}</option>`);
+                select.append(`<option value="${cidade.id}">${cidade.nome}</option>`);
             });
 
             // Habilita o select de cidades e ativa o label (para animações ou estilos visuais)
-            cidadeSelect.prop("disabled", false);
-            cidadeSelect.prev("label").addClass("active");
-        }).fail(function () {
-            console.error("Erro ao carregar cidades.");
+            select.prop("disabled", false);
+            select.prev("label").addClass("active");
         });
     }
 
     // Quando o select de estados mudar de valor, carrega as cidades correspondentes
-    estadoSelect.on("change", function () {
-        const estadoId = $(this).val();
+    function addCidades(selectCid, selectEst) {
+        const estadoId = $(selectEst).val();
 
         // Reinicia o select de cidades e desabilita-o temporariamente
-        cidadeSelect.empty().prop("disabled", true);
+        selectCid.empty().prop("disabled", true);
         // Remove a classe ativa do label de cidade caso o usuário mude de estado
-        cidadeSelect.prev("label").removeClass("active");
+        selectCid.prev("label").removeClass("active");
 
         if (estadoId) {
-            carregarCidades(estadoId);
+            carregarCidades(estadoId, selectCid);
         }
+    };
+
+
+    estadoCarroSelect.on("change", () => {
+        addCidades(cidadeCarroSelect, estadoCarroSelect)
+    }); 
+    
+    estadoMotoSelect.on("change", () => {
+        addCidades(cidadeMotoSelect, estadoMotoSelect)
     });
 
     // Carrega os estados assim que a página é carregada
-    carregarEstados();
+    carregarEstados(estadoCarroSelect);
+    carregarEstados(estadoMotoSelect);
 });
 
 
@@ -198,69 +207,163 @@ document.getElementById("upload-imagem").addEventListener("change", function (ev
     });
 });
 
+let fasesCarro = [
+    $('#fase-1'),
+    $('#fase-2'),
+    $('#fase-3-carro'),
+    $('#fase-4-carro'),
+    $('#fase-5'),
+]
+
+let fasesMoto = [
+    $('#fase-1'),
+    $('#fase-2'),
+    $('#fase-3-moto'),
+    $('#fase-4-moto'),
+    $('#fase-5-moto'),
+    $('#fase-5')
+]
 
 // Função para continuar
 $('#btn-continuar').click(function () {
     let divCerta = -1;
 
-    let fases = [
-        $('#fase-1'),
-        $('#fase-2'),
-        $('#fase-3'),
-        $('#fase-4'),
-        $('#fase-5'),
-    ]
+    function continuarBtn(listaFases) {
+        for (i = 0; i < listaFases.length; i++) {
+            if (listaFases[i].is(':visible')) {
+                divCerta = i + 1;
+                listaFases[i].hide();
+                break;
+            }
+        }
 
-    for (i = 0; i < fases.length; i++) {
-        if (fases[i].is(':visible')) {
-            divCerta = i + 1;
-            fases[i].hide();
-            break;
+        if (divCerta < listaFases.length) {
+            listaFases[divCerta].css('display', 'flex');
+
+            setTimeout(() => {
+                if (listaFases[listaFases.length - 1].is(':visible')) {
+                    $('#btn-continuar').attr('type', 'submit');
+                }
+            }, 100);
+        } else {
+            listaFases[divCerta - 1].css('display', 'flex');
         }
     }
-    
-    if (divCerta < fases.length) {
-        fases[divCerta].css('display', 'flex');
 
-        setTimeout(() => {
-            if (fases[4].is(':visible')) {
-                $('#btn-continuar').attr('type', 'submit');
-            }
-        }, 100);
-    } else {
-        fases[divCerta - 1].css('display', 'flex');
+    if ($('#tipo-carro').hasClass('active')) {
+        continuarBtn(fasesCarro);
     }
-})
+
+    if ($('#tipo-moto').hasClass('active')) {
+        continuarBtn(fasesMoto);
+    }
+});
 
 // Funções para voltar
 $('#btn-voltar').click(function () {
     let divCerta = -1;
 
-    let fases = [
-        $('#fase-1'),
-        $('#fase-2'),
-        $('#fase-3'),
-        $('#fase-4'),
-        $('#fase-5'),
-    ]
+    function voltarBtn(listaFases) {
+        for (i = 0; i < listaFases.length; i++) {
+            if (listaFases[i].is(':visible')) {
+                divCerta = i - 1;
+                listaFases[i].hide();
+                break;
+            }
+        }
 
-    for (i = 0; i < fases.length; i++) {
-        if (fases[i].is(':visible')) {
-            divCerta = i - 1;
-            fases[i].hide();
-            break;
+        if (divCerta >= 0) {
+            listaFases[divCerta].css('display', 'flex');
+
+            setTimeout(() => {
+                if ($('#btn-continuar').attr('type') === 'submit') {
+                    $('#btn-continuar').attr('type', 'button');
+                }
+            }, 100);
+        } else {
+            listaFases[divCerta + 1].css('display', 'flex');
         }
     }
-    
-    if (divCerta >= 0) {
-        fases[divCerta].css('display', 'flex');
 
-        setTimeout(() => {
-            if ($('#btn-continuar').attr('type') === 'submit') {
-                $('#btn-continuar').attr('type', 'button');
-            }
-        }, 100);
-    } else {
-        fases[divCerta + 1].css('display', 'flex');
+    if ($('#tipo-carro').hasClass('active')) {
+        voltarBtn(fasesCarro);
     }
-})
+
+    if ($('#tipo-moto').hasClass('active')) {
+        voltarBtn(fasesMoto);
+    }
+});
+
+// Enviar dados (Rota POST Carro)
+
+$('#form-add-veic').on('submit', function(e){
+    e.preventDefault();
+
+    let data = new FormData(this);
+
+    if ($('#tipo-carro').hasClass('active')) {
+
+        let envia = {
+            placa: data.get('placa'),
+            marca: data.get('marca-carro'),
+            modelo: data.get('modelo-carro'),
+            ano_modelo: data.get('ano-modelo-carro'),
+            ano_fabricacao: data.get('ano-fabricacao-carro'),
+            versao: data.get('versao-carro'),
+            cor: data.get('cor-carro'),
+            renavam: data.get('renavam-carro'),
+            cambio: data.get('cambio-carro'),
+            combustivel: data.get('combustivel-carro'),
+            categoria: data.get('categoria-carro'),
+            quilometragem: data.get('quilometragem-carro'),
+            estado: data.get('estado-carro'),
+            cidade: data.get('cidade-carro'),
+            preco_compra: data.get('preco_c-carro'),
+            preco_venda: data.get('preco_v-carro'),
+            licenciado: data.get('licenciado-carro')
+        }
+
+        for (const key in envia) {
+            if (!envia[key]) {
+                alertMessage(`Informações faltando: ${key}.`, 'error');
+                return;
+            }
+        }        
+
+        envia = JSON.stringify(envia);
+
+        $.ajax({
+            method: "post",
+            url: "http://192.168.1.120:5000/carro", // URL da API na Web
+            data: envia,
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response);
+                // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+    
+                // Redirecionar para a página de perfil após cadastrar
+                const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+                const tipoUser = dadosUser.tipo_usuario;
+    
+                if (tipoUser === 1) {
+                    window.location.href = 'administrador-perfil.html';
+                }
+                if (tipoUser === 2) {
+                    window.location.href = 'vendedor-perfil.html';
+                }
+    
+                // Definir mensagem para ser exibida no perfil
+                localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+            },
+            error: function (response) {
+                alertMessage(response.responseJSON.error, 'error');
+                console.log(response);
+            }
+        })
+    }
+
+
+    if ($('#tipo-moto').hasClass(active)) {
+        // Mesma lógica porém para adicionar moto
+    }
+}) 

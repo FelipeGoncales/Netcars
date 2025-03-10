@@ -36,17 +36,6 @@ $(document).ready(function() {
             fecharBarraLateral();
         }
     })
-    $("#link_anuncios").on("click", function() {
-        const elementoClicado = this;
-        selecionarA(elementoClicado);
-
-        $('#minha-conta').css('display', 'none');
-        $('#anuncios').css('display', 'flex');
-
-        if ($(window).width() <= 660) {
-            fecharBarraLateral();
-        }
-    })
 });
 
 // Fechar barra lateral
