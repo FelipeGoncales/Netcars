@@ -32,7 +32,6 @@ body {
     background-color: var(--cor-bg);
 }
 
-
 /* Header */
 header {
     width: 100%;
@@ -63,6 +62,10 @@ header {
         color: var(--cor-texto);
         font-weight: 600;
     }
+}
+
+#aDivLogo {
+    color: var(--cor-texto);
 }
 
 .div-logo {
@@ -510,7 +513,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 /* Footer */
 footer {
     position: relative;
-    z-index: 9;
+    z-index: 999;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -582,6 +585,10 @@ footer {
 /* Responsivo Header - Footer */
 
 @media (max-width: 980px) {
+    footer {
+        z-index: 9;
+    }
+
     header {
         padding: 12px 20px;
         & .div-logo-title {

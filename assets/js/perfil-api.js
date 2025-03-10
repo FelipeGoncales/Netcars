@@ -16,7 +16,7 @@ $(document).ready(function() {
     var data = new Date(dadosUser.data_nascimento);
     let ano = data.getFullYear();
     let mes = data.getMonth()+1;
-    let dia = data.getDate()+1;
+    let dia = data.getDate();
 
     if (mes < 10) {
         mes = `0${mes}`;
@@ -159,7 +159,6 @@ $("#cpf_cnpj_input").on("input", function(e) {
         input.style.borderColor = '#AEAEBA';
     }
 });
-
 
 // Função para mostrar senha quando clicar no olho
 function mostrarSenha(olho, input) {
@@ -312,6 +311,7 @@ $("#formEditarUsuario").on("submit", function(e) {
     const tipoUser = dadosUser.tipo_usuario;
 
     let dados = new FormData(this);
+
 
     let editar = {
         id_usuario: id,
