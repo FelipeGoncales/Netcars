@@ -443,6 +443,42 @@ main {
     scale: 1.07;
 }
 
+.botao-carrossel {
+    position: absolute;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: 0.3s;
+    z-index: 4;
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+    transition: 0.3s;
+}
+
+.right{
+    top: 35%;
+    right: 30px; 
+}
+
+.left{
+    top: 35%;
+    left: 30px; 
+}
+
+.botao-carrossel:hover {
+    background-color: #dfdfe0;
+    opacity: 1;
+    scale: 1.03;
+}
+
+.botao-carrossel:active{
+    scale: 1;
+}
+
 @media (max-width:1420px) {
     .div-content-venda {
         padding-right: 0;
