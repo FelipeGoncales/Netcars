@@ -11,26 +11,29 @@ $(document).ready(function() {
         window.location.href = 'login.html';
     }
 
-    var data = new Date(dadosUser.data_nascimento);
-    let ano = data.getFullYear();
-    let mes = data.getMonth()+1;
-    let dia = data.getDate();
+    if (dadosUser.data_nascimento) {
+        var data = new Date(dadosUser.data_nascimento);
+        let ano = data.getFullYear();
+        let mes = data.getMonth()+1;
+        let dia = data.getDate()+1;
 
-    if (mes < 10) {
-        mes = `0${mes}`;
+        if (mes < 10) {
+            mes = `0${mes}`;
+        }
+
+        // Correção para ajustar também dias menores que 10
+        if (dia < 10) {
+            dia = `0${dia}`;
+        }
+
+        let dataAjustada = `${ano}-${mes}-${dia}`;
+
+        $("#data_nascimento_input").val(dataAjustada);
     }
-
-    // Correção para ajustar também dias menores que 10
-    if (dia < 10) {
-        dia = `0${dia}`;
-    }
-
-    let dataAjustada = `${ano}-${mes}-${dia}`;
 
     // Preencher os inputs do formulário
     $("#email_input").val(dadosUser.email);
     $("#nome_completo_input").val(dadosUser.nome_completo);
-    $("#data_nascimento_input").val(dataAjustada);
     $("#cpf_cnpj_input").val(dadosUser.cpf_cnpj);
     $("#telefone_input").val(dadosUser.telefone);
 
@@ -384,3 +387,39 @@ $("#formEditarUsuario").on("submit", function(e) {
         }
     });
 });
+
+
+// Rota para deletar perfil
+$('#deletar-usuario').click(function() {
+    Swal.fire({
+        title: "Você tem certeza?",
+        text: "Sua conta será deletada para sempre.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+            const id = dadosUser.id_usuario;
+        
+            $.ajax({
+                method: "delete",
+                url: `http://192.168.1.120:5000/cadastro/${id}`, // URL da API na Web
+                data: id,
+                contentType: "application/json",
+                success: function(response) {
+                    localStorage.removeItem('dadosUser');
+                    localStorage.setItem('mensagem', JSON.stringify({
+                        success: 'Usuário deletado com sucesso!'
+                    }))
+                    window.location.href = 'login.html';
+                },
+                error: function(response) {
+                    alertMessage(response.responseJSON.error, 'error');
+                }
+            })
+        }
+      });
+ })

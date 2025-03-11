@@ -104,6 +104,10 @@ h1 {
     gap: 35px;
 }
 
+.container {
+    margin-top: 12px;
+}
+
 /* Menu NAV */
 
 #barra-lateral {
@@ -173,6 +177,26 @@ h1 {
         top: 2px;
         right: 15px;
         font-size: 2.3rem;
+    }
+
+    & #deletar-usuario {
+        width: 170px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        justify-self: center;
+        align-items: center;
+        gap: 8px;
+        & p {
+            color: #f71445;
+        }
+        & i {
+            color: #f71445;
+        }
     }
 }
 
