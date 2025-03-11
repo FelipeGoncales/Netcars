@@ -266,11 +266,15 @@ $('#btn-continuar').click(function () {
         if (divCerta < listaFases.length) {
             listaFases[divCerta].css('display', 'flex');
 
-            setTimeout(() => {
-                if (listaFases[listaFases.length - 1].is(':visible')) {
+            $('#btn-voltar').css('display', 'flex');
+
+            if (listaFases[listaFases.length - 1].is(':visible')) {
+                $('#btn-continuar').find('p').text('Concluir');
+                $('#btn-continuar').find('i').removeClass('fa-arrow-right').addClass('fa-check');
+                setTimeout(() => {
                     $('#btn-continuar').attr('type', 'submit');
-                }
-            }, 100);
+                }, 100);
+            }
         } else {
             listaFases[divCerta - 1].css('display', 'flex');
         }
@@ -301,11 +305,15 @@ $('#btn-voltar').click(function () {
         if (divCerta >= 0) {
             listaFases[divCerta].css('display', 'flex');
 
-            setTimeout(() => {
-                if ($('#btn-continuar').attr('type') === 'submit') {
+            $('#btn-voltar').css('display', 'none');
+
+            if ($('#btn-continuar').attr('type') === 'submit') {
+                $('#btn-continuar').find('p').text('Continuar');
+                $('#btn-continuar').find('i').removeClass('fa-check').addClass('fa-arrow-right');
+                setTimeout(() => {
                     $('#btn-continuar').attr('type', 'button');
-                }
-            }, 100);
+                }, 100);
+            }
         } else {
             listaFases[divCerta + 1].css('display', 'flex');
         }
