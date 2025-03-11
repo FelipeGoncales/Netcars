@@ -1,3 +1,31 @@
+// Funções para auxiliar no funcionamento dos inputs
+
+$('.div-input').each(function() {
+    const $input = $(this).find('input');
+    const $label = $(this).find('label');
+
+    $input.on('input', function() {
+        if ($input.val().trim() !== "") {
+            $label.addClass('active');
+        } else {
+            $label.removeClass('active');
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('.div-input').each(function() {
+    const $input = $(this).find('input');
+    const $label = $(this).find('label');
+
+    if ($input.val().trim() !== "") {
+        $label.addClass('active');
+    } else {
+        $label.removeClass('active');
+    }
+});
+});
+
 // Função de exibir a mensagem para evitar repetir código
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
@@ -44,7 +72,6 @@ $('#mostrarSenha').click(function() {
 
 
 // Rota para cadastrar clientes
-
 $("#formCadastroUsuario").on("submit", function (e) {
     e.preventDefault();
 
@@ -107,7 +134,8 @@ $("#formLoginUsuario").on('submit', function (e) {
                 data_nascimento: response.dados.data_nascimento,
                 cpf_cnpj: response.dados.cpf_cnpj,
                 telefone: response.dados.telefone,
-                tipo_usuario: response.dados.tipo_usuario
+                tipo_usuario: response.dados.tipo_usuario,
+                token: response.dados.token
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';

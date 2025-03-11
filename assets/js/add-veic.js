@@ -1,4 +1,24 @@
+// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+
+const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+if (!dadosUser) {
+    localStorage.setItem('mensagem', JSON.stringify({
+        error: 'Sessão não iniciada.'
+    }))
+
+    window.location.href = 'login.html';
+}
+
+const tipoUser = dadosUser.tipo_usuario;
+
+if (tipoUser === 3) {
+    window.location.href = 'index.html';
+}
+
+
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
+
 // Ao carregar o documento, adiciona a classe "active" ao label anterior se o input/select tiver valor
 document.addEventListener("DOMContentLoaded", function () {
     // Seleciona todos os selects e inputs dentro de elementos com a classe .div-input
@@ -28,10 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
 // Função para validar a placa
 function validarPlaca() {
     const placa = $('#placa').val(); // Pega o valor da placa
-    const regex = /^[A-Za-z]{3}[0-9]{1}[A-Za-z]{1}[0-9]{2}$/; // Expressão regular para validar o formato
+    const regexMercosul = /^[A-Za-z]{3}[0-9]{1}[A-Za-z]{1}[0-9]{2}$/; // Formato ABC1D23
+    const regexAntigo = /^[A-Za-z]{3}[0-9]{4}$/; // Formato ABC1234
 
-    if (!regex.test(placa)) {
-        alertMessage("Formato de placa inválido! A placa deve seguir o padrão ABC1D23.", 'error');
+    if (!regexMercosul.test(placa) && !regexAntigo.test(placa)) {
+        alertMessage("Formato de placa inválido! A placa deve seguir o padrão ABC1234 ou ABC1D23.", 'error');
         return false; // Retorna falso se não passar na validação
     }
 
@@ -92,14 +113,19 @@ function validarCampo(input) {
         // Exibe o alerta apenas uma vez
         if (!input.alertado) {
             input.alertado = true;
-            alertMessage(`Insira um ano válido.`, 'error')
+            alertMessage(`Insira um ano válido (${min} - ${max}).`, 'error')
             input.focus();
         }
     }
 }
 
 // Seleciona os inputs de ano de modelo e de fabricação e adiciona os eventos para validação
-document.querySelectorAll("#ano-modelo, #ano-fabricacao").forEach(input => {
+document.querySelectorAll("#ano-modelo-carro, #ano-fabricacao-carro").forEach(input => {
+    input.addEventListener("blur", () => validarCampo(input));
+    input.addEventListener("input", () => input.alertado = false);
+});
+
+document.querySelectorAll("#ano-modelo-moto, #ano-fabricacao-moto").forEach(input => {
     input.addEventListener("blur", () => validarCampo(input));
     input.addEventListener("input", () => input.alertado = false);
 });
@@ -240,11 +266,15 @@ $('#btn-continuar').click(function () {
         if (divCerta < listaFases.length) {
             listaFases[divCerta].css('display', 'flex');
 
-            setTimeout(() => {
-                if (listaFases[listaFases.length - 1].is(':visible')) {
+            $('#btn-voltar').css('display', 'flex');
+
+            if (listaFases[listaFases.length - 1].is(':visible')) {
+                $('#btn-continuar').find('p').text('Concluir');
+                $('#btn-continuar').find('i').removeClass('fa-arrow-right').addClass('fa-check');
+                setTimeout(() => {
                     $('#btn-continuar').attr('type', 'submit');
-                }
-            }, 100);
+                }, 100);
+            }
         } else {
             listaFases[divCerta - 1].css('display', 'flex');
         }
@@ -275,11 +305,17 @@ $('#btn-voltar').click(function () {
         if (divCerta >= 0) {
             listaFases[divCerta].css('display', 'flex');
 
-            setTimeout(() => {
-                if ($('#btn-continuar').attr('type') === 'submit') {
+            if (divCerta === 0) {
+                $('#btn-voltar').css('display', 'none');
+            }
+
+            if ($('#btn-continuar').attr('type') === 'submit') {
+                $('#btn-continuar').find('p').text('Continuar');
+                $('#btn-continuar').find('i').removeClass('fa-check').addClass('fa-arrow-right');
+                setTimeout(() => {
                     $('#btn-continuar').attr('type', 'button');
-                }
-            }, 100);
+                }, 100);
+            }
         } else {
             listaFases[divCerta + 1].css('display', 'flex');
         }
@@ -332,38 +368,166 @@ $('#form-add-veic').on('submit', function(e){
 
         envia = JSON.stringify(envia);
 
+        const files = $('#upload-imagem')[0].files; // Obter os arquivos
+
+        if (!files.length) {
+            alertMessage(`Informações faltando: Imagens.`, 'error');
+            return;
+        }        
+
         $.ajax({
             method: "post",
             url: "http://192.168.1.120:5000/carro", // URL da API na Web
             data: envia,
             contentType: "application/json",
-            success: function (response) {
-                console.log(response);
-                // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
-    
-                // Redirecionar para a página de perfil após cadastrar
-                const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-                const tipoUser = dadosUser.tipo_usuario;
-    
-                if (tipoUser === 1) {
-                    window.location.href = 'administrador-perfil.html';
-                }
-                if (tipoUser === 2) {
-                    window.location.href = 'vendedor-perfil.html';
-                }
-    
-                // Definir mensagem para ser exibida no perfil
-                localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+            headers: {
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
             },
-            error: function (response) {
-                alertMessage(response.responseJSON.error, 'error');
-                console.log(response);
+            success: function (response) {
+                alertMessage(`Veículo cadastrado com sucesso!`, 'success');
+                // Após o primeiro AJAX que cria o carro e retorna o id_carro:
+                const id_carro = response.dados.id_carro;
+
+                // Ao montar o FormData para as imagens:
+                let formDataImg = new FormData();
+
+                for (let i = 0; i < files.length; i++) {
+                    formDataImg.append('imagens', files[i]);
+                }
+
+                // Envia as imagens para a API
+                $.ajax({
+                    method: "post",
+                    url: `http://192.168.1.120:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    data: formDataImg,
+                    contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
+                    processData: false,  // Impede que o jQuery tente processar os dados
+                    headers: {
+                        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    },
+                    success: function() {
+                        // Redirecionar para a página de perfil após cadastrar
+                        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+                        const tipoUser = dadosUser.tipo_usuario;
+
+                        // Definir mensagem para ser exibida no perfil
+                        localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+                        
+                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+                        if (tipoUser === 1) {
+                            window.location.href = 'administrador-perfil.html';
+                        }
+                        if (tipoUser === 2) {
+                            window.location.href = 'vendedor-perfil.html';
+                        }
+                    },
+                    error: function(response) {
+                        alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                    }
+                });
+            },
+            error: function(response) {
+                alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
             }
         })
     }
 
+    if ($('#tipo-moto').hasClass('active')) {
+        
+        let envia = {
+            placa: data.get('placa'),
+            marca: data.get('marca-moto'),
+            modelo: data.get('modelo-moto'),
+            ano_modelo: data.get('ano-modelo-moto'),
+            ano_fabricacao: data.get('ano-fabricacao-moto'),
+            categoria: data.get('categoria-moto'),
+            cor: data.get('cor-moto'),
+            renavam: data.get('renavam-moto'),
+            licenciado: data.get('licenciado-moto'),
+            marchas: data.get('marchas-moto'),
+            partida: data.get('partida-moto'),
+            tipo_motor: data.get('tipo-motor-moto'),
+            cilindrada: data.get('cilindradas-moto'),
+            freio_dianteiro_traseiro: data.get('freio-moto'),
+            refrigeracao: data.get('refrigeracao-moto'),
+            estado: data.get('estado-moto'),
+            cidade: data.get('cidade-moto'),
+            alimentacao: data.get('alimentacao-moto'),
+            quilometragem: data.get('quilometragem-moto'),
+            preco_compra: data.get('preco_c-moto'),
+            preco_venda: data.get('preco_v-moto')
+        }
 
-    if ($('#tipo-moto').hasClass(active)) {
-        // Mesma lógica porém para adicionar moto
+        for (const key in envia) {
+            if (!envia[key]) {
+                alertMessage(`Informações faltando: ${key}.`, 'error');
+                return;
+            }
+        }        
+
+        envia = JSON.stringify(envia);
+
+        const files = $('#upload-imagem')[0].files; // Obter os arquivos
+
+        if (!files.length) {
+            alertMessage(`Informações faltando: Imagens.`, 'error');
+            return;
+        }        
+
+        $.ajax({
+            method: "post",
+            url: "http://192.168.1.120:5000/moto", // URL da API na Web
+            data: envia,
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+            },
+            success: function (response) {
+                alertMessage(`Veículo cadastrado com sucesso!`, 'success');
+                // Após o primeiro AJAX que cria o carro e retorna o id_carro:
+                const id_moto = response.dados.id_moto;
+
+                // Ao montar o FormData para as imagens:
+                let formDataImg = new FormData();
+
+                for (let i = 0; i < files.length; i++) {
+                    formDataImg.append('imagens', files[i]);
+                }
+
+                // Envia as imagens para a API
+                $.ajax({
+                    method: "post",
+                    url: `http://192.168.1.120:5000/moto/upload_img/${id_moto}`, // Certifique-se de usar o id_carro retornado
+                    data: formDataImg,
+                    contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
+                    processData: false,  // Impede que o jQuery tente processar os dados
+                    headers: {
+                        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    },
+                    success: function() {
+                        // Redirecionar para a página de perfil após cadastrar
+                        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+                        const tipoUser = dadosUser.tipo_usuario;
+
+                        // Definir mensagem para ser exibida no perfil
+                        localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+                        
+                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+                        if (tipoUser === 1) {
+                            window.location.href = 'administrador-perfil.html';
+                        }
+                        if (tipoUser === 2) {
+                            window.location.href = 'vendedor-perfil.html';
+                        }
+                    },
+                    error: function(response) {
+                        alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                    }
+                });
+            },
+            error: function(response) {
+                alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+            }
+        })
     }
 }) 

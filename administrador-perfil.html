@@ -15,6 +15,8 @@
     <script src="assets/js/nav-perfil-adm.js" defer></script>
     <!-- Arquivo JS padrão para todas as páginas de perfil -->
     <script src="assets/js/perfil-api.js" defer></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -48,6 +50,10 @@
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
             <p id="fecharBarraLateral">&times;</p>
+            <div id="deletar-usuario">
+                <i class="fa-solid fa-trash-can"></i>
+                <p>Deletar conta</p>
+            </div>
         </div>
         <div class="overlay-bg" id="overlay-bg"></div>
     </header>
@@ -97,15 +103,19 @@
 
             <!-- Div Relatórios -->
             <div class="container-relatorios" id="relatorios">
-                <a class="relatorios" href="baixar o arquivo pdf">
-                    <h3>Movimentação</h3>
+                <a class="relatorios" id="pdf-movimentacao">
+                    <h3>Movimentações</h3>
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </a>
-                <a class="relatorios" href="baixar o arquivo pdf">
-                    <h3>Veículos</h3>
+                <a class="relatorios" id="pdf-carros">
+                    <h3>Carros</h3>
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </a>
-                <a class="relatorios" href="baixar o arquivo pdf">
+                <a class="relatorios" id="pdf-motos">
+                    <h3>Motos</h3>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </a>
+                <a class="relatorios" id="pdf-clientes">
                     <h3>Clientes</h3>
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </a>

@@ -13,10 +13,27 @@ if (tipoUser === 3) {
 
 // Aparecer mensagem caso cadastrar veículo dê certo
 
+function alertMessage(text, type) {
+    $('#divAlertMessage').css('display', 'flex')
+
+    let bgColor = type === 'success' ? '#0bd979' : '#f71445';
+
+    $('<p>')
+        .addClass('alertMessage')
+        .text(text)
+        .css('background-color', bgColor)
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+}
+
 const mensagemCadVeic = localStorage.getItem('msgCadVeic');
 
 if (mensagemCadVeic) {
     alertMessage(mensagemCadVeic, 'success');
+    localStorage.removeItem('msgCadVeic')
 };
 
 // Fazer o nav funcionar
@@ -67,3 +84,75 @@ function fecharBarraLateral() {
         overlayBg.css('display', 'none');
     }, 699);
 }
+
+// Baixar PDF de carros
+$('#pdf-carros').click(() => {
+    $.ajax({
+        method: 'GET',
+        url: 'http://192.168.1.120:5000/relatorio/carros',
+        xhrFields: {
+            responseType: 'blob'
+          },
+          success: function(response) {
+            const url = window.URL.createObjectURL(response);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'relatorio_carros.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+          },
+          error: function(error) {
+            console.error('Erro ao baixar PDF:', error);
+          }
+    });
+})
+
+// Baixar PDF de motos
+$('#pdf-motos').click(() => {
+    $.ajax({
+        method: 'GET',
+        url: 'http://192.168.1.120:5000/relatorio/motos',
+        xhrFields: {
+            responseType: 'blob'
+          },
+          success: function(response) {
+            const url = window.URL.createObjectURL(response);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'relatorio_motos.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+          },
+          error: function(response) {
+            alertMessage(response.responseJSON.error, error);
+          }
+    });
+})
+
+// Baixar PDF de usuarios
+$('#pdf-clientes').click(() => {
+    $.ajax({
+        method: 'GET',
+        url: 'http://192.168.1.120:5000/relatorio/usuarios',
+        xhrFields: {
+            responseType: 'blob'
+          },
+          success: function(response) {
+            const url = window.URL.createObjectURL(response);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'relatorio_usuarios.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+          },
+          error: function(response) {
+            alertMessage(response.responseJSON.error, error);
+          }
+    });
+})
