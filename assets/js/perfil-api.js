@@ -1,7 +1,6 @@
-let isValidCPF_CNPJ = false; 
+let isValidCPF_CNPJ = false;
 
 // Função para preencher as informações nos inputs ao entrar na página
-
 $(document).ready(function() {
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
@@ -9,7 +8,6 @@ $(document).ready(function() {
         localStorage.setItem('mensagem', JSON.stringify({
             error: 'Sessão não iniciada.'
         }))
-
         window.location.href = 'login.html';
     }
 
@@ -20,6 +18,11 @@ $(document).ready(function() {
 
     if (mes < 10) {
         mes = `0${mes}`;
+    }
+
+    // Correção para ajustar também dias menores que 10
+    if (dia < 10) {
+        dia = `0${dia}`;
     }
 
     let dataAjustada = `${ano}-${mes}-${dia}`;
@@ -46,14 +49,10 @@ $(document).ready(function() {
         telefoneInput.dispatchEvent(new Event('input'));
     }
 
-    // Verifica CPF/CNPJ ao carregar a página
+    // Agora não validamos visualmente ao carregar a página
     if ($('#cpf_cnpj_input').val().trim() !== "") {
-        validarCPF_CNPJ(cpfCnpjInput);
-    }
-
-    // Verifica CPF/CNPJ ao carregar a página
-    if ($('#cpf_cnpj_input').val().trim() !== "") {
-        validarCPF_CNPJ(cpfCnpjInput);
+        const rawValue = $('#cpf_cnpj_input').val().replace(/\D/g, '');
+        isValidCPF_CNPJ = validarDocumento(rawValue);
     }
 });
 
@@ -70,39 +69,16 @@ $('#deslogarConta').click(function(e) {
     window.location.href = 'login.html';
 })
 
-// Modifique o evento 'input' para chamar diretamente validarCPF_CNPJ()
-document.getElementById("cpf_cnpj_input").addEventListener("input", function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    let formatted = value;
-
-    if (value.length > 11) {
-        formatted = formatted.replace(/(\d{2})(\d)/, '$1.$2')
-                             .replace(/(\d{3})(\d)/, '$1.$2')
-                             .replace(/(\d{3})(\d)/, '$1/$2')
-                             .replace(/(\d{4})(\d)/, '$1-$2');
-    } else {
-        formatted = formatted.replace(/(\d{3})(\d)/, '$1.$2')
-                             .replace(/(\d{3})(\d)/, '$1.$2')
-                             .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    }
-
-    e.target.value = formatted;
-    validarCPF_CNPJ(e.target);
-});
-
-
 // Função para auxiliar na animação dos inputs já preenchidos ao abrir o site
 $(document).ready(function() {
     $('.container-input').each(function() {
-    const $input = $(this).find('input');
-    const $label = $(this).find('label');
+        const $input = $(this).find('input');
+        const $label = $(this).find('label');
 
-    if ($input.val().trim() !== "") {
-        $label.addClass('active');
-    } else {
-        $label.removeClass('active');
-    }
-});
+        $input.on('input', function() {
+            $label.toggleClass('active', $(this).val().trim() !== '');
+        }).trigger('input'); // Dispara inicialmente
+    });
 });
 
 // Lógica para adicionar uma função nos inputs para quando forem preenchidos ficarem com a animação correta
@@ -119,45 +95,64 @@ $(document).find('.container-input').each((_, container) => {
     })
 })
 
-
 // Formatação do input de telefone
 document.getElementById("telefone_input").addEventListener("input", function (e) {
     let value = e.target.value.replace(/\D/g, '');
     value = value.substring(0, 11);
-    
+
     let formatted = '';
     if (value.length > 0) {
-        if (value.length <= 2) {
-            formatted = value;
-        } else {
-            formatted = `(${value.substring(0,2)}) `;
-            value = value.substring(2);
-            if (value.length > 5) {
-                formatted += `${value.substring(0,5)}-${value.substring(5,9)}`;
-            } else {
-                formatted += value;
+        formatted = `(${value.substring(0,2)}) `;
+        if (value.length > 2) {
+            formatted += `${value.substring(2,7)}`;
+            if (value.length > 7) {
+                formatted += `-${value.substring(7,11)}`;
             }
         }
     }
     e.target.value = formatted;
 });
 
-// Handler unificado para o input
+// Handler unificado para o input de CPF/CNPJ - só aplicamos cores durante a edição
 $("#cpf_cnpj_input").on("input", function(e) {
     const input = e.target;
     const rawValue = input.value.replace(/\D/g, '');
-    
+
     // Formatação
-    input.value = formatarDocumento(input.value);
-    
+    input.value = formatarDocumento(rawValue);
+
     // Validação e feedback visual
-    isValidCPF_CNPJ = validarDocumento(rawValue);
-    
-    if (rawValue.length >= 11 && !isValidCPF_CNPJ) {
-        input.style.borderColor = '#ff0000';
-    } else {
+    if (rawValue.length === 0) {
+        // Input vazio, usar cor padrão
+        input.style.borderColor = '#AEAEBA';
+    } 
+    else if (rawValue.length >= 11) {
+        // Temos dígitos suficientes para validar
+        isValidCPF_CNPJ = validarDocumento(rawValue);
+        
+        if (isValidCPF_CNPJ) {
+            input.style.borderColor = '#0bd979'; // Verde para válido
+        } else {
+            input.style.borderColor = '#ff0000'; // Vermelho para inválido
+        }
+    }
+    // Se tiver menos de 11 dígitos, não alteramos a cor
+});
+
+// Adicionar evento blur que só retorna à cor neutra quando for válido
+$("#cpf_cnpj_input").on("blur", function(e) {
+    const input = e.target;
+    const rawValue = input.value.replace(/\D/g, '');
+
+    if (rawValue.length === 0) {
+        // Input vazio
+        input.style.borderColor = '#AEAEBA';
+    } 
+    else if (isValidCPF_CNPJ) {
+        // Valor válido (verde), volta para cor neutra
         input.style.borderColor = '#AEAEBA';
     }
+    // Se for inválido (vermelho), mantém a cor vermelha
 });
 
 // Função para mostrar senha quando clicar no olho
@@ -166,7 +161,7 @@ function mostrarSenha(olho, input) {
         olho.removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
         input.attr('type', 'text') // Trocando o tipo de input
     } else {
-        olho.removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho 
+        olho.removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho
         input.attr('type', 'password') // Trocando o tipo de input
     }
 }
@@ -175,11 +170,10 @@ function mostrarSenha(olho, input) {
 $('#mostrarSenhaAtual').click(() => mostrarSenha($('#mostrarSenhaAtual'), $('#input-senha-atual') ));
 $('#mostrarSenhaNova').click( () => mostrarSenha($('#mostrarSenhaNova'), $('#input-senha-nova') ));
 
-
 // Função unificada de formatação
 function formatarDocumento(value) {
     const numeros = value.replace(/\D/g, '');
-    
+
     if (numeros.length > 11) { // CNPJ
         return numeros
             .replace(/(\d{2})(\d)/, '$1.$2')
@@ -188,7 +182,7 @@ function formatarDocumento(value) {
             .replace(/(\d{4})(\d)/, '$1-$2')
             .substring(0, 18);
     }
-    
+
     // CPF
     return numeros
         .replace(/(\d{3})(\d)/, '$1.$2')
@@ -200,7 +194,7 @@ function formatarDocumento(value) {
 // Função unificada de validação de CPF/CNPJ
 function validarDocumento(value) {
     const numeros = value.replace(/\D/g, '');
-    
+
     if (numeros.length === 11) {
         return validarCPF(numeros); // Utiliza função validar CPF
     } 
@@ -217,13 +211,14 @@ function validarCPF(cpf) {
     let soma = 0;
     for (let i = 0; i < 9; i++) soma += parseInt(cpf[i]) * (10 - i);
     let resto = (soma * 10) % 11;
-    if ((resto === 10 || resto === 11) && cpf[9] !== '0') return false;
+    if (resto === 10 || resto === 11) resto = 0;
     if (resto.toString() !== cpf[9]) return false;
 
     soma = 0;
     for (let i = 0; i < 10; i++) soma += parseInt(cpf[i]) * (11 - i);
     resto = (soma * 10) % 11;
-    return (resto === 10 ? 0 : resto).toString() === cpf[10];
+    if (resto === 10 || resto === 11) resto = 0;
+    return resto.toString() === cpf[10];
 }
 
 // Validar CNPJ
@@ -232,7 +227,7 @@ function validarCNPJ(cnpj) {
 
     const pesos1 = [5,4,3,2,9,8,7,6,5,4,3,2];
     const pesos2 = [6,5,4,3,2,9,8,7,6,5,4,3,2];
-    
+
     const calculaDigito = (slice, pesos) => {
         const soma = slice.reduce((acc, num, i) => acc + (num * pesos[i]), 0);
         const resto = soma % 11;
@@ -248,6 +243,7 @@ function validarCNPJ(cnpj) {
 
 // Função de exibir a mensagem para evitar repetir código
 function alertMessage(text, type) {
+    $('#divAlertMessage').empty().css('display', 'flex');
     $('#divAlertMessage').css('display', 'flex')
 
     let bgColor = type === 'success' ? '#0bd979' : '#f71445';
@@ -287,10 +283,13 @@ function fecharBarraLateral() {
     barraLateral.css('animation', 'fecharBarraLateral 0.7s');
     overlayBg.css('animation', 'sumirOverlay 0.7s');
 
-    setTimeout(() => {
+    barraLateral.on('animationend', function() {
         barraLateral.css('display', 'none');
+    });
+
+    overlayBg.on('animationend', function() {
         overlayBg.css('display', 'none');
-    }, 699);
+    });
 }
 
 closeBarraLateral.click(() => {
@@ -301,43 +300,71 @@ closeBarraLateral.click(() => {
 $("#formEditarUsuario").on("submit", function(e) {
     e.preventDefault();
 
-    if (!isValidCPF_CNPJ) {
-        alertMessage('CPF/CNPJ inválido.', 'error');
-        return;
-    }
-
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     const id = dadosUser.id_usuario;
     const tipoUser = dadosUser.tipo_usuario;
 
     let dados = new FormData(this);
 
+    // Verificar se a senha nova foi fornecida sem a senha atual
+    const senhaNova = dados.get('senha_nova');
+    const senhaAtual = dados.get('senha_hash');
 
+    // Verifica se a senha nova foi informada, mas a atual não
+    if (senhaNova && !senhaAtual) {
+        alertMessage('Para alterar a senha, informe a senha atual.', 'error');
+        return;
+    }
+
+    // Verificar se o CPF/CNPJ é válido
+    const cpfCnpj = dados.get('cpf_cnpj').replace(/\D/g, '');
+    isValidCPF_CNPJ = validarDocumento(cpfCnpj);
+
+    if (!isValidCPF_CNPJ) {
+        alertMessage('CPF/CNPJ inválido.', 'error');
+        return;
+    }
+
+    // Preparar objeto com os dados para atualização
     let editar = {
         id_usuario: id,
         email: dados.get('email'),
         nome_completo: dados.get('nome_completo'),
         data_nascimento: dados.get('data_nascimento'),
-        cpf_cnpj: dados.get('cpf_cnpj').replace(/[./-]/g, ''), // Função .replace para retirar caractéres "-", "." e "/"
-        telefone: dados.get('telefone').replace(/[\s()-]/g, ''), // Função .replace para retirar caractéres "(", ")" e "-"
-        senha_hash: dados.get('senha_hash'),
-        senha_nova: dados.get('senha_nova'),
+        cpf_cnpj: dados.get('cpf_cnpj').replace(/[./-]/g, ''), // Remove caracteres especiais
+        telefone: dados.get('telefone').replace(/[\s()-]/g, ''), // Remove caracteres especiais
         tipo_usuario: tipoUser
     };
     
-    editar = JSON.stringify(editar);
+    // Apenas incluir as senhas no objeto se foram fornecidas
+    if (senhaAtual) {
+        editar.senha_hash = senhaAtual;
+        
+        if (senhaNova) {
+            editar.senha_nova = senhaNova;
+        }
+    }
+
+    const editarJSON = JSON.stringify(editar);
 
     // Rota para editar perfil
     $.ajax({
         method: "put",
-        url: `http://192.168.1.7:5000/cadastro/${id}`, // URL da API na Web
-        data: editar,
+        url: `http://192.168.1.120:5000/cadastro/${id}`, // URL da API na Web
+        data: editarJSON,
         contentType: "application/json",
         success: function(response) {
-            localStorage.setItem('dadosUser', editar);
-
-            // "desjsonizando" a variável editar para conseguir acessar os valores
-            editar = JSON.parse(editar);
+            // Manter a senha original no objeto dadosUser
+            if (!senhaAtual || !senhaNova) {
+                editar.senha_hash = dadosUser.senha_hash;
+            } else if (senhaNova) {
+                // Se forneceu nova senha, atualiza no localStorage
+                editar.senha_hash = senhaNova;
+                delete editar.senha_nova; // Remove campo temporário
+            }
+            
+            // Atualizar os dados no localStorage após receber a resposta positiva
+            localStorage.setItem('dadosUser', JSON.stringify(editar));
 
             // Preencher as informações do menu nav caso email e nome sejam alterados
             if (editar.email !== $("#emailNav").text()) {
@@ -355,5 +382,5 @@ $("#formEditarUsuario").on("submit", function(e) {
             // Exibir mensagem de erro
             alertMessage(response.responseJSON.error, 'error');
         }
-    })
-})
+    });
+});
