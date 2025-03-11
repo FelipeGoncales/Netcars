@@ -134,7 +134,8 @@ $("#formLoginUsuario").on('submit', function (e) {
                 data_nascimento: response.dados.data_nascimento,
                 cpf_cnpj: response.dados.cpf_cnpj,
                 telefone: response.dados.telefone,
-                tipo_usuario: response.dados.tipo_usuario
+                tipo_usuario: response.dados.tipo_usuario,
+                token: response.dados.token
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';

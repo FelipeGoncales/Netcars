@@ -380,6 +380,9 @@ $('#form-add-veic').on('submit', function(e){
             url: "http://192.168.1.120:5000/carro", // URL da API na Web
             data: envia,
             contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+            },
             success: function (response) {
                 alertMessage(`Veículo cadastrado com sucesso!`, 'success');
                 // Após o primeiro AJAX que cria o carro e retorna o id_carro:
@@ -399,6 +402,9 @@ $('#form-add-veic').on('submit', function(e){
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
+                    headers: {
+                        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    },
                     success: function() {
                         // Redirecionar para a página de perfil após cadastrar
                         const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
@@ -473,6 +479,9 @@ $('#form-add-veic').on('submit', function(e){
             url: "http://192.168.1.120:5000/moto", // URL da API na Web
             data: envia,
             contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+            },
             success: function (response) {
                 alertMessage(`Veículo cadastrado com sucesso!`, 'success');
                 // Após o primeiro AJAX que cria o carro e retorna o id_carro:
@@ -492,6 +501,9 @@ $('#form-add-veic').on('submit', function(e){
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
+                    headers: {
+                        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    },
                     success: function() {
                         // Redirecionar para a página de perfil após cadastrar
                         const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
