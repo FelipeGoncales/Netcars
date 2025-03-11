@@ -184,7 +184,7 @@ form {
 }
 
 .div-azul {
-    width: 561px;
+    width: 100%;
     height: 83px;
     flex-shrink: 0;
     border-radius: 16px 16px 0px 0px;
@@ -534,3 +534,358 @@ form {
 }
 
 /* Fim do Main */
+
+/* Responsive Styles for adicionar-veiculo.css */
+
+/* Tablets and smaller desktops (max-width: 992px) */
+@media screen and (max-width: 992px) {
+    .container-branco {
+        width: 95vw;
+        height: auto;
+        min-height: 80vh;
+        padding: 30px 20px 80px;
+    }
+
+    .pai-div-input {
+        width: 90%;
+        max-width: 600px;
+    }
+
+    .placa {
+        width: 90%;
+        max-width: 450px;
+    }
+
+    .placa .linha {
+        width: 80%;
+        max-width: 350px;
+    }
+
+    .aviso {
+        width: 90%;
+        max-width: 380px;
+    }
+
+    .texto-aviso {
+        width: 80%;
+        font-size: 11px;
+    }
+
+    .veiculo {
+        width: 90%;
+        max-width: 450px;
+    }
+
+    .titulo, .titulo2, .titulo3 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    #fase-5 {
+        top: 0;
+    }
+    
+    .div-preview-container-pai {
+        position: relative;
+        bottom: 0;
+        margin-top: 20px;
+        width: 90%;
+    }
+
+    #preview-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Mobile devices (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .container-branco {
+        width: 98vw;
+        padding: 20px 10px 70px;
+    }
+
+    .voltar, .continuar {
+        bottom: 15px;
+    }
+
+    .voltar {
+        left: 20px;
+    }
+
+    .continuar {
+        right: 20px;
+    }
+
+    .pai-div-input {
+        width: 95%;
+        gap: 15px;
+    }
+
+    .titulo, .titulo2, .titulo3 {
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 15px;
+    }
+
+    .placa input {
+        font-size: 30px;
+    }
+
+    .veiculo {
+        height: 90px;
+    }
+
+    .veiculo .icon-veiculo {
+        width: 120px;
+    }
+
+    .veiculo p {
+        font-size: 14px;
+        left: 20px;
+    }
+
+    .radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .radio-group label:first-child {
+        margin-bottom: 5px;
+    }
+
+    .div-input select, 
+    .div-input input {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .container-2labels {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .aviso {
+        padding: 10px;
+        height: auto;
+    }
+
+    .texto-aviso {
+        width: 75%;
+        font-size: 10px;
+        line-height: 15px;
+    }
+
+    .escudo-aviso {
+        top: 12px;
+    }
+
+    .preview-item {
+        width: 80px;
+        height: 80px;
+    }
+
+    .upload-label {
+        width: 150px;
+        height: 120px;
+    }
+}
+
+/* Small mobile devices (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    .container-branco {
+        min-height: 75vh;
+        padding: 15px 10px 60px;
+    }
+
+    .titulo, .titulo2, .titulo3 {
+        font-size: 18px;
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .placa {
+        width: 90%;
+        height: 200px;
+    }
+
+    .placa input {
+        font-size: 24px;
+        bottom: -35px;
+    }
+
+    .placa .linha {
+        bottom: -45px;
+    }
+
+    .div-azul {
+        height: 70px;
+    }
+
+    .logo-brazil {
+        width: 30px;
+        height: 30px;
+    }
+
+    .aviso {
+        margin-top: 15px;
+        width: 90%;
+        height: auto;
+        padding: 8px;
+    }
+
+    .escudo-aviso {
+        font-size: 14px;
+        left: 12px;
+        top: 10px;
+    }
+
+    .texto-aviso {
+        font-size: 9px;
+        line-height: 14px;
+        left: 35px;
+    }
+
+    .veiculo {
+        height: 80px;
+        width: 90%;
+    }
+
+    .veiculo .icon-veiculo {
+        width: 100px;
+    }
+
+    .veiculo .icon-veiculo i {
+        font-size: 1.8rem;
+    }
+
+    .veiculo p {
+        font-size: 13px;
+        left: 15px;
+        top: 15px;
+    }
+
+    .veiculo:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    .div-input label {
+        font-size: 0.8rem;
+    }
+
+    .div-input label.active,
+    .div-input:focus-within label {
+        font-size: 0.7rem;
+    }
+
+    .div-input select, 
+    .div-input input {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .voltar, .continuar {
+        bottom: 12px;
+    }
+
+    .voltar {
+        left: 15px;
+        font-size: 12px;
+    }
+
+    .continuar {
+        right: 15px;
+        width: 100px;
+        height: 35px;
+    }
+
+    .continuar p {
+        font-size: 12px;
+    }
+
+    .upload-label {
+        width: 120px;
+        height: 100px;
+    }
+
+    .upload-label i {
+        font-size: 1.8rem;
+    }
+
+    .preview-item {
+        width: 70px;
+        height: 70px;
+        margin: 3px;
+    }
+
+    .remove-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+    }
+}
+
+/* Extra small devices (max-width: 360px) */
+@media screen and (max-width: 360px) {
+    .container-branco {
+        padding: 10px 5px 50px;
+    }
+
+    .placa {
+        height: 180px;
+    }
+
+    .placa input {
+        font-size: 20px;
+        width: 200px;
+    }
+
+    .veiculo {
+        height: 70px;
+    }
+
+    .veiculo .icon-veiculo {
+        width: 80px;
+    }
+
+    .veiculo .icon-veiculo i {
+        font-size: 1.5rem;
+    }
+
+    .veiculo p {
+        font-size: 12px;
+        left: 10px;
+    }
+
+    .div-input label {
+        font-size: 0.75rem;
+    }
+
+    .div-input select, 
+    .div-input input {
+        padding: 7px;
+        font-size: 0.75rem;
+    }
+
+    .continuar {
+        width: 90px;
+    }
+
+    .continuar p {
+        font-size: 11px;
+    }
+
+    .voltar {
+        font-size: 11px;
+    }
+
+    .voltar i, .continuar i {
+        font-size: 0.8rem;
+    }
+
+    .preview-item {
+        width: 60px;
+        height: 60px;
+    }
+}
