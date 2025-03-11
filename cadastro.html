@@ -77,34 +77,5 @@
             <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
         </div>
     </footer>
-
-    <script>
-        $('.div-input').each(function() {
-            const $input = $(this).find('input');
-            const $label = $(this).find('label');
-
-            $input.on('input', function() {
-                if ($input.val().trim() !== "") {
-                    $label.addClass('active');
-                } else {
-                    $label.removeClass('active');
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            $('.div-input').each(function() {
-            const $input = $(this).find('input');
-            const $label = $(this).find('label');
-
-            if ($input.val().trim() !== "") {
-                $label.addClass('active');
-            } else {
-                $label.removeClass('active');
-            }
-        });
-        });
-
-    </script>
 </body>
 </html>

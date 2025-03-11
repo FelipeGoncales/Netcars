@@ -1,4 +1,13 @@
+// Função para limpar os inputs quando abrir a página (Caso o usuário cadastre e volte a página pelo navegador)
+$(document).ready(function() {
+    $('input').each(function() {
+        this.val('');
+    })
+})
+
+
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
+
 // Ao carregar o documento, adiciona a classe "active" ao label anterior se o input/select tiver valor
 document.addEventListener("DOMContentLoaded", function () {
     // Seleciona todos os selects e inputs dentro de elementos com a classe .div-input
@@ -28,10 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
 // Função para validar a placa
 function validarPlaca() {
     const placa = $('#placa').val(); // Pega o valor da placa
-    const regex = /^[A-Za-z]{3}[0-9]{1}[A-Za-z]{1}[0-9]{2}$/; // Expressão regular para validar o formato
+    const regexMercosul = /^[A-Za-z]{3}[0-9]{1}[A-Za-z]{1}[0-9]{2}$/; // Formato ABC1D23
+    const regexAntigo = /^[A-Za-z]{3}[0-9]{4}$/; // Formato ABC1234
 
-    if (!regex.test(placa)) {
-        alertMessage("Formato de placa inválido! A placa deve seguir o padrão ABC1D23.", 'error');
+    if (!regexMercosul.test(placa) && !regexAntigo.test(placa)) {
+        alertMessage("Formato de placa inválido! A placa deve seguir o padrão ABC1234 ou ABC1D23.", 'error');
         return false; // Retorna falso se não passar na validação
     }
 
@@ -92,14 +102,19 @@ function validarCampo(input) {
         // Exibe o alerta apenas uma vez
         if (!input.alertado) {
             input.alertado = true;
-            alertMessage(`Insira um ano válido.`, 'error')
+            alertMessage(`Insira um ano válido (${min} - ${max}).`, 'error')
             input.focus();
         }
     }
 }
 
 // Seleciona os inputs de ano de modelo e de fabricação e adiciona os eventos para validação
-document.querySelectorAll("#ano-modelo, #ano-fabricacao").forEach(input => {
+document.querySelectorAll("#ano-modelo-carro, #ano-fabricacao-carro").forEach(input => {
+    input.addEventListener("blur", () => validarCampo(input));
+    input.addEventListener("input", () => input.alertado = false);
+});
+
+document.querySelectorAll("#ano-modelo-moto, #ano-fabricacao-moto").forEach(input => {
     input.addEventListener("blur", () => validarCampo(input));
     input.addEventListener("input", () => input.alertado = false);
 });
@@ -332,38 +347,150 @@ $('#form-add-veic').on('submit', function(e){
 
         envia = JSON.stringify(envia);
 
+        const files = $('#upload-imagem')[0].files; // Obter os arquivos
+
+        if (!files.length) {
+            alertMessage(`Informações faltando: Imagens.`, 'error');
+            return;
+        }        
+
         $.ajax({
             method: "post",
             url: "http://192.168.1.120:5000/carro", // URL da API na Web
             data: envia,
             contentType: "application/json",
             success: function (response) {
-                console.log(response);
-                // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
-    
-                // Redirecionar para a página de perfil após cadastrar
-                const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-                const tipoUser = dadosUser.tipo_usuario;
-    
-                if (tipoUser === 1) {
-                    window.location.href = 'administrador-perfil.html';
+                alertMessage(`Veículo cadastrado com sucesso!`, 'success');
+                // Após o primeiro AJAX que cria o carro e retorna o id_carro:
+                const id_carro = response.dados.id_carro;
+
+                // Ao montar o FormData para as imagens:
+                let formDataImg = new FormData();
+
+                for (let i = 0; i < files.length; i++) {
+                    formDataImg.append('imagens', files[i]);
                 }
-                if (tipoUser === 2) {
-                    window.location.href = 'vendedor-perfil.html';
-                }
-    
-                // Definir mensagem para ser exibida no perfil
-                localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+
+                // Envia as imagens para a API
+                $.ajax({
+                    method: "post",
+                    url: `http://192.168.1.120:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    data: formDataImg,
+                    contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
+                    processData: false,  // Impede que o jQuery tente processar os dados
+                    success: function() {
+                        // Redirecionar para a página de perfil após cadastrar
+                        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+                        const tipoUser = dadosUser.tipo_usuario;
+
+                        // Definir mensagem para ser exibida no perfil
+                        localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+                        
+                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+                        if (tipoUser === 1) {
+                            window.location.href = 'administrador-perfil.html';
+                        }
+                        if (tipoUser === 2) {
+                            window.location.href = 'vendedor-perfil.html';
+                        }
+                    },
+                    error: function(response) {
+                        alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                    }
+                });
             },
-            error: function (response) {
-                alertMessage(response.responseJSON.error, 'error');
-                console.log(response);
+            error: function(response) {
+                alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
             }
         })
     }
 
-
     if ($('#tipo-moto').hasClass(active)) {
-        // Mesma lógica porém para adicionar moto
+        
+        let envia = {
+            placa: data.get('placa'),
+            marca: data.get('marca-carro'),
+            modelo: data.get('modelo-carro'),
+            ano_modelo: data.get('ano-modelo-carro'),
+            ano_fabricacao: data.get('ano-fabricacao-carro'),
+            versao: data.get('versao-carro'),
+            cor: data.get('cor-carro'),
+            renavam: data.get('renavam-carro'),
+            cambio: data.get('cambio-carro'),
+            combustivel: data.get('combustivel-carro'),
+            categoria: data.get('categoria-carro'),
+            quilometragem: data.get('quilometragem-carro'),
+            estado: data.get('estado-carro'),
+            cidade: data.get('cidade-carro'),
+            preco_compra: data.get('preco_c-carro'),
+            preco_venda: data.get('preco_v-carro'),
+            licenciado: data.get('licenciado-carro')
+        }
+
+        for (const key in envia) {
+            if (!envia[key]) {
+                alertMessage(`Informações faltando: ${key}.`, 'error');
+                return;
+            }
+        }        
+
+        envia = JSON.stringify(envia);
+
+        const files = $('#upload-imagem')[0].files; // Obter os arquivos
+
+        if (!files.length) {
+            alertMessage(`Informações faltando: Imagens.`, 'error');
+            return;
+        }        
+
+        $.ajax({
+            method: "post",
+            url: "http://192.168.1.120:5000/carro", // URL da API na Web
+            data: envia,
+            contentType: "application/json",
+            success: function (response) {
+                alertMessage(`Veículo cadastrado com sucesso!`, 'success');
+                // Após o primeiro AJAX que cria o carro e retorna o id_carro:
+                const id_carro = response.dados.id_carro;
+
+                // Ao montar o FormData para as imagens:
+                let formDataImg = new FormData();
+
+                for (let i = 0; i < files.length; i++) {
+                    formDataImg.append('imagens', files[i]);
+                }
+
+                // Envia as imagens para a API
+                $.ajax({
+                    method: "post",
+                    url: `http://192.168.1.120:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    data: formDataImg,
+                    contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
+                    processData: false,  // Impede que o jQuery tente processar os dados
+                    success: function() {
+                        // Redirecionar para a página de perfil após cadastrar
+                        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+                        const tipoUser = dadosUser.tipo_usuario;
+
+                        // Definir mensagem para ser exibida no perfil
+                        localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+                        
+                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+                        if (tipoUser === 1) {
+                            window.location.href = 'administrador-perfil.html';
+                        }
+                        if (tipoUser === 2) {
+                            window.location.href = 'vendedor-perfil.html';
+                        }
+                    },
+                    error: function(response) {
+                        alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                    }
+                });
+            },
+            error: function(response) {
+                alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+            }
+        })
     }
 }) 
