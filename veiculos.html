@@ -84,32 +84,592 @@
                             <p>São Paulo</p>
                             <i class="fa-solid fa-x"></i>
                         </div>
-                        </div>
                     </div>
-
-                    <div class="linha"></div> <!-- Linha -->
+                </div>
                 
-                    <div class="div-tipo-veic">
-                        <div class="active" id="tipo-veic-carro">
-                            <i class="fa-solid fa-car"></i>
-                            <p>Carros</p>
-                        </div>
-                        <div id="tipo-veic-moto">
-                            <i class="fa-solid fa-motorcycle"></i>
-                            <p>Motos</p>
-                        </div>
-                        <div id="tipo-veic-bg-selecionado"></div>
+                <div class="linha"></div> <!-- Linha -->
+                
+                <div class="div-tipo-veic">
+                    <div class="active" id="tipo-veic-carro">
+                        <i class="fa-solid fa-car"></i>
+                        <p>Carros</p>
                     </div>
+                    <div id="tipo-veic-moto">
+                        <i class="fa-solid fa-motorcycle"></i>
+                        <p>Motos</p>
+                    </div>
+                    <div id="tipo-veic-bg-selecionado"></div>
+                </div>
+                
+                <div class="linha"></div> <!-- Linha -->
 
-                    <div class="linha"></div> <!-- Linha -->
+                <div class="div-filtro-title">
+                    <h2>Lista de Veículos</h2>
+                    <div class="filtros-aplic">
+                            <ul class="itens-details">
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                                <li><a href=""><img src="assets/img/bmw.png" alt=""></a></li>
+                            </ul>
+                    </div>
+                </div>
 
+                <div class="linha"></div> <!-- Linha -->
 
+                <div class="div-filtro-title">
+                    <h2>Modelos</h2>
+                    <div class="filtros-aplic">
+                            <input type="text" name="Populares" id="" placeholder="Populares">
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title">
+                    <h2>Localidade</h2>
+                    <div class="filtros-aplic f-d">
+                            <input type="text" name="Estado" id="" placeholder="Estado">
+                            <input type="text" name="Cidade" id="" placeholder="Cidade">        
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title">
+                    <h2>Preço</h2>
+                    <div class="filtros-aplic">
+                            <input type="text" name="Preço min" id="" placeholder="Preço mínimo">
+                            <input type="text" name="Preço max" id="" placeholder="Preço máximo">        
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title">
+                    <h2>Ano</h2>
+                    <div class="filtros-aplic">
+                            <input type="text" name="Ano min" id="" placeholder="Ano mínimo">
+                            <input type="text" name="Ano max" id="" placeholder="Ano máximo">        
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+                <div class="div-filtro-title">
+                    <h2>Cor</h2>
+                    <div class="filtro-cor-container">
+                        <div class="filtro-cor-header">
+                            <span>Selecione as cores</span>
+                            <i class="fa-solid fa-chevron-down" style="color: #757575;"></i>
+                        </div>
+                        <div class="filtro-cor-options">
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-preto" name="cor-preto">
+                                <label for="cor-preto">Preto</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-branco" name="cor-branco">
+                                <label for="cor-branco">Branco</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-prata" name="cor-prata">
+                                <label for="cor-prata">Prata</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-vermelho" name="cor-vermelho">
+                                <label for="cor-vermelho">Vermelho</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-azul" name="cor-azul">
+                                <label for="cor-azul">Azul</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-cinza" name="cor-cinza">
+                                <label for="cor-cinza">Cinza</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-verde" name="cor-verde">
+                                <label for="cor-verde">Verde</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="cor-amarelo" name="cor-amarelo">
+                                <label for="cor-amarelo">Amarelo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="sec-veiculos-carro">
+            <div class="div-qts-anuncios">
+                <p>1.233 anúncios encontrados</p>
+            </div>
+
+            <div class="div-pai-cards">
+                
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/img/fiesta/img1.png" alt="">
+                    <div class="itens-card">
+                        <h3>Ford Fiesta</h3>
+                        <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
+                        <div class="container-info-card">
+                            <div class="info-card">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>2012</p>
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <p>128.763 Km</p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Birigui (SP)</p>
+                            </div>
+                        </div>
+                        <h3>R$21.900 </h3>
+                        <button id="link_carro">Ver detalhes</button>
+                    </div>
                 </div>
             </div>
         </section>
-        <section class="sec-veiculos">
-            <p>asdas</p>
+
+
+
+        <section class="sec-veiculos-moto">
+            <div class="div-qts-anuncios">
+                <p>876 anúncios encontrados</p>
+            </div>
+            <div class="div-pai-cards2">
+                <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/bmwS1000RR/img1.jpg" alt="">
+                <div class="itens-card2 ">
+                    <h3>BMW S 1000 RR</h3>
+                    <div class="container-info-card">
+                        <div class="info-card">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <p>2021</p>
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <p>16.233 Km</p>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Birigui (SP)</p>
+                        </div>
+                    </div>
+                    <h3>R$21.900 </h3>
+                    <button id="link_carro">Ver detalhes</button>
+                </div>
+            </div>
+            </div>
         </section>
+        
     </main>
 
     <footer id="footer">
