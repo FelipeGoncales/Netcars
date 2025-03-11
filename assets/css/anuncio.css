@@ -563,6 +563,7 @@ main {
 
 @media (max-width: 768px) {
     .sec-marcas {
+        margin-top: 65px;
         & .div-marcas {
             & div {
                 width: 110px;
@@ -585,6 +586,11 @@ main {
                 }
             }
         }
+    }
+
+    .div-contents-pai {
+        position: relative;
+        top: 0px;
     }
 }
 
@@ -666,7 +672,7 @@ main {
     }
 
     .sec-marcas {
-        margin-top: 180px;
+        margin-top: 225px;
     }
     .sec-modelos {
         margin-top: 45px;

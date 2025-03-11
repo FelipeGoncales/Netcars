@@ -94,6 +94,7 @@ form {
 }
 
 .continuar {
+    display: none;
     position: absolute;
     bottom: 20px;
     right: 50px;

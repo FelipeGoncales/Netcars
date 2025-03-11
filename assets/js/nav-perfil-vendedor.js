@@ -11,6 +11,31 @@ if (tipoUser === 3) {
     window.location.href = 'cliente-perfil.html';
 }
 
+// Aparecer mensagem caso cadastrar veículo dê certo
+
+function alertMessage(text, type) {
+    $('#divAlertMessage').css('display', 'flex')
+
+    let bgColor = type === 'success' ? '#0bd979' : '#f71445';
+
+    $('<p>')
+        .addClass('alertMessage')
+        .text(text)
+        .css('background-color', bgColor)
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+}
+
+const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+
+if (mensagemCadVeic) {
+    alertMessage(mensagemCadVeic, 'success');
+    localStorage.removeItem('msgCadVeic')
+};
+
 // Fazer o nav funcionar
 
 // Função para trocar a borda roxa do A que for clicado
