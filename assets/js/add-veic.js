@@ -1,9 +1,20 @@
-// Função para limpar os inputs quando abrir a página (Caso o usuário cadastre e volte a página pelo navegador)
-$(document).ready(function() {
-    $('input').each(function() {
-        this.val('');
-    })
-})
+// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+
+const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+if (!dadosUser) {
+    localStorage.setItem('mensagem', JSON.stringify({
+        error: 'Sessão não iniciada.'
+    }))
+
+    window.location.href = 'login.html';
+}
+
+const tipoUser = dadosUser.tipo_usuario;
+
+if (tipoUser === 3) {
+    window.location.href = 'index.html';
+}
 
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
@@ -405,26 +416,30 @@ $('#form-add-veic').on('submit', function(e){
         })
     }
 
-    if ($('#tipo-moto').hasClass(active)) {
+    if ($('#tipo-moto').hasClass('active')) {
         
         let envia = {
             placa: data.get('placa'),
-            marca: data.get('marca-carro'),
-            modelo: data.get('modelo-carro'),
-            ano_modelo: data.get('ano-modelo-carro'),
-            ano_fabricacao: data.get('ano-fabricacao-carro'),
-            versao: data.get('versao-carro'),
-            cor: data.get('cor-carro'),
-            renavam: data.get('renavam-carro'),
-            cambio: data.get('cambio-carro'),
-            combustivel: data.get('combustivel-carro'),
-            categoria: data.get('categoria-carro'),
-            quilometragem: data.get('quilometragem-carro'),
-            estado: data.get('estado-carro'),
-            cidade: data.get('cidade-carro'),
-            preco_compra: data.get('preco_c-carro'),
-            preco_venda: data.get('preco_v-carro'),
-            licenciado: data.get('licenciado-carro')
+            marca: data.get('marca-moto'),
+            modelo: data.get('modelo-moto'),
+            ano_modelo: data.get('ano-modelo-moto'),
+            ano_fabricacao: data.get('ano-fabricacao-moto'),
+            categoria: data.get('categoria-moto'),
+            cor: data.get('cor-moto'),
+            renavam: data.get('renavam-moto'),
+            licenciado: data.get('licenciado-moto'),
+            marchas: data.get('marchas-moto'),
+            partida: data.get('partida-moto'),
+            tipo_motor: data.get('tipo-motor-moto'),
+            cilindrada: data.get('cilindradas-moto'),
+            freio_dianteiro_traseiro: data.get('freio-moto'),
+            refrigeracao: data.get('refrigeracao-moto'),
+            estado: data.get('estado-moto'),
+            cidade: data.get('cidade-moto'),
+            alimentacao: data.get('alimentacao-moto'),
+            quilometragem: data.get('quilometragem-moto'),
+            preco_compra: data.get('preco_c-moto'),
+            preco_venda: data.get('preco_v-moto')
         }
 
         for (const key in envia) {
@@ -445,13 +460,13 @@ $('#form-add-veic').on('submit', function(e){
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.120:5000/carro", // URL da API na Web
+            url: "http://192.168.1.120:5000/moto", // URL da API na Web
             data: envia,
             contentType: "application/json",
             success: function (response) {
                 alertMessage(`Veículo cadastrado com sucesso!`, 'success');
                 // Após o primeiro AJAX que cria o carro e retorna o id_carro:
-                const id_carro = response.dados.id_carro;
+                const id_moto = response.dados.id_moto;
 
                 // Ao montar o FormData para as imagens:
                 let formDataImg = new FormData();
@@ -463,7 +478,7 @@ $('#form-add-veic').on('submit', function(e){
                 // Envia as imagens para a API
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.120:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.120:5000/moto/upload_img/${id_moto}`, // Certifique-se de usar o id_carro retornado
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
