@@ -1,8 +1,7 @@
 /* Main */
 
 main {
-    margin-top: 16px;
-    min-height: 100vh;
+    margin-top: 54px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,8 +56,8 @@ form {
 
 /* Classes universais para todas as etapas */
 .container-branco {
-    width: 1434px;
-    height: 600px;
+    width: 90vw;
+    height: 83vh;
     border-radius: 12px;
     border: 1px solid #D0CFDA;
     background: #FFF;
@@ -317,7 +316,8 @@ form {
     line-height: 19px;
     /* Ajustado para 125% */
     text-align: center;
-    margin-bottom: 40px;
+    margin-top: 40px;
+    margin-bottom: 26px;
 }
 
 .pai-div-input {
