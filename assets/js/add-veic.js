@@ -305,7 +305,9 @@ $('#btn-voltar').click(function () {
         if (divCerta >= 0) {
             listaFases[divCerta].css('display', 'flex');
 
-            $('#btn-voltar').css('display', 'none');
+            if (divCerta === 0) {
+                $('#btn-voltar').css('display', 'none');
+            }
 
             if ($('#btn-continuar').attr('type') === 'submit') {
                 $('#btn-continuar').find('p').text('Continuar');
