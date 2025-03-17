@@ -396,7 +396,7 @@ $('#deletar-usuario').click(function() {
         showCancelButton: true,
         confirmButtonColor: "#0bd979",
         cancelButtonColor: "#f71445",
-        confirmButtonText: "Confirmar"
+        confirmButtonText: "Confirmar" 
       }).then((result) => {
         if (result.isConfirmed) {
             const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
