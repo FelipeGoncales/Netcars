@@ -91,3 +91,74 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar (mostrar carros por padrão)
     mostrarCarros();
 });
+
+// Lógica para funcionar o scroll
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona os elementos necessários
+    const divPaiFiltro = document.querySelector('.div-pai-filtro');
+    const secVeiculosCarro = document.querySelector('.sec-veiculos-carro');
+    const secVeiculosMoto = document.querySelector('.sec-veiculos-moto');
+    
+    // Guarda o estilo original para poder restaurá-lo depois
+    const estiloOriginal = {
+        width: '100%',
+        position: 'static',
+        top: '20px'
+    };
+    
+    const estiloFixo = {
+        width: '28.3%',
+        position: 'fixed',
+        top: '86px'
+    };
+    
+    // Função para verificar a posição do scroll e aplicar os estilos adequados
+    function verificarScroll() {
+        const scrollPosition = window.scrollY;
+        
+        // Obtém a posição e dimensões das seções de veículos
+        const secVeiculosCarroRect = secVeiculosCarro.getBoundingClientRect();
+        const secVeiculosMotoRect = secVeiculosMoto.getBoundingClientRect();
+        
+        // Calcula o final da seção de veículos (considerando ambas as seções)
+        const finalSecVeiculos = Math.max(
+            secVeiculosCarro.offsetTop + secVeiculosCarro.offsetHeight,
+            secVeiculosMoto.offsetTop + secVeiculosMoto.offsetHeight
+        );
+        
+        // Altura do elemento de filtro
+        const alturaFiltro = divPaiFiltro.offsetHeight;
+        
+        // Posição onde o filtro deve parar (final da seção de veículos menos a altura do filtro)
+        const posicaoParada = finalSecVeiculos - alturaFiltro;
+        
+        if (scrollPosition < 128.8) {
+            // Antes do ponto de fixação, mantém o estilo original
+            divPaiFiltro.style.width = estiloOriginal.width;
+            divPaiFiltro.style.position = estiloOriginal.position;
+            divPaiFiltro.style.top = estiloOriginal.top;
+            divPaiFiltro.style.left = '';
+        } else if (scrollPosition >= 128.8 && scrollPosition < posicaoParada - 86) {
+            // Entre o ponto de fixação e o ponto de parada, mantém fixo
+            divPaiFiltro.style.width = estiloFixo.width;
+            divPaiFiltro.style.position = estiloFixo.position;
+            divPaiFiltro.style.top = estiloFixo.top;
+            divPaiFiltro.style.left = '';
+        } else {
+            // Após o ponto de parada, posiciona absolutamente no final da seção
+            divPaiFiltro.style.width = estiloFixo.width;
+            divPaiFiltro.style.position = 'absolute';
+            divPaiFiltro.style.top = (posicaoParada + 0) + 'px';
+            divPaiFiltro.style.left = '';
+        }
+    }
+    
+    // Adiciona o listener de evento para o scroll
+    window.addEventListener('scroll', verificarScroll);
+    
+    // Verifica a posição inicial ao carregar a página
+    verificarScroll();
+    
+    // Atualiza quando a janela é redimensionada
+    window.addEventListener('resize', verificarScroll);
+});
