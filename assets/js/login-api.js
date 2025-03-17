@@ -102,7 +102,11 @@ $("#formCadastroUsuario").on("submit", function (e) {
             window.location.href = 'index.html';
         },
         error: function (response) {
-            $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
+            $("#mensagemError")
+                .fadeIn(400)
+                .text(response.responseJSON.error).css('display', 'block')
+                .delay(4000)
+                .fadeOut(400)
         }
     })
 })
@@ -141,7 +145,11 @@ $("#formLoginUsuario").on('submit', function (e) {
             window.location.href = 'index.html';
         },
         error: function (response) {
-            $("#mensagemError").text(response.responseJSON.error).css('display', 'block')
+            $("#mensagemError")
+                .fadeIn(400)
+                .text(response.responseJSON.error).css('display', 'block')
+                .delay(4000)
+                .fadeOut(400)
         }
     })
 })

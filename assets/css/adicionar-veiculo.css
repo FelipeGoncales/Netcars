@@ -72,6 +72,7 @@ form {
 
 
 .voltar {
+    display: none;
     position: absolute;
     bottom: 20px;
     left: 50px;
@@ -84,7 +85,6 @@ form {
     border: none;
     background: none;
     cursor: pointer;
-    display: flex;
     align-items: center;
 
     & i {

@@ -73,6 +73,7 @@ header {
 .container-login {
     background-color: var(--cor-bg-sec);
     padding: 40px;
+    padding-bottom: 55px;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
     display: flex;
@@ -173,11 +174,16 @@ header {
     gap: 10px;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #mensagemError {
+    text-align: center;
+    position: absolute;
+    margin-top: 5px;
+    top: 100%;
     display: none;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     color: rgb(210, 32, 0);
 }
 
@@ -318,7 +324,13 @@ footer {
 
     .container-login {
         padding: 35px 25px;
+        padding-bottom: 47px;
     }
+    
+    #mensagemError {
+        bottom: -25px;
+    }
+    
     .div-input {
         & input {
             width: 300px;
@@ -347,10 +359,14 @@ footer {
     }
     .container-login {
         padding: 30px 25px;
+        padding-bottom: 47px;
         & h1 {
             width: 45vw;
             font-size: 17px;
         }
+    }
+    #mensagemError {
+        bottom: -23px;
     }
     .div-input {
         & input {
@@ -365,6 +381,7 @@ footer {
 @media (max-width: 320px) {
     .container-login {
         padding: 35px 25px;
+        padding-bottom: 47px;
         & h1 {
             width: 55vw;
             font-size: 16px;
@@ -375,6 +392,10 @@ footer {
             width: 230px;
             padding: 9px;
         }
+    }
+    
+    #mensagemError {
+        bottom: -25px;
     }
     .btn-acao {
         width: 230px;

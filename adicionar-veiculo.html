@@ -105,7 +105,6 @@
                             <label for="marca-carro">Marca*</label>
                             <select id="marca-carro" name="marca-carro">
                                 <option value=""></option>
-                                <!-- Carros -->
                                 <option value="chevrolet">Chevrolet</option>
                                 <option value="ford">Ford</option>
                                 <option value="volkswagen">Volkswagen</option>
@@ -113,17 +112,31 @@
                                 <option value="hyundai">Hyundai</option>
                                 <option value="toyota">Toyota</option>
                                 <option value="renault">Renault</option>
+                                <option value="honda">Honda</option>
+                                <option value="nissan">Nissan</option>
+                                <option value="peugeot">Peugeot</option>
+                                <option value="citroen">Citroën</option>
+                                <option value="mitsubishi">Mitsubishi</option>
+                                <option value="kia">Kia</option>
+                                <option value="bmw">BMW</option>
+                                <option value="mercedes-benz">Mercedes-Benz</option>
+                                <option value="audi">Audi</option>
+                                <option value="land-rover">Land Rover</option>
+                                <option value="jeep">Jeep</option>
+                                <option value="volvo">Volvo</option>
+                                <option value="subaru">Subaru</option>
+                                <option value="porsche">Porsche</option>
+                                <option value="mini">Mini</option>
+                                <option value="lexus">Lexus</option>
+                                <option value="mazda">Mazda</option>
+                                <option value="chery">Chery</option>
+                                <option value="jac">JAC</option>
                             </select>
                         </div>
 
                         <div class="div-input">
                             <label for="modelo-carro">Modelo*</label>
-                            <select id="modelo-carro" name="modelo-carro">
-                                <option value=""></option>
-                                <option value="onix">Onix</option>
-                                <option value="fiesta">Fiesta</option>
-                                <option value="uno">Uno</option>
-                            </select>
+                            <input id="modelo-carro" name="modelo-carro" type="text" placeholder="" />
                         </div>
 
                         <div class="container-2labels">
@@ -134,7 +147,8 @@
 
                             <div class="div-input">
                                 <label for="ano-fabricacao-carro">Ano de fabricação*</label>
-                                <input id="ano-fabricacao-carro" name="ano-fabricacao-carro" type="number" placeholder="" />
+                                <input id="ano-fabricacao-carro" name="ano-fabricacao-carro" type="number"
+                                    placeholder="" />
                             </div>
                         </div>
 
@@ -161,7 +175,7 @@
                                 <input type="radio" name="licenciado-carro" value="1" checked />
                                 <span>Sim</span>
                             </label>
-                            
+
                             <label>
                                 <input type="radio" name="licenciado-carro" value="0" />
                                 <span>Não</span>
@@ -178,24 +192,27 @@
                             <label for="marca-moto">Marca*</label>
                             <select id="marca-moto" name="marca-moto">
                                 <option value=""></option>
-                                <!-- Motos -->
                                 <option value="honda">Honda</option>
                                 <option value="yamaha">Yamaha</option>
                                 <option value="suzuki">Suzuki</option>
                                 <option value="kawasaki">Kawasaki</option>
                                 <option value="bmw">BMW Motorrad</option>
                                 <option value="ducati">Ducati</option>
+                                <option value="harley-davidson">Harley-Davidson</option>
+                                <option value="ktm">KTM</option>
+                                <option value="triumph">Triumph</option>
+                                <option value="aprilia">Aprilia</option>
+                                <option value="royal-enfield">Royal Enfield</option>
+                                <option value="benelli">Benelli</option>
+                                <option value="mv-agusta">MV Agusta</option>
+                                <option value="zero">Zero Motorcycles</option>
+                                <option value="indian">Indian Motorcycle</option>
                             </select>
                         </div>
 
                         <div class="div-input">
                             <label for="modelo-moto">Modelo*</label>
-                            <select id="modelo-moto" name="modelo-moto">
-                                <option value=""></option>
-                                <option value="onix">Onix</option>
-                                <option value="fiesta">Fiesta</option>
-                                <option value="uno">Uno</option>
-                            </select>
+                            <input id="modelo-moto" name="modelo-moto" type="text" placeholder="" />
                         </div>
 
                         <div class="container-2labels">
@@ -206,13 +223,23 @@
 
                             <div class="div-input">
                                 <label for="ano-fabricacao-moto">Ano de fabricação*</label>
-                                <input id="ano-fabricacao-moto" name="ano-fabricacao-moto" type="number" placeholder="" />
+                                <input id="ano-fabricacao-moto" name="ano-fabricacao-moto" type="number"
+                                    placeholder="" />
                             </div>
                         </div>
 
                         <div class="div-input">
                             <label for="categoria-moto">Categoria*</label>
-                            <input id="categoria-moto" name="categoria-moto" type="text" placeholder="" />
+                            <select id="categoria-moto" name="categoria-moto">
+                                <option value=""></option>
+                                <option value="esportiva">Esportiva</option>
+                                <option value="custom">Custom</option>
+                                <option value="scooter">Scooter</option>
+                                <option value="adventure">Adventure</option>
+                                <option value="off-road">Off-road</option>
+                                <option value="naked">Naked</option>
+                                <option value="touring">Touring</option>
+                            </select>
                         </div>
 
                         <div class="container-2labels">
@@ -233,7 +260,7 @@
                                 <input type="radio" name="licenciado-moto" value="1" checked />
                                 <span>Sim</span>
                             </label>
-                            
+
                             <label>
                                 <input type="radio" name="licenciado-moto" value="0" />
                                 <span>Não</span>
@@ -286,14 +313,15 @@
                                     <option value="esportivo">Esportivo</option>
                                     <option value="luxo">Luxo</option>
                                     <option value="compacto">Compacto</option>
-                                    <option value="elétrico">Elétrico</option>
-                                    <option value="híbrido">Híbrido</option>
+                                    <option value="eletrico">Elétrico</option>
+                                    <option value="hibrido">Híbrido</option>
                                 </select>
                             </div>
 
                             <div class="div-input">
                                 <label for="quilometragem-carro">Quilometragem*</label>
-                                <input id="quilometragem-carro" name="quilometragem-carro" type="number" placeholder="" />
+                                <input id="quilometragem-carro" name="quilometragem-carro" type="number"
+                                    placeholder="" />
                             </div>
                         </div>
 
@@ -330,44 +358,32 @@
                     <p class="titulo3">Complemente as informações do seu veículo</p>
                     <div class="pai-div-input">
                         <div class="container-2labels">
-                        <div class="div-input">
-                            <label for="marchas-moto">Marchas*</label>
-                            <input
-                                id="marchas-moto"
-                                name="marchas-moto"
-                                type="number"
-                            />
+                            <div class="div-input">
+                                <label for="marchas-moto">Marchas*</label>
+                                <input id="marchas-moto" name="marchas-moto" type="number" />
+                            </div>
+                            <div class="div-input">
+                                <label for="partida-moto">Partida*</label>
+                                <select id="partida-moto" name="partida-moto">
+                                    <option value=""></option>
+                                    <option value="eletrica">Elétrica</option>
+                                    <option value="pedal">Pedal</option>
+                                    <option value="mista">Mista (Elétrica + Pedal)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="div-input">
-                            <label for="partida-moto">Partida*</label>
-                            <select id="partida-moto" name="partida-moto">
-                                <option value=""></option>
-                                <option value="eletrica">Elétrica</option>
-                                <option value="pedal">Pedal</option>
-                                <option value="mista">Mista (Elétrica + Pedal)</option>
-                            </select>
-                        </div>
-                        </div>
-                          
+
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="tipo-motor-moto">Tipo de motor*</label>
-                                <input
-                                    id="tipo-motor-moto"
-                                    name="tipo-motor-moto"
-                                    type="text"
-                                />
+                                <input id="tipo-motor-moto" name="tipo-motor-moto" type="text" />
                             </div>
                             <div class="div-input">
                                 <label for="cilindradas-moto">Cilindradas*</label>
-                                <input
-                                    id="cilindradas-moto"
-                                    name="cilindradas-moto"
-                                    type="number"
-                                />
+                                <input id="cilindradas-moto" name="cilindradas-moto" type="number" />
                             </div>
                         </div>
-                      
+
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="freio-moto">Freio dianteiro/traseiro*</label>
@@ -388,7 +404,7 @@
                                 </select>
                             </div>
                         </div>
-                      
+
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="estado-moto">Estado*</label>
@@ -404,8 +420,8 @@
                         </div>
                     </div>
                 </div>
-                  
-                 <!-- Fase 5 Moto -->
+
+                <!-- Fase 5 Moto -->
                 <div id="fase-5-moto">
                     <p class="titulo3">Complemente as informações do seu veículo</p>
                     <div class="pai-div-input">
@@ -416,7 +432,7 @@
                                 <option value="Carburador">Carburador</option>
                                 <option value="Injecao Eletronica">Injeção Eletrônica</option>
                             </select>
-                        </div>                        
+                        </div>
 
                         <div class="div-input">
                             <label for="quilometragem-moto">Quilometragem*</label>
@@ -456,7 +472,8 @@
                 </div>
 
                 <!-- Botões voltar e continuar -->
-                <button class="voltar" type="button" id="btn-voltar"><i class="fa-solid fa-arrow-left"></i>Voltar</button>
+                <button class="voltar" type="button" id="btn-voltar"><i
+                        class="fa-solid fa-arrow-left"></i>Voltar</button>
 
                 <button type="button" class="continuar" id="btn-continuar">
                     <p>Continuar</p>
