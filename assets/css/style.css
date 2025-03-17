@@ -386,6 +386,12 @@ h4 {
     }
 }
 
+@media (max-width: 334px) {
+    .veiculo-nao-selecionado, .veiculo-selecionado {
+        font-size: 13px !important;
+    }
+}
+
 /* Fim do responsivo */
 
 

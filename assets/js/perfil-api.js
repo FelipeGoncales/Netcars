@@ -264,6 +264,7 @@ function alertMessage(text, type) {
 
 // Função para a barra lateral
 
+
 // Abrir e fechar barra lateral
 const sanduiche = $("#sanduicheHeader");
 const barraLateral = $('#barra-lateral');
@@ -281,19 +282,16 @@ sanduiche.click(() => {
     });
 });
 
-// Fechar barra lateral
 function fecharBarraLateral() {
     barraLateral.css('animation', 'fecharBarraLateral 0.7s');
     overlayBg.css('animation', 'sumirOverlay 0.7s');
 
-    barraLateral.on('animationend', function() {
+    setTimeout(() => {
         barraLateral.css('display', 'none');
-    });
-
-    overlayBg.on('animationend', function() {
         overlayBg.css('display', 'none');
-    });
-}
+    }, 660);
+};
+
 
 closeBarraLateral.click(() => {
     fecharBarraLateral()
