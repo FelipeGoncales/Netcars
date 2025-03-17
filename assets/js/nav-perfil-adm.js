@@ -89,7 +89,7 @@ function fecharBarraLateral() {
 $('#pdf-carros').click(() => {
     $.ajax({
         method: 'GET',
-        url: 'http://192.168.1.120:5000/relatorio/carros',
+        url: 'http://192.168.1.110:5000/relatorio/carros',
         xhrFields: {
             responseType: 'blob'
           },
@@ -113,7 +113,7 @@ $('#pdf-carros').click(() => {
 $('#pdf-motos').click(() => {
     $.ajax({
         method: 'GET',
-        url: 'http://192.168.1.120:5000/relatorio/motos',
+        url: 'http://192.168.1.110:5000/relatorio/motos',
         xhrFields: {
             responseType: 'blob'
           },
@@ -137,7 +137,7 @@ $('#pdf-motos').click(() => {
 $('#pdf-clientes').click(() => {
     $.ajax({
         method: 'GET',
-        url: 'http://192.168.1.120:5000/relatorio/usuarios',
+        url: 'http://192.168.1.110:5000/relatorio/usuarios',
         xhrFields: {
             responseType: 'blob'
           },
