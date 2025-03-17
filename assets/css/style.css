@@ -205,36 +205,36 @@ h4 {
 }
 
 .eletricos {
-    background-image: url(../img/eletrico.svg);
+    background-image: url(../img/eletrico.webp);
 }
-.populares {
-    background-image: url(../img/bannerPopular.svg);
+.hatchback {
+    background-image: url(../img/bannerPopular.jpg);
 }
 
 .picapes {
-    background-image: url(../img/bannerPicapes.svg);
+    background-image: url(../img/bannerPicapes.jpg);
 }
 .sedans {
-    background-image: url(../img/bannerSedans.svg);
+    background-image: url(../img/bannerSedans.jpg);
 }
 .suvs {
-    background-image: url(../img/bannerSUVs.svg);
+    background-image: url(../img/bannerSUVs.png);
 }
 
 .esportivas {
-    background-image: url(../img/esportivas.png);
+    background-image: url(../img/esportivas.jpg);
 }
-.populares-motos {
-    background-image: url(../img/populares-motos.png);
+.city {
+    background-image: url(../img/city.jpg);
 }
 .trail {
-    background-image: url(../img/trail.png);
+    background-image: url(../img/moto-populares.avif);
 }
 .big-trail {
-    background-image: url(../img/big-trail.png);
+    background-image: url(../img/big-trail.jpg);
 }
 .supermoto {
-    background-image: url(../img/supermoto.png);
+    background-image: url(../img/supermoto.jpg);
 }
 
 /* Fim do Main */
