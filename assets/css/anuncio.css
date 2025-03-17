@@ -89,7 +89,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    & li, input {
+    & div, input {
         width: 190px;
     }
 }
@@ -610,7 +610,7 @@ main {
     .itens-details {
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
-        & li {
+        & div {
             width: 100%;
             & .itemcss-title {
                 font-size: 12px;
@@ -696,7 +696,7 @@ main {
         padding: 20px 25px;
     }
     .itens-details {
-        & li {
+        & div {
             & .itemcss-title {
                 font-size: 11px;
             }
