@@ -14,6 +14,10 @@ main {
     gap: 40px;
 }
 
+#categorias-moto, #marcas-moto {
+    display: none;
+}
+
 /* Filtro */
 
 .sec-filtro {
@@ -43,6 +47,12 @@ main {
     }
     & i {
         font-size: 0.7rem;
+    }
+    & #estado-container, #cidade-container {
+        display: inherit;
+        gap: inherit;
+        align-items: inherit;
+        justify-content: inherit;
     }
 }
 
@@ -114,7 +124,7 @@ main {
     flex-direction: row;
     gap: 12px;
     width: 100%;
-    & input{
+    & input, select {
         flex: 1; 
         min-width: 150px; 
         padding: 15px;
@@ -255,7 +265,7 @@ main {
 
 /* Galeria de veículos */
 
-.sec-veiculos-carro {
+.sec-veiculos {
     width: 100%;
     height: 100%;
     display: flex;
@@ -263,15 +273,8 @@ main {
     gap: 20px;
 }
 
-.sec-veiculos-moto {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+/* Início do Card */
 
-/* Início Card de carro */
 .card{
     background: var(--cor-bg-sec);
     width: 300px;
@@ -320,63 +323,7 @@ main {
     }    
 }
 
-/* Fim do card de CARRO */
-
-/* Início do card de MOTO */
-
-.card{
-    background: var(--cor-bg-sec);
-    width: 300px;
-    height: 470px;
-    border-radius: 10px;
-    & img{
-        width: 100%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    } & .itens-card2{                              
-        display: flex;
-        flex-direction: column;
-        padding: 0px 15px;
-        gap: 26Px;
-        & h3{
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #000;
-        } & p{
-            font-size: 0.8rem;
-            color: var(--cor-titles);
-            font-weight: 400;
-        } & button{
-            background: #000;
-            color: #fff;
-            padding: 12px;
-            font-weight: 400;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            &:hover {
-                background-color: var(--roxo);
-                scale: 1.01;
-            }
-        }& .container-info-card{
-            color: var(--cor-titles);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            & .info-card{
-                display: flex;
-                gap: 10px;
-                align-items: center;
-            }
-        }
-    }    
-}
-
-/* Fim do card de MOTO */
-
-
-
+/* Fim do card */
 
 
 .itens-details {
@@ -384,9 +331,8 @@ main {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     list-style: none;
-    & li 
-    {   
-        transition: 0.3s;
+    & li {   
+        transition: 0.2s;
         cursor: pointer;
         width: 100%;
         aspect-ratio: 1 / 1;
@@ -398,12 +344,14 @@ main {
         justify-content: center;
         align-items: center;
         overflow: hidden;
-        box-shadow: 0 0 20px rgba(108, 29, 233, 0.3);
         &:hover {
-            scale: 1.07;
+            scale: 1.03;
         }
-        & a 
-        {
+        &.active {
+            border: 2px solid var(--roxo);
+            box-shadow: 0 0 20px rgba(108, 29, 233, 0.3);
+        }
+        & a {
             display: flex;
             justify-content: center;
             align-items: center;
