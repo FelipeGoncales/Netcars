@@ -23,7 +23,7 @@ closeBarraLateral.click(() => {
     setTimeout(() => {
         barraLateral.css('display', 'none');
         overlayBg.css('display', 'none');
-    }, 699);
+    }, 660);
 });
 
 
