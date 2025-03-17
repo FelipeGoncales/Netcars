@@ -243,40 +243,6 @@ function validarCNPJ(cnpj) {
 
     return digito1 === digitos[12] && digito2 === digitos[13];
 }
-// verificar se o CPF/CNPJ já existe
-function verificarCPFTelefone(cpfCnpj, telefone, callback) {
-    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    const id = dadosUser.id_usuario;
-    
-    // Se o CPF/CNPJ ou telefone forem os mesmos que já estão cadastrados para este usuário,
-    // não precisamos verificar no backend
-    if (dadosUser.cpf_cnpj === cpfCnpj && dadosUser.telefone === telefone) {
-        callback(true);
-        return;
-    }
-    
-    // Criar um objeto com os dados a serem verificados
-    const dadosVerificar = {
-        cpf_cnpj: cpfCnpj,
-        telefone: telefone,
-        id_usuario: id
-    };
-    
-    // Fazer uma requisição para verificar os dados no servidor
-    $.ajax({
-        method: "POST",
-        url: "http://192.168.1.110:5000/verificar_dados",
-        data: JSON.stringify(dadosVerificar),
-        contentType: "application/json",
-        success: function(response) {
-            callback(true);
-        },
-        error: function(response) {
-            alertMessage(response.responseJSON.error, 'error');
-            callback(false);
-        }
-    });
-}
 
 // Função de exibir a mensagem para evitar repetir código
 function alertMessage(text, type) {
@@ -332,42 +298,6 @@ closeBarraLateral.click(() => {
 });
 
 // Lógica para envio do formulário de editar perfil
-// Adicione esta função para verificar se o CPF/CNPJ já existe
-function verificarCPFTelefone(cpfCnpj, telefone, callback) {
-    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    const id = dadosUser.id_usuario;
-    
-    // Se o CPF/CNPJ ou telefone forem os mesmos que já estão cadastrados para este usuário,
-    // não precisamos verificar no backend
-    if (dadosUser.cpf_cnpj === cpfCnpj && dadosUser.telefone === telefone) {
-        callback(true);
-        return;
-    }
-    
-    // Criar um objeto com os dados a serem verificados
-    const dadosVerificar = {
-        cpf_cnpj: cpfCnpj,
-        telefone: telefone,
-        id_usuario: id
-    };
-    
-    // Fazer uma requisição para verificar os dados no servidor
-    $.ajax({
-        method: "POST",
-        url: "http://192.168.1.110:5000/verificar_dados",
-        data: JSON.stringify(dadosVerificar),
-        contentType: "application/json",
-        success: function(response) {
-            callback(true);
-        },
-        error: function(response) {
-            alertMessage(response.responseJSON.error, 'error');
-            callback(false);
-        }
-    });
-}
-
-// Modifique a função de envio do formulário para incluir a verificação
 $("#formEditarUsuario").on("submit", function(e) {
     e.preventDefault();
 
@@ -395,7 +325,7 @@ $("#formEditarUsuario").on("submit", function(e) {
         alertMessage('CPF/CNPJ inválido.', 'error');
         return;
     }
-    
+
     // Preparar objeto com os dados para atualização
     let editar = {
         id_usuario: id,
