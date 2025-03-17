@@ -377,7 +377,7 @@ $('#form-add-veic').on('submit', function(e){
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.120:5000/carro", // URL da API na Web
+            url: "http://192.168.1.110:5000/carro", // URL da API na Web
             data: envia,
             contentType: "application/json",
             headers: {
@@ -398,7 +398,7 @@ $('#form-add-veic').on('submit', function(e){
                 // Envia as imagens para a API
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.120:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.110:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
@@ -476,7 +476,7 @@ $('#form-add-veic').on('submit', function(e){
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.120:5000/moto", // URL da API na Web
+            url: "http://192.168.1.110:5000/moto", // URL da API na Web
             data: envia,
             contentType: "application/json",
             headers: {
@@ -497,7 +497,7 @@ $('#form-add-veic').on('submit', function(e){
                 // Envia as imagens para a API
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.120:5000/moto/upload_img/${id_moto}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.110:5000/moto/upload_img/${id_moto}`, // Certifique-se de usar o id_carro retornado
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
