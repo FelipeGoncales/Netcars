@@ -88,7 +88,7 @@ $("#formCadastroUsuario").on("submit", function (e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.120:5000/cadastro", // URL da API na Web
+        url: "http://192.168.1.110:5000/cadastro", // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
@@ -123,7 +123,7 @@ $("#formLoginUsuario").on('submit', function (e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.120:5000/login", // URL da API na Web
+        url: "http://192.168.1.110:5000/login", // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
