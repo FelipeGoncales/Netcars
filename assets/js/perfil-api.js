@@ -351,7 +351,7 @@ $("#formEditarUsuario").on("submit", function(e) {
     // Rota para editar perfil
     $.ajax({
         method: "put",
-        url: `http://192.168.1.122:5000/cadastro/${id}`, // URL da API na Web
+        url: `http://192.168.1.130:5000/cadastro/${id}`, // URL da API na Web
         data: editarJSON,
         contentType: "application/json",
         success: function(response) {
@@ -414,7 +414,7 @@ $('#deletar-usuario').click(function() {
         
             $.ajax({
                 method: "delete",
-                url: `http://192.168.1.122:5000/cadastro/${id}`, // URL da API na Web
+                url: `http://192.168.1.130:5000/cadastro/${id}`, // URL da API na Web
                 data: id,
                 contentType: "application/json",
                 success: function(response) {
