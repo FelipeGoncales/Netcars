@@ -118,12 +118,18 @@ h1 {
     height: 100vh;
     border-top: 1px solid rgba(0, 0, 0, 0.15);
     background: var(--cor-bg-sec);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Add scrolling if content exceeds height */
+    
     & nav {
         padding: 40px 0;
         display: flex;
         flex-direction: column;
         gap: 25px;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
+        flex: 1; /* Allow nav to grow */
+        
         & a {
             cursor: pointer;
             padding-left: 15px;
@@ -182,15 +188,12 @@ h1 {
     & #deletar-usuario {
         width: 170px;
         cursor: pointer;
-        position: absolute;
-        bottom: 100px;
-        left: 50%;
-        transform: translateX(-50%);
+        margin: 20px auto; /* Change from absolute to margin */
         display: flex;
         justify-content: center;
-        justify-self: center;
         align-items: center;
         gap: 8px;
+        padding-bottom: 20px; /* Add some padding at the bottom */
         & p {
             color: #f71445;
         }
@@ -259,6 +262,34 @@ h1 {
         opacity: 0%;
     }
 }
+
+.submenu-relatorios {
+    display: none;
+    flex-direction: column;
+    padding-left: 30px;
+    gap: 8px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+
+.sub-relatorio.destaque {
+    color: var(--roxo) !important;
+    font-weight: 500;
+}
+
+.submenu-relatorios a {
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-size: 0.95em;
+    cursor: pointer;
+}
+
+.submenu-relatorios a:hover {
+    color: var(--cor-destaque);
+}
+
+/* Container Relatório */
 
 /* Main - minha conta*/
 

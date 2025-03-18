@@ -1,7 +1,5 @@
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
-
 const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-
 const tipoUser = dadosUser.tipo_usuario;
 
 if (tipoUser === 2) {
@@ -12,7 +10,6 @@ if (tipoUser === 3) {
 }
 
 // Aparecer mensagem caso cadastrar veículo dê certo
-
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
 
@@ -42,11 +39,21 @@ if (mensagemCadVeic) {
 function selecionarA(clicado) {
     $('nav').find('a').each(function(_, a) {
         if (a !== clicado) {
-            $(a).removeClass('selecionado')
+            $(a).removeClass('selecionado');
         } else {
-            $(a).addClass('selecionado')
+            $(a).addClass('selecionado');
         }
-    })
+    });
+}
+
+// Função para exibir relatório de movimentação
+function exibirRelatorioMovimentacao() {
+    $('#minha-conta').css('display', 'none');
+    $('#relatorios').css('display', 'flex');
+    
+    // Destacar o item de movimentação no submenu
+    $('.sub-relatorio').removeClass('destaque');
+    $('#movimentacao').addClass('destaque');
 }
 
 $(document).ready(function() {
@@ -56,22 +63,37 @@ $(document).ready(function() {
 
         $('#minha-conta').css('display', 'flex');
         $('#relatorios').css('display', 'none');
-        
+        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+
         if ($(window).width() <= 660) {
             fecharBarraLateral();
         }
-    })
+    });
+
     $("#link_relatorios").on("click", function() {
         const elementoClicado = this;
         selecionarA(elementoClicado);
 
-        $('#minha-conta').css('display', 'none');
-        $('#relatorios').css('display', 'flex');
+        // Alternar a exibição do submenu
+        $(".submenu-relatorios").slideDown();
         
+        // Exibir a página de movimentação automaticamente
+        exibirRelatorioMovimentacao();
+
         if ($(window).width() <= 660) {
             fecharBarraLateral();
         }
-    })
+    });
+
+    // Ação ao clicar nos itens do submenu
+    $(".sub-relatorio").on("click", function() {
+        // Remover destaque de todos e adicionar ao clicado
+        $('.sub-relatorio').removeClass('destaque');
+        $(this).addClass('destaque');
+        
+        $('#minha-conta').css('display', 'none');
+        $('#relatorios').css('display', 'flex');
+    });
 });
 
 // Fechar barra lateral
@@ -89,7 +111,7 @@ function fecharBarraLateral() {
 $('#pdf-carros').click(() => {
     $.ajax({
         method: 'GET',
-        url: 'http://192.168.1.110:5000/relatorio/carros',
+        url: 'http://192.168.1.122:5000/relatorio/carros',
         xhrFields: {
             responseType: 'blob'
           },
@@ -107,13 +129,13 @@ $('#pdf-carros').click(() => {
             console.error('Erro ao baixar PDF:', error);
           }
     });
-})
+});
 
 // Baixar PDF de motos
 $('#pdf-motos').click(() => {
     $.ajax({
         method: 'GET',
-        url: 'http://192.168.1.110:5000/relatorio/motos',
+        url: 'http://192.168.1.122:5000/relatorio/motos',
         xhrFields: {
             responseType: 'blob'
           },
@@ -128,16 +150,16 @@ $('#pdf-motos').click(() => {
             window.URL.revokeObjectURL(url);
           },
           error: function(response) {
-            alertMessage(response.responseJSON.error, error);
+            alertMessage(response.responseJSON.error, 'error');
           }
     });
-})
+});
 
 // Baixar PDF de usuarios
 $('#pdf-clientes').click(() => {
     $.ajax({
         method: 'GET',
-        url: 'http://192.168.1.110:5000/relatorio/usuarios',
+        url: 'http://192.168.1.122:5000/relatorio/usuarios',
         xhrFields: {
             responseType: 'blob'
           },
@@ -152,7 +174,7 @@ $('#pdf-clientes').click(() => {
             window.URL.revokeObjectURL(url);
           },
           error: function(response) {
-            alertMessage(response.responseJSON.error, error);
+            alertMessage(response.responseJSON.error, 'error');
           }
     });
-})
+});
