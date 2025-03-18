@@ -421,6 +421,8 @@ main {
 
 /* Fim do CSS da div Minha Conta (Que é a mesma para todos os usuários) */
 
+/* Container Cadastro de Usuários */
+
 .container-cad-user {
     display: none;
     flex-direction: column;
@@ -428,12 +430,12 @@ main {
     align-items: center;
     margin-top: 15px;
     gap: 10px;
-    height: 100%;
     & .div-input {
         height: fit-content;
         display: flex;
         flex-direction: column;
         position: relative;
+        width: 420px;
         & label {
             font-size: 0.85rem;
             color: var(--cor-texto-apagado);
@@ -455,7 +457,7 @@ main {
             }
         }
         & input, select {
-            width: 385px;
+            width: 100%;
             padding: 12px;
             font-size: 0.9rem;
             border: 2px #e0e1e4 solid;
@@ -503,7 +505,6 @@ main {
     align-items: center;
     gap: 30px;
     position: relative;
-    margin-top: 75px;
 }
 
 .title {
@@ -519,7 +520,7 @@ main {
     font-size: 15px;
     font-weight: 500;
     border: none;
-    width: 385px;
+    width: 420px;
     height: 50px;
     transition: 0.1s;
     cursor: pointer;
@@ -537,6 +538,101 @@ main {
     position: relative;
 }
 
+/* END Container Cadastro de Usuários */
+
+/* Responsivo Container Login */
+
+@media (max-width: 525px) {
+    * {
+        font-size: 14px;
+    }
+
+    header {
+        height: 64px;
+        padding: 12px 25px;
+    }
+
+    .container-login {
+        padding: 35px 25px;
+        padding-bottom: 47px;
+    }
+    
+    #mensagemError {
+        bottom: -25px;
+    }
+    
+    .div-input {
+        & input {
+            width: 300px;
+        }
+    }
+    .btn-acao {
+        width: 300px;
+    }
+
+    footer {
+        & .div-contato {
+            align-items: center;
+            gap: 50px;
+            flex-direction: column;
+            & div {
+                align-items: center;
+            }
+        }
+    }
+}
+
+
+@media (max-width: 400px) {
+    * {
+        font-size: 14px;
+    }
+    .container-login {
+        padding: 30px 25px;
+        padding-bottom: 47px;
+        & h1 {
+            width: 45vw;
+            font-size: 17px;
+        }
+    }
+    #mensagemError {
+        bottom: -23px;
+    }
+    .div-input {
+        & input {
+            width: 250px;
+        }
+    }
+    .btn-acao {
+        width: 250px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container-login {
+        padding: 35px 25px;
+        padding-bottom: 47px;
+        & h1 {
+            width: 55vw;
+            font-size: 16px;
+        }
+    }
+    .div-input {
+        & input {
+            width: 230px;
+            padding: 9px;
+        }
+    }
+    
+    #mensagemError {
+        bottom: -25px;
+    }
+    .btn-acao {
+        width: 230px;
+    }
+}
+
+/* END Responsivo Container Login */
 
 /* DIVS PERFIL CLIENTE */
 

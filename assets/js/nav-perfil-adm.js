@@ -9,7 +9,7 @@ if (tipoUser === 3) {
     window.location.href = 'cliente-perfil.html';
 }
 
-// Aparecer mensagem caso cadastrar veículo dê certo
+// Aparecer mensagem
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
     let bgColor = type === 'success' ? '#0bd979' : '#f71445';
@@ -73,6 +73,7 @@ function selecionarA(clicado) {
 function exibirRelatorio(tipo) {
     // Esconder todas as telas de relatório
     $('#minha-conta').css('display', 'none');
+    $('#cadUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
     
     // Mostrar apenas o relatório selecionado
@@ -91,6 +92,7 @@ $(document).ready(function() {
         const elementoClicado = this;
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'flex');
+        $('#cadUser').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
@@ -102,6 +104,7 @@ $(document).ready(function() {
         const elementoClicado = this;
         if ($(elementoClicado).hasClass('selecionado')) {
             $('#minha-conta').css('display', 'flex');
+            $('#cadUser').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
             $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
            
@@ -115,6 +118,18 @@ $(document).ready(function() {
             exibirRelatorio('movimentacao');
             selecionarA(elementoClicado);
         }
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+
+    $("#link_cadUser").on("click", function() {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+        $('#minha-conta').css('display', 'none');
+        $('#cadUser').css('display', 'flex');
+        $('.container-relatorios').css('display', 'none');
+        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -150,6 +165,47 @@ $(document).ready(function() {
         }
     });
 });
+
+// Função para mostrar senha quando clicar no olho
+
+$('#mostrarSenha').click(function() {
+    if ($('#input-senha').attr('type') === 'password') {
+        $('#mostrarSenha').removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
+        $('#input-senha').attr('type', 'text') // Trocando o tipo de input
+    } else {
+        $('#mostrarSenha').removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho 
+        $('#input-senha').attr('type', 'password') // Trocando o tipo de input
+    }
+})
+
+// Rota para cadastrar usuários
+$("#formCadastroUsuario").on("submit", function (e) {
+    e.preventDefault();
+
+    let dados = new FormData(this);
+
+    let envia = {
+        nome_completo: dados.get("nome_completo"),
+        email: dados.get("email"),
+        senha_hash: dados.get("senha_hash"),
+        tipo_usuario: dados.get("tipo_user")
+    }
+
+    envia = JSON.stringify(envia);
+
+    $.ajax({
+        method: "post",
+        url: "http://192.168.1.130:5000/cadastro", // URL da API na Web
+        data: envia,
+        contentType: "application/json",
+        success: function (response) {
+            alertMessage(response.success, 'success');
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+})
 
 // Fechar barra lateral
 function fecharBarraLateral() {
