@@ -541,6 +541,13 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
+.container-branco {
+    background-color: white;
+    width: 782px;
+    height: 336px;
+    flex-shrink: 0;
+}
+
 /* END DIVS ADMINISTRADOR */
 
 /* Div Alert Message */
