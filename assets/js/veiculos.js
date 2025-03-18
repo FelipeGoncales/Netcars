@@ -100,10 +100,11 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
         filtroSelect[tipo] = nome;
     }
 
-    console.log(filtroSelect)
-
     // Adicionar o filtro a div de filtros
+
     divFiltro.append(div);
+
+    $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
 }
 
 // Função para trocar o filtro entre carro e moto
@@ -122,11 +123,13 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
         $("#tipo-veic").text(texto);
 
         // Lógica para trocar as categorias visíveis
-        categoria1.css('display', 'flex')
-        marca1.css('display', 'flex')
+        categoria1.css('display', 'flex');
+        marca1.css('display', 'flex');
         
-        categoria2.css('display', 'none')
-        marca2.css('display', 'none')
+        categoria2.css('display', 'none');
+        marca2.css('display', 'none');
+    
+        limparFiltros();
     }
 }
 divTipoCarro.click(() => {
@@ -137,6 +140,18 @@ divTipoCarro.click(() => {
 divTipoMoto.click(() => {
     alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  
     $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'));
+})
+
+// Limpar filtros
+
+function limparFiltros() {
+    filtroSelect = {};
+    $("#filtros-aplic").empty();
+    $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+}
+
+$('#limpar-filtros').click(() => {
+    limparFiltros();
 })
 
 // Filtro Marca
@@ -337,13 +352,13 @@ $("#input-preco-max").on("input", function() {
 // Filtro Ano Mínimo
 
 $("#input-ano-min").on("input", function() {
-    addFiltro("ano-min", `Desde ${$(this).val()}`, null, "preco-min", "input", $(this));
+    addFiltro("ano-min", `Desde ${$(this).val()}`, null, "ano-min", "input", $(this));
 })
 
 // Filtro Ano Máximo
 
 $("#input-ano-max").on("input", function() {
-    addFiltro("ano-max", `Até ${$(this).val()}`, null, "preco-max", "input", $(this));
+    addFiltro("ano-max", `Até ${$(this).val()}`, null, "ano-max", "input", $(this));
 })
 
 // Filtro Cores
@@ -359,18 +374,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const optionItems = document.querySelectorAll('.option-item');
 
+// Function para colocar as cores na lista
 optionItems.forEach((item) => {
     const label = $(item).find('label');
 
     label.click(function() {
-        // Pega o input checkbox dentro do item
-        const checkbox = $(item).find('input[type="checkbox"]')[0];    
-        
-        // Troca o input
-        checkbox.checked = !checkbox.checked;
-
         // Objeto com lista de cores
-        filtroSelect['cores'] = [];
+        cores = [];
+
+        if (!$(this).prop("checked")) {
+            cores.push($(this).text());
+        }
 
         // Percorre todas as cores para refazer o array
         optionItems.forEach((item) => {
@@ -380,11 +394,15 @@ optionItems.forEach((item) => {
             const label = $(item).find('label');   
 
             // Verifica se o input está checkado
-            if (checkbox.checked) {
+            if (checkbox.prop("checked")) {
                 // Se sim, adiciona a lista de cores
-                filtroSelect['cores'].push(label.text());
+                cores.push(label.text());
             }
         })
+
+        filtroSelect['cores'] = cores;
+        
+        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
 
         console.log(filtroSelect);
     });

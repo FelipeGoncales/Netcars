@@ -24,6 +24,33 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
+
+// FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
+
+// Ao carregar o documento, adiciona a classe "active" ao label anterior se o input/select tiver valor
+document.addEventListener("DOMContentLoaded", function () {
+    // Seleciona todos os selects e inputs dentro de elementos com a classe .div-input
+    const inputs = document.querySelectorAll(".div-input select, .div-input input");
+
+    inputs.forEach((input) => {
+        // Adiciona um ouvinte de evento para mudanças no valor do input/select
+        input.addEventListener("change", function () {
+            if (this.value) {
+                // Se houver valor, adiciona a classe "active" no elemento irmão anterior (geralmente o label)
+                this.previousElementSibling.classList.add("active");
+            } else {
+                // Se não houver valor, remove a classe "active"
+                this.previousElementSibling.classList.remove("active");
+            }
+        });
+
+        // Ao carregar a página, se o input já tiver um valor, ativa o label correspondente
+        if (input.value) {
+            input.previousElementSibling.classList.add("active");
+        }
+    });
+});
+
 const mensagemCadVeic = localStorage.getItem('msgCadVeic');
 if (mensagemCadVeic) {
     alertMessage(mensagemCadVeic, 'success');
