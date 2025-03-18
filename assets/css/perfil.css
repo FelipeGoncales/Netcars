@@ -188,12 +188,12 @@ h1 {
     & #deletar-usuario {
         width: 170px;
         cursor: pointer;
-        margin: 20px auto; /* Change from absolute to margin */
+        margin: 20px auto;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 8px;
-        padding-bottom: 20px; /* Add some padding at the bottom */
+        padding-bottom: 80px;
         & p {
             color: #f71445;
         }
