@@ -565,10 +565,11 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
+
 .container-branco {
     background-color: white;
     width: 782px;
-    height: 336px;
+    height: auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     flex-shrink: 0;
@@ -581,6 +582,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     flex-direction: row;
     gap: 12px;
     width: 100%;
+    position: relative;
     & input, select {
         flex: 1; 
         min-width: 100px; 
@@ -607,6 +609,53 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         font-size: 1rem;
     }
 }
+
+.input-conbranco label {
+    font-size: 0.85rem;
+    color: var(--cor-texto-apagado);
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 16px;
+    background: var(--cor-bg-sec);
+    width: fit-content;
+    transition: 0.3s;
+    z-index: 1;
+    padding: 0 4px;
+    pointer-events: none;
+}
+
+/* Estado ativo (quando o input/select está focado ou possui valor) */
+.input-conbranco label.active,
+.input-conbranco:focus-within label {
+    color: var(--roxo);
+    top: 0;
+    font-size: 0.75rem;
+    z-index: 3;
+}
+
+/* Estilo dos inputs e selects */
+.input-conbranco select,
+.input-conbranco input {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.9rem;
+    border: 2px #e0e1e4 solid;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+    background: transparent;
+    z-index: 2;
+    appearance: none;
+    cursor: pointer;
+}
+
+.input-conbranco select:focus,
+.input-conbranco input:focus {
+    border: 2px var(--roxo) solid;
+}
+
 
 .container-dashboard   {
     max-width: 900px;

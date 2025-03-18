@@ -134,6 +134,18 @@ function fecharBarraLateral() {
     }, 699);
 }
 
+// Rota para adicionar as options do select ano veículo
+
+const anoMin = 1950;
+const anoMax = new Date().getFullYear();
+const selectAnoVeic = $('#select-ano-veic');
+
+for (let ano = anoMin; ano <= anoMax; ano++) {
+    const option = $(`<option value="${ano}">${ano}</option>`);
+    selectAnoVeic.append(option);
+}
+
+
 // Exibir pdf carros
 $('#pdf-carros').click(() => {
     window.open('http://192.168.1.122:5000/relatorio/carros', '_blank');
