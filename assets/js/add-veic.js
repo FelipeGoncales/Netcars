@@ -1,3 +1,8 @@
+const renavamValidity = {
+    'renavam-carro': false,
+    'renavam-moto': false
+};
+
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
 const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
@@ -118,6 +123,119 @@ function validarCampo(input) {
         }
     }
 }
+
+// Função para validar o RENAVAM (tanto de carros quanto de motos)
+function validarRENAVAM(seletor) {
+    let renavam = $(seletor).val().replace(/\D/g, '');
+    
+    // Verificação do tamanho
+    if (renavam.length === 10) {
+        $(seletor).val(renavam);
+    } else if (renavam.length !== 11) {
+        alertMessage("O RENAVAM deve contem 11 dígitos.", 'error');
+        return false;
+    }
+
+    const digitoVerificador = parseInt(renavam.charAt(10));
+    const base = renavam.substring(0, 10);
+
+    let soma = 0;
+    let peso = 2;
+    
+    for (let i = base.length - 1; i >= 0; i--) {
+        const digito = parseInt(base.charAt(i));
+        soma += digito * peso;
+        
+        peso++;
+        if (peso > 9) {
+            peso = 2;
+        }
+    }
+    
+    const resto = soma % 11;
+    
+    let digitoEsperado = 11 - resto;
+    
+    if (digitoEsperado === 10 || digitoEsperado === 11) {
+        digitoEsperado = 0;
+    }
+    
+    if (digitoVerificador !== digitoEsperado) {
+        return false;
+    }
+    return true;
+}
+
+// Handler para input - feedback visual durante digitação
+$('#renavam-carro, #renavam-moto').on('input', function() {
+    const input = this;
+    const inputId = input.id;
+    const rawValue = input.value.replace(/\D/g, '');
+    
+    // Limitar o tamanho a 11 dígitos
+    if (rawValue.length > 11) {
+        input.value = rawValue.substring(0, 11);
+        return;
+    }
+    
+    // Verificação visual
+    if (rawValue.length === 0) {
+        // Input vazio, usar cor padrão
+        input.style.borderColor = '#AEAEBA';
+    } 
+    else if (rawValue.length >= 10) {
+        // Temos dígitos suficientes para validar
+        renavamValidity[inputId] = validarRENAVAM('#' + inputId);
+        
+        if (renavamValidity[inputId]) {
+            input.style.borderColor = '#0bd979'; // Verde para válido
+        } else {
+            input.style.borderColor = '#ff0000'; // Vermelho para inválido
+        }
+    }
+});
+
+// Handler para blur - validação completa e mensagem de erro
+$('#renavam-carro, #renavam-moto').on('blur', function() {
+    const input = this;
+    const inputId = input.id;
+    let renavam = input.value.replace(/\D/g, '');
+    
+    if (renavam.length === 0) {
+        // Input vazio
+        input.style.borderColor = '#AEAEBA';
+        return;
+    }
+    
+    if (renavam.length === 10) {
+        renavam = '0' + renavam;
+        $(this).val(renavam);
+    } else if (renavam.length !== 11) {
+        alertMessage("RENAVAM inválido.", 'error');
+        input.style.borderColor = '#ff0000';
+        return;
+    }
+    
+    renavamValidity[inputId] = validarRENAVAM('#' + inputId);
+    
+    if (renavamValidity[inputId]) {
+        // Válido, volta para cor neutra
+        input.style.borderColor = '#AEAEBA';
+    } else {
+        // Inválido, mantém vermelho e exibe mensagem
+        input.style.borderColor = '#ff0000';
+        alertMessage("RENAVAM inválido! Verifique os números digitados.", 'error');
+    }
+});
+
+// Limitar o tamanho do RENAVAM a 11 dígitos durante a digitação
+$('#renavam-carro, #renavam-moto').on('input', function() {
+    let valor = $(this).val().replace(/\D/g, '');
+    if (valor.length > 11) {
+        valor = valor.substring(0, 11);
+    }
+    $(this).val(valor);
+});
 
 // Seleciona os inputs de ano de modelo e de fabricação e adiciona os eventos para validação
 document.querySelectorAll("#ano-modelo-carro, #ano-fabricacao-carro").forEach(input => {
@@ -336,6 +454,10 @@ $('#form-add-veic').on('submit', function(e){
     e.preventDefault();
 
     let data = new FormData(this);
+    if (!validarRENAVAM()) {
+        alertMessage('RENAVAM inválido.', 'error');
+        e.preventDefault();
+    }
 
     if ($('#tipo-carro').hasClass('active')) {
 
