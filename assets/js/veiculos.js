@@ -58,6 +58,24 @@ document.addEventListener('DOMContentLoaded', function() {
     verificarScroll(); // Verifica a posição inicial ao carregar
 });
 
+let filtroSelect = {};
+
+// add filtro visual 
+function addFiltro(tipo, nome, remove, id) {
+    let divFiltro = $('#filtros-aplic');
+
+    if ($(`#${id}`)) {
+        ($(`#${id}`)).remove()
+    }
+
+    let div = $("<div></div>").attr('id',id).addClass('filtro');
+    div.append($('<p></p>').text(nome)).append(remove);
+
+    divFiltro.append(div);
+
+    filtroSelect[tipo] = nome;
+}
+
 // Função para trocar o filtro entre carro e moto
 
 const divTipoCarro = $('#tipo-veic-carro');
@@ -100,7 +118,7 @@ divTipoMoto.click(() => {
     }
 })
 
-// FUNÇÃO API DO IBGE - Localidade
+// Filtro Localidade
 $(document).ready(function () {
     const estadoSelect = $("#estado-select"); 
     const cidadeSelect = $("#cidade-select"); 
@@ -191,9 +209,7 @@ $(document).ready(function () {
                 fluxoFiltro.append(estadoContainer);
             }
             
-            // Criação da div para o estado com o ícone de remoção
-            let divEstado = $("<div></div>").attr('id','estado-filtro').addClass('filtro');
-            let pNome = $("<p></p>").text(estado.nome);
+            // Criação do ícone de remover
             let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
                 divEstado.remove(); // Remove o filtro de estado ao clicar no X
                 estadoContainer.remove();
@@ -204,10 +220,12 @@ $(document).ready(function () {
                 // Remove as cidades
                 divFiltro.find('#cidade-filtro').remove();
                 fluxoFiltro.find("#cidade-container").remove();
+
+                // Remover estado do objeto
+                delete filtroSelect.estado;
             });
             
-            divEstado.append(pNome).append(removerFiltro);
-            divFiltro.append(divEstado);
+            addFiltro('estado', estado.nome, removerFiltro, 'estado-filtro')
 
             // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
             estadoContainer.empty().append(chevronRight).append(estadoLink);
@@ -257,19 +275,7 @@ $(document).ready(function () {
     carregarEstados(estadoSelect);
 });
 
-function addFiltro(nome, remove, id) {
-    let divFiltro = $('#filtros-aplic');
-
-    if ($(`#${id}`)) {
-        ($(`#${id}`)).remove()
-    }
-
-    let div = $("<div></div>").attr('id',id).addClass('filtro');
-    div.append($('<p></p>').text(nome)).append(remove);
-
-    divFiltro.append(div);
-}
-
+// Filtro Marca
 $(".itens-details li").on("click", function() {
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');
@@ -284,10 +290,10 @@ $(".itens-details li").on("click", function() {
         $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
     });
 
-    addFiltro(marca, removerFiltro, "filtro-marca");
+    addFiltro("marca", marca, removerFiltro, "filtro-marca");
 });
 
-// Função para selecionar as cores
+// Filtro Cores
 document.addEventListener('DOMContentLoaded', function() {
     const filterHeader = document.querySelector('.filtro-cor-header');
     const filterContainer = document.querySelector('.filtro-cor-container');

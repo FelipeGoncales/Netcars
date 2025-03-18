@@ -127,7 +127,7 @@ function validarCampo(input) {
 // Função para validar o RENAVAM (tanto de carros quanto de motos)
 function validarRENAVAM(seletor) {
     let renavam = $(seletor).val().replace(/\D/g, '');
-    
+
     // Verificação do tamanho
     if (renavam.length === 10) {
         $(seletor).val(renavam);
@@ -141,25 +141,25 @@ function validarRENAVAM(seletor) {
 
     let soma = 0;
     let peso = 2;
-    
+
     for (let i = base.length - 1; i >= 0; i--) {
         const digito = parseInt(base.charAt(i));
         soma += digito * peso;
-        
+
         peso++;
         if (peso > 9) {
             peso = 2;
         }
     }
-    
+
     const resto = soma % 11;
-    
+
     let digitoEsperado = 11 - resto;
-    
+
     if (digitoEsperado === 10 || digitoEsperado === 11) {
         digitoEsperado = 0;
     }
-    
+
     if (digitoVerificador !== digitoEsperado) {
         return false;
     }
@@ -167,26 +167,26 @@ function validarRENAVAM(seletor) {
 }
 
 // Handler para input - feedback visual durante digitação
-$('#renavam-carro, #renavam-moto').on('input', function() {
+$('#renavam-carro, #renavam-moto').on('input', function () {
     const input = this;
     const inputId = input.id;
     const rawValue = input.value.replace(/\D/g, '');
-    
+
     // Limitar o tamanho a 11 dígitos
     if (rawValue.length > 11) {
         input.value = rawValue.substring(0, 11);
         return;
     }
-    
+
     // Verificação visual
     if (rawValue.length === 0) {
         // Input vazio, usar cor padrão
         input.style.borderColor = '#AEAEBA';
-    } 
+    }
     else if (rawValue.length >= 10) {
         // Temos dígitos suficientes para validar
         renavamValidity[inputId] = validarRENAVAM('#' + inputId);
-        
+
         if (renavamValidity[inputId]) {
             input.style.borderColor = '#0bd979'; // Verde para válido
         } else {
@@ -196,17 +196,17 @@ $('#renavam-carro, #renavam-moto').on('input', function() {
 });
 
 // Handler para blur - validação completa e mensagem de erro
-$('#renavam-carro, #renavam-moto').on('blur', function() {
+$('#renavam-carro, #renavam-moto').on('blur', function () {
     const input = this;
     const inputId = input.id;
     let renavam = input.value.replace(/\D/g, '');
-    
+
     if (renavam.length === 0) {
         // Input vazio
         input.style.borderColor = '#AEAEBA';
         return;
     }
-    
+
     if (renavam.length === 10) {
         renavam = '0' + renavam;
         $(this).val(renavam);
@@ -215,9 +215,9 @@ $('#renavam-carro, #renavam-moto').on('blur', function() {
         input.style.borderColor = '#ff0000';
         return;
     }
-    
+
     renavamValidity[inputId] = validarRENAVAM('#' + inputId);
-    
+
     if (renavamValidity[inputId]) {
         // Válido, volta para cor neutra
         input.style.borderColor = '#AEAEBA';
@@ -229,7 +229,7 @@ $('#renavam-carro, #renavam-moto').on('blur', function() {
 });
 
 // Limitar o tamanho do RENAVAM a 11 dígitos durante a digitação
-$('#renavam-carro, #renavam-moto').on('input', function() {
+$('#renavam-carro, #renavam-moto').on('input', function () {
     let valor = $(this).val().replace(/\D/g, '');
     if (valor.length > 11) {
         valor = valor.substring(0, 11);
@@ -254,11 +254,11 @@ document.querySelectorAll("#ano-modelo-moto, #ano-fabricacao-moto").forEach(inpu
 // FUNÇÃO API DO IBGE
 // Utiliza jQuery para popular selects de estados e cidades usando a API do IBGE
 $(document).ready(function () {
-    const estadoCarroSelect = $("#estado-carro");  
-    const cidadeCarroSelect = $("#cidade-carro"); 
+    const estadoCarroSelect = $("#estado-carro");
+    const cidadeCarroSelect = $("#cidade-carro");
 
-    const estadoMotoSelect = $("#estado-moto");  
-    const cidadeMotoSelect = $("#cidade-moto"); 
+    const estadoMotoSelect = $("#estado-moto");
+    const cidadeMotoSelect = $("#cidade-moto");
 
     // Função para carregar os estados do IBGE
     function carregarEstados(select) {
@@ -267,8 +267,9 @@ $(document).ready(function () {
             estados.sort((a, b) => a.nome.localeCompare(b.nome));
 
             // Para cada estado, adiciona uma opção no select
+            // O value é o nome (para envio ao banco) e data-id guarda o id do estado
             $.each(estados, function (index, estado) {
-                select.append(`<option value="${estado.id}">${estado.nome}</option>`);
+                select.append(`<option value="${estado.nome}" data-id="${estado.id}">${estado.nome}</option>`);
             });
         });
     }
@@ -278,9 +279,9 @@ $(document).ready(function () {
         $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`, function (cidades) {
             select.empty(); // Limpa as opções anteriores do select de cidades
 
-            // Adiciona cada cidade como opção
+            // Adiciona cada cidade como opção, com value como o nome e data-id com o id da cidade
             $.each(cidades, function (index, cidade) {
-                select.append(`<option value="${cidade.id}">${cidade.nome}</option>`);
+                select.append(`<option value="${cidade.nome}" data-id="${cidade.id}">${cidade.nome}</option>`);
             });
 
             // Habilita o select de cidades e ativa o label (para animações ou estilos visuais)
@@ -291,7 +292,8 @@ $(document).ready(function () {
 
     // Quando o select de estados mudar de valor, carrega as cidades correspondentes
     function addCidades(selectCid, selectEst) {
-        const estadoId = $(selectEst).val();
+        // Recupera o id do estado a partir do atributo data-id do option selecionado
+        const estadoId = $(selectEst).find('option:selected').data('id');
 
         // Reinicia o select de cidades e desabilita-o temporariamente
         selectCid.empty().prop("disabled", true);
@@ -303,13 +305,12 @@ $(document).ready(function () {
         }
     };
 
-
     estadoCarroSelect.on("change", () => {
-        addCidades(cidadeCarroSelect, estadoCarroSelect)
-    }); 
-    
+        addCidades(cidadeCarroSelect, estadoCarroSelect);
+    });
+
     estadoMotoSelect.on("change", () => {
-        addCidades(cidadeMotoSelect, estadoMotoSelect)
+        addCidades(cidadeMotoSelect, estadoMotoSelect);
     });
 
     // Carrega os estados assim que a página é carregada
@@ -318,13 +319,17 @@ $(document).ready(function () {
 });
 
 
+
 // FASE 5
 
 // JS PARA EXIBIR A IMAGEM DO VEÍCULO
 // Ao selecionar um arquivo, utiliza FileReader para exibir uma prévia da imagem
+
 document.getElementById("upload-imagem").addEventListener("change", function (event) {
     const files = event.target.files;
     const previewContainer = document.getElementById("preview-container");
+
+    $(previewContainer).empty()
 
     Array.from(files).forEach(file => {
         if (file.type.startsWith("image/")) {
@@ -450,14 +455,10 @@ $('#btn-voltar').click(function () {
 
 // Enviar dados (Rota POST Carro)
 
-$('#form-add-veic').on('submit', function(e){
+$('#form-add-veic').on('submit', function (e) {
     e.preventDefault();
 
     let data = new FormData(this);
-    if (!validarRENAVAM()) {
-        alertMessage('RENAVAM inválido.', 'error');
-        e.preventDefault();
-    }
 
     if ($('#tipo-carro').hasClass('active')) {
 
@@ -486,7 +487,7 @@ $('#form-add-veic').on('submit', function(e){
                 alertMessage(`Informações faltando: ${key}.`, 'error');
                 return;
             }
-        }        
+        }
 
         envia = JSON.stringify(envia);
 
@@ -495,11 +496,16 @@ $('#form-add-veic').on('submit', function(e){
         if (!files.length) {
             alertMessage(`Informações faltando: Imagens.`, 'error');
             return;
-        }        
+        }
+
+        if (files.length < 3) {
+            alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
+            return;
+        }
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.122:5000/carro", // URL da API na Web
+            url: "http://192.168.1.130:5000/carro", // URL da API para carros
             data: envia,
             contentType: "application/json",
             headers: {
@@ -512,7 +518,6 @@ $('#form-add-veic').on('submit', function(e){
 
                 // Ao montar o FormData para as imagens:
                 let formDataImg = new FormData();
-
                 for (let i = 0; i < files.length; i++) {
                     formDataImg.append('imagens', files[i]);
                 }
@@ -520,22 +525,18 @@ $('#form-add-veic').on('submit', function(e){
                 // Envia as imagens para a API
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.122:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.130:5000/carro/upload_img/${id_carro}`, // Usa o id_carro retornado
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
                     headers: {
                         "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                     },
-                    success: function() {
+                    success: function () {
                         // Redirecionar para a página de perfil após cadastrar
                         const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
                         const tipoUser = dadosUser.tipo_usuario;
-
-                        // Definir mensagem para ser exibida no perfil
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
-                        
-                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
                         if (tipoUser === 1) {
                             window.location.href = 'administrador-perfil.html';
                         }
@@ -543,19 +544,19 @@ $('#form-add-veic').on('submit', function(e){
                             window.location.href = 'vendedor-perfil.html';
                         }
                     },
-                    error: function(response) {
+                    error: function (response) {
                         alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
                     }
                 });
             },
-            error: function(response) {
+            error: function (response) {
                 alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
             }
         })
     }
 
     if ($('#tipo-moto').hasClass('active')) {
-        
+
         let envia = {
             placa: data.get('placa'),
             marca: data.get('marca-moto'),
@@ -585,7 +586,7 @@ $('#form-add-veic').on('submit', function(e){
                 alertMessage(`Informações faltando: ${key}.`, 'error');
                 return;
             }
-        }        
+        }
 
         envia = JSON.stringify(envia);
 
@@ -594,11 +595,16 @@ $('#form-add-veic').on('submit', function(e){
         if (!files.length) {
             alertMessage(`Informações faltando: Imagens.`, 'error');
             return;
-        }        
+        }
+
+        if (files.length < 3) {
+            alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
+            return;
+        }
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.122:5000/moto", // URL da API na Web
+            url: "http://192.168.1.130:5000/moto", // URL da API para motos
             data: envia,
             contentType: "application/json",
             headers: {
@@ -606,35 +612,30 @@ $('#form-add-veic').on('submit', function(e){
             },
             success: function (response) {
                 alertMessage(`Veículo cadastrado com sucesso!`, 'success');
-                // Após o primeiro AJAX que cria o carro e retorna o id_carro:
+                // CORREÇÃO: Atualize o comentário e variável para refletir que é uma moto.
                 const id_moto = response.dados.id_moto;
 
                 // Ao montar o FormData para as imagens:
                 let formDataImg = new FormData();
-
                 for (let i = 0; i < files.length; i++) {
                     formDataImg.append('imagens', files[i]);
                 }
 
-                // Envia as imagens para a API
+                // CORREÇÃO: Alterado o endereço IP para manter consistência com a API (usando 192.168.1.122, igual ao endpoint de POST).
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.110:5000/moto/upload_img/${id_moto}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.130:5000/moto/upload_img/${id_moto}`, // Usa o id_moto retornado
                     data: formDataImg,
-                    contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
-                    processData: false,  // Impede que o jQuery tente processar os dados
+                    contentType: false,
+                    processData: false,
                     headers: {
                         "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                     },
-                    success: function() {
+                    success: function () {
                         // Redirecionar para a página de perfil após cadastrar
                         const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
                         const tipoUser = dadosUser.tipo_usuario;
-
-                        // Definir mensagem para ser exibida no perfil
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
-                        
-                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
                         if (tipoUser === 1) {
                             window.location.href = 'administrador-perfil.html';
                         }
@@ -642,14 +643,14 @@ $('#form-add-veic').on('submit', function(e){
                             window.location.href = 'vendedor-perfil.html';
                         }
                     },
-                    error: function(response) {
+                    error: function (response) {
                         alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
                     }
                 });
             },
-            error: function(response) {
+            error: function (response) {
                 alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
             }
         })
     }
-}) 
+})

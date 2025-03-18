@@ -188,12 +188,12 @@ h1 {
     & #deletar-usuario {
         width: 170px;
         cursor: pointer;
-        margin: 20px auto; /* Change from absolute to margin */
+        margin: 20px auto;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 8px;
-        padding-bottom: 20px; /* Add some padding at the bottom */
+        padding-bottom: 80px;
         & p {
             color: #f71445;
         }
@@ -608,6 +608,118 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
+.container-dashboard   {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 50vw;
+}
+
+.texto-principal {
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.balance-card {
+    background-color: #e6d5f5;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.balance-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.balance-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    text-align: right;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.transactions-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.charts-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.transaction-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.transaction-amount {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.add-button {
+    background-color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 2;
+}
+
+.add-button:hover {
+    background-color: #f5f5f5;
+}
+
+.transaction-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 15px 0;
+}
+
+.charts-text {
+    color: #777;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* END DIVS ADMINISTRADOR */
 
 /* Div Alert Message */
@@ -772,6 +884,10 @@ footer {
         & h1 {
             display: none;
         }
+    }
+
+    .alertMessage {
+        max-width: 85vw;
     }
 
     main .container-minha-conta {
