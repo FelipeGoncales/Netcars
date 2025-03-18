@@ -82,40 +82,29 @@ const divTipoCarro = $('#tipo-veic-carro');
 const divTipoMoto = $('#tipo-veic-moto');
 const tipoVeicBgSelecionado =  $('#tipo-veic-bg-selecionado');
 
-divTipoCarro.click(() => {
-    // Lógica para mudar cor do selecionado
-    if (!divTipoCarro.hasClass('active')) {
-        divTipoCarro.addClass('active');
-        divTipoMoto.removeClass('active');
-        tipoVeicBgSelecionado.css('left', '0');
+// Lógica para mudar cor do selecionado
+function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, categoria2, marca1, marca2) {
+    if (!tipo1.hasClass('active')) {
+        tipo1.addClass('active');
+        tipo2.removeClass('active');
+        tipoVeicBgSelecionado.css('left', posicao);
 
-        $("#tipo-veic").text("Carros");
+        $("#tipo-veic").text(texto);
 
         // Lógica para trocar as categorias visíveis
-        $('#categorias-carro').css('display', 'flex')
-        $('#marcas-carro').css('display', 'flex')
+        categoria1.css('display', 'flex')
+        marca1.css('display', 'flex')
         
-        $('#categorias-moto').css('display', 'none')
-        $('#marcas-moto').css('display', 'none')
+        categoria2.css('display', 'none')
+        marca2.css('display', 'none')
     }
+}
+divTipoCarro.click(() => {
+   alterarTipoSelecionado(divTipoCarro, divTipoMoto, '0', 'Carros', $('#categorias-carro'), $('#categorias-moto'), $('#marcas-carro'), $('#marcas-moto')) 
 })
 
 divTipoMoto.click(() => {
-    // Lógica para mudar cor do selecionado
-    if (!divTipoMoto.hasClass('active')) {
-        divTipoMoto.addClass('active');
-        divTipoCarro.removeClass('active');
-        tipoVeicBgSelecionado.css('left', '50%');
-
-        $("#tipo-veic").text("Motos");
-        
-        // Lógica para trocar as categorias visíveis
-        $('#categorias-moto').css('display', 'flex')
-        $('#marcas-moto').css('display', 'flex')
-        
-        $('#categorias-carro').css('display', 'none')
-        $('#marcas-carro').css('display', 'none')
-    }
+    alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro')) 
 })
 
 // Filtro Localidade
@@ -292,6 +281,16 @@ $(".itens-details li").on("click", function() {
 
     addFiltro("marca", marca, removerFiltro, "filtro-marca");
 });
+
+// Filtro categoria
+
+// $('#select-categoria-carro').on('change', function() {
+//     let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+//         $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
+//     });
+
+//     addFiltro('categoria', this.val(), removerFiltro, '')
+// })
 
 // Filtro Cores
 document.addEventListener('DOMContentLoaded', function() {

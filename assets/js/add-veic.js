@@ -325,30 +325,47 @@ $(document).ready(function () {
 // JS PARA EXIBIR A IMAGEM DO VEÍCULO
 // Ao selecionar um arquivo, utiliza FileReader para exibir uma prévia da imagem
 
-document.getElementById("upload-imagem").addEventListener("change", function (event) {
-    const files = event.target.files;
-    const previewContainer = document.getElementById("preview-container");
+// Variável global para armazenar os arquivos
+let currentFiles = new DataTransfer();
 
-    $(previewContainer).empty()
+$("#upload-imagem").on("change", function(event) {
+    const newFiles = Array.from(this.files);
+    currentFiles = new DataTransfer();
+    
+    // Adiciona novos arquivos ao DataTransfer
+    newFiles.forEach(file => currentFiles.items.add(file));
+    
+    // Atualiza o input com os novos arquivos
+    this.files = currentFiles.files;
 
-    Array.from(files).forEach(file => {
+    const previewContainer = $("#preview-container");
+
+    previewContainer.empty();
+
+    Array.from(this.files).forEach((file, index) => {
         if (file.type.startsWith("image/")) {
             const reader = new FileReader();
 
-            reader.onload = function (e) {
-                const imgContainer = document.createElement("div");
-                imgContainer.classList.add("preview-item");
-                imgContainer.style.backgroundImage = `url(${e.target.result})`;
+            reader.onload = function(e) {
+                const imgContainer = $('<div>')
+                    .addClass('preview-item')
+                    .css('background-image', `url(${e.target.result})`);
 
-                // Botão para remover a imagem
-                const removeBtn = document.createElement("i");
-                removeBtn.classList.add("fa-solid");
-                removeBtn.classList.add('fa-xmark');
-                removeBtn.classList.add('remove-btn');
-                removeBtn.onclick = () => imgContainer.remove();
+                const removeBtn = $('<i>')
+                    .addClass('fa-solid fa-xmark remove-btn')
+                    .on('click', () => {
+                        // Remove do DataTransfer
+                        currentFiles.items.remove(index);
+                        
+                        // Atualiza o input
+                        $('#upload-imagem')[0].files = currentFiles.files;
+                        
+                        // Atualiza preview
+                        imgContainer.remove();
+                    });
 
-                imgContainer.appendChild(removeBtn);
-                previewContainer.appendChild(imgContainer);
+                imgContainer.append(removeBtn);
+                previewContainer.append(imgContainer);
             };
 
             reader.readAsDataURL(file);
@@ -356,6 +373,7 @@ document.getElementById("upload-imagem").addEventListener("change", function (ev
     });
 });
 
+// Fases para adicionar informações de cada tipo de veículo
 let fasesCarro = [
     $('#fase-1'),
     $('#fase-2'),
