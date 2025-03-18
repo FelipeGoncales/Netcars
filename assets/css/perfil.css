@@ -714,6 +714,10 @@ footer {
         }
     }
 
+    .alertMessage {
+        max-width: 85vw;
+    }
+
     main .container-minha-conta {
         width: 92vw;
         & .informacoes-usuario {

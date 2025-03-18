@@ -322,9 +322,12 @@ $(document).ready(function () {
 
 // JS PARA EXIBIR A IMAGEM DO VEÍCULO
 // Ao selecionar um arquivo, utiliza FileReader para exibir uma prévia da imagem
+
 document.getElementById("upload-imagem").addEventListener("change", function (event) {
     const files = event.target.files;
     const previewContainer = document.getElementById("preview-container");
+
+    $(previewContainer).empty()
 
     Array.from(files).forEach(file => {
         if (file.type.startsWith("image/")) {
@@ -454,10 +457,6 @@ $('#form-add-veic').on('submit', function(e){
     e.preventDefault();
 
     let data = new FormData(this);
-    if (!validarRENAVAM()) {
-        alertMessage('RENAVAM inválido.', 'error');
-        e.preventDefault();
-    }
 
     if ($('#tipo-carro').hasClass('active')) {
 
@@ -497,9 +496,14 @@ $('#form-add-veic').on('submit', function(e){
             return;
         }        
 
+        if (files.length < 3) {
+            alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
+            return;
+        }        
+
         $.ajax({
             method: "post",
-            url: "http://192.168.1.122:5000/carro", // URL da API na Web
+            url: "http://192.168.1.122:5000/carro", // URL da API para carros
             data: envia,
             contentType: "application/json",
             headers: {
@@ -512,7 +516,6 @@ $('#form-add-veic').on('submit', function(e){
 
                 // Ao montar o FormData para as imagens:
                 let formDataImg = new FormData();
-
                 for (let i = 0; i < files.length; i++) {
                     formDataImg.append('imagens', files[i]);
                 }
@@ -520,7 +523,7 @@ $('#form-add-veic').on('submit', function(e){
                 // Envia as imagens para a API
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.122:5000/carro/upload_img/${id_carro}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.122:5000/carro/upload_img/${id_carro}`, // Usa o id_carro retornado
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
@@ -531,11 +534,7 @@ $('#form-add-veic').on('submit', function(e){
                         // Redirecionar para a página de perfil após cadastrar
                         const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
                         const tipoUser = dadosUser.tipo_usuario;
-
-                        // Definir mensagem para ser exibida no perfil
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
-                        
-                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
                         if (tipoUser === 1) {
                             window.location.href = 'administrador-perfil.html';
                         }
@@ -596,9 +595,14 @@ $('#form-add-veic').on('submit', function(e){
             return;
         }        
 
+        if (files.length < 3) {
+            alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
+            return;
+        } 
+
         $.ajax({
             method: "post",
-            url: "http://192.168.1.122:5000/moto", // URL da API na Web
+            url: "http://192.168.1.122:5000/moto", // URL da API para motos
             data: envia,
             contentType: "application/json",
             headers: {
@@ -606,23 +610,22 @@ $('#form-add-veic').on('submit', function(e){
             },
             success: function (response) {
                 alertMessage(`Veículo cadastrado com sucesso!`, 'success');
-                // Após o primeiro AJAX que cria o carro e retorna o id_carro:
+                // CORREÇÃO: Atualize o comentário e variável para refletir que é uma moto.
                 const id_moto = response.dados.id_moto;
 
                 // Ao montar o FormData para as imagens:
                 let formDataImg = new FormData();
-
                 for (let i = 0; i < files.length; i++) {
                     formDataImg.append('imagens', files[i]);
                 }
 
-                // Envia as imagens para a API
+                // CORREÇÃO: Alterado o endereço IP para manter consistência com a API (usando 192.168.1.122, igual ao endpoint de POST).
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.110:5000/moto/upload_img/${id_moto}`, // Certifique-se de usar o id_carro retornado
+                    url: `http://192.168.1.122:5000/moto/upload_img/${id_moto}`, // Usa o id_moto retornado
                     data: formDataImg,
-                    contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
-                    processData: false,  // Impede que o jQuery tente processar os dados
+                    contentType: false,
+                    processData: false,
                     headers: {
                         "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                     },
@@ -630,11 +633,7 @@ $('#form-add-veic').on('submit', function(e){
                         // Redirecionar para a página de perfil após cadastrar
                         const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
                         const tipoUser = dadosUser.tipo_usuario;
-
-                        // Definir mensagem para ser exibida no perfil
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
-                        
-                        // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
                         if (tipoUser === 1) {
                             window.location.href = 'administrador-perfil.html';
                         }
@@ -652,4 +651,4 @@ $('#form-add-veic').on('submit', function(e){
             }
         })
     }
-}) 
+})
