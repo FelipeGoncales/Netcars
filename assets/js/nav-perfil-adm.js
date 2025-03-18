@@ -87,15 +87,15 @@ function fecharBarraLateral() {
 
 // Exibir pdf carros
 $('#pdf-carros').click(() => {
-    window.open('http://127.0.0.1:5000/relatorio/carros', '_blank');
+    window.open('http://192.168.1.122:5000/relatorio/carros', '_blank');
   });
 
 // Exibir pdf motos
 $('#pdf-motos').click(() => {
-    window.open('http://127.0.0.1:5000/relatorio/motos', '_blank');
+    window.open('http://192.168.1.122:5000/relatorio/motos', '_blank');
   });
 
 // Exibir PDF de usuarios
 $('#pdf-clientes').click(() => {
-    window.open('http://127.0.0.1:5000/relatorio/usuarios', '_blank');
+    window.open('http://192.168.1.122:5000/relatorio/usuarios', '_blank');
   });
