@@ -351,7 +351,7 @@ $("#formEditarUsuario").on("submit", function(e) {
     // Rota para editar perfil
     $.ajax({
         method: "put",
-        url: `http://192.168.1.110:5000/cadastro/${id}`, // URL da API na Web
+        url: `http://192.168.1.122:5000/cadastro/${id}`, // URL da API na Web
         data: editarJSON,
         contentType: "application/json",
         success: function(response) {
@@ -396,7 +396,7 @@ $('#deletar-usuario').click(function() {
         showCancelButton: true,
         confirmButtonColor: "#0bd979",
         cancelButtonColor: "#f71445",
-        confirmButtonText: "Confirmar"
+        confirmButtonText: "Confirmar" 
       }).then((result) => {
         if (result.isConfirmed) {
             const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
@@ -404,7 +404,7 @@ $('#deletar-usuario').click(function() {
         
             $.ajax({
                 method: "delete",
-                url: `http://192.168.1.110:5000/cadastro/${id}`, // URL da API na Web
+                url: `http://192.168.1.122:5000/cadastro/${id}`, // URL da API na Web
                 data: id,
                 contentType: "application/json",
                 success: function(response) {

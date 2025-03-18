@@ -1,3 +1,63 @@
+
+// Lógica para funcionar o scroll
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona os elementos necessários
+    const divPaiFiltro = document.querySelector('.div-pai-filtro');
+    const secVeiculos = document.querySelector('.sec-veiculos'); // Utiliza a seção correta de veículos
+
+    // Estilos originais e fixos para o filtro
+    const originalStyle = {
+        width: '100%',
+        position: 'static',
+        top: '20px'
+    };
+    const fixedStyle = {
+        width: '28.3%',
+        position: 'fixed',
+        top: '86px'
+    };
+    const fixThreshold = 128.8; // Ponto de scroll a partir do qual o filtro se fixa
+
+    function verificarScroll() {
+        const scrollPosition = window.scrollY;
+        const finalSecVeiculos = secVeiculos.offsetTop + secVeiculos.offsetHeight;
+        const alturaFiltro = divPaiFiltro.offsetHeight;
+        // Ponto onde o filtro deve parar de estar fixo
+        const posicaoParada = finalSecVeiculos - alturaFiltro;
+
+        if (scrollPosition < fixThreshold) {
+            // Antes do ponto de fixação, restaura o estilo original
+            Object.assign(divPaiFiltro.style, {
+                width: originalStyle.width,
+                position: originalStyle.position,
+                top: originalStyle.top,
+                left: ''
+            });
+        } else if (scrollPosition >= fixThreshold && scrollPosition < posicaoParada - parseFloat(fixedStyle.top)) {
+            // Entre o ponto de fixação e o ponto de parada, mantém o filtro fixo
+            Object.assign(divPaiFiltro.style, {
+                width: fixedStyle.width,
+                position: fixedStyle.position,
+                top: fixedStyle.top,
+                left: ''
+            });
+        } else {
+            // Após o ponto de parada, posiciona o filtro de forma absoluta para que ele não ultrapasse a seção
+            Object.assign(divPaiFiltro.style, {
+                width: fixedStyle.width,
+                position: 'absolute',
+                top: posicaoParada + 'px',
+                left: ''
+            });
+        }
+    }
+
+    // Eventos para atualizar o estilo conforme o scroll e redimensionamento da janela
+    window.addEventListener('scroll', verificarScroll);
+    window.addEventListener('resize', verificarScroll);
+    verificarScroll(); // Verifica a posição inicial ao carregar
+});
+
 // Função para trocar o filtro entre carro e moto
 
 const divTipoCarro = $('#tipo-veic-carro');
@@ -5,21 +65,229 @@ const divTipoMoto = $('#tipo-veic-moto');
 const tipoVeicBgSelecionado =  $('#tipo-veic-bg-selecionado');
 
 divTipoCarro.click(() => {
+    // Lógica para mudar cor do selecionado
     if (!divTipoCarro.hasClass('active')) {
         divTipoCarro.addClass('active');
         divTipoMoto.removeClass('active');
+        tipoVeicBgSelecionado.css('left', '0');
+
+        $("#tipo-veic").text("Carros");
+
+        // Lógica para trocar as categorias visíveis
+        $('#categorias-carro').css('display', 'flex')
+        $('#marcas-carro').css('display', 'flex')
+        
+        $('#categorias-moto').css('display', 'none')
+        $('#marcas-moto').css('display', 'none')
     }
-    tipoVeicBgSelecionado.css('left', '0');
 })
 
 divTipoMoto.click(() => {
+    // Lógica para mudar cor do selecionado
     if (!divTipoMoto.hasClass('active')) {
         divTipoMoto.addClass('active');
         divTipoCarro.removeClass('active');
+        tipoVeicBgSelecionado.css('left', '50%');
+
+        $("#tipo-veic").text("Motos");
+        
+        // Lógica para trocar as categorias visíveis
+        $('#categorias-moto').css('display', 'flex')
+        $('#marcas-moto').css('display', 'flex')
+        
+        $('#categorias-carro').css('display', 'none')
+        $('#marcas-carro').css('display', 'none')
     }
-    tipoVeicBgSelecionado.css('left', '50%');
 })
 
+// FUNÇÃO API DO IBGE - Localidade
+$(document).ready(function () {
+    const estadoSelect = $("#estado-select"); 
+    const cidadeSelect = $("#cidade-select"); 
+
+    // Função para carregar os estados do IBGE
+    function carregarEstados(select) {
+        $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
+            // Ordena os estados por nome
+            estados.sort((a, b) => a.nome.localeCompare(b.nome));
+
+            // Para cada estado, adiciona uma opção no select
+            $.each(estados, function (index, estado) {
+                select.append(`<option value="${estado.id}">${estado.nome}</option>`);
+            });
+        });
+    }
+
+    // Função para carregar as cidades com base no estado selecionado
+    function carregarCidades(estadoId, select) {
+        $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`, function (cidades) {
+            select.empty(); // Limpa as opções anteriores do select de cidades
+
+            select.append(`<option value="">Todas</option>`)
+
+            // Adiciona cada cidade como opção
+            $.each(cidades, function (index, cidade) {
+                select.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
+            });
+
+            // Habilita o select de cidades e ativa o label (para animações ou estilos visuais)
+            select.prop("disabled", false);
+            select.prev("label").addClass("active");
+        });
+    }
+
+    // Quando o select de estados mudar de valor, carrega as cidades correspondentes
+    function addCidades(selectCid, selectEst) {
+        const estadoId = $(selectEst).val();
+
+        // Reinicia o select de cidades e desabilita-o temporariamente
+        selectCid.empty().prop("disabled", true);
+        // Remove a classe ativa do label de cidade caso o usuário mude de estado
+        selectCid.prev("label").removeClass("active");
+
+        if (estadoId) {
+            carregarCidades(estadoId, selectCid);
+        }
+    };
+
+    estadoSelect.on("change", () => {
+        addCidades(cidadeSelect, estadoSelect);
+
+        const estadoId = estadoSelect.val();
+        let fluxoFiltro = $('#fluxo-filtro');
+        let divFiltro = $('#filtros-aplic');
+
+        if (!estadoId) {
+            divFiltro.find('#estado-filtro').remove();
+            fluxoFiltro.find("#estado-container").remove();
+            divFiltro.find('#cidade-filtro').remove();
+            fluxoFiltro.find("#cidade-container").remove();
+            return;
+        }
+
+        if (!estadoId) {
+            let divEstado = divFiltro.find('#estado-filtro'); // Pega o filtro do estado
+            let estadoContainer = fluxoFiltro.find("#estado-container"); // Pega o container do estado
+        
+            divEstado.remove(); // Remove o filtro de estado
+            estadoContainer.remove(); // Remove o container do estado
+            cidadeSelect.empty().append('<option value="">Todas</option>').prop("disabled", true); // Reset no select de cidade
+            cidadeSelect.prev("label").removeClass("active"); // Remove classe ativa do label de cidade
+            return; // Para evitar que o restante do código seja executado
+        }
+        
+
+
+        // Requisição para obter detalhes do estado
+        $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}`, function(estado) {
+            // Cria novos elementos usando $('<i>') e $('<a>') para evitar selecionar elementos já existentes
+            let chevronRight = $("<i></i>").addClass("fa-solid fa-chevron-right");
+            let estadoLink = $("<a></a>").text(estado.sigla);
+
+            // Procura por um container específico para os dados dinâmicos; se não existir, cria um
+            let estadoContainer = fluxoFiltro.find("#estado-container");
+            if (!estadoContainer.length) {
+                estadoContainer = $("<span></span>").attr("id", "estado-container");
+                fluxoFiltro.append(estadoContainer);
+            }
+            
+            // Criação da div para o estado com o ícone de remoção
+            let divEstado = $("<div></div>").attr('id','estado-filtro').addClass('filtro');
+            let pNome = $("<p></p>").text(estado.nome);
+            let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+                divEstado.remove(); // Remove o filtro de estado ao clicar no X
+                estadoContainer.remove();
+                estadoSelect.val(""); // Limpa o estado selecionado
+                cidadeSelect.empty().prop("disabled", true); // Limpa o select de cidade
+                cidadeSelect.prev("label").removeClass("active"); // Remove a classe ativa do label de cidade
+
+                // Remove as cidades
+                divFiltro.find('#cidade-filtro').remove();
+                fluxoFiltro.find("#cidade-container").remove();
+            });
+            
+            divEstado.append(pNome).append(removerFiltro);
+            divFiltro.append(divEstado);
+
+            // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
+            estadoContainer.empty().append(chevronRight).append(estadoLink);
+
+            // Remover a sigla de cidade caso troque o estado
+            let cidadeContainer = fluxoFiltro.find("#cidade-container");
+            if (cidadeContainer) {
+                cidadeContainer.remove();
+            }
+        }); 
+    });
+
+    cidadeSelect.on("change", () => {
+        const cidadeNome = cidadeSelect.val();
+        let fluxoFiltro = $('#fluxo-filtro');
+
+        let chevronRight = $("<i></i>").addClass("fa-solid fa-chevron-right");
+        let cidadeLink = $("<a></a>").text(cidadeNome);
+
+        // Procura por um container específico para os dados dinâmicos; se não existir, cria um
+        let cidadeContainer = fluxoFiltro.find("#cidade-container");
+        if (!cidadeContainer.length) {
+            cidadeContainer = $("<span></span>").attr("id", "cidade-container");
+            fluxoFiltro.append(cidadeContainer);
+        }
+
+        // Cria a div para cidade com ícone de remoção
+        let divFiltro = $('#filtros-aplic');
+            
+        // Criação da div para o estado com o ícone de remoção
+        let divCidade = $("<div></div>").attr('id','cidade-filtro').addClass('filtro');
+        let pNome = $("<p></p>").text(cidadeNome);
+        let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+            divCidade.remove(); // Remove o filtro de estado ao clicar no X
+            cidadeContainer.remove();
+            cidadeSelect.find('option[value=""]').prop('selected', true);
+        });
+        
+        divCidade.append(pNome).append(removerFiltro);
+        divFiltro.append(divCidade);
+
+        // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
+        cidadeContainer.empty().append(chevronRight).append(cidadeLink);
+    })
+
+    // Carrega os estados assim que a página é carregada
+    carregarEstados(estadoSelect);
+});
+
+function addFiltro(nome, remove, id) {
+    let divFiltro = $('#filtros-aplic');
+
+    if ($(`#${id}`)) {
+        ($(`#${id}`)).remove()
+    }
+
+    let div = $("<div></div>").attr('id',id).addClass('filtro');
+    div.append($('<p></p>').text(nome)).append(remove);
+
+    divFiltro.append(div);
+}
+
+$(".itens-details li").on("click", function() {
+    if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $('#filtro-marca').remove();
+        return;
+    }
+    
+    $(".itens-details li").removeClass("active");
+    $(this).addClass("active");
+    let marca = $(this).attr('marca')
+    let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+        $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
+    });
+
+    addFiltro(marca, removerFiltro, "filtro-marca");
+});
+
+// Função para selecionar as cores
 document.addEventListener('DOMContentLoaded', function() {
     const filterHeader = document.querySelector('.filtro-cor-header');
     const filterContainer = document.querySelector('.filtro-cor-container');
@@ -38,127 +306,4 @@ optionItems.forEach((item) => {
         
         checkbox.checked = !checkbox.checked;
     });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Selecionar os elementos
-    const btnCarro = document.getElementById('tipo-veic-carro');
-    const btnMoto = document.getElementById('tipo-veic-moto');
-    const bgSelecionado = document.getElementById('tipo-veic-bg-selecionado');
-    const secCarro = document.querySelector('.sec-veiculos-carro');
-    
-    // Verificar se a seção de motos existe ou precisa ser criada
-    let secMoto = document.querySelector('.sec-veiculos-moto');
-    if (!secMoto) {
-        // Caso a seção de motos não exista, crie-a (opcional - você pode remover isto se já tiver a seção no HTML)
-        secMoto = document.createElement('section');
-        secMoto.className = 'sec-veiculos-moto';
-        secMoto.innerHTML = `
-            <div class="div-qts-anuncios">
-                <p>587 anúncios encontrados</p>
-            </div>
-            <div class="div-pai-cards">
-                <!-- Seus cards de motos aqui -->
-            </div>
-        `;
-        secMoto.style.display = 'none'; // Esconde inicialmente
-        secCarro.parentNode.insertBefore(secMoto, secCarro.nextSibling);
-    }
-
-    // Função para alternar entre carros e motos
-    function mostrarCarros() {
-        secCarro.style.display = 'flex';
-        secMoto.style.display = 'none';
-        btnCarro.classList.add('active');
-        btnMoto.classList.remove('active');
-        // Move o background para o botão de carros
-        bgSelecionado.style.left = '0';
-    }
-
-    function mostrarMotos() {
-        secCarro.style.display = 'none';
-        secMoto.style.display = 'flex';
-        btnMoto.classList.add('active');
-        btnCarro.classList.remove('active');
-        // Move o background para o botão de motos
-        bgSelecionado.style.left = '50%';
-    }
-
-    // Adicionar event listeners
-    btnCarro.addEventListener('click', mostrarCarros);
-    btnMoto.addEventListener('click', mostrarMotos);
-
-    // Inicializar (mostrar carros por padrão)
-    mostrarCarros();
-});
-
-// Lógica para funcionar o scroll
-document.addEventListener('DOMContentLoaded', function() {
-    // Seleciona os elementos necessários
-    const divPaiFiltro = document.querySelector('.div-pai-filtro');
-    const secVeiculosCarro = document.querySelector('.sec-veiculos-carro');
-    const secVeiculosMoto = document.querySelector('.sec-veiculos-moto');
-    
-    // Guarda o estilo original para poder restaurá-lo depois
-    const estiloOriginal = {
-        width: '100%',
-        position: 'static',
-        top: '20px'
-    };
-    
-    const estiloFixo = {
-        width: '28.3%',
-        position: 'fixed',
-        top: '86px'
-    };
-    
-    // Função para verificar a posição do scroll e aplicar os estilos adequados
-    function verificarScroll() {
-        const scrollPosition = window.scrollY;
-        
-        // Obtém a posição e dimensões das seções de veículos
-        const secVeiculosCarroRect = secVeiculosCarro.getBoundingClientRect();
-        const secVeiculosMotoRect = secVeiculosMoto.getBoundingClientRect();
-        
-        // Calcula o final da seção de veículos (considerando ambas as seções)
-        const finalSecVeiculos = Math.max(
-            secVeiculosCarro.offsetTop + secVeiculosCarro.offsetHeight,
-            secVeiculosMoto.offsetTop + secVeiculosMoto.offsetHeight
-        );
-        
-        // Altura do elemento de filtro
-        const alturaFiltro = divPaiFiltro.offsetHeight;
-        
-        // Posição onde o filtro deve parar (final da seção de veículos menos a altura do filtro)
-        const posicaoParada = finalSecVeiculos - alturaFiltro;
-        
-        if (scrollPosition < 128.8) {
-            // Antes do ponto de fixação, mantém o estilo original
-            divPaiFiltro.style.width = estiloOriginal.width;
-            divPaiFiltro.style.position = estiloOriginal.position;
-            divPaiFiltro.style.top = estiloOriginal.top;
-            divPaiFiltro.style.left = '';
-        } else if (scrollPosition >= 128.8 && scrollPosition < posicaoParada - 86) {
-            // Entre o ponto de fixação e o ponto de parada, mantém fixo
-            divPaiFiltro.style.width = estiloFixo.width;
-            divPaiFiltro.style.position = estiloFixo.position;
-            divPaiFiltro.style.top = estiloFixo.top;
-            divPaiFiltro.style.left = '';
-        } else {
-            // Após o ponto de parada, posiciona absolutamente no final da seção
-            divPaiFiltro.style.width = estiloFixo.width;
-            divPaiFiltro.style.position = 'absolute';
-            divPaiFiltro.style.top = (posicaoParada + 0) + 'px';
-            divPaiFiltro.style.left = '';
-        }
-    }
-    
-    // Adiciona o listener de evento para o scroll
-    window.addEventListener('scroll', verificarScroll);
-    
-    // Verifica a posição inicial ao carregar a página
-    verificarScroll();
-    
-    // Atualiza quando a janela é redimensionada
-    window.addEventListener('resize', verificarScroll);
 });

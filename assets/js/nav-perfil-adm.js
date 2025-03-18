@@ -107,74 +107,18 @@ function fecharBarraLateral() {
     }, 699);
 }
 
-// Baixar PDF de carros
+// Exibir pdf carros
 $('#pdf-carros').click(() => {
-    $.ajax({
-        method: 'GET',
-        url: 'http://192.168.1.122:5000/relatorio/carros',
-        xhrFields: {
-            responseType: 'blob'
-          },
-          success: function(response) {
-            const url = window.URL.createObjectURL(response);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'relatorio_carros.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-          },
-          error: function(error) {
-            console.error('Erro ao baixar PDF:', error);
-          }
-    });
+    window.open('http://192.168.1.122:5000/relatorio/carros', '_blank');
 });
 
-// Baixar PDF de motos
+// Exibir pdf motos
 $('#pdf-motos').click(() => {
-    $.ajax({
-        method: 'GET',
-        url: 'http://192.168.1.122:5000/relatorio/motos',
-        xhrFields: {
-            responseType: 'blob'
-          },
-          success: function(response) {
-            const url = window.URL.createObjectURL(response);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'relatorio_motos.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-          },
-          error: function(response) {
-            alertMessage(response.responseJSON.error, 'error');
-          }
-    });
+window.open('http://192.168.1.122:5000/relatorio/motos', '_blank');
 });
 
-// Baixar PDF de usuarios
+// Exibir PDF de usuarios
 $('#pdf-clientes').click(() => {
-    $.ajax({
-        method: 'GET',
-        url: 'http://192.168.1.122:5000/relatorio/usuarios',
-        xhrFields: {
-            responseType: 'blob'
-          },
-          success: function(response) {
-            const url = window.URL.createObjectURL(response);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'relatorio_usuarios.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-          },
-          error: function(response) {
-            alertMessage(response.responseJSON.error, 'error');
-          }
-    });
+    window.open('http://192.168.1.122:5000/relatorio/usuarios', '_blank');
 });
+
