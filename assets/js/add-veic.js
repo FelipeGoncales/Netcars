@@ -318,8 +318,6 @@ $(document).ready(function () {
     carregarEstados(estadoMotoSelect);
 });
 
-
-
 // FASE 5
 
 // JS PARA EXIBIR A IMAGEM DO VEÍCULO

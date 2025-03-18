@@ -61,19 +61,49 @@ document.addEventListener('DOMContentLoaded', function() {
 let filtroSelect = {};
 
 // add filtro visual 
-function addFiltro(tipo, nome, remove, id) {
+function addFiltro(tipo, nome, remove, id, tipoInput, input) {
     let divFiltro = $('#filtros-aplic');
+    let removerBtn = remove;
 
-    if ($(`#${id}`)) {
-        ($(`#${id}`)).remove()
+    if (!remove) {
+        removerBtn = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+            // Remove o filtro de estado ao clicar no X
+            $(`#${id}`).remove();
+            // Remover do informação do objeto
+            delete filtroSelect[tipo];
+            // Descelecionar select
+            
+            if (tipoInput === "select") {
+                input.find('option[value=""]').prop('selected', true);
+            } else {
+                input.val("");
+            }
+
+            console.log(filtroSelect);
+        });
     }
 
+    // Remover o filtro caso já exista
+    if ($(`#${id}`)) {
+        ($(`#${id}`)).remove();
+    }
+
+    // Criar a div
     let div = $("<div></div>").attr('id',id).addClass('filtro');
-    div.append($('<p></p>').text(nome)).append(remove);
+    div.append($('<p></p>').text(nome)).append(removerBtn);
 
+    // Adicionar informação no objeto
+
+    if ($(input).val()) {
+        filtroSelect[tipo] = $(input).val();
+    } else {
+        filtroSelect[tipo] = nome;
+    }
+
+    console.log(filtroSelect)
+
+    // Adicionar o filtro a div de filtros
     divFiltro.append(div);
-
-    filtroSelect[tipo] = nome;
 }
 
 // Função para trocar o filtro entre carro e moto
@@ -100,14 +130,42 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
     }
 }
 divTipoCarro.click(() => {
-   alterarTipoSelecionado(divTipoCarro, divTipoMoto, '0', 'Carros', $('#categorias-carro'), $('#categorias-moto'), $('#marcas-carro'), $('#marcas-moto')) 
+   alterarTipoSelecionado(divTipoCarro, divTipoMoto, '0', 'Carros', $('#categorias-carro'), 
+   $('#categorias-moto'), $('#marcas-carro'), $('#marcas-moto')); 
 })
 
 divTipoMoto.click(() => {
-    alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro')) 
+    alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  
+    $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'));
+})
+
+// Filtro Marca
+$(".itens-details li").on("click", function() {
+    if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $('#filtro-marca').remove();
+        return;
+    }
+    
+    $(".itens-details li").removeClass("active");
+    $(this).addClass("active");
+    let marca = $(this).attr('marca')
+    let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+        $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
+    });
+
+    addFiltro("marca", marca, null, "filtro-marca", "select", $(this));
+});
+
+
+// Filtro categoria
+
+$('#select-categoria-carro').on('change', function() {
+    addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-carro'));
 })
 
 // Filtro Localidade
+
 $(document).ready(function () {
     const estadoSelect = $("#estado-select"); 
     const cidadeSelect = $("#cidade-select"); 
@@ -264,33 +322,29 @@ $(document).ready(function () {
     carregarEstados(estadoSelect);
 });
 
-// Filtro Marca
-$(".itens-details li").on("click", function() {
-    if ($(this).hasClass('active')) {
-        $(this).removeClass('active');
-        $('#filtro-marca').remove();
-        return;
-    }
-    
-    $(".itens-details li").removeClass("active");
-    $(this).addClass("active");
-    let marca = $(this).attr('marca')
-    let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
-        $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
-    });
+// Filtro Preço Mínimo
 
-    addFiltro("marca", marca, removerFiltro, "filtro-marca");
-});
+$("#input-preco-min").on("input", function() {
+    addFiltro("preco-min", `Mín: R$${$(this).val()}`, null, "preco-min", "input", $(this));
+})
 
-// Filtro categoria
+// Filtro Preço Máximo
 
-// $('#select-categoria-carro').on('change', function() {
-//     let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
-//         $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
-//     });
+$("#input-preco-max").on("input", function() {
+    addFiltro("preco-max", `Max: R$${$(this).val()}`, null, "preco-max", "input", $(this));
+})
 
-//     addFiltro('categoria', this.val(), removerFiltro, '')
-// })
+// Filtro Ano Mínimo
+
+$("#input-ano-min").on("input", function() {
+    addFiltro("ano-min", `Desde ${$(this).val()}`, null, "preco-min", "input", $(this));
+})
+
+// Filtro Ano Máximo
+
+$("#input-ano-max").on("input", function() {
+    addFiltro("ano-max", `Até ${$(this).val()}`, null, "preco-max", "input", $(this));
+})
 
 // Filtro Cores
 document.addEventListener('DOMContentLoaded', function() {
@@ -306,9 +360,32 @@ document.addEventListener('DOMContentLoaded', function() {
 const optionItems = document.querySelectorAll('.option-item');
 
 optionItems.forEach((item) => {
-    item.addEventListener('click', () => {
-        const checkbox = item.querySelector('input[type="checkbox"]');
+    const label = $(item).find('label');
+
+    label.click(function() {
+        // Pega o input checkbox dentro do item
+        const checkbox = $(item).find('input[type="checkbox"]')[0];    
         
+        // Troca o input
         checkbox.checked = !checkbox.checked;
+
+        // Objeto com lista de cores
+        filtroSelect['cores'] = [];
+
+        // Percorre todas as cores para refazer o array
+        optionItems.forEach((item) => {
+            // Pega o input checkbox dentro do item
+            const checkbox = $(item).find('input[type="checkbox"]');
+            // Pega a label dentro do item
+            const label = $(item).find('label');   
+
+            // Verifica se o input está checkado
+            if (checkbox.checked) {
+                // Se sim, adiciona a lista de cores
+                filtroSelect['cores'].push(label.text());
+            }
+        })
+
+        console.log(filtroSelect);
     });
 });
