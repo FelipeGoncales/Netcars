@@ -11,7 +11,7 @@ if (tipoUser === 2) {
     window.location.href = 'vendedor-perfil.html';
 }
 
-// Aparecer mensagem caso cadastrar veículo dê certo
+// Função Alert Message
 
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
