@@ -12,9 +12,7 @@ if (tipoUser === 3) {
 // Aparecer mensagem caso cadastrar veículo dê certo
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
-
     let bgColor = type === 'success' ? '#0bd979' : '#f71445';
-
     $('<p>')
         .addClass('alertMessage')
         .text(text)
@@ -27,14 +25,12 @@ function alertMessage(text, type) {
 }
 
 const mensagemCadVeic = localStorage.getItem('msgCadVeic');
-
 if (mensagemCadVeic) {
     alertMessage(mensagemCadVeic, 'success');
     localStorage.removeItem('msgCadVeic')
 };
 
 // Fazer o nav funcionar
-
 // Função para trocar a borda roxa do A que for clicado
 function selecionarA(clicado) {
     $('nav').find('a').each(function(_, a) {
@@ -46,53 +42,84 @@ function selecionarA(clicado) {
     });
 }
 
-// Função para exibir relatório de movimentação
-function exibirRelatorioMovimentacao() {
+// Função para exibir relatório específico
+function exibirRelatorio(tipo) {
+    // Esconder todas as telas de relatório
     $('#minha-conta').css('display', 'none');
-    $('#relatorios').css('display', 'flex');
+    $('.container-relatorios').css('display', 'none');
     
-    // Destacar o item de movimentação no submenu
+    // Mostrar apenas o relatório selecionado
+    $(`#relatorio-${tipo}`).css('display', 'flex');
+    
+    // Destacar o item no submenu
     $('.sub-relatorio').removeClass('destaque');
-    $('#movimentacao').addClass('destaque');
+    $(`#${tipo}`).addClass('destaque');
 }
 
 $(document).ready(function() {
+    // Inicialmente ocultar todos os relatórios específicos
+    $('.container-relatorios').hide();
+    
     $("#link_minhaConta").on("click", function() {
         const elementoClicado = this;
         selecionarA(elementoClicado);
-
         $('#minha-conta').css('display', 'flex');
-        $('#relatorios').css('display', 'none');
+        $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
-
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
     });
-
+   
     $("#link_relatorios").on("click", function() {
         const elementoClicado = this;
-        selecionarA(elementoClicado);
-
-        // Alternar a exibição do submenu
-        $(".submenu-relatorios").slideDown();
-        
-        // Exibir a página de movimentação automaticamente
-        exibirRelatorioMovimentacao();
-
-        if ($(window).width() <= 660) {
+        if ($(elementoClicado).hasClass('selecionado')) {
+            $('#minha-conta').css('display', 'flex');
+            $('.container-relatorios').css('display', 'none');
+            $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+           
+            const minhaConta = document.getElementById('link_minhaConta');
+            selecionarA(minhaConta);
+        } else {
+            // Alternar a exibição do submenu
+            $(".submenu-relatorios").slideDown();
+                   
+            // Exibir a página de movimentação automaticamente
+            exibirRelatorio('movimentacao');
+            selecionarA(elementoClicado);
+        }
+        if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
     });
-
+    
     // Ação ao clicar nos itens do submenu
-    $(".sub-relatorio").on("click", function() {
-        // Remover destaque de todos e adicionar ao clicado
-        $('.sub-relatorio').removeClass('destaque');
-        $(this).addClass('destaque');
-        
-        $('#minha-conta').css('display', 'none');
-        $('#relatorios').css('display', 'flex');
+    $("#movimentacao").on("click", function() {
+        exibirRelatorio('movimentacao');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+    
+    $("#carros").on("click", function() {
+        exibirRelatorio('carros');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+    
+    $("#motos").on("click", function() {
+        exibirRelatorio('motos');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+    
+    $("#clientes").on("click", function() {
+        exibirRelatorio('clientes');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
     });
 });
 
@@ -100,7 +127,6 @@ $(document).ready(function() {
 function fecharBarraLateral() {
     barraLateral.css('animation', 'fecharBarraLateral 0.7s');
     overlayBg.css('animation', 'sumirOverlay 0.7s');
-
     setTimeout(() => {
         barraLateral.css('display', 'none');
         overlayBg.css('display', 'none');
@@ -114,7 +140,7 @@ $('#pdf-carros').click(() => {
 
 // Exibir pdf motos
 $('#pdf-motos').click(() => {
-window.open('http://192.168.1.122:5000/relatorio/motos', '_blank');
+    window.open('http://192.168.1.122:5000/relatorio/motos', '_blank');
 });
 
 // Exibir PDF de usuarios
@@ -122,3 +148,7 @@ $('#pdf-clientes').click(() => {
     window.open('http://192.168.1.122:5000/relatorio/usuarios', '_blank');
 });
 
+// Exibir PDF de movimentações
+$('#pdf-movimentacao').click(() => {
+    window.open('http://192.168.1.122:5000/relatorio/movimentacoes', '_blank');
+});
