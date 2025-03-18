@@ -116,6 +116,7 @@ $(document).ready(function() {
     });
     
     $("#clientes").on("click", function() {
+        console.log("Clique em clientes detectado");
         exibirRelatorio('clientes');
         if ($(window).width() <= 980) {
             fecharBarraLateral();

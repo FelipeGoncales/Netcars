@@ -517,6 +517,29 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* DIVS ADMINISTRADOR */
 
+.inputs-DMA{
+    display: flex;
+    gap: 5px;
+    width: 49%;
+}
+.content-conbranco{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 55px;
+}
+.botao-conbranco{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-conbranco{
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
 .container-relatorios{
     display: none;
     justify-content: center;
@@ -528,14 +551,15 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         justify-content: center;
         align-items: center;
         gap: 10px;
-        background: var(--cor-bg-sec);
+        background: var(--roxo);
         cursor: pointer;
-        padding: 20px;
+        padding: 15px 20px;
         border-radius: 10px;
-        color: var(--cor-texto);
+        width: 35%;
+        color: var(--cor-bg);
         transition: 0.2s ease-in;
         &:hover{
-            background-color: var(--roxo);
+            background-color: var(--hover-roxo);
             color: var(--cor-bg-sec);
         }
     }
@@ -545,7 +569,43 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     background-color: white;
     width: 782px;
     height: 336px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     flex-shrink: 0;
+}
+
+.input-conbranco{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    & input, select {
+        flex: 1; 
+        min-width: 100px; 
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+}
+
+.input-conbranco2{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
+    width: 50%;
+    & input, select {
+        flex: 1; 
+        min-width: 113px; 
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
 }
 
 /* END DIVS ADMINISTRADOR */
