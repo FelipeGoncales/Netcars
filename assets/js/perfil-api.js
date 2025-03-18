@@ -355,15 +355,25 @@ $("#formEditarUsuario").on("submit", function(e) {
         data: editarJSON,
         contentType: "application/json",
         success: function(response) {
-            // Manter a senha original no objeto dadosUser
-            if (!senhaAtual || !senhaNova) {
-                editar.senha_hash = dadosUser.senha_hash;
-            } else if (senhaNova) {
-                // Se forneceu nova senha, atualiza no localStorage
-                editar.senha_hash = senhaNova;
-                delete editar.senha_nova; // Remove campo temporário
-            }
+            // Retirar as senhas do objeto editar para salvar no Local Storage depois
+            delete editar.senha_nova;
+            delete editar.senha_hash;
+
+            // Limpar os inputs
+            $("#input-senha-nova").val('');
+            $("#input-senha-atual").val('');
+
+            // Voltar as labels para o meio do input de novo
+            $("#label-senha-nova").removeClass('active');
+            $("#label-senha-atual").removeClass('active');
             
+            // Ocultar os inputs de senha
+            $("#mostrarSenhaNova").removeClass('fa-eye-slash').addClass('fa-eye')
+            $("#input-senha-nova").attr('type', 'password')
+
+            $("#mostrarSenhaAtual").removeClass('fa-eye-slash').addClass('fa-eye')
+            $("#input-senha-atual").attr('type', 'password')
+
             // Atualizar os dados no localStorage após receber a resposta positiva
             localStorage.setItem('dadosUser', JSON.stringify(editar));
 
