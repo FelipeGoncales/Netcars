@@ -1,4 +1,9 @@
+// URL API
+
+const BASE_URL_ADM = "http://192.168.1.12:5000";
+
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+
 const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 const tipoUser = dadosUser.tipo_usuario;
 
@@ -23,7 +28,6 @@ function alertMessage(text, type) {
         .delay(3500)
         .fadeOut(400);
 }
-
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
 
@@ -378,3 +382,123 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+ // Carregar usuários
+
+ $.ajax({
+    url: `${BASE_URL_ADM}/cadastro`,
+    success: function(response) {
+        const tbody = $("tbody");
+
+        const usuarios = response.usuarios;
+        for (index in usuarios) {
+            // Cria um elemento <tr> para agrupar as colunas
+            const $tr= $('<tr>');
+
+            if (index % 2 === 0) {
+                $tr.addClass('tipo2');
+            } else {
+                $tr.addClass('tipo1');
+            }
+            
+            // Cria os tds que irão conter as informações
+            const $tdIcon = $('<td>');
+            const $icone = $('<i>').addClass('fa-solid fa-pen-to-square edit-icon').attr('id', usuarios[index].id_usuario);
+            $tdIcon.append($icone);
+            
+            const $tdNome = $('<td>').text(usuarios[index].nome_completo).addClass('nome-td');
+            const $tdEmail = $('<td>').text(usuarios[index].email).addClass('email-td');
+            const $tdTelefone = $('<td>').text(usuarios[index].telefone).addClass('telefone-td');
+
+            let textoAtivo = usuarios[index].ativo === 1 ? "Ativo" : "Inativo";
+            const $tdAtivo = $('<td>').text(textoAtivo).addClass('ativo-td');
+
+            let textoTipoUser = usuarios[index].tipo_usuario === 1 ? "Administrador" : usuarios[index].tipo_usuario === 2 ? "Vendedor" : "Cliente";
+            const $tdTipoUsuario = $('<td>').text(textoTipoUser).addClass('tipo-user-td');
+            
+            $tr.append($tdIcon)
+                .append($tdNome)
+                .append($tdEmail)
+                .append($tdTelefone)
+                .append($tdAtivo)
+                .append($tdTipoUsuario);
+            
+            tbody.append($tr);
+        }
+    },
+    error: function(response) {
+        alertMessage(response.responseJSON.error, 'error');
+    }
+ })
+
+ // Fechar modal editar
+
+ $("#close-modal-editar").click(function() {
+    $('#modal-editar-usuario').css('display', 'none');
+    $('#overlay-bg').css('display', 'none');
+ })
+
+ // Abrir modal editar ao clicar no ícone de editar
+
+ $('table').on('click', '.edit-icon', function() {
+    const idUser = $(this).attr('id');
+
+    const tdPai = $(this).closest('tr');
+
+    const nome = tdPai.find('.nome-td').text();
+    const email = tdPai.find('.email-td').text();
+    const telefone = tdPai.find('.telefone-td').text();
+
+    const ativo = tdPai.find('.ativo-td').text();
+    // Transformando em número
+    let textoAtivo = ativo === "Ativo" ? 1 : 0;
+    
+    const tipoUser = tdPai.find('.tipo-user-td').text();
+    // Transformando em número
+    let textoTipoUser = tipoUser === "Administrador"  ? 1 : tipoUser === "Vendedor" ? 2 : 3;
+
+    $('#modal-editar-usuario').css('display', 'flex')
+    $('#overlay-bg').css('display', 'flex');
+
+    $('#nome-editar').val(nome);
+    $('#email-editar').val(email);
+    $('#telefone-editar').val(telefone);
+    $('#ativo-editar').val(textoAtivo);
+    $('#tipo-user-editar').val(textoTipoUser);
+
+    // Preparar objeto com os dados para atualização
+    let editar = {
+        id_usuario: idUser,
+        email: email,
+        nome_completo: nome,
+        telefone: telefone, // Remove caracteres especiais
+        tipo_usuario: textoTipoUser,
+        ativo: textoAtivo
+    };
+
+    const editarJSON = JSON.stringify(editar);
+
+    // Rota para editar perfil
+    $('#modal-editar-usuario').on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            method: "put",
+            url: `${BASE_URL_ADM}/cadastro/${idUser}`, // URL da API na Web
+            data: editarJSON,
+            contentType: "application/json",
+            success: function(response) {
+                // Exibir mensagem de sucesso
+                alertMessage(response.success, 'success');
+
+                $('#modal-editar-usuario').css('display', 'none')
+                $('#overlay-bg').css('display', 'none');
+            },
+            error: function(response) {
+                // Exibir mensagem de erro
+                alertMessage(response.responseJSON.error, 'error');
+            }
+        });
+    });
+})

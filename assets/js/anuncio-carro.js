@@ -1,5 +1,5 @@
 // URL da API
-const BASE_URL = "http://192.168.1.123:5000";
+const BASE_URL = "http://192.168.1.12:5000";
 
 // Função para inicializar o carrossel
 function carregarOwlCarrossel() {

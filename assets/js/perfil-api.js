@@ -1,6 +1,6 @@
 // URL API
 
-const BASE_URL = "http://192.168.1.123:5000";
+const BASE_URL = "http://192.168.1.12:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
 
@@ -400,7 +400,6 @@ $("#formEditarUsuario").on("submit", function(e) {
         }
     });
 });
-
 
 // Rota para deletar perfil
 $('#deletar-usuario').click(function() {
