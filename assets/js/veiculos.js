@@ -37,6 +37,8 @@ function buscarVeiculos() {
                 // Cria a imagem da capa
                 const img = $("<img>")
                     .attr("alt", "Imagem do veículo anunciado.");
+                    
+                console.log(veiculo.imagens)
             
                 // Cria a div de itens do card
                 const divItensCard = $("<div></div>").addClass("itens-card");
@@ -56,7 +58,7 @@ function buscarVeiculos() {
             
                 // Quilometragem
                 const iconGauge = $("<i></i>").addClass("fa-solid fa-gauge-high");
-                const pKm = $("<p></p>").text(veiculo.quilometragem); // Quilometragem
+                const pKm = $("<p></p>").text(`${veiculo.quilometragem} Km`); // Quilometragem
             
                 
                 $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
