@@ -2,7 +2,6 @@
 
 const BASE_URL = "http://192.168.1.123:5000";
 
-
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
 const renavamValidity = {
@@ -113,8 +112,10 @@ function alertMessage(text, type) {
 
 const anoMin = 1950;
 const anoMax = new Date().getFullYear();
-const anoModelo = $('#ano-modelo-carro');
-const anoFabricacao = $('#ano-fabricacao-carro');
+const anoModeloCarro = $('#ano-modelo-carro');
+const anoFabricacaoCarro = $('#ano-fabricacao-carro');
+const anoModeloMoto = $('#ano-modelo-moto');
+const anoFabricacaoMoto = $('#ano-fabricacao-moto');
 
 function addAnoInput(input) {
     for (let ano = anoMin; ano <= anoMax; ano++) {
@@ -122,9 +123,11 @@ function addAnoInput(input) {
         input.append(option);
     }
 }
-
-addAnoInput(anoModelo);
-addAnoInput(anoFabricacao);
+// Adicionado options aos inputs
+addAnoInput(anoModeloCarro);
+addAnoInput(anoFabricacaoCarro);
+addAnoInput(anoModeloMoto);
+addAnoInput(anoFabricacaoMoto);
 
 // Função para validar o RENAVAM (tanto de carros quanto de motos)
 function validarRENAVAM(seletor) {
@@ -563,12 +566,12 @@ $('#form-add-veic').on('submit', function (e) {
                         }
                     },
                     error: function (response) {
-                        alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                        alertMessage(`${response.responseJSON.error}`, 'error');
                     }
                 });
             },
             error: function (response) {
-                alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                alertMessage(`${response.responseJSON.error}`, 'error');
             }
         })
     }
@@ -662,12 +665,12 @@ $('#form-add-veic').on('submit', function (e) {
                         }
                     },
                     error: function (response) {
-                        alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                        alertMessage(`${response.responseJSON.error}`, 'error');
                     }
                 });
             },
             error: function (response) {
-                alertMessage(`${response.responseJSON.error}: ${response.responseJSON.missing_fields}`, 'error');
+                alertMessage(`${response.responseJSON.error}`, 'error');
             }
         })
     }

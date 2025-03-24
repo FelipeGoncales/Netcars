@@ -47,6 +47,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    text-transform: uppercase;
     &.marca {
         color: var(--cor-texto);
     }
@@ -395,13 +396,13 @@ main {
     }
 }
 
+/* Imagens carros */
 .eletricos {
-    background-image: url(../img/eletrico.svg);
+    background-image: url(../img/eletrico.webp);
 }
-.populares {
-    background-image: url(../img/bannerPopular.svg);
+.hatchback {
+    background-image: url(../img/bannerPopular.jpg);
 }
-
 .picapes {
     background-image: url(../img/bannerPicapes.svg);
 }
@@ -412,6 +413,7 @@ main {
     background-image: url(../img/bannerSUVs.svg);
 }
 
+/* Imagens motos */
 .esportivas {
     background-image: url(../img/esportivas.png);
 }

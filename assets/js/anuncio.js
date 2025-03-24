@@ -92,14 +92,7 @@ $('#editarAnuncio').click(function () {
 
         // Lógica para salvar no banco
 
-
-        $('input').each(function () {
-            const id = $(this).attr('id');
-            const spanMirror = $(`#mirror-${id}`)
-
-            $(this).css('display', 'none');
-            spanMirror.text($(this).val()).css('display', 'flex');
-        })
+        carregarInputs();
     }
 });
 
@@ -113,19 +106,16 @@ $('#salvar-alteracoes').click(function () {
 
         // Lógica para salvar no banco
 
-
-        $('input').each(function () {
-            const id = $(this).attr('id');
-            const spanMirror = $(`#mirror-${id}`)
-
-            $(this).css('display', 'none');
-            spanMirror.text($(this).val()).css('display', 'flex');
-        })
+        carregarInputs();
     }
 });
 
-// Função para aparecer tela de confirmação
+function carregarInputs() {
+    $('input').each(function () {
+        const id = $(this).attr('id');
+        const spanMirror = $(`#mirror-${id}`)
 
-// $('#reservar-btn').click(function() {
-
-// })
+        $(this).css('display', 'none');
+        spanMirror.text($(this).val()).css('display', 'flex');
+    })
+}

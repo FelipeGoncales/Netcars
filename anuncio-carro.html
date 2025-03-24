@@ -23,8 +23,10 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
-
+    <!-- JS de anúncio -->
     <script src="assets/js/anuncio.js" defer></script>
+    <!-- JS anúncio de carro -->
+     <script src="assets/js/anuncio-carro.js" defer></script>
 </head>
 
 <body>
@@ -68,13 +70,7 @@
     <main>
         <div class="div-pai-banner-venda">
             <div class="container">
-                <div class="owl-carousel">
-                    <div> <img src="assets/img/fiesta/img1.png" alt="Imagem 1"> </div>
-                    <div> <img src="assets/img/fiesta/img2.png" alt="Imagem 2"> </div>
-                    <div> <img src="assets/img/fiesta/img3.jpg" alt="Imagem 3"> </div>
-                    <div> <img src="assets/img/fiesta/img4.jpg" alt="Imagem 4"> </div>
-                    <div> <img src="assets/img/fiesta/img5.jpg" alt="Imagem 5"> </div>
-                    <div> <img src="assets/img/fiesta/img6.jpg" alt="Imagem 6"> </div>
+                <div class="owl-carousel" id="div-owl-carousel">
                 </div>
                 <button id="nextSlide" class="botao-carrossel right"><i class="fa-solid fa-arrow-right"></i></button>
                 <button id="prevSlide" class="botao-carrossel left"><i class="fa-solid fa-arrow-left"></i></button>
@@ -165,7 +161,7 @@
                     </div>
                     <div class="div-content-venda-filho2">
                         <div class="circleLogo">
-                            <img src="assets/img/ford.png" alt="Ford Logo">
+                            <img src="assets/img/ford.png" id="logo-img" alt="Ford Logo">
                         </div>
                     </div>
                 </div>
@@ -180,7 +176,7 @@
                         <img src="assets/img/bmw.png" alt="BMW Logo">
                     </div>
                     <div>
-                        <img src="assets/img/byd.png" alt="BYD Logo">
+                        <img src="assets/img/BYD.svg" alt="BYD Logo">
                     </div>
                     <div>
                         <img src="assets/img/toyota.png" alt="Toyota Logo">
@@ -189,7 +185,7 @@
                         <img src="assets/img/volkswagem.png" alt="Volkswagem Logo">
                     </div>
                     <div>
-                        <img src="assets/img/fiat.png" alt="Fiat Logo">
+                        <img src="assets/img/fiat.svg" alt="Fiat Logo">
                     </div>
                     <div>
                         <img src="assets/img/ford.png" alt="Ford Logo">
@@ -209,8 +205,8 @@
                         <p>Elétricos</p>
                         <div class="overlay"></div>
                     </div>
-                    <div class="populares">
-                        <p>Populares</p>
+                    <div class="hatchback">
+                        <p>Hatchback</p>
                         <div class="overlay"></div>
                     </div>
                     <div class="picapes">
@@ -280,34 +276,5 @@
         <p class="subtitle">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
         <p id="closeModalLogin">&times;</p>
     </div>
-
-    <!-- Script de inicialização -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-            var owl = $(".owl-carousel");
-
-            owl.owlCarousel({
-                loop: false,
-                nav: false,
-                margin: 10,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 2 },
-                    1000: { items: 3 }
-                }
-            });
-
-            document.getElementById("nextSlide").addEventListener("click", function () {
-                owl.trigger("next.owl.carousel");
-            });
-
-            document.getElementById("prevSlide").addEventListener("click", function () {
-                owl.trigger("prev.owl.carousel");
-            });
-        });
-
-
-</script>
 </body>
-
 </html>

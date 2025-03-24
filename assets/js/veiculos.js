@@ -5,32 +5,36 @@ const BASE_URL = "http://192.168.1.123:5000";
 // Criando o dicionário do filtro
 let filtroSelect = {};
 
+let tipoVeiculo = "";
+
 // Carregar veículos ao abrir a página
 $(document).ready(() => {
-    filtroSelect["veiculo"] = "carro";
-    console.log("sla");
+    tipoVeiculo = "carro";
     buscarVeiculos();
 })
 
 function buscarVeiculos() {
     $.ajax({
         method: "POST",
-        url: `${BASE_URL}/buscar-${filtroSelect.veiculo}`,
+        url: `${BASE_URL}/buscar-${tipoVeiculo}`,
         data: JSON.stringify(filtroSelect),
         contentType: "application/json",
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         success: function(response) {
+            console.log(response)
             // Alterando o número da quantidade de veículos obtidos através da resposta da API
             $("#qnt-veiculos").text(response.qnt);
-            console.log(response)
 
             // Obtendo a div para inserir os veículos
             const $divVeic = $("#div-veiculos");
+            $divVeic.empty();
 
             // Obtém a lista de veículos
             const listaVeic = response.veiculos;
 
             for (veiculo of listaVeic) {
-                console.log(veiculo);
                 // Cria a div card
                 const divCard = $("<div></div>").addClass("card");
             
@@ -69,7 +73,6 @@ function buscarVeiculos() {
 
                     // Localização
                     const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
-                    console.log(siglaEstado)
                     const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
 
                     // Monta a div infoCard com ícones e textos
@@ -83,7 +86,7 @@ function buscarVeiculos() {
                 // Url para abrir a página de anúncio
                 let urlAnuncio;
 
-                if (filtroSelect.veiculo == "carro") {
+                if (tipoVeiculo === "carro") {
                     urlAnuncio = "anuncio-carro.html";
                 } else {
                     urlAnuncio = "anuncio-moto.html";
@@ -190,6 +193,9 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
             }
 
             console.log(filtroSelect);
+
+            // Aplicar filtros a API quando deletar
+            buscarVeiculos();
         });
     }
 
@@ -215,6 +221,9 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
     divFiltro.append(div);
 
     $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+    // Aplicar filtros e enviar para a API
+    buscarVeiculos();
 }
 
 // Função para trocar o filtro entre carro e moto
@@ -226,6 +235,13 @@ const tipoVeicBgSelecionado =  $('#tipo-veic-bg-selecionado');
 // Lógica para mudar cor do selecionado
 function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, categoria2, marca1, marca2, tipoFiltro) {
     if (!tipo1.hasClass('active')) {
+        if (texto === 'Carros') {
+            $('#h2-titulo').text(`Carros semi-novos e usados`)
+        } else {
+            $('#h2-titulo').text(`Motos semi-novas e usadas`)
+        }
+
+
         tipo1.addClass('active');
         tipo2.removeClass('active');
         tipoVeicBgSelecionado.css('left', posicao);
@@ -241,7 +257,9 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
     
         limparFiltros();
 
-        filtroSelect["veiculo"] = tipoFiltro;
+        tipoVeiculo = tipoFiltro;
+
+        buscarVeiculos();
     }
 }
 divTipoCarro.click(() => {
@@ -279,6 +297,10 @@ $(".itens-details li").on("click", function() {
     let marca = $(this).attr('marca')
     let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
         $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
+        
+        // Retirar objeto do dicionário e recontar a quantidade de filtros aplicados
+        delete filtroSelect['marca'];
+        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
     });
 
     addFiltro("marca", marca, null, "filtro-marca", "select", $(this));
