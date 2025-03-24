@@ -2,6 +2,119 @@
 
 const BASE_URL = "http://192.168.1.123:5000";
 
+// Criando o dicionário do filtro
+let filtroSelect = {};
+
+// Carregar veículos ao abrir a página
+$(document).ready(() => {
+    filtroSelect["veiculo"] = "carro";
+    console.log("sla");
+    buscarVeiculos();
+})
+
+function buscarVeiculos() {
+    $.ajax({
+        method: "POST",
+        url: `${BASE_URL}/buscar-${filtroSelect.veiculo}`,
+        data: JSON.stringify(filtroSelect),
+        contentType: "application/json",
+        success: function(response) {
+            // Alterando o número da quantidade de veículos obtidos através da resposta da API
+            $("#qnt-veiculos").text(response.qnt);
+            console.log(response)
+
+            // Obtendo a div para inserir os veículos
+            const $divVeic = $("#div-veiculos");
+
+            // Obtém a lista de veículos
+            const listaVeic = response.veiculos;
+
+            for (veiculo of listaVeic) {
+                console.log(veiculo);
+                // Cria a div card
+                const divCard = $("<div></div>").addClass("card");
+            
+                // Cria a imagem da capa
+                const img = $("<img>")
+                    .attr("alt", "Imagem do veículo anunciado.");
+            
+                // Cria a div de itens do card
+                const divItensCard = $("<div></div>").addClass("itens-card");
+            
+                // Título do veículo
+                const h3Title = $("<h3></h3>").text(`${veiculo.marca} ${veiculo.modelo}`); // Inserir nome do carro
+            
+                // Descrição do veículo
+                const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+            
+                // Container das informações adicionais
+                const containerInfoCard = $("<div></div>").addClass("container-info-card");
+            
+                // Ano do veículo
+                const iconCalendar = $("<i></i>").addClass("fa-solid fa-calendar-days");
+                const pYear = $("<p></p>").text(veiculo.ano_modelo); // Ano veículo
+            
+                // Quilometragem
+                const iconGauge = $("<i></i>").addClass("fa-solid fa-gauge-high");
+                const pKm = $("<p></p>").text(veiculo.quilometragem); // Quilometragem
+            
+                
+                $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
+                    let siglaEstado = '';
+
+                    for (estado of estados) {
+                        if (estado.nome === veiculo.estado) {
+                            siglaEstado = estado.sigla;
+                            break;
+                        }
+                    }
+
+                    // Localização
+                    const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
+                    console.log(siglaEstado)
+                    const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
+
+                    // Monta a div infoCard com ícones e textos
+                    containerInfoCard.append(iconCalendar, pYear, iconGauge, pKm, iconLocation, pLocation);
+                })
+            
+                // Preço do veículo
+                let valor = parseFloat(veiculo.preco_venda).toFixed(2);
+                const h3Price = $("<h3></h3>").text(`R$${valor}`); // Valor
+                
+                // Url para abrir a página de anúncio
+                let urlAnuncio;
+
+                if (filtroSelect.veiculo == "carro") {
+                    urlAnuncio = "anuncio-carro.html";
+                } else {
+                    urlAnuncio = "anuncio-moto.html";
+                }
+
+                // Botão para ver detalhes
+                const buttonDetalhes = $("<a></a>")
+                    .attr("href", `${urlAnuncio}?id=${veiculo.id}`) // Url para anúncio veículos passando id pela url
+                    .text("Ver detalhes")
+                    .addClass("ver-detalhes");
+            
+                // Adiciona todos os itens na div itens-card
+                divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
+            
+                // Junta a imagem e os itens ao card
+                divCard.append(img, divItensCard);
+            
+                // Insere o card no container desejado na página
+                $divVeic.append(divCard);
+            }
+        },
+        error: function(response) {
+            console.log(response.responseJSON.error);
+        }
+    })
+}
+
+
+
 // Lógica para funcionar o scroll
 document.addEventListener('DOMContentLoaded', function() {
     // Seleciona os elementos necessários
@@ -61,8 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
     verificarScroll(); // Verifica a posição inicial ao carregar
 });
 
-let filtroSelect = {};
-
 // add filtro visual 
 function addFiltro(tipo, nome, remove, id, tipoInput, input) {
     let divFiltro = $('#filtros-aplic');
@@ -117,7 +228,7 @@ const divTipoMoto = $('#tipo-veic-moto');
 const tipoVeicBgSelecionado =  $('#tipo-veic-bg-selecionado');
 
 // Lógica para mudar cor do selecionado
-function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, categoria2, marca1, marca2) {
+function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, categoria2, marca1, marca2, tipoFiltro) {
     if (!tipo1.hasClass('active')) {
         tipo1.addClass('active');
         tipo2.removeClass('active');
@@ -133,16 +244,18 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
         marca2.css('display', 'none');
     
         limparFiltros();
+
+        filtroSelect["veiculo"] = tipoFiltro;
     }
 }
 divTipoCarro.click(() => {
    alterarTipoSelecionado(divTipoCarro, divTipoMoto, '0', 'Carros', $('#categorias-carro'), 
-   $('#categorias-moto'), $('#marcas-carro'), $('#marcas-moto')); 
+   $('#categorias-moto'), $('#marcas-carro'), $('#marcas-moto'), "carro"); 
 })
 
 divTipoMoto.click(() => {
     alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  
-    $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'));
+    $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'), "moto");
 })
 
 // Limpar filtros
@@ -259,8 +372,6 @@ $(document).ready(function () {
             return; // Para evitar que o restante do código seja executado
         }
         
-
-
         // Requisição para obter detalhes do estado
         $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}`, function(estado) {
             // Cria novos elementos usando $('<i>') e $('<a>') para evitar selecionar elementos já existentes
@@ -276,21 +387,27 @@ $(document).ready(function () {
             
             // Criação do ícone de remover
             let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
-                divEstado.remove(); // Remove o filtro de estado ao clicar no X
-                estadoContainer.remove();
-                estadoSelect.val(""); // Limpa o estado selecionado
-                cidadeSelect.empty().prop("disabled", true); // Limpa o select de cidade
-                cidadeSelect.prev("label").removeClass("active"); // Remove a classe ativa do label de cidade
+                $("#estado-filtro").remove(); // Remove o filtro de estado ao clicar no X
+                $("#estado-container").remove();
+                $("#estado-select").val(""); // Limpa o estado selecionado
+                // Remove a classe ativa do label de cidade
+                // Limpa o select de cidade
+                $("#cidade-select").empty().prop("disabled", true).prev("label").removeClass("active"); 
 
                 // Remove as cidades
-                divFiltro.find('#cidade-filtro').remove();
-                fluxoFiltro.find("#cidade-container").remove();
+                $("#filtros-aplic").find('#cidade-filtro').remove();
+                $("#fluxo-filtro").find("#cidade-container").remove();
 
-                // Remover estado do objeto
-                delete filtroSelect.estado;
+                // Limpar filtros aplicados
+                delete filtroSelect["estado"];
+                // Limpar filtros aplicados
+                delete filtroSelect["cidade"];
+
+                // ALterar o número de filtros aplicados exibidos
+                $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
             });
-            
-            addFiltro('estado', estado.nome, removerFiltro, 'estado-filtro')
+
+            addFiltro('estado', estado.nome, removerFiltro, 'estado-filtro', null, null);
 
             // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
             estadoContainer.empty().append(chevronRight).append(estadoLink);
@@ -317,20 +434,26 @@ $(document).ready(function () {
             fluxoFiltro.append(cidadeContainer);
         }
 
-        // Cria a div para cidade com ícone de remoção
-        let divFiltro = $('#filtros-aplic');
             
-        // Criação da div para o estado com o ícone de remoção
-        let divCidade = $("<div></div>").attr('id','cidade-filtro').addClass('filtro');
-        let pNome = $("<p></p>").text(cidadeNome);
+        // Criação do ícone de remoção
         let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
-            divCidade.remove(); // Remove o filtro de estado ao clicar no X
-            cidadeContainer.remove();
-            cidadeSelect.find('option[value=""]').prop('selected', true);
+            // Remove o filtro de estado ao clicar no X
+            $("#cidade-filtro").remove();
+
+            // Remove o nome da cidade no topo da página
+            $("#cidade-container").remove();
+
+            // Desceleciona o input
+            $("#cidade-select").find('option[value=""]').prop('selected', true);
+
+            // Limpar filtros aplicados
+            delete filtroSelect["cidade"];
+
+            // ALterar o número de filtros aplicados exibidos
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
         });
-        
-        divCidade.append(pNome).append(removerFiltro);
-        divFiltro.append(divCidade);
+
+        addFiltro("cidade", cidadeNome, removerFiltro, "cidade-filtro", null, null);
 
         // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
         cidadeContainer.empty().append(chevronRight).append(cidadeLink);
