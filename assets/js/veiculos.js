@@ -1,3 +1,6 @@
+// URL API
+
+const BASE_URL = "http://192.168.1.123:5000";
 
 // Lógica para funcionar o scroll
 document.addEventListener('DOMContentLoaded', function() {

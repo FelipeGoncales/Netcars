@@ -1,6 +1,11 @@
-let isValidCPF_CNPJ = false;
+// URL API
+
+const BASE_URL = "http://192.168.1.123:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
+
+let isValidCPF_CNPJ = false;
+
 $(document).ready(function() {
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
@@ -351,7 +356,7 @@ $("#formEditarUsuario").on("submit", function(e) {
     // Rota para editar perfil
     $.ajax({
         method: "put",
-        url: `http://192.168.1.130:5000/cadastro/${id}`, // URL da API na Web
+        url: `${BASE_URL}/cadastro/${id}`, // URL da API na Web
         data: editarJSON,
         contentType: "application/json",
         success: function(response) {
@@ -414,7 +419,7 @@ $('#deletar-usuario').click(function() {
         
             $.ajax({
                 method: "delete",
-                url: `http://192.168.1.130:5000/cadastro/${id}`, // URL da API na Web
+                url: `${BASE_URL}/cadastro/${id}`, // URL da API na Web
                 data: id,
                 contentType: "application/json",
                 success: function(response) {

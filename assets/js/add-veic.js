@@ -1,9 +1,14 @@
+// URL API
+
+const BASE_URL = "http://192.168.1.123:5000";
+
+
+// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+
 const renavamValidity = {
     'renavam-carro': false,
     'renavam-moto': false
 };
-
-// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
 const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
@@ -521,7 +526,7 @@ $('#form-add-veic').on('submit', function (e) {
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.130:5000/carro", // URL da API para carros
+            url: `${BASE_URL}/carro`, // URL da API para carros
             data: envia,
             contentType: "application/json",
             headers: {
@@ -541,7 +546,7 @@ $('#form-add-veic').on('submit', function (e) {
                 // Envia as imagens para a API
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.130:5000/carro/upload_img/${id_carro}`, // Usa o id_carro retornado
+                    url: `${BASE_URL}/carro/upload_img/${id_carro}`, // Usa o id_carro retornado
                     data: formDataImg,
                     contentType: false,  // Permite que o navegador defina o contentType apropriado (multipart/form-data)
                     processData: false,  // Impede que o jQuery tente processar os dados
@@ -620,7 +625,7 @@ $('#form-add-veic').on('submit', function (e) {
 
         $.ajax({
             method: "post",
-            url: "http://192.168.1.130:5000/moto", // URL da API para motos
+            url: `${BASE_URL}/moto`, // URL da API para motos
             data: envia,
             contentType: "application/json",
             headers: {
@@ -640,7 +645,7 @@ $('#form-add-veic').on('submit', function (e) {
                 // CORREÇÃO: Alterado o endereço IP para manter consistência com a API (usando 192.168.1.122, igual ao endpoint de POST).
                 $.ajax({
                     method: "post",
-                    url: `http://192.168.1.130:5000/moto/upload_img/${id_moto}`, // Usa o id_moto retornado
+                    url: `${BASE_URL}/moto/upload_img/${id_moto}`, // Usa o id_moto retornado
                     data: formDataImg,
                     contentType: false,
                     processData: false,

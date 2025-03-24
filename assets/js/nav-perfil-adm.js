@@ -1,3 +1,7 @@
+// URL API
+
+const BASE_URL = "http://192.168.1.123:5000";
+
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 const tipoUser = dadosUser.tipo_usuario;
@@ -195,7 +199,7 @@ $("#formCadastroUsuario").on("submit", function (e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.130:5000/cadastro", // URL da API na Web
+        url: `${BASE_URL}/cadastro`, // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {

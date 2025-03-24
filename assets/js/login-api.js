@@ -1,3 +1,7 @@
+// URL API
+
+const BASE_URL = "http://192.168.1.123:5000";
+
 // Funções para auxiliar no funcionamento dos inputs
 
 $('.div-input').each(function() {
@@ -88,7 +92,7 @@ $("#formCadastroUsuario").on("submit", function (e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.130:5000/cadastro", // URL da API na Web
+        url: `${BASE_URL}/cadastro`, // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
@@ -127,7 +131,7 @@ $("#formLoginUsuario").on('submit', function (e) {
 
     $.ajax({
         method: "post",
-        url: "http://192.168.1.130:5000/login", // URL da API na Web
+        url: `${BASE_URL}/login`, // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
