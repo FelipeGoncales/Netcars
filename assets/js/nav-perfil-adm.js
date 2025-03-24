@@ -1,7 +1,3 @@
-// URL API
-
-const BASE_URL = "http://192.168.1.123:5000";
-
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 const tipoUser = dadosUser.tipo_usuario;
