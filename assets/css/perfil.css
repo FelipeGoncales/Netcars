@@ -11,6 +11,7 @@
     scroll-behavior: smooth;
 }
 
+
 :root {
     --roxo: #6C1DE9;
     --hover-roxo: #5a19c1;
@@ -420,6 +421,211 @@ main {
 }
 
 /* Fim do CSS da div Minha Conta (Que é a mesma para todos os usuários) */
+
+
+/* Container Edição de Usuários */
+
+.filtro-users-wrapper {
+    display: flex;
+    gap: 0px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-box, .status-box, .type-box {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.search-label, .status-label, .type-label {
+    font-size: 0.85rem;
+    color: #7B7B7B;
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    left: 16px;
+    background: var(--cor-bg-sec);
+    width: fit-content;
+    z-index: 3;
+    padding: 0 4px;
+    font-size: 0.75rem;
+}
+
+.search-box input, .status-box select, .type-box select {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.9rem;
+    border: 2px #e0e1e4 solid;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+    z-index: 2;
+    color: #757587;
+}
+
+.search-box input:focus, .status-box select:focus, .type-box select:focus {
+    border: 2px var(--roxo) solid;
+}
+
+.search-box i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    position: absolute;
+    right: 20px;
+    top: 54%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 99;
+    font-size: 1.1rem;
+    color: #7B7B7B;
+}
+
+.container-edit-user {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+    & .div-input {
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 420px;
+        & label {
+            font-size: 0.85rem;
+            color: var(--cor-texto-apagado);
+            font-weight: 600;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 16px;
+            background: var(--cor-bg-sec);
+            width: fit-content;
+            transition: 0.3s;
+            z-index: 1;
+            padding: 0 4px;
+            &.active {
+                color: var(--cor-texto-apagado);
+                top: 0;
+                font-size: 0.75rem;
+                z-index: 3;
+            }
+        }
+        & input, select {
+            width: 100%;
+            padding: 12px;
+            font-size: 0.9rem;
+            border: 2px #e0e1e4 solid;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+            background: transparent;
+            z-index: 2;
+            &:focus {
+                border: 2px var(--roxo) solid;
+            }
+        }
+        &:focus-within label {
+            color: var(--roxo);
+            top: 0;
+            font-size: 0.75rem;
+            z-index: 3;
+        }
+        & i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            position: absolute;
+            right: 20px;
+            top: 54%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 99;
+            font-size: 1.1rem;
+            color: var(--cor-texto-apagado);
+        }
+    }
+}
+
+.container-login {
+    background-color: var(--cor-bg-sec);
+    padding: 40px;
+    padding-bottom: 55px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+}
+  
+.btn-acao {
+    background-color: var(--roxo);
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    width: 420px;
+    height: 50px;
+    transition: 0.1s;
+    cursor: pointer;
+    &:hover {
+        background-color: var(--hover-roxo);
+    }
+}
+
+.divButtonSubmit {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* END Container Edição de Usuários */
+.table-container {
+    max-height: 70vh; /* Ajuste a altura conforme necessário */
+    overflow-y: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    border: 1px solid #ddd;
+    padding: 20px 30px;
+    font-size: 0.8rem;
+    text-align: left;
+    border: 1px solid #000000;
+}
+
+.user-table th {
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+    font-weight: 600;
+}
 
 /* Container Cadastro de Usuários */
 

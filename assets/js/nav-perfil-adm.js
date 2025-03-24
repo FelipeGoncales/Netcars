@@ -74,6 +74,7 @@ function exibirRelatorio(tipo) {
     // Esconder todas as telas de relatório
     $('#minha-conta').css('display', 'none');
     $('#cadUser').css('display', 'none');
+    $('#editUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
     
     // Mostrar apenas o relatório selecionado
@@ -93,6 +94,7 @@ $(document).ready(function() {
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'flex');
         $('#cadUser').css('display', 'none');
+        $('#editUser').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
@@ -105,6 +107,7 @@ $(document).ready(function() {
         if ($(elementoClicado).hasClass('selecionado')) {
             $('#minha-conta').css('display', 'flex');
             $('#cadUser').css('display', 'none');
+            $('#editUser').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
             $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
            
@@ -128,6 +131,20 @@ $(document).ready(function() {
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'none');
         $('#cadUser').css('display', 'flex');
+        $('#editUser').css('display', 'none');
+        $('.container-relatorios').css('display', 'none');
+        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+
+    $("#link_editUser").on("click", function() {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+        $('#minha-conta').css('display', 'none');
+        $('#cadUser').css('display', 'none');
+        $('#editUser').css('display', 'flex');
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
@@ -165,6 +182,20 @@ $(document).ready(function() {
         }
     });
 });
+
+// Função para tabela de listagem de usuários
+
+$(document).ready(function() {
+    // Alternar cores de fundo das linhas da tabela
+    $(".user-table tbody tr:odd").css("background-color", "#ffffff");
+    $(".user-table tbody tr:even").css("background-color", "#E3D3FD");
+    
+    // Aplicar cor cinza aos ícones de edição
+    $(".fa-solid.fa-pen-to-square").css("color", "#7B7B7B");
+});1
+
+
+
 
 // Função para mostrar senha quando clicar no olho
 

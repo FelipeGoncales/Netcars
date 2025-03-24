@@ -46,6 +46,7 @@
                 <a href="veiculos.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar Anúncio</a>
                 <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
                 <a id="link_cadUser"><i class="fa fa-user-plus" aria-hidden="true"></i>Cadastrar usuário</a>
+                <a id="link_editUser"><i class="fa-solid fa-user-pen"></i>Editar usuário</a>
                 <a id="link_relatorios"><i class="fas fa-file-alt"></i>Relatórios</a>
                 <div class="submenu-relatorios" style="display: none;">
                     <a class="sub-relatorio" id="movimentacao">Movimentação</a>
@@ -53,7 +54,7 @@
                     <a class="sub-relatorio" id="motos">Motos</a>
                     <a class="sub-relatorio" id="clientes">Clientes</a>
                 </div>                
-                <a href="adicionar-veiculo.html"><i class="fa-solid fa-car"></i>Adiconar Veiculo</a>
+                <a href="adicionar-veiculo.html"><i class="fa-solid fa-car"></i>Adicionar Veiculo</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
             <p id="fecharBarraLateral">&times;</p>
@@ -133,6 +134,155 @@
                         <button class="btn-acao" type="submit">Criar conta</button>
                     </div>
                 </form>
+            </div>
+            <div>
+
+            </div>
+
+            
+            <div class="container-edit-user" id="editUser">
+
+                <div class="filtro-users-wrapper">
+                    <div class="search-box">
+                        <input type="text" id="search-user-input" placeholder="Buscar usuário">
+                        <i class="fa-solid fa-search"></i>
+                    </div>
+                    
+                    <div class="status-box">
+                        <select id="status-select">
+                            <option value="" disabled selected hidden>Situação</option>
+                            <option value="Sim">Ativo</option>
+                            <option value="Não">Inativo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="type-box">
+                        <select id="type-select">
+                            <option value="" disabled selected hidden>Tipo</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Vendedor">Vendedor</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fa-solid fa-user" style="color: rgb(123, 123, 123);"></i></th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Ativo</th>
+                                <th>Tipo usuário</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Exemplo de dados de usuário -->
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>João Silva</td>
+                                <td>joao.silva@example.com</td>
+                                <td>(18) 99718-4005</td>
+                                <td>Sim</td>
+                                <td>Administrador</td>
+
+                            
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i style="color: #f2f2f2;"td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@example.com</td>              
+                                <td>(18) 99857-1854</td>     
+                                <td>Sim</td>
+                                <td>Vendedor</td>
+                            </tr>
+                                
+                            
+                            
+                            <!-- Adicione mais linhas conforme necessário -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Div Relatórios -->
