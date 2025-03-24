@@ -36,7 +36,8 @@ function buscarVeiculos() {
             
                 // Cria a imagem da capa
                 const img = $("<img>")
-                    .attr("alt", "Imagem do veículo anunciado.");
+                    .attr("alt", "Imagem do veículo anunciado.")
+                    .attr("src", veiculo.imagens[0]);
                     
                 console.log(veiculo.imagens)
             
@@ -55,11 +56,6 @@ function buscarVeiculos() {
                 // Ano do veículo
                 const iconCalendar = $("<i></i>").addClass("fa-solid fa-calendar-days");
                 const pYear = $("<p></p>").text(veiculo.ano_modelo); // Ano veículo
-            
-                // Quilometragem
-                const iconGauge = $("<i></i>").addClass("fa-solid fa-gauge-high");
-                const pKm = $("<p></p>").text(`${veiculo.quilometragem} Km`); // Quilometragem
-            
                 
                 $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
                     let siglaEstado = '';
@@ -77,7 +73,7 @@ function buscarVeiculos() {
                     const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
 
                     // Monta a div infoCard com ícones e textos
-                    containerInfoCard.append(iconCalendar, pYear, iconGauge, pKm, iconLocation, pLocation);
+                    containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
                 })
             
                 // Preço do veículo
@@ -114,8 +110,6 @@ function buscarVeiculos() {
         }
     })
 }
-
-
 
 // Lógica para funcionar o scroll
 document.addEventListener('DOMContentLoaded', function() {

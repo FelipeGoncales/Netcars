@@ -108,26 +108,23 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-// FUNÇÃO QUE VALIDA O ANO DOS CARROS
-function validarCampo(input) {
-    const min = 1950; // A partir de 1950
-    const max = new Date().getFullYear();
 
-    // Se o campo estiver vazio, não faz a validação
-    if (!input.value) return;
+// Rota para adicionar as options do select ano veículo
 
-    const valor = +input.value; // Converte o valor para número
+const anoMin = 1950;
+const anoMax = new Date().getFullYear();
+const anoModelo = $('#ano-modelo-carro');
+const anoFabricacao = $('#ano-fabricacao-carro');
 
-    // Se o valor estiver fora do intervalo permitido
-    if (valor < min || valor > max) {
-        // Exibe o alerta apenas uma vez
-        if (!input.alertado) {
-            input.alertado = true;
-            alertMessage(`Insira um ano válido (${min} - ${max}).`, 'error')
-            input.focus();
-        }
+function addAnoInput(input) {
+    for (let ano = anoMin; ano <= anoMax; ano++) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        input.append(option);
     }
 }
+
+addAnoInput(anoModelo);
+addAnoInput(anoFabricacao);
 
 // Função para validar o RENAVAM (tanto de carros quanto de motos)
 function validarRENAVAM(seletor) {

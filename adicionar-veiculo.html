@@ -142,19 +142,22 @@
                         <div class="container-2labels">
                             <div class="div-input">
                                 <label for="ano-modelo-carro">Ano do modelo*</label>
-                                <input id="ano-modelo-carro" name="ano-modelo-carro" type="number" placeholder="" />
+                                <select name="ano-modelo-carro" id="ano-modelo-carro">
+                                    <option value=""></option>
+                                </select>
                             </div>
 
                             <div class="div-input">
                                 <label for="ano-fabricacao-carro">Ano de fabricação*</label>
-                                <input id="ano-fabricacao-carro" name="ano-fabricacao-carro" type="number"
-                                    placeholder="" />
+                                <select name="ano-fabricacao-carro" id="ano-fabricacao-carro">
+                                    <option value=""></option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="div-input">
                             <label for="versao-carro">Versão*</label>
-                            <input id="versao-carro" name="versao-carro" type="text" placeholder="" />
+                            <input id="versao-carro" name="versao-carro" type="text" placeholder="" maxlength="38" />
                         </div>
 
                         <div class="container-2labels">
@@ -292,7 +295,9 @@
                                 <label for="combustivel-carro">Combustível*</label>
                                 <select id="combustivel-carro" name="combustivel-carro">
                                     <option value=""></option>
+                                    <option value="Álcool">Álcool</option>
                                     <option value="Gasolina">Gasolina</option>
+                                    <option value="Flex">Flex</option>
                                     <option value="Etanol">Etanol</option>
                                     <option value="Diesel">Diesel</option>
                                     <option value="GNV (Gás Natural Veicular)">GNV (Gás Natural Veicular)</option>

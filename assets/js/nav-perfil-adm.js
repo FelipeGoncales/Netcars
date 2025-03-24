@@ -184,6 +184,10 @@ $("#formCadastroUsuario").on("submit", function (e) {
 
     let dados = new FormData(this);
 
+    if (!dados.get('tipo_user')) {
+        return alertMessage("Tipo de usuário inválido.", 'error');
+    }
+
     let envia = {
         nome_completo: dados.get("nome_completo"),
         email: dados.get("email"),
