@@ -264,22 +264,117 @@ for (let ano = anoMin; ano <= anoMax; ano++) {
 }
 
 
-// Exibir pdf carros
-$('#pdf-carros').click(() => {
-    window.open('http://192.168.1.130:5000/relatorio/carros', '_blank');
+//pdf carros
+$('#pdf-carros').click(function(e) {
+    e.preventDefault();
+
+    // 1) Pegar valores do filtro
+    const marca = $('#select-marca-carro').val();
+    const anoMin = $('#ano-minimo-carro').val();
+    const anoMax = $('#ano-maximo-carro').val();
+
+    // 2) Montar URL
+    let url = `${BASE_URL}/relatorio/carros?`;
+
+    if (marca) {
+        url += 'marca=' + encodeURIComponent(marca) + '&';
+    }
+    if (anoMin) {
+        url += 'ano_minimo=' + encodeURIComponent(anoMin) + '&';
+    }
+    if (anoMax) {
+        url += 'ano_maximo=' + encodeURIComponent(anoMax) + '&';
+    }
+
+    // 3) Abrir em nova aba (ou na mesma, se preferir)
+    window.open(url, '_blank');
 });
 
-// Exibir pdf motos
-$('#pdf-motos').click(() => {
-    window.open('http://192.168.1.130:5000/relatorio/motos', '_blank');
+
+//pdf motos
+$('#pdf-motos').click(function(e) {
+    e.preventDefault();
+
+    const marca = $('#select-marca-moto').val();
+    const anoMin = $('#ano-minimo-moto').val();
+    const anoMax = $('#ano-maximo-moto').val();
+
+    let url = `${BASE_URL}/relatorio/motos?`;
+    if (marca) {
+        url += 'marca=' + encodeURIComponent(marca) + '&';
+    }
+    if (anoMin) {
+        url += 'ano_minimo=' + encodeURIComponent(anoMin) + '&';
+    }
+    if (anoMax) {
+        url += 'ano_maximo=' + encodeURIComponent(anoMax) + '&';
+    }
+    window.open(url, '_blank');
 });
 
-// Exibir PDF de usuarios
-$('#pdf-clientes').click(() => {
-    window.open('http://192.168.1.130:5000/relatorio/usuarios', '_blank');
+
+//pdf usuarios
+$('#pdf-clientes').click(function(e) {
+    e.preventDefault();
+
+    const nome   = $('#nome-cliente').val();
+    const cpf    = $('#cpf-cnpj-cliente').val();
+    const status = $('#status-cliente').val();
+    const dia    = $('#dia-cliente').val();
+    const mes    = $('#mes-cliente').val();
+    const ano    = $('#ano-cliente').val();
+
+    let url = `${BASE_URL}/relatorio/usuarios?`; 
+
+    if (nome) {
+        url += 'nome=' + encodeURIComponent(nome) + '&';
+    }
+    if (cpf) {
+        url += 'cpf=' + encodeURIComponent(cpf) + '&';
+    }
+    if (status) {
+        url += 'status=' + encodeURIComponent(status) + '&';
+    }
+    if (dia) {
+        url += 'dia=' + encodeURIComponent(dia) + '&';
+    }
+    if (mes) {
+        url += 'mes=' + encodeURIComponent(mes) + '&';
+    }
+    if (ano) {
+        url += 'ano=' + encodeURIComponent(ano) + '&';
+    }
+    window.open(url, '_blank');
 });
 
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
-    window.open('http://192.168.1.130:5000/relatorio/movimentacoes', '_blank');
+    window.open(`${BASE_URL}/relatorio/movimentacoes`, '_blank');
+});
+
+
+// FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
+
+// Ao carregar o documento, adiciona a classe "active" ao label anterior se o input/select tiver valor
+document.addEventListener("DOMContentLoaded", function () {
+    // Seleciona todos os selects e inputs dentro de elementos com a classe .div-input
+    const inputs = document.querySelectorAll("#select-marca-carro, #ano-minimo-carro .div-input input");
+
+    inputs.forEach((input) => {
+        // Adiciona um ouvinte de evento para mudanças no valor do input/select
+        input.addEventListener("change", function () {
+            if (this.value) {
+                // Se houver valor, adiciona a classe "active" no elemento irmão anterior (geralmente o label)
+                this.previousElementSibling.classList.add("active");
+            } else {
+                // Se não houver valor, remove a classe "active"
+                this.previousElementSibling.classList.remove("active");
+            }
+        });
+
+        // Ao carregar a página, se o input já tiver um valor, ativa o label correspondente
+        if (input.value) {
+            input.previousElementSibling.classList.add("active");
+        }
+    });
 });
