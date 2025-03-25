@@ -82,6 +82,23 @@ main {
     }
 }
 
+#btnFiltros {
+    background-color: #2C2B32;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btnFiltros svg {
+    margin-left: 8px;
+}
+
 
 
 /* Div pai das divs do título */
@@ -394,6 +411,11 @@ main {
     }
 }
 
+.pai-div-qts-anuncios{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+}
 
 
 .div-pai-cards {
@@ -418,10 +440,158 @@ main {
     }
 }
 
-@media (min-width: 1560px) {
-    .card {
-        width: 100%;
-        height: auto;
-        padding-bottom: 15px;
+.div-qts-anuncios2{
+    display: none;
+    align-items: center;
+}
+
+.div-sections{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+
+
+@media (min-width: 649px) {
+    .div-pai-cards{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .div-pai-cards2{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .div-sections{
+        flex-direction: column;
+    }
+    .div-pai-filtro{
+        display: none;
+    }
+
+    .div-qts-anuncios{
+        margin-top: 0px;
+        display: flex;
+    }
+    .div-qts-anuncios2{
+        margin-top: 0px;
+        display: flex;
     }
 }
+/* Responsivo MOBILE P */
+
+@media (min-width: 1450px) {
+    .div-pai-filtro{
+        display: flex;
+    }
+}
+@media (min-width: 768px){
+    .div-pai-cards{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .div-pai-cards2{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pai-div-qts-anuncios{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between ;
+    }
+
+    .div-pai-filtro{
+        display: none;
+    }
+
+    .div-sections{
+        flex-direction: column;
+        gap: 40px;
+    }
+    .div-qts-anuncios{
+        margin-top: 0px;
+        display: flex;
+    }
+    .div-qts-anuncios2{
+        margin-top: 0px;
+        display: flex;
+    }
+}
+@media (max-width: 1804px) {
+    .div-qts-anuncios{
+        margin-top: 0px;
+        display: flex;
+    }
+
+    .div-pai-cards{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .div-pai-cards2{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pai-div-qts-anuncios{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between ;
+    }
+
+    .div-pai-filtro{
+        display: none;
+    }
+
+    .div-sections{
+        flex-direction: column;
+        gap: 40px;
+    }
+    .div-qts-anuncios2{
+        margin-top: 0px;
+        display: flex;
+    }
+}
+@media (max-width: 649px){
+    body {
+        font-size: 14px;
+    }
+    main{
+        margin-top: 64px;
+    }
+
+    .sec-veiculos{
+        align-items: center;
+    }
+    .sec-filtro{
+        min-width: 320px;
+        padding: 30px;
+    }
+    .div-qts-anuncios{
+        margin-top: 20px;
+    }
+    .div-qts-anuncios2{
+        margin-top: 20px;
+        display: flex;
+    }
+
+    .pai-div-qts-anuncios{
+        display: flex;
+        gap: 64px;
+    }
+    
+    .div-sections{
+        flex-direction: column;
+        gap: 0;
+    }
+    .div-filtro-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .div-pai-cards{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .div-pai-cards2{
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .div-pai-filtro{
+        display: none;
+    }
+} 

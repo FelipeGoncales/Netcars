@@ -61,199 +61,219 @@
     </header>
 
     <main>
-        <section class="sec-filtro">
-            <div class="div-fluxo-filtro" id="fluxo-filtro">
-                <a href="index.html">Home</a>
-                <i class="fa-solid fa-chevron-right"></i>
-                <a href="" id="tipo-veic">Carros</a>
-            </div>
-            <h2 id="h2-titulo">Carros semi-novos e usados</h2>
-            <div class="div-pai-filtro">
-                <div class="div-filtro-title">
-                    <div class="div-filtro-aplic">
-                        <h2>Filtros aplicados</h2>
-                        <p id="num-filtros-aplic">0</p>
-                    </div>
-                    <p id="limpar-filtros">Limpar filtros</p>
-
-                    <div class="filtros-aplic" id="filtros-aplic"></div>
+        <div class="div-sections">
+            <section class="sec-filtro">
+                <div class="div-fluxo-filtro" id="fluxo-filtro">
+                    <a href="index.html">Home</a>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a href="" id="tipo-veic">Carros</a>
                 </div>
-
-                <div class="linha"></div> <!-- Linha -->
-
-                <div class="div-tipo-veic">
-                    <div class="active" id="tipo-veic-carro">
-                        <i class="fa-solid fa-car"></i>
-                        <p>Carros</p>
-                    </div>
-                    <div id="tipo-veic-moto">
-                        <i class="fa-solid fa-motorcycle"></i>
-                        <p>Motos</p>
-                    </div>
-                    <div id="tipo-veic-bg-selecionado"></div>
-                </div>
-
-                <div class="linha"></div> <!-- Linha -->
-
-                <div class="div-filtro-title" id="marcas-carro">
-                    <h2>Lista de Marcas</h2>
-                    <div class="filtros-aplic">
-                        <ul class="itens-details">
-                            <li marca="BMW"><img src="assets/img/bmw.png" alt="Logomarca"></li>
-                            <li marca="BYD"><img src="assets/img/BYD.svg" alt="Logomarca"></li>
-                            <li marca="Toyota"><img src="assets/img/toyota.png" alt="Logomarca"></li>
-                            <li marca="Volkswagem"><img src="assets/img/volkswagem.png" alt="Logomarca"></li>
-                            <li marca="Fiat"><img src="assets/img/fiat.svg" alt="Logomarca"></li>
-                            <li marca="Ford"><img src="assets/img/ford.png" alt="Logomarca"></li>
-                            <li marca="Nissan"><img src="assets/img/nissan.png" alt="Logomarca"></li>
-                            <li marca="Chevrolet"><img src="assets/img/chevrolet.jpg" alt="Logomarca"></li>
-                            <li marca="Jeep"><img src="assets/img/jeep.svg" alt="Logomarca"></li>
-                        </ul>                        
-                    </div>
-                </div>
-
-                <div class="div-filtro-title" id="marcas-moto">
-                    <h2>Lista de Marcas</h2>
-                    <div class="filtros-aplic">
-                        <ul class="itens-details">
-                            <li marca="BMW"><img src="assets/img/bmw.png" alt="Logomarca"></li>
-                            <li marca="Yamaha"><img src="assets/img/yamaha.png" alt="Logomarca"></li>
-                            <li marca="Honda"><img src="assets/img/honda.png" alt="Logomarca"></li>
-                            <li marca="Suzuki"><img src="assets/img/suzuki.png" alt="Logomarca"></li>
-                            <li marca="Kawasaki"><img src="assets/img/kawasaki.png" alt="Logomarca"></li>
-                            <li marca="Ducati"><img src="assets/img/ducati.png" alt="Logomarca"></li>
-                            <li marca="Harley-Davidson"><img src="assets/img/Harley_davidson.jpg" alt="Logomarca"></li>
-                            <li marca="Shineray"><img src="assets/img/shineray.png" alt="Logomarca"></li>
-                            <li marca="Haojue"><img src="assets/img/haojue.png" alt="Logomarca"></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="linha"></div> <!-- Linha -->
-
-                <div class="div-filtro-title" id="categorias-carro">
-                    <h2>Categoria</h2>
-                    <div class="filtros-aplic">
-                        <select name="categoria-carro" id="select-categoria-carro">
-                            <option value="">Todos</option>
-                            <option value="SUV (Veículo Utilitário Esportivo)">SUV</option>
-                            <option value="Sedã">Sedã</option>
-                            <option value="Hatchback">Hatchback</option>
-                            <option value="Picape">Picape</option>
-                            <option value="Crossover">Crossover</option>
-                            <option value="Minivan">Minivan</option>
-                            <option value="Esportivo">Esportivo</option>
-                            <option value="Luxo">Luxo</option>
-                            <option value="Compacto">Compacto</option>
-                            <option value="Elétrico">Elétrico</option>
-                            <option value="Híbrido">Híbrido</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="div-filtro-title" id="categorias-moto">
-                    <h2>Categoria</h2>
-                    <div class="filtros-aplic">
-                        <select name="categoria-moto" id="select-categoria-moto">
-                            <option value="">Todos</option>
-                            <option value="Esportiva">Esportiva</option>
-                            <option value="Custom">Custom</option>
-                            <option value="Scooter">Scooter</option>
-                            <option value="Adventure">Adventure</option>
-                            <option value="Off-road">Off-road</option>
-                            <option value="Naked">Naked</option>
-                            <option value="Touring">Touring</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="linha"></div> <!-- Linha -->
-
-                <div class="div-filtro-title">
-                    <h2>Localidade</h2>
-                    <div class="filtros-aplic f-d">
-                        <select type="text" name="cidade" id="estado-select">
-                            <option value="">Todos</option>
-                        </select>
-                        <select type="text" name="cidade" id="cidade-select" disabled>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="linha"></div> <!-- Linha -->
-
-                <div class="div-filtro-title">
-                    <h2>Preço</h2>
-                    <div class="filtros-aplic">
-                        <input type="text" name="Preço min" id="input-preco-min" placeholder="Preço mínimo" >
-                        <input type="text" name="Preço max" id="input-preco-max" placeholder="Preço máximo" >
-                    </div>
-                </div>
-
-                <div class="linha"></div> <!-- Linha -->
-
-                <div class="div-filtro-title">
-                    <h2>Ano</h2>
-                    <div class="filtros-aplic">
-                        <input type="text" name="Ano min" id="input-ano-min" placeholder="Ano mínimo">
-                        <input type="text" name="Ano max" id="input-ano-max" placeholder="Ano máximo">
-                    </div>
-                </div>
-
-                <div class="linha"></div> <!-- Linha -->
-                <div class="div-filtro-title">
-                    <h2>Cor</h2>
-                    <div class="filtro-cor-container">
-                        <div class="filtro-cor-header">
-                            <span>Selecione as cores</span>
-                            <i class="fa-solid fa-chevron-down" style="color: #757575;"></i>
+                <h2 id="h2-titulo">Carros semi-novos e usados</h2>
+                <div class="div-pai-filtro">
+                    <div class="div-filtro-title">
+                        <div class="div-filtro-aplic">
+                            <h2>Filtros aplicados</h2>
+                            <p id="num-filtros-aplic">0</p>
                         </div>
-                        <div class="filtro-cor-options">
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-preto" name="cor-preto">
-                                <label for="cor-preto">Preto</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-branco" name="cor-branco">
-                                <label for="cor-branco">Branco</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-prata" name="cor-prata">
-                                <label for="cor-prata">Prata</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-vermelho" name="cor-vermelho">
-                                <label for="cor-vermelho">Vermelho</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-azul" name="cor-azul">
-                                <label for="cor-azul">Azul</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-cinza" name="cor-cinza">
-                                <label for="cor-cinza">Cinza</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-verde" name="cor-verde">
-                                <label for="cor-verde">Verde</label>
-                            </div>
-                            <div class="option-item">
-                                <input type="checkbox" id="cor-amarelo" name="cor-amarelo">
-                                <label for="cor-amarelo">Amarelo</label>
-                            </div>
+                        <p id="limpar-filtros">Limpar filtros</p>
+
+                        <div class="filtros-aplic" id="filtros-aplic"></div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+                    <div class="div-tipo-veic">
+                        <div class="active" id="tipo-veic-carro">
+                            <i class="fa-solid fa-car"></i>
+                            <p>Carros</p>
+                        </div>
+                        <div id="tipo-veic-moto">
+                            <i class="fa-solid fa-motorcycle"></i>
+                            <p>Motos</p>
+                        </div>
+                        <div id="tipo-veic-bg-selecionado"></div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+                    <div class="div-filtro-title" id="marcas-carro">
+                        <h2>Lista de Marcas</h2>
+                        <div class="filtros-aplic">
+                            <ul class="itens-details">
+                                <li marca="BMW"><img src="assets/img/bmw.png" alt="Logomarca"></li>
+                                <li marca="BYD"><img src="assets/img/BYD.svg" alt="Logomarca"></li>
+                                <li marca="Toyota"><img src="assets/img/toyota.png" alt="Logomarca"></li>
+                                <li marca="Volkswagem"><img src="assets/img/volkswagem.png" alt="Logomarca"></li>
+                                <li marca="Fiat"><img src="assets/img/fiat.svg" alt="Logomarca"></li>
+                                <li marca="Ford"><img src="assets/img/ford.png" alt="Logomarca"></li>
+                                <li marca="Nissan"><img src="assets/img/nissan.png" alt="Logomarca"></li>
+                                <li marca="Chevrolet"><img src="assets/img/chevrolet.jpg" alt="Logomarca"></li>
+                                <li marca="Jeep"><img src="assets/img/jeep.svg" alt="Logomarca"></li>
+                            </ul>                        
                         </div>
                     </div>
-                </div>
 
-            </div>
-        </section>
-        <section class="sec-veiculos">
-            <div class="div-qts-anuncios">
-                <p><span id="qnt-veiculos"></span> anúncios encontrados</p>
-            </div>
-            <!-- Div Listar Veículos -->
-            <div class="div-pai-cards" id="div-veiculos"></div>
-        </section>
+                    <div class="div-filtro-title" id="marcas-moto">
+                        <h2>Lista de Marcas</h2>
+                        <div class="filtros-aplic">
+                            <ul class="itens-details">
+                                <li marca="BMW"><img src="assets/img/bmw.png" alt="Logomarca"></li>
+                                <li marca="Yamaha"><img src="assets/img/yamaha.png" alt="Logomarca"></li>
+                                <li marca="Honda"><img src="assets/img/honda.png" alt="Logomarca"></li>
+                                <li marca="Suzuki"><img src="assets/img/suzuki.png" alt="Logomarca"></li>
+                                <li marca="Kawasaki"><img src="assets/img/kawasaki.png" alt="Logomarca"></li>
+                                <li marca="Ducati"><img src="assets/img/ducati.png" alt="Logomarca"></li>
+                                <li marca="Harley-Davidson"><img src="assets/img/Harley_davidson.jpg" alt="Logomarca"></li>
+                                <li marca="Shineray"><img src="assets/img/shineray.png" alt="Logomarca"></li>
+                                <li marca="Haojue"><img src="assets/img/haojue.png" alt="Logomarca"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+                    <div class="div-filtro-title" id="categorias-carro">
+                        <h2>Categoria</h2>
+                        <div class="filtros-aplic">
+                            <select name="categoria-carro" id="select-categoria-carro">
+                                <option value="">Todos</option>
+                                <option value="SUV (Veículo Utilitário Esportivo)">SUV</option>
+                                <option value="Sedã">Sedã</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Picape">Picape</option>
+                                <option value="Crossover">Crossover</option>
+                                <option value="Minivan">Minivan</option>
+                                <option value="Esportivo">Esportivo</option>
+                                <option value="Luxo">Luxo</option>
+                                <option value="Compacto">Compacto</option>
+                                <option value="Elétrico">Elétrico</option>
+                                <option value="Híbrido">Híbrido</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="div-filtro-title" id="categorias-moto">
+                        <h2>Categoria</h2>
+                        <div class="filtros-aplic">
+                            <select name="categoria-moto" id="select-categoria-moto">
+                                <option value="">Todos</option>
+                                <option value="Esportiva">Esportiva</option>
+                                <option value="Custom">Custom</option>
+                                <option value="Scooter">Scooter</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Off-road">Off-road</option>
+                                <option value="Naked">Naked</option>
+                                <option value="Touring">Touring</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+                    <div class="div-filtro-title">
+                        <h2>Localidade</h2>
+                        <div class="filtros-aplic f-d">
+                            <select type="text" name="cidade" id="estado-select">
+                                <option value="">Todos</option>
+                            </select>
+                            <select type="text" name="cidade" id="cidade-select" disabled>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+                    <div class="div-filtro-title">
+                        <h2>Preço</h2>
+                        <div class="filtros-aplic">
+                            <input type="text" name="Preço min" id="input-preco-min" placeholder="Preço mínimo" >
+                            <input type="text" name="Preço max" id="input-preco-max" placeholder="Preço máximo" >
+                        </div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+
+                    <div class="div-filtro-title">
+                        <h2>Ano</h2>
+                        <div class="filtros-aplic">
+                            <input type="text" name="Ano min" id="input-ano-min" placeholder="Ano mínimo">
+                            <input type="text" name="Ano max" id="input-ano-max" placeholder="Ano máximo">
+                        </div>
+                    </div>
+
+                    <div class="linha"></div> <!-- Linha -->
+                    <div class="div-filtro-title">
+                        <h2>Cor</h2>
+                        <div class="filtro-cor-container">
+                            <div class="filtro-cor-header">
+                                <span>Selecione as cores</span>
+                                <i class="fa-solid fa-chevron-down" style="color: #757575;"></i>
+                            </div>
+                            <div class="filtro-cor-options">
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-preto" name="cor-preto">
+                                    <label for="cor-preto">Preto</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-branco" name="cor-branco">
+                                    <label for="cor-branco">Branco</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-prata" name="cor-prata">
+                                    <label for="cor-prata">Prata</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-vermelho" name="cor-vermelho">
+                                    <label for="cor-vermelho">Vermelho</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-azul" name="cor-azul">
+                                    <label for="cor-azul">Azul</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-cinza" name="cor-cinza">
+                                    <label for="cor-cinza">Cinza</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-verde" name="cor-verde">
+                                    <label for="cor-verde">Verde</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" id="cor-amarelo" name="cor-amarelo">
+                                    <label for="cor-amarelo">Amarelo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <section class="sec-veiculos">
+                <div class="pai-div-qts-anuncios">
+                    <div class="div-qts-anuncios">
+                        <p><span id="qnt-veiculos"></span> anúncios</p>
+                    </div>
+                    <div class="div-qts-anuncios2">
+                        <button id="btnFiltros">
+                            Filtros
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="21" x2="4" y2="14"></line>
+                                <line x1="4" y1="10" x2="4" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12" y2="3"></line>
+                                <line x1="20" y1="21" x2="20" y2="16"></line>
+                                <line x1="20" y1="12" x2="20" y2="3"></line>
+                                <line x1="2" y1="14" x2="6" y2="14"></line>
+                                <line x1="10" y1="8" x2="14" y2="8"></line>
+                                <line x1="18" y1="16" x2="22" y2="16"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Div Listar Veículos -->
+                <div class="div-pai-cards" id="div-veiculos"></div>
+            </section>
+        </div>
     </main>
 
     <footer id="footer">
