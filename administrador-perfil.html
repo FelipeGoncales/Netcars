@@ -36,6 +36,8 @@
             <div class="linha2"></div>
             <div class="linha3"></div>
         </div>
+
+
         <div class="container-perfil" id="barra-lateral">
             <div class="perfil-usuario">
                 <i class="fa-solid fa-circle-user"></i>
@@ -59,6 +61,8 @@
             </nav>
             <p id="fecharBarraLateral">&times;</p>
         </div>
+        <!-- Overlay -->
+        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
         <section class="container" id="conteudo">
@@ -135,6 +139,7 @@
                 </form>
             </div>
 
+            <!-- Div Edit User -->
             <div class="container-edit-user" id="editUser">
 
                 <div class="filtro-users-wrapper">
@@ -145,7 +150,7 @@
 
                     <div class="status-box">
                         <select id="status-select">
-                            <option value="" >Situação</option>
+                            <option value="">Situação</option>
                             <option value="1">Ativo</option>
                             <option value="0">Inativo</option>
                         </select>
@@ -153,7 +158,7 @@
 
                     <div class="type-box">
                         <select id="type-select">
-                            <option value="" >Tipo</option>
+                            <option value="">Tipo</option>
                             <option value="1">Administrador</option>
                             <option value="2">Vendedor</option>
                             <option value="3">Cliente</option>
@@ -177,7 +182,6 @@
                 </div>
             </div>
 
-            <!-- Div Relatórios -->
             <!-- Div Relatórios - Movimentações -->
             <div class="container-relatorios" id="relatorio-movimentacao">
                 <div class="container-dashboard">
@@ -399,14 +403,14 @@
             </div>
             <div class="div-input">
                 <label for="ativo-editar">Ativo:</label>
-                <select name="ativo-editar" id="ativo-editar" required >
+                <select name="ativo-editar" id="ativo-editar" required>
                     <option value="1">Ativo</option>
                     <option value="0">Inativo</option>
                 </select>
             </div>
             <div class="div-input">
                 <label for="tipo-usuario-editar">Ativo:</label>
-                <select name="tipo-usuario-editar" id="tipo-usuario-editar" required >
+                <select name="tipo-usuario-editar" id="tipo-usuario-editar" required>
                     <option value="1">Administrador</option>
                     <option value="2">Vendedor</option>
                     <option value="3">Cliente</option>
@@ -415,7 +419,7 @@
             <button type="submit">Salvar alterações</button>
         </form>
         <!-- Overlay -->
-        <div class="overlay-bg" id="overlay-bg"></div>
+        <div class="overlay-bg" id="overlay-bg-modal-edit"></div>
     </main>
     <footer id="footer">
         <div class="div-contato">
