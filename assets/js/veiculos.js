@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         top: '20px'
     };
     const fixedStyle = {
-        width: '28.3%',
+        width: '430px',
         position: 'fixed',
         top: '86px'
     };
