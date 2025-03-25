@@ -197,9 +197,6 @@ $(document).ready(function () {
     $(".fa-solid.fa-pen-to-square").css("color", "#7B7B7B");
 }); 1
 
-
-
-
 // Função para mostrar senha quando clicar no olho
 
 $('#mostrarSenha').click(function () {

@@ -422,7 +422,6 @@ main {
 
 /* Fim do CSS da div Minha Conta (Que é a mesma para todos os usuários) */
 
-
 /* Container Edição de Usuários */
 
 .filtro-users-wrapper {
@@ -705,6 +704,52 @@ tbody tr.tipo2 {
         }
     }
 }
+
+/* Responsivo Container Cadastro User */
+
+@media (max-width: 480px) {
+    .container-cad-user {
+        margin-top: 10px;
+    }
+
+    .container-login {
+        padding: 30px 20px;
+        width: 130%;
+        max-width: 130%;
+    }
+
+    .div-input {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .btn-acao {
+        width: 250% !important;
+        max-width: 250% !important;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container-login {
+        padding: 20px 15px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .div-input input, 
+    .div-input select {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* END Responsivo Container Cadastro User */
 
 /* Container Cadastro de Usuários */
 
