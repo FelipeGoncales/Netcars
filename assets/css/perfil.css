@@ -672,7 +672,7 @@ tbody tr.tipo2 {
         padding: 5px;
         cursor: pointer;
     }
-    & .div-input {
+    & .div-input-modal {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
