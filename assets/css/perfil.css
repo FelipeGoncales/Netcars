@@ -487,9 +487,9 @@ main {
 .container-edit-user {
     display: none;
     flex-direction: column;
+    height: 100vh;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
     gap: 10px;
     & .div-input {
         height: fit-content;
@@ -605,9 +605,13 @@ main {
 
 .table-container {
     max-height: 70vh; /* Ajuste a altura conforme necessário */
-    overflow-y: auto;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    width: 90vw;
+    overflow: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .user-table {
@@ -1298,12 +1302,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     font-size: 16px;
 }
 
-@media (max-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* END DIVS ADMINISTRADOR */
 
 /* Div Alert Message */
@@ -1427,6 +1425,10 @@ footer {
         }
     }
 
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
     #barra-lateral {
         display: none;
         position: fixed;
@@ -1481,6 +1483,11 @@ footer {
 
     .alertMessage {
         max-width: 85vw;
+    }
+    .filtro-users-wrapper {
+        margin-top: 70px;
+        flex-direction: column;
+        gap: 10px;
     }
 
     main .container-minha-conta {

@@ -535,6 +535,9 @@ $(document).ready(() => {
         $('#minha-conta').css('display', 'none');
         $('#cadUser').css('display', 'none');
         $('#editUser').css('display', 'flex');
+        // Código para selecionar o ícone de editar usuário
+        const editA = $('#link_editUser');
+        selecionarA(editA[0]);
 
         alertMessage(userEditado.success, "success");
 
