@@ -66,7 +66,7 @@ $(document).ready(function() {
 
 // Função para deslogar da conta ao clicar em sair
 $('#deslogarConta').click(function(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     localStorage.clear();
 
