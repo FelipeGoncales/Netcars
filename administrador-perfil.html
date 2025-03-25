@@ -59,7 +59,6 @@
             </nav>
             <p id="fecharBarraLateral">&times;</p>
         </div>
-        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
         <section class="container" id="conteudo">
@@ -150,17 +149,18 @@
 
                     <div class="status-box">
                         <select id="status-select">
-                            <option value="" disabled selected hidden>Situação</option>
-                            <option value="Sim">Ativo</option>
-                            <option value="Não">Inativo</option>
+                            <option value="" >Situação</option>
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
                         </select>
                     </div>
 
                     <div class="type-box">
                         <select id="type-select">
-                            <option value="" disabled selected hidden>Tipo</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Vendedor">Vendedor</option>
+                            <option value="" >Tipo</option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Vendedor</option>
+                            <option value="3">Cliente</option>
                         </select>
                     </div>
                 </div>
@@ -353,26 +353,26 @@
             <h3>Editar informações do usuário</h3>
             <div class="div-input">
                 <label for="nome-editar">Nome</label>
-                <input type="text" name="nome-editar" id="nome-editar">
+                <input type="text" name="nome-editar" id="nome-editar" required />
             </div>
             <div class="div-input">
                 <label for="email-editar">Email:</label>
-                <input type="text" name="email-editar" id="email-editar">
+                <input type="text" name="email-editar" id="email-editar" required />
             </div>
             <div class="div-input">
                 <label for="telefone-editar">Telefone:</label>
-                <input type="text" name="telefone-editar" id="telefone-editar">
+                <input type="text" name="telefone-editar" id="telefone-editar" />
             </div>
             <div class="div-input">
                 <label for="ativo-editar">Ativo:</label>
-                <select name="ativo-editar" id="ativo-editar">
+                <select name="ativo-editar" id="ativo-editar" required >
                     <option value="1">Ativo</option>
                     <option value="0">Inativo</option>
                 </select>
             </div>
             <div class="div-input">
                 <label for="tipo-usuario-editar">Ativo:</label>
-                <select name="tipo-usuario-editar" id="tipo-usuario-editar">
+                <select name="tipo-usuario-editar" id="tipo-usuario-editar" required >
                     <option value="1">Administrador</option>
                     <option value="2">Vendedor</option>
                     <option value="3">Cliente</option>
@@ -380,7 +380,8 @@
             </div>
             <button type="submit">Salvar alterações</button>
         </form>
-
+        <!-- Overlay -->
+        <div class="overlay-bg" id="overlay-bg"></div>
     </main>
     <footer id="footer">
         <div class="div-contato">

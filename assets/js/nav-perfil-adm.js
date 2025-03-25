@@ -64,7 +64,7 @@ if (mensagemCadVeic) {
 // Fazer o nav funcionar
 // Função para trocar a borda roxa do A que for clicado
 function selecionarA(clicado) {
-    $('nav').find('a').each(function(_, a) {
+    $('nav').find('a').each(function (_, a) {
         if (a !== clicado) {
             $(a).removeClass('selecionado');
         } else {
@@ -80,20 +80,20 @@ function exibirRelatorio(tipo) {
     $('#cadUser').css('display', 'none');
     $('#editUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
-    
+
     // Mostrar apenas o relatório selecionado
     $(`#relatorio-${tipo}`).css('display', 'flex');
-    
+
     // Destacar o item no submenu
     $('.sub-relatorio').removeClass('destaque');
     $(`#${tipo}`).addClass('destaque');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Inicialmente ocultar todos os relatórios específicos
     $('.container-relatorios').hide();
-    
-    $("#link_minhaConta").on("click", function() {
+
+    $("#link_minhaConta").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'flex');
@@ -105,8 +105,8 @@ $(document).ready(function() {
             fecharBarraLateral();
         }
     });
-   
-    $("#link_relatorios").on("click", function() {
+
+    $("#link_relatorios").on("click", function () {
         const elementoClicado = this;
         if ($(elementoClicado).hasClass('selecionado')) {
             $('#minha-conta').css('display', 'flex');
@@ -114,13 +114,13 @@ $(document).ready(function() {
             $('#editUser').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
             $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
-           
+
             const minhaConta = document.getElementById('link_minhaConta');
             selecionarA(minhaConta);
         } else {
             // Alternar a exibição do submenu
             $(".submenu-relatorios").slideDown();
-                   
+
             // Exibir a página de movimentação automaticamente
             exibirRelatorio('movimentacao');
             selecionarA(elementoClicado);
@@ -130,7 +130,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#link_cadUser").on("click", function() {
+    $("#link_cadUser").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'none');
@@ -143,7 +143,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#link_editUser").on("click", function() {
+    $("#link_editUser").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'none');
@@ -155,31 +155,30 @@ $(document).ready(function() {
             fecharBarraLateral();
         }
     });
-    
+
     // Ação ao clicar nos itens do submenu
-    $("#movimentacao").on("click", function() {
+    $("#movimentacao").on("click", function () {
         exibirRelatorio('movimentacao');
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
     });
-    
-    $("#carros").on("click", function() {
+
+    $("#carros").on("click", function () {
         exibirRelatorio('carros');
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
     });
-    
-    $("#motos").on("click", function() {
+
+    $("#motos").on("click", function () {
         exibirRelatorio('motos');
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
     });
-    
-    $("#clientes").on("click", function() {
-        console.log("Clique em clientes detectado");
+
+    $("#clientes").on("click", function () {
         exibirRelatorio('clientes');
         if ($(window).width() <= 980) {
             fecharBarraLateral();
@@ -189,21 +188,21 @@ $(document).ready(function() {
 
 // Função para tabela de listagem de usuários
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Alternar cores de fundo das linhas da tabela
     $(".user-table tbody tr:odd").css("background-color", "#ffffff");
     $(".user-table tbody tr:even").css("background-color", "#E3D3FD");
-    
+
     // Aplicar cor cinza aos ícones de edição
     $(".fa-solid.fa-pen-to-square").css("color", "#7B7B7B");
-});1
+}); 1
 
 
 
 
 // Função para mostrar senha quando clicar no olho
 
-$('#mostrarSenha').click(function() {
+$('#mostrarSenha').click(function () {
     if ($('#input-senha').attr('type') === 'password') {
         $('#mostrarSenha').removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
         $('#input-senha').attr('type', 'text') // Trocando o tipo de input
@@ -269,7 +268,7 @@ for (let ano = anoMin; ano <= anoMax; ano++) {
 
 
 //pdf carros
-$('#pdf-carros').click(function(e) {
+$('#pdf-carros').click(function (e) {
     e.preventDefault();
 
     // 1) Pegar valores do filtro
@@ -296,7 +295,7 @@ $('#pdf-carros').click(function(e) {
 
 
 //pdf motos
-$('#pdf-motos').click(function(e) {
+$('#pdf-motos').click(function (e) {
     e.preventDefault();
 
     const marca = $('#select-marca-moto').val();
@@ -318,17 +317,17 @@ $('#pdf-motos').click(function(e) {
 
 
 //pdf usuarios
-$('#pdf-clientes').click(function(e) {
+$('#pdf-clientes').click(function (e) {
     e.preventDefault();
 
-    const nome   = $('#nome-cliente').val();
-    const cpf    = $('#cpf-cnpj-cliente').val();
+    const nome = $('#nome-cliente').val();
+    const cpf = $('#cpf-cnpj-cliente').val();
     const status = $('#status-cliente').val();
-    const dia    = $('#dia-cliente').val();
-    const mes    = $('#mes-cliente').val();
-    const ano    = $('#ano-cliente').val();
+    const dia = $('#dia-cliente').val();
+    const mes = $('#mes-cliente').val();
+    const ano = $('#ano-cliente').val();
 
-    let url = `${BASE_URL}/relatorio/usuarios?`; 
+    let url = `${BASE_URL}/relatorio/usuarios?`;
 
     if (nome) {
         url += 'nome=' + encodeURIComponent(nome) + '&';
@@ -383,65 +382,76 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Carregar usuários
 
- // Carregar usuários
+function carregarUsuarios(usuarios_lista) {
+    $.ajax({
+        url: `${BASE_URL_ADM}/cadastro`,
+        success: function (response) {
+            const tbody = $("tbody");
 
- $.ajax({
-    url: `${BASE_URL_ADM}/cadastro`,
-    success: function(response) {
-        const tbody = $("tbody");
-
-        const usuarios = response.usuarios;
-        for (index in usuarios) {
-            // Cria um elemento <tr> para agrupar as colunas
-            const $tr= $('<tr>');
-
-            if (index % 2 === 0) {
-                $tr.addClass('tipo2');
-            } else {
-                $tr.addClass('tipo1');
+            let usuarios = usuarios_lista;
+            // Caso não tiver parâmetro lista, usar resposta API
+            if (!usuarios_lista) {
+                usuarios = response.usuarios;
             }
-            
-            // Cria os tds que irão conter as informações
-            const $tdIcon = $('<td>');
-            const $icone = $('<i>').addClass('fa-solid fa-pen-to-square edit-icon').attr('id', usuarios[index].id_usuario);
-            $tdIcon.append($icone);
-            
-            const $tdNome = $('<td>').text(usuarios[index].nome_completo).addClass('nome-td');
-            const $tdEmail = $('<td>').text(usuarios[index].email).addClass('email-td');
-            const $tdTelefone = $('<td>').text(usuarios[index].telefone).addClass('telefone-td');
 
-            let textoAtivo = usuarios[index].ativo === 1 ? "Ativo" : "Inativo";
-            const $tdAtivo = $('<td>').text(textoAtivo).addClass('ativo-td');
+            // Limpa o tbody antes de carregar os outros elementos
+            tbody.empty();
 
-            let textoTipoUser = usuarios[index].tipo_usuario === 1 ? "Administrador" : usuarios[index].tipo_usuario === 2 ? "Vendedor" : "Cliente";
-            const $tdTipoUsuario = $('<td>').text(textoTipoUser).addClass('tipo-user-td');
-            
-            $tr.append($tdIcon)
-                .append($tdNome)
-                .append($tdEmail)
-                .append($tdTelefone)
-                .append($tdAtivo)
-                .append($tdTipoUsuario);
-            
-            tbody.append($tr);
+            for (index in usuarios) {
+                // Cria um elemento <tr> para agrupar as colunas
+                const $tr = $('<tr>');
+
+                if (index % 2 === 0) {
+                    $tr.addClass('tipo2');
+                } else {
+                    $tr.addClass('tipo1');
+                }
+
+                // Cria os tds que irão conter as informações
+                const $tdIcon = $('<td>');
+                const $icone = $('<i>').addClass('fa-solid fa-pen-to-square edit-icon').attr('id', usuarios[index].id_usuario);
+                $tdIcon.append($icone);
+
+                const $tdNome = $('<td>').text(usuarios[index].nome_completo).addClass('nome-td');
+                const $tdEmail = $('<td>').text(usuarios[index].email).addClass('email-td');
+                const $tdTelefone = $('<td>').text(usuarios[index].telefone).addClass('telefone-td');
+
+                let textoAtivo = usuarios[index].ativo === 1 ? "Ativo" : "Inativo";
+                const $tdAtivo = $('<td>').text(textoAtivo).addClass('ativo-td');
+
+                let textoTipoUser = usuarios[index].tipo_usuario === 1 ? "Administrador" : usuarios[index].tipo_usuario === 2 ? "Vendedor" : "Cliente";
+                const $tdTipoUsuario = $('<td>').text(textoTipoUser).addClass('tipo-user-td');
+
+                $tr.append($tdIcon)
+                    .append($tdNome)
+                    .append($tdEmail)
+                    .append($tdTelefone)
+                    .append($tdAtivo)
+                    .append($tdTipoUsuario);
+
+                tbody.append($tr);
+            }
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
         }
-    },
-    error: function(response) {
-        alertMessage(response.responseJSON.error, 'error');
-    }
- })
+    })
+}
 
- // Fechar modal editar
+// Chamar a função ao abrir a página
 
- $("#close-modal-editar").click(function() {
+$(document).ready(() => carregarUsuarios());
+
+// Fechar modal editar
+$("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').css('display', 'none');
     $('#overlay-bg').css('display', 'none');
- })
+})
 
- // Abrir modal editar ao clicar no ícone de editar
-
- $('table').on('click', '.edit-icon', function() {
+// Abrir modal editar ao clicar no ícone de editar
+$('table').on('click', '.edit-icon', function () {
     const idUser = $(this).attr('id');
 
     const tdPai = $(this).closest('tr');
@@ -453,10 +463,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const ativo = tdPai.find('.ativo-td').text();
     // Transformando em número
     let textoAtivo = ativo === "Ativo" ? 1 : 0;
-    
+
     const tipoUser = tdPai.find('.tipo-user-td').text();
     // Transformando em número
-    let textoTipoUser = tipoUser === "Administrador"  ? 1 : tipoUser === "Vendedor" ? 2 : 3;
+    let textoTipoUser = tipoUser === "Administrador" ? 1 : tipoUser === "Vendedor" ? 2 : 3;
 
     $('#modal-editar-usuario').css('display', 'flex')
     $('#overlay-bg').css('display', 'flex');
@@ -467,38 +477,76 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#ativo-editar').val(textoAtivo);
     $('#tipo-user-editar').val(textoTipoUser);
 
-    // Preparar objeto com os dados para atualização
-    let editar = {
-        id_usuario: idUser,
-        email: email,
-        nome_completo: nome,
-        telefone: telefone, // Remove caracteres especiais
-        tipo_usuario: textoTipoUser,
-        ativo: textoAtivo
-    };
-
-    const editarJSON = JSON.stringify(editar);
-
     // Rota para editar perfil
     $('#modal-editar-usuario').on("submit", function (e) {
         e.preventDefault();
 
+        let dados = new FormData(this);
+
+        // Preparar objeto com os dados para atualização
+        let editar = {
+            id_usuario: idUser,
+            email: dados.get('email-editar'),
+            nome_completo: dados.get('nome-editar'),
+            telefone: dados.get('telefone-editar'),
+            tipo_usuario: dados.get('tipo-usuario-editar'),
+            ativo: dados.get('ativo-editar')
+        };
+
+        const editarJSON = JSON.stringify(editar);
+
         $.ajax({
             method: "put",
-            url: `${BASE_URL_ADM}/cadastro/${idUser}`, // URL da API na Web
+            url: `${BASE_URL_ADM}/update_user`, // URL da API na Web
             data: editarJSON,
             contentType: "application/json",
-            success: function(response) {
+            success: function (response) {
                 // Exibir mensagem de sucesso
                 alertMessage(response.success, 'success');
 
                 $('#modal-editar-usuario').css('display', 'none')
                 $('#overlay-bg').css('display', 'none');
+
+                carregarUsuarios();
             },
-            error: function(response) {
+            error: function (response) {
                 // Exibir mensagem de erro
                 alertMessage(response.responseJSON.error, 'error');
             }
         });
     });
 })
+
+// Fetch filtro usuarios
+
+function fetchFiltroUsuarios() {
+    const nomeLike = $('#search-user-input').val();
+    const ativo = $('#status-select').val();
+    const tipoUser = $('#type-select').val();
+
+    const data = {
+        'nome-like': nomeLike,
+        'ativo': ativo,
+        'tipo_usuario': tipoUser
+    }
+
+    const dataJSON = JSON.stringify(data);
+
+    $.ajax({
+        method: 'POST',
+        url: `${BASE_URL_ADM}/get_user_filtro`,
+        data: dataJSON,
+        contentType: "application/json",
+        success: function(response) {
+            carregarUsuarios(response.usuarios);
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+}
+
+// Adicionado a função quando os inputs forem alterados
+$('#search-user-input').on('input', fetchFiltroUsuarios);
+$('#status-select').on('change', fetchFiltroUsuarios);
+$('#type-select').on('change', fetchFiltroUsuarios);
