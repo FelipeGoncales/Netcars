@@ -1095,6 +1095,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     flex-direction: column;
     gap: 25px;
     padding: 35px;
+    width: 600px;
 }
 
 .title-conbranco{
@@ -1468,6 +1469,14 @@ footer {
         & h1 {
             display: none;
         }
+    }
+
+    .div-input-dupla {
+        flex-direction: column;
+        gap: inherit;
+    }
+    .container-branco {
+        width: 90vw;
     }
 
     .alertMessage {
