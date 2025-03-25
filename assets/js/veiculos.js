@@ -37,11 +37,15 @@ function buscarVeiculos() {
             for (veiculo of listaVeic) {
                 // Cria a div card
                 const divCard = $("<div></div>").addClass("card");
-            
-                // Cria a imagem da capa
-                const img = $("<img>")
-                    .attr("alt", "Imagem do veículo anunciado.")
-                    .attr("src", veiculo.imagens[0]);
+
+                const img = $("<div></div>")
+                            .css({
+                                "background-image": `url(${veiculo.imagens[0]})`,
+                                "background-position": "center",
+                                "background-repeat": "no-repeat",
+                                "background-size": "cover",
+                                "height": "225px"
+                            })
                     
                 console.log(veiculo.imagens)
             
@@ -60,24 +64,24 @@ function buscarVeiculos() {
                 // Ano do veículo
                 const iconCalendar = $("<i></i>").addClass("fa-solid fa-calendar-days");
                 const pYear = $("<p></p>").text(veiculo.ano_modelo); // Ano veículo
-                
+
                 $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
                     let siglaEstado = '';
-
-                    for (estado of estados) {
+                    for (let estado of estados) {
                         if (estado.nome === veiculo.estado) {
                             siglaEstado = estado.sigla;
                             break;
                         }
                     }
-
+                    
                     // Localização
                     const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
                     const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
 
                     // Monta a div infoCard com ícones e textos
                     containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
-                })
+                });
+                
             
                 // Preço do veículo
                 let valor = parseFloat(veiculo.preco_venda).toFixed(2);

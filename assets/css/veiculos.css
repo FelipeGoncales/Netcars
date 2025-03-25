@@ -283,8 +283,9 @@ main {
 .card{
     background: var(--cor-bg-sec);
     width: 300px;
-    height: 470px;
+    padding-bottom: 14px;
     border-radius: 10px;
+    overflow: hidden;
     & img{
         width: 100%;
         border-top-left-radius: 10px;

@@ -110,6 +110,8 @@ $('#salvar-alteracoes').click(function () {
     }
 });
 
+// Função para passar o valor dos inputs para o parágrafo espelho (mirror)
+
 function carregarInputs() {
     $('input').each(function () {
         const id = $(this).attr('id');
