@@ -245,13 +245,22 @@ function fecharBarraLateral() {
 
 const anoMin = 1950;
 const anoMax = new Date().getFullYear();
-const selectAnoVeic = $('#select-ano-veic');
+const selectAnoFabCarro = $('#ano-fabricacao-carro');
+const selectAnoModCarro = $('#ano-modelo-carro');
+const selectAnoFabMoto = $('#ano-fabricacao-moto');
+const selectAnoModMoto = $('#ano-modelo-moto');
 
-for (let ano = anoMin; ano <= anoMax; ano++) {
-    const option = $(`<option value="${ano}">${ano}</option>`);
-    selectAnoVeic.append(option);
+function carregarAnos(select) {
+    for (let ano = anoMax; ano >= anoMin; ano--) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        select.append(option);
+    }
 }
 
+carregarAnos(selectAnoFabCarro);
+carregarAnos(selectAnoModCarro);
+carregarAnos(selectAnoFabMoto);
+carregarAnos(selectAnoModMoto);
 
 //pdf carros
 $('#pdf-carros').click(function (e) {
@@ -259,23 +268,26 @@ $('#pdf-carros').click(function (e) {
 
     // 1) Pegar valores do filtro
     const marca = $('#select-marca-carro').val();
-    const anoMin = $('#ano-minimo-carro').val();
-    const anoMax = $('#ano-maximo-carro').val();
+    const anoModelo = parseInt($('#ano-modelo-carro').val());
+    const anoFabricacao = parseInt($('#ano-fabricacao-carro').val());
 
     // 2) Montar URL
     let url = `${BASE_URL}/relatorio/carros?`;
 
+    let listaUrl = [];
+
     if (marca) {
-        url += 'marca=' + encodeURIComponent(marca) + '&';
+        listaUrl.push(`marca=${encodeURIComponent(marca)}`);
     }
-    if (anoMin) {
-        url += 'ano_minimo=' + encodeURIComponent(anoMin) + '&';
+    if (anoModelo) {
+        listaUrl.push(`ano_modelo=${encodeURIComponent(anoModelo)}`);
     }
-    if (anoMax) {
-        url += 'ano_maximo=' + encodeURIComponent(anoMax) + '&';
+    if (anoFabricacao) {
+        listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
 
-    // 3) Abrir em nova aba (ou na mesma, se preferir)
+    url += listaUrl.join('&');
+
     window.open(url, '_blank');
 });
 
@@ -284,23 +296,30 @@ $('#pdf-carros').click(function (e) {
 $('#pdf-motos').click(function (e) {
     e.preventDefault();
 
+    // 1) Pegar valores do filtro
     const marca = $('#select-marca-moto').val();
-    const anoMin = $('#ano-minimo-moto').val();
-    const anoMax = $('#ano-maximo-moto').val();
+    const anoModelo = parseInt($('#ano-modelo-moto').val());
+    const anoFabricacao = parseInt($('#ano-fabricacao-moto').val());
 
+    // 2) Montar URL
     let url = `${BASE_URL}/relatorio/motos?`;
+
+    let listaUrl = [];
+
     if (marca) {
-        url += 'marca=' + encodeURIComponent(marca) + '&';
+        listaUrl.push(`marca=${encodeURIComponent(marca)}`);
     }
-    if (anoMin) {
-        url += 'ano_minimo=' + encodeURIComponent(anoMin) + '&';
+    if (anoModelo) {
+        listaUrl.push(`ano_modelo=${encodeURIComponent(anoModelo)}`);
     }
-    if (anoMax) {
-        url += 'ano_maximo=' + encodeURIComponent(anoMax) + '&';
+    if (anoFabricacao) {
+        listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
+
+    url += listaUrl.join('&');
+
     window.open(url, '_blank');
 });
-
 
 //pdf usuarios
 $('#pdf-clientes').click(function (e) {
@@ -319,10 +338,10 @@ $('#pdf-clientes').click(function (e) {
         url += 'nome=' + encodeURIComponent(nome) + '&';
     }
     if (cpf) {
-        url += 'cpf=' + encodeURIComponent(cpf) + '&';
+        url += 'cpf_cnpj=' + encodeURIComponent(cpf) + '&';
     }
     if (status) {
-        url += 'status=' + encodeURIComponent(status) + '&';
+        url += 'ativo=' + encodeURIComponent(status) + '&';
     }
     if (dia) {
         url += 'dia=' + encodeURIComponent(dia) + '&';
