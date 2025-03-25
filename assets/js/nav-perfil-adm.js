@@ -1,6 +1,6 @@
 // URL API
 
-const BASE_URL_ADM = "http://192.168.1.12:5000";
+const BASE_URL_ADM = "http://192.168.1.118:5000";
 
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 

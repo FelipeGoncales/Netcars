@@ -1,6 +1,6 @@
 // URL API
 
-const BASE_URL = "http://192.168.1.12:5000";
+const BASE_URL = "http://192.168.1.118:5000";
 
 // Criando o dicionário do filtro
 let filtroSelect = {};
