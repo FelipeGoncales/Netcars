@@ -100,7 +100,8 @@ $("#formCadastroUsuario").on("submit", function (e) {
                 id_usuario: response.dados.id_usuario,
                 email: response.dados.email,
                 nome_completo: response.dados.nome_completo,
-                tipo_usuario: response.dados.tipo_usuario
+                tipo_usuario: response.dados.tipo_usuario,
+                token: response.dados.token
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
             window.location.href = 'index.html';
