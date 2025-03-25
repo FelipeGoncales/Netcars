@@ -36,6 +36,8 @@
             <div class="linha2"></div>
             <div class="linha3"></div>
         </div>
+
+
         <div class="container-perfil" id="barra-lateral">
             <div class="perfil-usuario">
                 <i class="fa-solid fa-circle-user"></i>
@@ -59,6 +61,8 @@
             </nav>
             <p id="fecharBarraLateral">&times;</p>
         </div>
+        <!-- Overlay -->
+        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
         <section class="container" id="conteudo">
@@ -134,11 +138,8 @@
                     </div>
                 </form>
             </div>
-            <div>
 
-            </div>
-
-
+            <!-- Div Edit User -->
             <div class="container-edit-user" id="editUser">
 
                 <div class="filtro-users-wrapper">
@@ -149,7 +150,7 @@
 
                     <div class="status-box">
                         <select id="status-select">
-                            <option value="" >Situação</option>
+                            <option value="">Situação</option>
                             <option value="1">Ativo</option>
                             <option value="0">Inativo</option>
                         </select>
@@ -157,7 +158,7 @@
 
                     <div class="type-box">
                         <select id="type-select">
-                            <option value="" >Tipo</option>
+                            <option value="">Tipo</option>
                             <option value="1">Administrador</option>
                             <option value="2">Vendedor</option>
                             <option value="3">Cliente</option>
@@ -181,7 +182,6 @@
                 </div>
             </div>
 
-            <!-- Div Relatórios -->
             <!-- Div Relatórios - Movimentações -->
             <div class="container-relatorios" id="relatorio-movimentacao">
                 <div class="container-dashboard">
@@ -218,127 +218,173 @@
             <!-- Div Relatórios - Carros -->
             <div class="container-relatorios" id="relatorio-carros">
                 <div class="container-branco">
-                    <div class="content-conbranco">
-                        <h3 class="title-conbranco">Filtro - Carros</h3>
-                        <div class="input-conbranco">
-                            <label for="select-marca-carro">Marca*</label>
-                            <select id="select-marca-carro" name="marca">
+                    <h3 class="title-conbranco">Filtro - Carros</h3>
+                    <div class="div-input">
+                        <label for="select-marca-carro">Marca*</label>
+                        <select id="select-marca-carro" name="marca">
+                            <option value=""></option>
+                            <option value="Acura">Acura</option>
+                            <option value="Alfa Romeo">Alfa Romeo</option>
+                            <option value="Aston Martin">Aston Martin</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Bentley">Bentley</option>
+                            <option value="BMW">BMW</option>
+                            <option value="BYD">BYD</option>
+                            <option value="Bugatti">Bugatti</option>
+                            <option value="Cadillac">Cadillac</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                            <option value="Chery">Chery</option>
+                            <option value="Citroën">Citroën</option>
+                            <option value="Dodge">Dodge</option>
+                            <option value="Ferrari">Ferrari</option>
+                            <option value="Fiat">Fiat</option>
+                            <option value="Ford">Ford</option>
+                            <option value="GMC">GMC</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Infiniti">Infiniti</option>
+                            <option value="JAC">JAC</option>
+                            <option value="Jeep">Jeep</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Land Rover">Land Rover</option>
+                            <option value="Lexus">Lexus</option>
+                            <option value="Maserati">Maserati</option>
+                            <option value="McLaren">McLaren</option>
+                            <option value="Mazda">Mazda</option>
+                            <option value="Mini">Mini</option>
+                            <option value="Mitsubishi">Mitsubishi</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="Peugeot">Peugeot</option>
+                            <option value="Porsche">Porsche</option>
+                            <option value="Ram">Ram</option>
+                            <option value="Renault">Renault</option>
+                            <option value="Rolls-Royce">Rolls-Royce</option>
+                            <option value="Saab">Saab</option>
+                            <option value="Smart">Smart</option>
+                            <option value="Subaru">Subaru</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Tesla">Tesla</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Volvo">Volvo</option>
+                        </select>
+                    </div>
+                    <div class="div-input-dupla">
+                        <div class="div-input">
+                            <label for="ano-fabricacao-carro">Ano fabricação*</label>
+                            <select name="ano-fabricacao-carro" id="ano-fabricacao-carro">
                                 <option value=""></option>
-                                <option value="Chevrolet">Chevrolet</option>
-                                <option value="Ford">Ford</option>
-                                <option value="Volkswagen">Volkswagen</option>
-                                <option value="Audi">Audi</option>
                             </select>
                         </div>
-                        <div class="input-conbranco">
-                            <label for="ano-minimo-carro">Ano mínimo*</label>
-                            <input id="ano-minimo-carro" type="text">
 
-                            <label for="ano-maximo-carro">Ano máximo*</label>
-                            <input id="ano-maximo-carro" type="text">
-                        </div>
-                        <div class="botao-conbranco">
-                            <a class="relatorios" id="pdf-carros">
-                                <h3>Visualizar/Gerar PDF</h3>
-                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                            </a>
+                        <div class="div-input">
+                            <label for="ano-modelo-carro">Ano modelo*</label>
+                            <select name="ano-modelo-carro" id="ano-modelo-carro">
+                                <option value=""></option>
+                            </select>
                         </div>
                     </div>
+                    
+                    <a class="relatorios-btn" id="pdf-carros">
+                        <h3>Visualizar/Gerar PDF</h3>
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </a>
                 </div>
-            </div>
-
-            <!-- Aqui você pode adicionar conteúdo específico para carros -->
             </div>
 
             <!-- Div Relatórios - Motos -->
             <div class="container-relatorios" id="relatorio-motos">
                 <div class="container-branco">
-                    <div class="content-conbranco">
-                        <h3 class="title-conbranco">Filtro - Motos</h3>
-                        <div class="input-conbranco">
-                            <label for="select-marca-moto">Marca*</label>
-                            <select id="select-marca-moto" name="marca-moto">
+                    <h3 class="title-conbranco">Filtro - Motos</h3>
+                    <div class="div-input">
+                        <label for="select-marca-carro">Marca*</label>
+                        <select id="select-marca-carro" name="marca">
+                            <option value=""></option>
+                            <option value="Aprilia">Aprilia</option>
+                            <option value="Benelli">Benelli</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Bultaco">Bultaco</option>
+                            <option value="Cagiva">Cagiva</option>
+                            <option value="CFMoto">CFMoto</option>
+                            <option value="Ducati">Ducati</option>
+                            <option value="Harley-Davidson">Harley-Davidson</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Husqvarna">Husqvarna</option>
+                            <option value="Indian Motorcycle">Indian Motorcycle</option>
+                            <option value="Kawasaki">Kawasaki</option>
+                            <option value="KTM">KTM</option>
+                            <option value="Kymco">Kymco</option>
+                            <option value="MV Agusta">MV Agusta</option>
+                            <option value="Royal Enfield">Royal Enfield</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Triumph">Triumph</option>
+                            <option value="Yamaha">Yamaha</option>
+                            <option value="Zero Motorcycles">Zero Motorcycles</option>
+                        </select>
+                    </div>
+                    <div class="div-input-dupla">
+                        <div class="div-input">
+                            <label for="ano-fabricacao-moto">Ano fabricação*</label>
+                            <select name="ano-fabricacao-moto" id="ano-fabricacao-moto">
                                 <option value=""></option>
-                                <option value="Chevrolet">Chevrolet</option>
-                                <option value="Ford">Ford</option>
-                                <option value="Volkswagen">Volkswagen</option>
-                                <option value="Fiat">Fiat</option>
-                                <option value="Hyundai">Hyundai</option>
-                                <option value="Toyota">Toyota</option>
-                                <option value="Renault">Renault</option>
-                                <option value="Honda">Honda</option>
-                                <option value="Nissan">Nissan</option>
-                                <option value="Peugeot">Peugeot</option>
-                                <option value="Citroën">Citroën</option>
-                                <option value="Mitsubishi">Mitsubishi</option>
-                                <option value="Kia">Kia</option>
-                                <option value="BMW">BMW</option>
-                                <option value="Mercedes-Benz">Mercedes-Benz</option>
-                                <option value="Audi">Audi</option>
-                                <option value="Land Rover">Land Rover</option>
-                                <option value="Jeep">Jeep</option>
-                                <option value="Volvo">Volvo</option>
-                                <option value="Subaru">Subaru</option>
-                                <option value="Porsche">Porsche</option>
-                                <option value="Mini">Mini</option>
-                                <option value="Lexus">Lexus</option>
-                                <option value="Mazda">Mazda</option>
-                                <option value="Chery">Chery</option>
-                                <option value="JAC">JAC</option>
                             </select>
                         </div>
-                        <div class="input-conbranco">
-                            <label for="ano-minimo-moto">Ano mínimo*</label>
-                            <input id="ano-minimo-moto" type="text">
 
-                            <label for="ano-maximo-moto">Ano máximo*</label>
-                            <input id="ano-maximo-moto" type="text">
-                        </div>
-                        <div class="botao-conbranco">
-                            <a class="relatorios" id="pdf-motos">
-                                <h3>Visualizar/Gerar PDF</h3>
-                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                            </a>
+                        <div class="div-input">
+                            <label for="ano-modelo-moto">Ano modelo*</label>
+                            <select name="ano-modelo-moto" id="ano-modelo-moto">
+                                <option value=""></option>
+                            </select>
                         </div>
                     </div>
+                    
+                    <a class="relatorios-btn" id="pdf-motos">
+                        <h3>Visualizar/Gerar PDF</h3>
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </a>
                 </div>
             </div>
 
             <!-- Div Relatórios - Clientes -->
             <div class="container-relatorios" id="relatorio-clientes">
                 <div class="container-branco">
-                    <div class="content-conbranco">
-                        <h3 class="title-conbranco">Filtro - Clientes</h3>
-                        <div class="input-conbranco">
+                    <h3 class="title-conbranco">Filtro - Clientes</h3>
+                    <div class="div-input-dupla">
+                        <div class="div-input">
                             <label for="nome-cliente">Nome</label>
-                            <input id="nome-cliente" type="text" placeholder="Nome">
-
+                            <input id="nome-cliente" type="text" />
+                        </div>
+                        <div class="div-input">
                             <label for="cpf-cnpj-cliente">CPF/CNPJ</label>
-                            <input id="cpf-cnpj-cliente" type="text" placeholder="CPF/CNPJ">
-                        </div>
-                        <div class="input-conbranco">
-                            <label for="status-cliente">Status*</label>
-                            <select id="status-cliente" name="status-cliente">
-                                <option value=""></option>
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
-                            </select>
-                            <div class="inputs-DMA">
-                                <label for="dia-cliente">Dia</label>
-                                <input id="dia-cliente" type="text" placeholder="Dia">
-                                <label for="mes-cliente">Mês</label>
-                                <input id="mes-cliente" type="text" placeholder="Mês">
-                                <label for="ano-cliente">Ano</label>
-                                <input id="ano-cliente" type="text" placeholder="Ano">
-                            </div>
-                        </div>
-                        <div class="botao-conbranco">
-                            <a class="relatorios" id="pdf-clientes">
-                                <h3>Visualizar/Gerar PDF</h3>
-                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                            </a>
+                            <input id="cpf-cnpj-cliente" type="text" />
                         </div>
                     </div>
+                    <div class="div-input">
+                        <label for="status-cliente">Status*</label>
+                        <select id="status-cliente" name="status-cliente">
+                            <option value=""></option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                    </div>
+                    <div class="inputs-DMA">
+                        <div class="div-input">
+                            <label for="dia-cliente">Dia</label>
+                            <input id="dia-cliente" type="text" />
+                        </div>
+                        <div class="div-input">
+                            <label for="mes-cliente">Mês</label>
+                            <input id="mes-cliente" type="text" />
+                        </div>
+                        <div class="div-input">
+                            <label for="ano-cliente">Ano</label>
+                            <input id="ano-cliente" type="text" />
+                        </div>
+                    </div>
+                    <a class="relatorios-btn" id="pdf-clientes">
+                        <h3>Visualizar/Gerar PDF</h3>
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </a>
                 </div>
             </div>
 
@@ -351,28 +397,28 @@
         <form id="modal-editar-usuario">
             <i class="fa-solid fa-xmark" id="close-modal-editar"></i>
             <h3>Editar informações do usuário</h3>
-            <div class="div-input">
+            <div class="div-input-modal">
                 <label for="nome-editar">Nome</label>
                 <input type="text" name="nome-editar" id="nome-editar" required />
             </div>
-            <div class="div-input">
+            <div class="div-input-modal">
                 <label for="email-editar">Email:</label>
                 <input type="text" name="email-editar" id="email-editar" required />
             </div>
-            <div class="div-input">
+            <div class="div-input-modal">
                 <label for="telefone-editar">Telefone:</label>
                 <input type="text" name="telefone-editar" id="telefone-editar" />
             </div>
-            <div class="div-input">
+            <div class="div-input-modal">
                 <label for="ativo-editar">Ativo:</label>
-                <select name="ativo-editar" id="ativo-editar" required >
+                <select name="ativo-editar" id="ativo-editar" required>
                     <option value="1">Ativo</option>
                     <option value="0">Inativo</option>
                 </select>
             </div>
-            <div class="div-input">
+            <div class="div-input-modal">
                 <label for="tipo-usuario-editar">Ativo:</label>
-                <select name="tipo-usuario-editar" id="tipo-usuario-editar" required >
+                <select name="tipo-usuario-editar" id="tipo-usuario-editar" required>
                     <option value="1">Administrador</option>
                     <option value="2">Vendedor</option>
                     <option value="3">Cliente</option>
@@ -381,7 +427,7 @@
             <button type="submit">Salvar alterações</button>
         </form>
         <!-- Overlay -->
-        <div class="overlay-bg" id="overlay-bg"></div>
+        <div class="overlay-bg" id="overlay-bg-modal-edit"></div>
     </main>
     <footer id="footer">
         <div class="div-contato">

@@ -11,7 +11,6 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
-
     <link rel="stylesheet" href="assets/css/veiculos.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -74,6 +73,134 @@
                         <div class="div-filtro-aplic">
                             <h2>Filtros aplicados</h2>
                             <p id="num-filtros-aplic">0</p>
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-tipo-veic">
+                    <div class="active" id="tipo-veic-carro">
+                        <i class="fa-solid fa-car"></i>
+                        <p>Carros</p>
+                    </div>
+                    <div id="tipo-veic-moto">
+                        <i class="fa-solid fa-motorcycle"></i>
+                        <p>Motos</p>
+                    </div>
+                    <div id="tipo-veic-bg-selecionado"></div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title" id="marcas-carro">
+                    <h2>Lista de Marcas</h2>
+                    <div class="filtros-aplic">
+                        <ul class="itens-details">
+                            <li marca="BMW"><img src="assets/img/logo-carro/bmw.png" alt="Logomarca"></li>
+                            <li marca="BYD"><img src="assets/img/logo-carro/byd.svg" alt="Logomarca"></li>
+                            <li marca="Toyota"><img src="assets/img/logo-carro/toyota.png" alt="Logomarca"></li>
+                            <li marca="Volkswagem"><img src="assets/img/logo-carro/volkswagem.png" alt="Logomarca"></li>
+                            <li marca="Fiat"><img src="assets/img/logo-carro/fiat.svg" alt="Logomarca"></li>
+                            <li marca="Ford"><img src="assets/img/logo-carro/ford.png" alt="Logomarca"></li>
+                            <li marca="Nissan"><img src="assets/img/logo-carro/nissan.png" alt="Logomarca"></li>
+                            <li marca="Chevrolet"><img src="assets/img/logo-carro/chevrolet.jpg" alt="Logomarca"></li>
+                            <li marca="Jeep"><img src="assets/img/logo-carro/jeep.svg" alt="Logomarca"></li>
+                        </ul>                        
+                    </div>
+                </div>
+
+                <div class="div-filtro-title" id="marcas-moto">
+                    <h2>Lista de Marcas</h2>
+                    <div class="filtros-aplic">
+                        <ul class="itens-details">
+                            <li marca="BMW"><img src="assets/img/logo-moto/bmw.png" alt="Logomarca"></li>
+                            <li marca="Yamaha"><img src="assets/img/logo-moto/yamaha.png" alt="Logomarca"></li>
+                            <li marca="Honda"><img src="assets/img/logo-moto/honda.png" alt="Logomarca"></li>
+                            <li marca="Suzuki"><img src="assets/img/logo-moto/suzuki.png" alt="Logomarca"></li>
+                            <li marca="Kawasaki"><img src="assets/img/logo-moto/kawasaki.png" alt="Logomarca"></li>
+                            <li marca="Ducati"><img src="assets/img/logo-moto/ducati.png" alt="Logomarca"></li>
+                            <li marca="Harley-Davidson"><img src="assets/img/logo-moto/Harley_davidson.jpg" alt="Logomarca"></li>
+                            <li marca="Shineray"><img src="assets/img/logo-moto/shineray.png" alt="Logomarca"></li>
+                            <li marca="Haojue"><img src="assets/img/logo-moto/haojue.png" alt="Logomarca"></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title" id="categorias-carro">
+                    <h2>Categoria</h2>
+                    <div class="filtros-aplic">
+                        <select name="categoria-carro" id="select-categoria-carro">
+                            <option value="">Todos</option>
+                            <option value="SUV (Veículo Utilitário Esportivo)">SUV</option>
+                            <option value="Sedã">Sedã</option>
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Picape">Picape</option>
+                            <option value="Crossover">Crossover</option>
+                            <option value="Minivan">Minivan</option>
+                            <option value="Esportivo">Esportivo</option>
+                            <option value="Luxo">Luxo</option>
+                            <option value="Compacto">Compacto</option>
+                            <option value="Elétrico">Elétrico</option>
+                            <option value="Híbrido">Híbrido</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="div-filtro-title" id="categorias-moto">
+                    <h2>Categoria</h2>
+                    <div class="filtros-aplic">
+                        <select name="categoria-moto" id="select-categoria-moto">
+                            <option value="">Todos</option>
+                            <option value="Esportiva">Esportiva</option>
+                            <option value="Custom">Custom</option>
+                            <option value="Scooter">Scooter</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Off-road">Off-road</option>
+                            <option value="Naked">Naked</option>
+                            <option value="Touring">Touring</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title">
+                    <h2>Localidade</h2>
+                    <div class="filtros-aplic f-d">
+                        <select type="text" name="cidade" id="estado-select">
+                            <option value="">Todos</option>
+                        </select>
+                        <select type="text" name="cidade" id="cidade-select" disabled>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title">
+                    <h2>Preço</h2>
+                    <div class="filtros-aplic">
+                        <input type="text" name="Preço min" id="input-preco-min" placeholder="Preço mínimo" >
+                        <input type="text" name="Preço max" id="input-preco-max" placeholder="Preço máximo" >
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+
+                <div class="div-filtro-title">
+                    <h2>Ano</h2>
+                    <div class="filtros-aplic">
+                        <input type="text" name="Ano min" id="input-ano-min" placeholder="Ano mínimo">
+                        <input type="text" name="Ano max" id="input-ano-max" placeholder="Ano máximo">
+                    </div>
+                </div>
+
+                <div class="linha"></div> <!-- Linha -->
+                <div class="div-filtro-title">
+                    <h2>Cor</h2>
+                    <div class="filtro-cor-container">
+                        <div class="filtro-cor-header">
+                            <span>Selecione as cores</span>
+                            <i class="fa-solid fa-chevron-down" style="color: #757575;"></i>
                         </div>
                         <p id="limpar-filtros">Limpar filtros</p>
 

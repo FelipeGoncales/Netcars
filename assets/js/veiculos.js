@@ -19,9 +19,6 @@ function buscarVeiculos() {
         url: `${BASE_URL}/buscar-${tipoVeiculo}`,
         data: JSON.stringify(filtroSelect),
         contentType: "application/json",
-        headers: {
-            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
-        },
         success: function(response) {
             console.log(response)
             // Alterando o número da quantidade de veículos obtidos através da resposta da API
@@ -131,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         top: '20px'
     };
     const fixedStyle = {
-        width: '28.3%',
+        width: '430px',
         position: 'fixed',
         top: '86px'
     };
@@ -282,6 +279,8 @@ function limparFiltros() {
     filtroSelect = {};
     $("#filtros-aplic").empty();
     $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+    buscarVeiculos();
 }
 
 $('#limpar-filtros').click(() => {

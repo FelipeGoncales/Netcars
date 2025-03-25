@@ -153,9 +153,27 @@ $(document).ready(function() {
             // Input preço venda
             $("#input-preco-venda").val(infoVeic.preco_venda);
 
-            // Logo img
-            $("#logo-img").attr('src', `assets/img/${infoVeic.marca.toLowerCase()}.*`);
+            // Lista de extensões que você quer tentar
+            var extensoes = ["png", "jpg", "jpeg", "svg"];
+            var fileName = `assets/img/${infoVeic.marca.toLowerCase()}`;
+            var $img = $("#logo-img");
 
+            function tentarCarregar(i) {
+                if (i >= extensoes.length) {
+                    console.error("Imagem não encontrada para a marca:", infoVeic.marca);
+                    return;
+                }
+
+                // Tenta carregar com a extensão atual
+                $img.attr('src', `${fileName}.${extensoes[i]}`)
+                    .off("error") // Remove qualquer handler anterior para evitar loops
+                    .on("error", function() {
+                        // Se der erro, tenta com a próxima extensão
+                        tentarCarregar(i + 1);
+                    });
+            }
+
+            tentarCarregar(0);
         
             carregarInputs();
         },

@@ -186,20 +186,6 @@ $(document).ready(function () {
     });
 });
 
-// Função para tabela de listagem de usuários
-
-$(document).ready(function () {
-    // Alternar cores de fundo das linhas da tabela
-    $(".user-table tbody tr:odd").css("background-color", "#ffffff");
-    $(".user-table tbody tr:even").css("background-color", "#E3D3FD");
-
-    // Aplicar cor cinza aos ícones de edição
-    $(".fa-solid.fa-pen-to-square").css("color", "#7B7B7B");
-}); 1
-
-
-
-
 // Função para mostrar senha quando clicar no olho
 
 $('#mostrarSenha').click(function () {
@@ -259,13 +245,22 @@ function fecharBarraLateral() {
 
 const anoMin = 1950;
 const anoMax = new Date().getFullYear();
-const selectAnoVeic = $('#select-ano-veic');
+const selectAnoFabCarro = $('#ano-fabricacao-carro');
+const selectAnoModCarro = $('#ano-modelo-carro');
+const selectAnoFabMoto = $('#ano-fabricacao-moto');
+const selectAnoModMoto = $('#ano-modelo-moto');
 
-for (let ano = anoMin; ano <= anoMax; ano++) {
-    const option = $(`<option value="${ano}">${ano}</option>`);
-    selectAnoVeic.append(option);
+function carregarAnos(select) {
+    for (let ano = anoMax; ano >= anoMin; ano--) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        select.append(option);
+    }
 }
 
+carregarAnos(selectAnoFabCarro);
+carregarAnos(selectAnoModCarro);
+carregarAnos(selectAnoFabMoto);
+carregarAnos(selectAnoModMoto);
 
 //pdf carros
 $('#pdf-carros').click(function (e) {
@@ -273,23 +268,26 @@ $('#pdf-carros').click(function (e) {
 
     // 1) Pegar valores do filtro
     const marca = $('#select-marca-carro').val();
-    const anoMin = $('#ano-minimo-carro').val();
-    const anoMax = $('#ano-maximo-carro').val();
+    const anoModelo = parseInt($('#ano-modelo-carro').val());
+    const anoFabricacao = parseInt($('#ano-fabricacao-carro').val());
 
     // 2) Montar URL
     let url = `${BASE_URL}/relatorio/carros?`;
 
+    let listaUrl = [];
+
     if (marca) {
-        url += 'marca=' + encodeURIComponent(marca) + '&';
+        listaUrl.push(`marca=${encodeURIComponent(marca)}`);
     }
-    if (anoMin) {
-        url += 'ano_minimo=' + encodeURIComponent(anoMin) + '&';
+    if (anoModelo) {
+        listaUrl.push(`ano_modelo=${encodeURIComponent(anoModelo)}`);
     }
-    if (anoMax) {
-        url += 'ano_maximo=' + encodeURIComponent(anoMax) + '&';
+    if (anoFabricacao) {
+        listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
 
-    // 3) Abrir em nova aba (ou na mesma, se preferir)
+    url += listaUrl.join('&');
+
     window.open(url, '_blank');
 });
 
@@ -298,23 +296,30 @@ $('#pdf-carros').click(function (e) {
 $('#pdf-motos').click(function (e) {
     e.preventDefault();
 
+    // 1) Pegar valores do filtro
     const marca = $('#select-marca-moto').val();
-    const anoMin = $('#ano-minimo-moto').val();
-    const anoMax = $('#ano-maximo-moto').val();
+    const anoModelo = parseInt($('#ano-modelo-moto').val());
+    const anoFabricacao = parseInt($('#ano-fabricacao-moto').val());
 
+    // 2) Montar URL
     let url = `${BASE_URL}/relatorio/motos?`;
+
+    let listaUrl = [];
+
     if (marca) {
-        url += 'marca=' + encodeURIComponent(marca) + '&';
+        listaUrl.push(`marca=${encodeURIComponent(marca)}`);
     }
-    if (anoMin) {
-        url += 'ano_minimo=' + encodeURIComponent(anoMin) + '&';
+    if (anoModelo) {
+        listaUrl.push(`ano_modelo=${encodeURIComponent(anoModelo)}`);
     }
-    if (anoMax) {
-        url += 'ano_maximo=' + encodeURIComponent(anoMax) + '&';
+    if (anoFabricacao) {
+        listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
+
+    url += listaUrl.join('&');
+
     window.open(url, '_blank');
 });
-
 
 //pdf usuarios
 $('#pdf-clientes').click(function (e) {
@@ -333,10 +338,10 @@ $('#pdf-clientes').click(function (e) {
         url += 'nome=' + encodeURIComponent(nome) + '&';
     }
     if (cpf) {
-        url += 'cpf=' + encodeURIComponent(cpf) + '&';
+        url += 'cpf_cnpj=' + encodeURIComponent(cpf) + '&';
     }
     if (status) {
-        url += 'status=' + encodeURIComponent(status) + '&';
+        url += 'ativo=' + encodeURIComponent(status) + '&';
     }
     if (dia) {
         url += 'dia=' + encodeURIComponent(dia) + '&';
@@ -447,7 +452,7 @@ $(document).ready(() => carregarUsuarios());
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').css('display', 'none');
-    $('#overlay-bg').css('display', 'none');
+    $('#overlay-bg-modal-edit').css('display', 'none');
 })
 
 // Abrir modal editar ao clicar no ícone de editar
@@ -456,24 +461,28 @@ $('table').on('click', '.edit-icon', function () {
 
     const tdPai = $(this).closest('tr');
 
-    const nome = tdPai.find('.nome-td').text();
-    const email = tdPai.find('.email-td').text();
-    const telefone = tdPai.find('.telefone-td').text();
-
+    const nome = tdPai.find('.nome-td');
+    const email = tdPai.find('.email-td');
+    const telefone = tdPai.find('.telefone-td');
     const ativo = tdPai.find('.ativo-td').text();
+    const tipoUser = tdPai.find('.tipo-user-td').text();
+
+    let textoNome = nome.text();
+    let textoEmail = email.text();
+    let textoTelefone = telefone.text();
+
     // Transformando em número
     let textoAtivo = ativo === "Ativo" ? 1 : 0;
 
-    const tipoUser = tdPai.find('.tipo-user-td').text();
     // Transformando em número
     let textoTipoUser = tipoUser === "Administrador" ? 1 : tipoUser === "Vendedor" ? 2 : 3;
 
     $('#modal-editar-usuario').css('display', 'flex')
-    $('#overlay-bg').css('display', 'flex');
+    $('#overlay-bg-modal-edit').css('display', 'flex');
 
-    $('#nome-editar').val(nome);
-    $('#email-editar').val(email);
-    $('#telefone-editar').val(telefone);
+    $('#nome-editar').val(textoNome);
+    $('#email-editar').val(textoEmail);
+    $('#telefone-editar').val(textoTelefone);
     $('#ativo-editar').val(textoAtivo);
     $('#tipo-user-editar').val(textoTipoUser);
 
@@ -493,6 +502,8 @@ $('table').on('click', '.edit-icon', function () {
             ativo: dados.get('ativo-editar')
         };
 
+        console.log(editar)
+
         const editarJSON = JSON.stringify(editar);
 
         $.ajax({
@@ -501,13 +512,11 @@ $('table').on('click', '.edit-icon', function () {
             data: editarJSON,
             contentType: "application/json",
             success: function (response) {
-                // Exibir mensagem de sucesso
-                alertMessage(response.success, 'success');
+                localStorage.setItem('usuario-editado', JSON.stringify({
+                    success: response.success
+                }));
 
-                $('#modal-editar-usuario').css('display', 'none')
-                $('#overlay-bg').css('display', 'none');
-
-                carregarUsuarios();
+                window.location.reload();
             },
             error: function (response) {
                 // Exibir mensagem de erro
@@ -515,6 +524,25 @@ $('table').on('click', '.edit-icon', function () {
             }
         });
     });
+})
+
+// Verificar se usuário foi editado
+$(document).ready(() => {
+    const userEditado = JSON.parse(localStorage.getItem('usuario-editado'));
+
+    if (userEditado) {
+        // Aparecer a tabela logo ao abrir a página 
+        $('#minha-conta').css('display', 'none');
+        $('#cadUser').css('display', 'none');
+        $('#editUser').css('display', 'flex');
+        // Código para selecionar o ícone de editar usuário
+        const editA = $('#link_editUser');
+        selecionarA(editA[0]);
+
+        alertMessage(userEditado.success, "success");
+
+        localStorage.removeItem('usuario-editado');
+    }
 })
 
 // Fetch filtro usuarios
@@ -547,6 +575,6 @@ function fetchFiltroUsuarios() {
 }
 
 // Adicionado a função quando os inputs forem alterados
-$('#search-user-input').on('input', fetchFiltroUsuarios);
-$('#status-select').on('change', fetchFiltroUsuarios);
-$('#type-select').on('change', fetchFiltroUsuarios);
+$('#search-user-input').on('input', () => fetchFiltroUsuarios());
+$('#status-select').on('change', () => fetchFiltroUsuarios());
+$('#type-select').on('change', () => fetchFiltroUsuarios());
