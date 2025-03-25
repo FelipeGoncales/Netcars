@@ -204,36 +204,38 @@ h4 {
     }
 }
 
+/* Carros */
 .eletricos {
-    background-image: url(../img/eletrico.webp);
+    background-image: url(../img/banner-carro/eletrico.webp);
 }
 .hatchback {
-    background-image: url(../img/bannerPopular.jpg);
+    background-image: url(../img/banner-carro/bannerPopular.jpg);
 }
 .picapes {
-    background-image: url(../img/bannerPicapes.jpg);
+    background-image: url(../img/banner-carro/bannerPicapes.jpg);
 }
 .sedans {
-    background-image: url(../img/bannerSedans.jpg);
+    background-image: url(../img/banner-carro/bannerSedans.jpg);
 }
 .suvs {
-    background-image: url(../img/bannerSUVs.png);
+    background-image: url(../img/banner-carro/bannerSUVs.png);
 }
 
+/* Motos */
 .esportivas {
-    background-image: url(../img/esportivas.jpg);
+    background-image: url(../img/banner-moto/esportivas.jpg);
 }
 .street {
-    background-image: url(../img/street.jpg);
+    background-image: url(../img/banner-moto/street.jpg);
 }
 .trail {
-    background-image: url(../img/moto-populares.avif);
+    background-image: url(../img/banner-moto/trail.avif);
 }
 .big-trail {
-    background-image: url(../img/big-trail.jpg);
+    background-image: url(../img/banner-moto/big-trail.jpg);
 }
 .supermoto {
-    background-image: url(../img/supermoto.jpg);
+    background-image: url(../img/banner-moto/supermoto.jpg);
 }
 
 /* Fim do Main */
