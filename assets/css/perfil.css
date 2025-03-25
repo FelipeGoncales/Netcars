@@ -1095,7 +1095,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     flex-direction: column;
     gap: 25px;
     padding: 35px;
-    width: 600px;
 }
 
 .title-conbranco{
@@ -1189,6 +1188,13 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     max-width: 900px;
     margin: 0 auto;
     width: 50vw;
+}
+
+@media (max-width: 678px) {
+    .container-dashboard {
+        max-width: 100%; /* Ajusta para ocupar toda a largura da tela */
+        width: 80vw; /* Reduz um pouco a largura para dar margem */
+    }
 }
 
 .texto-principal {
