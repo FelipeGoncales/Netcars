@@ -186,17 +186,6 @@ $(document).ready(function () {
     });
 });
 
-// Função para tabela de listagem de usuários
-
-$(document).ready(function () {
-    // Alternar cores de fundo das linhas da tabela
-    $(".user-table tbody tr:odd").css("background-color", "#ffffff");
-    $(".user-table tbody tr:even").css("background-color", "#E3D3FD");
-
-    // Aplicar cor cinza aos ícones de edição
-    $(".fa-solid.fa-pen-to-square").css("color", "#7B7B7B");
-}); 1
-
 // Função para mostrar senha quando clicar no olho
 
 $('#mostrarSenha').click(function () {
@@ -453,24 +442,28 @@ $('table').on('click', '.edit-icon', function () {
 
     const tdPai = $(this).closest('tr');
 
-    const nome = tdPai.find('.nome-td').text();
-    const email = tdPai.find('.email-td').text();
-    const telefone = tdPai.find('.telefone-td').text();
-
+    const nome = tdPai.find('.nome-td');
+    const email = tdPai.find('.email-td');
+    const telefone = tdPai.find('.telefone-td');
     const ativo = tdPai.find('.ativo-td').text();
+    const tipoUser = tdPai.find('.tipo-user-td').text();
+
+    let textoNome = nome.text();
+    let textoEmail = email.text();
+    let textoTelefone = telefone.text();
+
     // Transformando em número
     let textoAtivo = ativo === "Ativo" ? 1 : 0;
 
-    const tipoUser = tdPai.find('.tipo-user-td').text();
     // Transformando em número
     let textoTipoUser = tipoUser === "Administrador" ? 1 : tipoUser === "Vendedor" ? 2 : 3;
 
     $('#modal-editar-usuario').css('display', 'flex')
     $('#overlay-bg-modal-edit').css('display', 'flex');
 
-    $('#nome-editar').val(nome);
-    $('#email-editar').val(email);
-    $('#telefone-editar').val(telefone);
+    $('#nome-editar').val(textoNome);
+    $('#email-editar').val(textoEmail);
+    $('#telefone-editar').val(textoTelefone);
     $('#ativo-editar').val(textoAtivo);
     $('#tipo-user-editar').val(textoTipoUser);
 
@@ -490,6 +483,8 @@ $('table').on('click', '.edit-icon', function () {
             ativo: dados.get('ativo-editar')
         };
 
+        console.log(editar)
+
         const editarJSON = JSON.stringify(editar);
 
         $.ajax({
@@ -498,13 +493,11 @@ $('table').on('click', '.edit-icon', function () {
             data: editarJSON,
             contentType: "application/json",
             success: function (response) {
-                // Exibir mensagem de sucesso
-                alertMessage(response.success, 'success');
+                localStorage.setItem('usuario-editado', JSON.stringify({
+                    success: response.success
+                }));
 
-                $('#modal-editar-usuario').css('display', 'none');
-                $('#overlay-bg-modal-edit').css('display', 'none');
-
-                carregarUsuarios();
+                window.location.reload();
             },
             error: function (response) {
                 // Exibir mensagem de erro
@@ -512,6 +505,22 @@ $('table').on('click', '.edit-icon', function () {
             }
         });
     });
+})
+
+// Verificar se usuário foi editado
+$(document).ready(() => {
+    const userEditado = JSON.parse(localStorage.getItem('usuario-editado'));
+
+    if (userEditado) {
+        // Aparecer a tabela logo ao abrir a página 
+        $('#minha-conta').css('display', 'none');
+        $('#cadUser').css('display', 'none');
+        $('#editUser').css('display', 'flex');
+
+        alertMessage(userEditado.success, "success");
+
+        localStorage.removeItem('usuario-editado');
+    }
 })
 
 // Fetch filtro usuarios
@@ -544,6 +553,6 @@ function fetchFiltroUsuarios() {
 }
 
 // Adicionado a função quando os inputs forem alterados
-$('#search-user-input').on('input', fetchFiltroUsuarios);
-$('#status-select').on('change', fetchFiltroUsuarios);
-$('#type-select').on('change', fetchFiltroUsuarios);
+$('#search-user-input').on('input', () => fetchFiltroUsuarios());
+$('#status-select').on('change', () => fetchFiltroUsuarios());
+$('#type-select').on('change', () => fetchFiltroUsuarios());
