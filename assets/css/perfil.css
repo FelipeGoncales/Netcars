@@ -1371,6 +1371,7 @@ footer {
 
     header {
         padding: 12px 20px;
+        z-index: 99;
         & .div-logo-title {
             gap: 20px;
             align-items: center;

@@ -447,7 +447,7 @@ $(document).ready(() => carregarUsuarios());
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').css('display', 'none');
-    $('#overlay-bg').css('display', 'none');
+    $('#overlay-bg-modal-edit').css('display', 'none');
 })
 
 // Abrir modal editar ao clicar no ícone de editar
@@ -469,7 +469,7 @@ $('table').on('click', '.edit-icon', function () {
     let textoTipoUser = tipoUser === "Administrador" ? 1 : tipoUser === "Vendedor" ? 2 : 3;
 
     $('#modal-editar-usuario').css('display', 'flex')
-    $('#overlay-bg').css('display', 'flex');
+    $('#overlay-bg-modal-edit').css('display', 'flex');
 
     $('#nome-editar').val(nome);
     $('#email-editar').val(email);
@@ -504,8 +504,8 @@ $('table').on('click', '.edit-icon', function () {
                 // Exibir mensagem de sucesso
                 alertMessage(response.success, 'success');
 
-                $('#modal-editar-usuario').css('display', 'none')
-                $('#overlay-bg').css('display', 'none');
+                $('#modal-editar-usuario').css('display', 'none');
+                $('#overlay-bg-modal-edit').css('display', 'none');
 
                 carregarUsuarios();
             },
