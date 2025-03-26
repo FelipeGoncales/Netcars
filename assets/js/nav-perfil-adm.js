@@ -1,18 +1,30 @@
-// URL API
-
-const BASE_URL_ADM = "http://192.168.1.12:5000";
-
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
-const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-const tipoUser = dadosUser.tipo_usuario;
+$(document).ready(function() {
+    $.ajax({
+        url: `${BASE_URL}/obter_tipo_usuario`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: function(response) {
+            const tipoUser = response.tipo_usuario;
 
-if (tipoUser === 2) {
-    window.location.href = 'vendedor-perfil.html';
-}
-if (tipoUser === 3) {
-    window.location.href = 'cliente-perfil.html';
-}
+            if (tipoUser === 2) {
+                window.location.href = 'vendedor-perfil.html';
+            }
+            if (tipoUser === 3) {
+                window.location.href = 'cliente-perfil.html';
+            }
+        },
+        error: function(response) {
+            localStorage.deleteItem('dadosUser');
+            localStorage.setItem('mensagem', JSON.stringify({
+                "error": response.responseJSON.error
+            }))
+            window.location.href = "login.html";
+        }
+    })
+})
 
 // Aparecer mensagem
 function alertMessage(text, type) {
@@ -391,7 +403,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function carregarUsuarios(usuarios_lista) {
     $.ajax({
-        url: `${BASE_URL_ADM}/cadastro`,
+        url: `${BASE_URL}/cadastro`,
         success: function (response) {
             const tbody = $("tbody");
 
@@ -508,7 +520,7 @@ $('table').on('click', '.edit-icon', function () {
 
         $.ajax({
             method: "put",
-            url: `${BASE_URL_ADM}/update_user`, // URL da API na Web
+            url: `${BASE_URL}/update_user`, // URL da API na Web
             data: editarJSON,
             contentType: "application/json",
             success: function (response) {
@@ -562,7 +574,7 @@ function fetchFiltroUsuarios() {
 
     $.ajax({
         method: 'POST',
-        url: `${BASE_URL_ADM}/get_user_filtro`,
+        url: `${BASE_URL}/get_user_filtro`,
         data: dataJSON,
         contentType: "application/json",
         success: function(response) {

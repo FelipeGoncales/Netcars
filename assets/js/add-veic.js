@@ -1,30 +1,56 @@
-// URL API
+// Lógica para não permitir que um usuário cliente cadastre
 
-const BASE_URL = "http://192.168.1.12:5000";
+$(document).ready(function() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
 
-// Lógica para não permitir que um tipo de usuário acesse o perfil de outros
+    if (!dadosUser) {
+        localStorage.setItem('mensagem', JSON.stringify({
+            "error": "Sessão não iniciada."
+        }))
+        window.location.href = 'login.html';
+    }
+    
+    const token = dadosUser.token;
 
+    if (!token) {
+        localStorage.removeItem('dadosUser');
+        localStorage.setItem('mensagem', JSON.stringify({
+            "error": "Sessão não iniciada."
+        }))
+        window.location.href = 'login.html';
+    }
+
+    $.ajax({
+        url: `${BASE_URL}/obter_tipo_usuario`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(response) {
+            const tipoUser = response.tipo_usuario;
+
+            if (tipoUser === 3) {
+                localStorage.removeItem('dadosUser');
+                localStorage.setItem('mensagem', JSON.stringify({
+                    "error": "Tentativa de violação identificada."
+                }))
+                window.location.href = 'login.html';
+            }
+        },
+        error: function(response) {
+            localStorage.removeItem('dadosUser');
+            localStorage.setItem('mensagem', JSON.stringify({
+                "error": response.responseJSON.error
+            }))
+            window.location.href = "login.html";
+        }
+    })
+})
+
+// ???? (QM ADICIONOU ESSA PORRA AQUI)
 const renavamValidity = {
     'renavam-carro': false,
     'renavam-moto': false
 };
-
-const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-
-if (!dadosUser) {
-    localStorage.setItem('mensagem', JSON.stringify({
-        error: 'Sessão não iniciada.'
-    }))
-
-    window.location.href = 'login.html';
-}
-
-const tipoUser = dadosUser.tipo_usuario;
-
-if (tipoUser === 3) {
-    window.location.href = 'index.html';
-}
-
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
 

@@ -1,5 +1,67 @@
 // Mudar perfil quando usuário estiver logado
 
+$(document).ready(function() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
+
+    if (dadosUser) {
+        const token = dadosUser.token;
+
+        if (!token) {
+            localStorage.removeItem('dadosUser');
+            localStorage.setItem('mensagem', JSON.stringify({
+                "error": "Sessão não iniciada."
+            }))
+            window.location.href = 'login.html';
+        }
+    
+        $.ajax({
+            url: `${BASE_URL}/obter_tipo_usuario`,
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                const tipoUser = response.tipo_usuario;
+
+                if (tipoUser === 2 || tipoUser === 1) {
+                    $('#div-button-vendedor').css('display', 'flex');
+                    $('#div-button-cliente').css('display', 'none');
+
+                    // Função para mudar a frase que aparece caso seja cliente ou usuário
+                    $('#mensagem-user').css('display', 'none');
+                    $('#mensagem-adm').css('display', 'flex');
+
+                    $('#editarAnuncio').css('display', 'flex');
+                } else {
+                    $('#div-button-vendedor').css('display', 'none');
+                    $('#div-button-cliente').css('display', 'flex');
+
+                    // Função para mudar a frase que aparece caso seja cliente ou usuário
+                    $('#mensagem-user').css('display', 'flex');
+                    $('#mensagem-adm').css('display', 'none');
+
+                    $('#editarAnuncio').css('display', 'none');
+                }
+            },
+            error: function(response) {
+                localStorage.removeItem('dadosUser');
+                localStorage.setItem('mensagem', JSON.stringify({
+                    "error": response.responseJSON.error
+                }))
+                window.location.href = "login.html";
+            }
+        })
+    } else {
+        $('#div-button-vendedor').css('display', 'none');
+        $('#div-button-cliente').css('display', 'flex');
+
+        // Função para mudar a frase que aparece caso seja cliente ou usuário
+        $('#mensagem-user').css('display', 'flex');
+        $('#mensagem-adm').css('display', 'none');
+
+        $('#editarAnuncio').css('display', 'none');
+    }
+})
+
 $(document).ready(function () {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
@@ -121,3 +183,13 @@ function carregarInputs() {
         spanMirror.text($(this).val()).css('display', 'flex');
     })
 }
+
+// Função caso usuário não esteja logado e clique no botão reservar
+
+$('#reservar-btn').click(function() {
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    if (!dadosUser) {
+        window.location.href = "login.html";
+    }
+})

@@ -1,3 +1,7 @@
+// URL API
+
+// Variável Global
+var BASE_URL = "http://192.168.1.12:5000";
 
 // Abrir e fechar barra lateral
 const sanduiche = $("#sanduicheHeader");
@@ -53,15 +57,34 @@ $(document).ready(function() {
     if (dadosUser) {
         $('#nomeUsuario').text(dadosUser.nome_completo) 
         
-        const tipoUser = dadosUser.tipo_usuario;
+        // Lógica para obter tipo do usuário
 
-        if (tipoUser === 3) {
-            $('#aDivEntrar').attr('href', 'cliente-perfil.html')
-        } else if (tipoUser === 2) {
-            $('#aDivEntrar').attr('href', 'vendedor-perfil.html')
-        } else if (tipoUser === 1) {
-            $('#aDivEntrar').attr('href', 'administrador-perfil.html')
-        }
+        $(document).ready(function() {
+            $.ajax({
+                url: `${BASE_URL}/obter_tipo_usuario`,
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                },
+                success: function(response) {
+                    const tipoUser = response.tipo_usuario;
+
+                    if (tipoUser === 3) {
+                        $('#aDivEntrar').attr('href', 'cliente-perfil.html')
+                    } else if (tipoUser === 2) {
+                        $('#aDivEntrar').attr('href', 'vendedor-perfil.html')
+                    } else if (tipoUser === 1) {
+                        $('#aDivEntrar').attr('href', 'administrador-perfil.html')
+                    }
+                },
+                error: function(response) {
+                    localStorage.deleteItem('dadosUser');
+                    localStorage.setItem('mensagem', JSON.stringify({
+                        "error": response.responseJSON.error
+                    }))
+                    window.location.href = "login.html";
+                }
+            })
+        })
 
     } else { 
         // Abrir e fechar modal login
@@ -101,4 +124,16 @@ $(document).ready(function() {
             }
         })
     }
+})
+
+// Abrir página de carro ou motos ao clicar no modal do nav
+
+$('#pagina-veiculo-carro').click(function() {
+    localStorage.setItem('tipo-veiculo', 'carro');
+    window.location.href = "veiculos.html";
+})
+
+$('#pagina-veiculo-moto').click(function() {
+    localStorage.setItem('tipo-veiculo', 'moto');
+    window.location.href = "veiculos.html";
 })

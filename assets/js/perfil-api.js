@@ -1,6 +1,7 @@
 // URL API
 
-const BASE_URL = "http://192.168.1.12:5000";
+// Variável Global
+var BASE_URL = "http://192.168.1.12:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
 
@@ -9,6 +10,7 @@ let isValidCPF_CNPJ = false;
 $(document).ready(function() {
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
+    // Enviar o usuário para a tela de login caso não esteja logado
     if (!dadosUser) {
         localStorage.setItem('mensagem', JSON.stringify({
             error: 'Sessão não iniciada.'

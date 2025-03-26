@@ -1,6 +1,22 @@
-// URL API
+// Função de exibir a mensagem para evitar repetir código
+function alertMessage(text, type) {
+    $('#divAlertMessage').css('display', 'flex')
 
-const BASE_URL = "http://192.168.1.12:5000";
+    let bgColor = type === 'success' ? '#0bd979' : '#f71445';
+
+    $('<p>')
+        .addClass('alertMessage')
+        .text(text)
+        .css('background-color', bgColor)
+        .appendTo('#divAlertMessage')
+        .hide()
+        .fadeIn(400)
+        .delay(3500)
+        .fadeOut(400);
+
+        // Limpar o local storage para evitar que a mensagem de novo ao recarregar a página
+        localStorage.clear();
+}
 
 // Criando o dicionário do filtro
 let filtroSelect = {};
@@ -9,9 +25,37 @@ let tipoVeiculo = "";
 
 // Carregar veículos ao abrir a página
 $(document).ready(() => {
-    tipoVeiculo = "carro";
+    const tipoVeicLocalStorage = localStorage.getItem('tipo-veiculo');
+
+    if (tipoVeicLocalStorage) {
+        if (tipoVeicLocalStorage == "carro") {
+            tipoVeiculo = "carro";
+        } else if (tipoVeicLocalStorage === "moto") {
+            tipoVeiculo = "moto";
+        }
+
+        localStorage.removeItem('tipo-veiculo');
+    } else {
+        tipoVeiculo = "carro";
+    }
+
     buscarVeiculos();
 })
+
+// Função para obter sigla dos estados
+function obterSiglaEstado(estadoVeiculo) {
+    return new Promise((resolve, reject) => {
+        $.getJSON('https://servicodados.ibge.gov.br/api/v1/localidades/estados', function(estados) {
+            for (let estado of estados) {
+                if (estado.nome === estadoVeiculo) {
+                    resolve(estado.sigla);
+                    return;
+                }
+            }
+            resolve(false);
+        }).fail(reject);
+    });
+}
 
 function buscarVeiculos() {
     $.ajax({
@@ -19,8 +63,7 @@ function buscarVeiculos() {
         url: `${BASE_URL}/buscar-${tipoVeiculo}`,
         data: JSON.stringify(filtroSelect),
         contentType: "application/json",
-        success: function(response) {
-            console.log(response)
+        success: async function(response) {
             // Alterando o número da quantidade de veículos obtidos através da resposta da API
             $("#qnt-veiculos").text(response.qnt);
 
@@ -43,8 +86,6 @@ function buscarVeiculos() {
                                 "background-size": "cover",
                                 "height": "225px"
                             })
-                    
-                console.log(veiculo.imagens)
             
                 // Cria a div de itens do card
                 const divItensCard = $("<div></div>").addClass("itens-card");
@@ -62,23 +103,14 @@ function buscarVeiculos() {
                 const iconCalendar = $("<i></i>").addClass("fa-solid fa-calendar-days");
                 const pYear = $("<p></p>").text(veiculo.ano_modelo); // Ano veículo
 
-                $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
-                    let siglaEstado = '';
-                    for (let estado of estados) {
-                        if (estado.nome === veiculo.estado) {
-                            siglaEstado = estado.sigla;
-                            break;
-                        }
-                    }
+                let siglaEstado = await obterSiglaEstado(veiculo.estado);
                     
-                    // Localização
-                    const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
-                    const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
+                // Localização
+                const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
+                const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
 
-                    // Monta a div infoCard com ícones e textos
-                    containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
-                });
-                
+                // Monta a div infoCard com ícones e textos
+                containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
             
                 // Preço do veículo
                 let valor = parseFloat(veiculo.preco_venda).toFixed(2);
@@ -110,7 +142,10 @@ function buscarVeiculos() {
             }
         },
         error: function(response) {
-            console.log(response.responseJSON.error);
+            alertMessage(response.responseJSON.error, 'error');
+            setTimeout(
+                window.location.href = "index.html"
+            , 3000)
         }
     })
 }
@@ -192,8 +227,6 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
             } else {
                 input.val("");
             }
-
-            console.log(filtroSelect);
 
             // Aplicar filtros a API quando deletar
             buscarVeiculos();
@@ -550,7 +583,5 @@ optionItems.forEach((item) => {
         filtroSelect['cores'] = cores;
         
         $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
-
-        console.log(filtroSelect);
     });
 });

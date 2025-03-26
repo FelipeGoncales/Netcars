@@ -1,6 +1,3 @@
-// URL da API
-const BASE_URL = "http://192.168.1.12:5000";
-
 // Função para inicializar o carrossel
 function carregarOwlCarrossel() {
     var owl = $("#div-owl-carousel");
@@ -69,9 +66,6 @@ $(document).ready(function() {
             'id': id
         }),
         contentType: "application/json",
-        headers: {
-            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
-        },
         success: function(response) {
             const infoVeic = response.veiculos[0];
             const divCarrossel = $('#div-owl-carousel');

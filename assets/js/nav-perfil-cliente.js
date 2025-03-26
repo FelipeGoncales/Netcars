@@ -1,15 +1,30 @@
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
-const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+$(document).ready(function() {
+    $.ajax({
+        url: `${BASE_URL}/obter_tipo_usuario`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: function(response) {
+            const tipoUser = response.tipo_usuario;
 
-const tipoUser = dadosUser.tipo_usuario;
-
-if (tipoUser === 1) {
-    window.location.href = 'administrador-perfil.html';
-}
-if (tipoUser === 2) {
-    window.location.href = 'vendedor-perfil.html';
-}
+            if (tipoUser === 1) {
+                window.location.href = 'administrador-perfil.html';
+            }
+            if (tipoUser === 2) {
+                window.location.href = 'vendedor-perfil.html';
+            }
+        },
+        error: function(response) {
+            localStorage.deleteItem('dadosUser');
+            localStorage.setItem('mensagem', JSON.stringify({
+                "error": response.responseJSON.error
+            }))
+            window.location.href = "login.html";
+        }
+    })
+})
 
 // Função Alert Message
 
