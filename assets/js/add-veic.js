@@ -1,6 +1,6 @@
 // URL API
 
-const BASE_URL = "http://192.168.1.118:5000";
+const BASE_URL = "http://192.168.1.12:5000";
 
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
@@ -118,7 +118,7 @@ const anoModeloMoto = $('#ano-modelo-moto');
 const anoFabricacaoMoto = $('#ano-fabricacao-moto');
 
 function addAnoInput(input) {
-    for (let ano = anoMin; ano <= anoMax; ano++) {
+    for (let ano = anoMax; ano >= anoMin; ano--) {
         const option = $(`<option value="${ano}">${ano}</option>`);
         input.append(option);
     }
@@ -242,18 +242,6 @@ $('#renavam-carro, #renavam-moto').on('input', function () {
     $(this).val(valor);
 });
 
-// Seleciona os inputs de ano de modelo e de fabricação e adiciona os eventos para validação
-document.querySelectorAll("#ano-modelo-carro, #ano-fabricacao-carro").forEach(input => {
-    input.addEventListener("blur", () => validarCampo(input));
-    input.addEventListener("input", () => input.alertado = false);
-});
-
-document.querySelectorAll("#ano-modelo-moto, #ano-fabricacao-moto").forEach(input => {
-    input.addEventListener("blur", () => validarCampo(input));
-    input.addEventListener("input", () => input.alertado = false);
-});
-
-
 // FASE 4
 
 // FUNÇÃO API DO IBGE
@@ -295,6 +283,62 @@ $(document).ready(function () {
         });
     }
 
+    // Evento de input para formatação em tempo real
+    $('#preco_c-moto, #preco_v-moto, #preco_c-carro, #preco_v-carro').on('input', function() {
+        // 1. Limpeza do Input: Remove caracteres não numéricos
+        let valor = $(this).val().replace(/[^\d]/g, '');
+        
+        // Ignora se estiver vazio
+        if (!valor) {
+            $(this).val('');
+            return;
+        }
+        
+        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
+        const centavos = parseInt(valor, 10);
+        const reais = Math.floor(centavos / 100);
+        const centavosFinal = centavos % 100;
+        
+        // Converte para strings para formatação
+        let parteInteira = reais.toString();
+        const parteDecimal = centavosFinal.toString().padStart(2, '0');
+        
+        // 3. Formatação da Parte Inteira
+        // Adiciona pontos a cada 3 dígitos
+        if (parteInteira.length > 3) {
+            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
+        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+        
+        // Atualiza o valor do campo
+        $(this).val(precoFormatado);
+    });
+
+    // Evento de blur para garantir formatação correta ao sair do campo
+    $('#preco_c-moto, #preco_v-moto, #preco_c-carro, #preco_v-carro').on('blur', function() {
+        let valor = $(this).val();
+        
+        // Ignora se campo estiver vazio
+        if (!valor) return;
+        
+        // Se o valor não estiver corretamente formatado, aplica a formatação
+        if (!valor.startsWith('R$')) {
+            $(this).trigger('input');
+        }
+    });
+
+    function desformatarPreco(valorFormatado) {
+    // Remove "R$", espaços e pontos, troca vírgula por ponto
+    let valorLimpo = valorFormatado
+        .replace("R$", "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+
+    return Math.round(parseFloat(valorLimpo));
+}
     // Quando o select de estados mudar de valor, carrega as cidades correspondentes
     function addCidades(selectCid, selectEst) {
         // Recupera o id do estado a partir do atributo data-id do option selecionado
@@ -309,6 +353,54 @@ $(document).ready(function () {
             carregarCidades(estadoId, selectCid);
         }
     };
+
+
+    function formatarQuilometragem(quilometragem) {
+        const km = Number(quilometragem);
+        if (isNaN(km)) {
+            return "";
+        }
+    
+        // Formata o número com separador de milhar
+        let formatted = km.toLocaleString('pt-BR', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+    
+        return `${formatted} km`;
+    }
+    
+    function extrairNumeros(valor) {
+        // Remove qualquer caractere que não seja número
+        let valorNumerico = valor.replace(/[^\d]/g, '');
+        
+        return valorNumerico;
+    }
+    
+    const camposQuilometragem = $('#quilometragem-carro, #quilometragem-moto');
+    
+    camposQuilometragem.each(function() {
+        $(this).data('valor-numerico', '');
+    });
+    
+    camposQuilometragem.on('input', function() {
+        const valorNumerico = extrairNumeros($(this).val());
+        $(this).data('valor-numerico', valorNumerico);
+        $(this).val(valorNumerico ? formatarQuilometragem(valorNumerico) : '');
+    });
+    
+    camposQuilometragem.on('blur', function() {
+        const valorNumerico = $(this).data('valor-numerico');
+        $(this).val(valorNumerico ? formatarQuilometragem(valorNumerico) : '');
+    });
+    
+    $('#form-add-veic').on('submit', function() {
+        camposQuilometragem.each(function() {
+            const valorNumerico = $(this).data('valor-numerico');
+            // Garante que o valor numérico seja enviado corretamente
+            $(this).val(valorNumerico);
+        });
+    });
 
     estadoCarroSelect.on("change", () => {
         addCidades(cidadeCarroSelect, estadoCarroSelect);
@@ -474,6 +566,18 @@ $('#btn-voltar').click(function () {
     }
 });
 
+function desformatarPreco(valorFormatado) {
+    // Remove "R$", espaços e pontos, troca vírgula por ponto
+    let valorLimpo = valorFormatado
+        .replace("R$", "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+    
+    // Converte para número e multiplica por 100 para obter centavos como inteiro
+    return Math.round(parseFloat(valorLimpo));
+}
+
 // Enviar dados (Rota POST Carro)
 
 $('#form-add-veic').on('submit', function (e) {
@@ -498,8 +602,8 @@ $('#form-add-veic').on('submit', function (e) {
             quilometragem: data.get('quilometragem-carro'),
             estado: data.get('estado-carro'),
             cidade: data.get('cidade-carro'),
-            preco_compra: data.get('preco_c-carro'),
-            preco_venda: data.get('preco_v-carro'),
+            preco_compra: desformatarPreco(data.get('preco_c-carro')),
+            preco_venda: desformatarPreco(data.get('preco_v-carro')),
             licenciado: data.get('licenciado-carro')
         }
 
@@ -578,6 +682,12 @@ $('#form-add-veic').on('submit', function (e) {
 
     if ($('#tipo-moto').hasClass('active')) {
 
+        let preco_compra = data.get('preco_c-moto');
+        let preco_venda = data.get('preco_v-moto');
+
+        alert(desformatarPreco(preco_compra))
+        alert(desformatarPreco(preco_venda))
+
         let envia = {
             placa: data.get('placa'),
             marca: data.get('marca-moto'),
@@ -598,8 +708,8 @@ $('#form-add-veic').on('submit', function (e) {
             cidade: data.get('cidade-moto'),
             alimentacao: data.get('alimentacao-moto'),
             quilometragem: data.get('quilometragem-moto'),
-            preco_compra: data.get('preco_c-moto'),
-            preco_venda: data.get('preco_v-moto')
+            preco_compra: desformatarPreco(preco_compra),
+            preco_venda: desformatarPreco(preco_venda)
         }
 
         for (const key in envia) {
