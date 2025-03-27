@@ -51,28 +51,35 @@ function alertMessage(text, type) {
 }
 
 // Função para exibir mensagem (se existir) logo ao abrir a página
-const mensagem = JSON.parse(localStorage.getItem('mensagem'));
+$(document).ready(() => {
+    const mensagem = JSON.parse(localStorage.getItem('mensagem'));
 
-if (mensagem) {
-    if (mensagem.error) {
-        alertMessage(mensagem.error, 'error');
-    }
-    if (mensagem.success) {
-        alertMessage(mensagem.success, 'success');
-    }
-}
-
-// Função para mostrar senha quando clicar no olho
-
-$('#mostrarSenha').click(function() {
-    if ($('#input-senha').attr('type') === 'password') {
-        $('#mostrarSenha').removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
-        $('#input-senha').attr('type', 'text') // Trocando o tipo de input
-    } else {
-        $('#mostrarSenha').removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho 
-        $('#input-senha').attr('type', 'password') // Trocando o tipo de input
+    if (mensagem) {
+        if (mensagem.error) {
+            alertMessage(mensagem.error, 'error');
+        }
+        if (mensagem.success) {
+            alertMessage(mensagem.success, 'success');
+        }
     }
 })
+
+// Função para mostrar senha quando clicar no olho
+function mostrarSenha(eyeIcon, input) {  
+    $(eyeIcon).click(function() {
+        if ($(input).attr('type') === 'password') {
+            $(eyeIcon).removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
+            $(input).attr('type', 'text') // Trocando o tipo de input
+        } else {
+            $(eyeIcon).removeClass('fa-eye-slash').addClass('fa-eye') // Trocando o ícone do olho 
+            $(input).attr('type', 'password') // Trocando o tipo de input
+        }
+    })
+}
+
+mostrarSenha('#mostrarSenha', '#input-senha');
+mostrarSenha('#mostrarSenhaNova', '#senha-nova');
+mostrarSenha('#mostrarRepetirSenhaNova', '#repetir-senha-nova');
 
 
 // Rota para cadastrar clientes

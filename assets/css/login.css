@@ -151,7 +151,79 @@ header {
         color: var(--cor-texto-apagado);
     }
 }
-  
+ 
+.div-button-forgot-password {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+}
+
+#forgot-password, #enviar-novamente {
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--cor-texto-apagado);
+    transition: 0.15s;
+    &:hover {
+        color: var(--roxo);
+    }
+}
+
+.icone-modal {
+    color: var(--roxo);
+    font-size: 4.5rem;
+}
+
+.mensagem-error {
+    display: none;
+    background-color: var(--error-bg);
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--error-text);
+    text-align: start;
+}
+
+.mensagem {
+    text-align: center;
+    color: var(--label);
+}
+
+#div-form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+#email-user, .mensagem {
+    max-width: 320px;
+}
+
+#formVerificarCodigo, #formAltSenha {
+    display: none;
+}
+
+#div-codigo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    & input {
+        height: 80px;
+        width: 55px;
+        border: 1px solid var(--cor-texto-apagado);
+        border-radius: 10px;
+        text-align: center;
+        outline: none;
+        font-size: 2rem;
+    }
+}
+
+
 .btn-acao {
     background-color: var(--roxo);
     color: var(--cor-bg-sec);
