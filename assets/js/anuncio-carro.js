@@ -43,6 +43,10 @@ function carregarInputs() {
     })
 }
 
+
+// Declarando a variável id_carro fora da função para usá-la depois
+let id_carro = '';
+
 $(document).ready(function() {
 
     // Recupera a query string da URL
@@ -52,9 +56,9 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(urlFrontEnd);
 
     // Obtém o valor do parâmetro 'id'
-    const id = urlParams.get('id');
+    id_carro = urlParams.get('id');
 
-    if (!id) {
+    if (!id_carro) {
         window.location.href = "veiculos.html";
     }
 
@@ -63,7 +67,7 @@ $(document).ready(function() {
         method: "post",
         url: `${BASE_URL}/buscar-carro`, // URL da API para carros
         data: JSON.stringify({
-            'id': id
+            'id': id_carro
         }),
         contentType: "application/json",
         success: function(response) {
@@ -176,4 +180,44 @@ $(document).ready(function() {
             console.log(response);
         }
     });
+})
+
+// Deletar veículo
+
+$('#deletar-veiculo').click( function () {
+    Swal.fire({
+        title: "Você tem certeza?",
+        text: "Você está prestes a deletar os dados desse veículo para sempre.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar" 
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "DELETE",
+                url: `${BASE_URL}/carro/${id_carro}`,
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                },
+                success: function(response) {
+                    // Definir mensagem de sucesso
+                    localStorage.setItem('msgCadVeic', response.success);
+        
+                    // Redirecionar para a página de perfil
+                    if (response.tipo_usuario === 1) {
+                        window.location.href = 'administrador-perfil.html';
+                    }
+                    if (response.tipo_usuario === 2) {
+                        window.location.href = 'vendedor-perfil.html';
+                    }
+                },
+                error: function(response) {
+                    alertMessage(response.responseJSON.error, 'error');
+                }
+            })
+        }
+      });
 })

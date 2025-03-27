@@ -309,62 +309,6 @@ $(document).ready(function () {
         });
     }
 
-    // Evento de input para formatação em tempo real
-    $('#preco_c-moto, #preco_v-moto, #preco_c-carro, #preco_v-carro').on('input', function() {
-        // 1. Limpeza do Input: Remove caracteres não numéricos
-        let valor = $(this).val().replace(/[^\d]/g, '');
-        
-        // Ignora se estiver vazio
-        if (!valor) {
-            $(this).val('');
-            return;
-        }
-        
-        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
-        const centavos = parseInt(valor, 10);
-        const reais = Math.floor(centavos / 100);
-        const centavosFinal = centavos % 100;
-        
-        // Converte para strings para formatação
-        let parteInteira = reais.toString();
-        const parteDecimal = centavosFinal.toString().padStart(2, '0');
-        
-        // 3. Formatação da Parte Inteira
-        // Adiciona pontos a cada 3 dígitos
-        if (parteInteira.length > 3) {
-            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        }
-        
-        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
-        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
-        
-        // Atualiza o valor do campo
-        $(this).val(precoFormatado);
-    });
-
-    // Evento de blur para garantir formatação correta ao sair do campo
-    $('#preco_c-moto, #preco_v-moto, #preco_c-carro, #preco_v-carro').on('blur', function() {
-        let valor = $(this).val();
-        
-        // Ignora se campo estiver vazio
-        if (!valor) return;
-        
-        // Se o valor não estiver corretamente formatado, aplica a formatação
-        if (!valor.startsWith('R$')) {
-            $(this).trigger('input');
-        }
-    });
-
-    function desformatarPreco(valorFormatado) {
-    // Remove "R$", espaços e pontos, troca vírgula por ponto
-    let valorLimpo = valorFormatado
-        .replace("R$", "")
-        .replace(/\s/g, "")
-        .replace(/\./g, "")
-        .replace(",", ".");
-
-    return Math.round(parseFloat(valorLimpo));
-}
     // Quando o select de estados mudar de valor, carrega as cidades correspondentes
     function addCidades(selectCid, selectEst) {
         // Recupera o id do estado a partir do atributo data-id do option selecionado
@@ -379,29 +323,6 @@ $(document).ready(function () {
             carregarCidades(estadoId, selectCid);
         }
     };
-
-
-    function formatarQuilometragem(quilometragem) {
-        const km = Number(quilometragem);
-        if (isNaN(km)) {
-            return "";
-        }
-    
-        // Formata o número com separador de milhar
-        let formatted = km.toLocaleString('pt-BR', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        });
-    
-        return `${formatted} km`;
-    }
-    
-    function extrairNumeros(valor) {
-        // Remove qualquer caractere que não seja número
-        let valorNumerico = valor.replace(/[^\d]/g, '');
-        
-        return valorNumerico;
-    }
     
     const camposQuilometragem = $('#quilometragem-carro, #quilometragem-moto');
     
@@ -592,22 +513,14 @@ $('#btn-voltar').click(function () {
     }
 });
 
-function desformatarPreco(valorFormatado) {
-    // Remove "R$", espaços e pontos, troca vírgula por ponto
-    let valorLimpo = valorFormatado
-        .replace("R$", "")
-        .replace(/\s/g, "")
-        .replace(/\./g, "")
-        .replace(",", ".");
-    
-    // Converte para número e multiplica por 100 para obter centavos como inteiro
-    return Math.round(parseFloat(valorLimpo));
-}
-
 // Enviar dados (Rota POST Carro)
 
 $('#form-add-veic').on('submit', function (e) {
     e.preventDefault();
+
+    if ($('#btn-continuar').attr('disabled')) return;
+
+    $('#btn-continuar').attr('disabled', true);
 
     let data = new FormData(this);
 
@@ -625,7 +538,7 @@ $('#form-add-veic').on('submit', function (e) {
             cambio: data.get('cambio-carro'),
             combustivel: data.get('combustivel-carro'),
             categoria: data.get('categoria-carro'),
-            quilometragem: data.get('quilometragem-carro'),
+            quilometragem: extrairNumeros(data.get('quilometragem-carro')),
             estado: data.get('estado-carro'),
             cidade: data.get('cidade-carro'),
             preco_compra: desformatarPreco(data.get('preco_c-carro')),
@@ -702,6 +615,7 @@ $('#form-add-veic').on('submit', function (e) {
             },
             error: function (response) {
                 alertMessage(`${response.responseJSON.error}`, 'error');
+                $('#btn-continuar').attr('disabled', false);
             }
         })
     }
@@ -710,9 +624,6 @@ $('#form-add-veic').on('submit', function (e) {
 
         let preco_compra = data.get('preco_c-moto');
         let preco_venda = data.get('preco_v-moto');
-
-        alert(desformatarPreco(preco_compra))
-        alert(desformatarPreco(preco_venda))
 
         let envia = {
             placa: data.get('placa'),
@@ -811,3 +722,97 @@ $('#form-add-veic').on('submit', function (e) {
         })
     }
 })
+
+
+// Funções de formatação
+
+// Evento de input para formatação em tempo real
+
+function formatarPreco(input) {
+    $(input).on('input', function() {
+        // 1. Limpeza do Input: Remove caracteres não numéricos
+        let valor = $(this).val().replace(/[^\d]/g, '');
+        
+        // Ignora se estiver vazio
+        if (!valor) {
+            $(this).val('');
+            return;
+        }
+        
+        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
+        const centavos = parseInt(valor, 10);
+        const reais = Math.floor(centavos / 100);
+        const centavosFinal = centavos % 100;
+        
+        // Converte para strings para formatação
+        let parteInteira = reais.toString();
+        const parteDecimal = centavosFinal.toString().padStart(2, '0');
+        
+        // 3. Formatação da Parte Inteira
+        // Adiciona pontos a cada 3 dígitos
+        if (parteInteira.length > 3) {
+            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
+        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+        
+        // Atualiza o valor do campo
+        $(this).val(precoFormatado);
+    })
+
+    $(input).on('blur', function() {
+        let valor = $(this).val();
+    
+        // Ignora se campo estiver vazio
+        if (!valor) return;
+        
+        // Se o valor não estiver corretamente formatado, aplica a formatação
+        if (!valor.startsWith('R$')) {
+            $(this).trigger('input');
+        }
+    })
+}
+
+// Adicionando formatação de preço
+formatarPreco('#preco_c-moto');
+formatarPreco('#preco_v-moto');
+formatarPreco('#preco_c-carro');
+formatarPreco('#preco_v-carro');
+
+// Desformatar preço
+function desformatarPreco(valorFormatado) {
+    // Remove "R$", espaços e pontos, troca vírgula por ponto
+    let valorLimpo = valorFormatado
+        .replace("R$", "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+    
+        // Aredonda o valor para duas casas decimais
+    return parseFloat(valorLimpo).toFixed(2);
+}
+
+// Formatar quilometragem
+function formatarQuilometragem(quilometragem) {
+    const km = Number(quilometragem);
+    if (isNaN(km)) {
+        return "";
+    }
+
+    // Formata o número com separador de milhar
+    let formatted = km.toLocaleString('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+    return `${formatted} km`;
+}
+
+// Extrair números
+function extrairNumeros(valor) {
+    // Remove qualquer caractere que não seja número
+    let valorNumerico = valor.replace(/[^\d]/g, '');
+    
+    return valorNumerico;
+}

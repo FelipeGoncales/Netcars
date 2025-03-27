@@ -18,7 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Owl Carousel JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Scripts das funções essenciais do Header -->
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
@@ -27,6 +28,7 @@
     <script src="assets/js/anuncio.js" defer></script>
     <!-- JS anúncio de carro -->
      <script src="assets/js/anuncio-carro.js" defer></script>
+     
 </head>
 
 <body>
@@ -153,7 +155,7 @@
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
                             <button class="salvar-btn" id="salvar-alteracoes">Salvar alterações</button>
-                            <i class="fa-solid fa-trash icon-trash"></i>
+                            <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
                         </div>
                         <div class="div-buttons cliente" id="div-button-cliente">
                             <button class="salvar-btn" id="reservar-btn">Reservar agora</button>
