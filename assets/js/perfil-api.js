@@ -382,16 +382,14 @@ $("#formEditarUsuario").on("submit", function(e) {
             $("#input-senha-atual").attr('type', 'password')
 
             // Atualizar os dados no localStorage após receber a resposta positiva
-            localStorage.setItem('dadosUser', JSON.stringify(editar));
+            localStorage.setItem('dadosUser', JSON.stringify(response.user));
 
             // Preencher as informações do menu nav caso email e nome sejam alterados
-            if (editar.email !== $("#emailNav").text()) {
-                $("#emailNav").text(editar.email);
-            }
+            $("#nome_completo_input").val(response.user.nome_completo);
+            
+            $("#emailNav").text(response.user.email);
 
-            if (editar.nome_completo !== $("#nomeNav").text()) {
-                $("#nomeNav").text(editar.nome_completo);
-            }
+            $("#nomeNav").text(response.user.nome_completo);
             
             // Exibir mensagem de sucesso
             alertMessage(response.success, 'success');
