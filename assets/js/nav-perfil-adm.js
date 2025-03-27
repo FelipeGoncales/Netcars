@@ -496,7 +496,7 @@ $('table').on('click', '.edit-icon', function () {
     $('#email-editar').val(textoEmail);
     $('#telefone-editar').val(textoTelefone);
     $('#ativo-editar').val(textoAtivo);
-    $('#tipo-user-editar').val(textoTipoUser);
+    $('#tipo-usuario-editar').val(textoTipoUser);
 
     // Rota para editar perfil
     $('#modal-editar-usuario').on("submit", function (e) {

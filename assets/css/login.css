@@ -421,6 +421,25 @@ footer {
                 align-items: center;
             }
         }
+    }    
+    
+    .mensagem {
+        max-width: 85%;
+    }
+
+    #formVerificarCodigo {
+        width: 87vw;
+    }
+
+    #div-codigo {
+        gap: 5px;
+        width: 85%;
+        & input {
+            font-size: 1.5rem;
+            width: 15%;
+            height: 50px;
+            border-radius: 7px;
+        }
     }
 }
 

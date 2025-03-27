@@ -92,23 +92,8 @@ $(document).ready(function() {
             divCarrossel.empty();
 
             for (const imagem of urlImagens) {
-                // CSS para ficar todas as fotos do mesmo tamanho
-                const divImg = $('<div></div>')
-                                .css({
-                                    "position": "relative",
-                                    "min-height": "350px",
-                                    "height": "500px",
-                                    "overflow": "hidden"
-                                })
-                divImg.append($('<img>').attr('src', imagem).css({
-                    "position": "absolute",
-                    "top": "50%",
-                    "left": "50%",
-                    "transform": "translate(-50%, -50%)",
-                    "height": "100%",
-                    "width": "auto"
-                }))
-                                
+                const divImg = $('<div></div>');
+                divImg.append($('<img>').attr('src', imagem));
                 divCarrossel.append(divImg);
             }
 

@@ -790,7 +790,7 @@ function desformatarPreco(valorFormatado) {
         .replace(",", ".");
     
         // Aredonda o valor para duas casas decimais
-    return parseFloat(valorLimpo).toFixed(2);
+    return parseFloat(valorLimpo);
 }
 
 // Formatar quilometragem

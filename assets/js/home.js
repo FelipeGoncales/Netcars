@@ -21,3 +21,37 @@ tipoVeicMoto.click(() => {
 tipoVeicCarro.click(() => {
     mudarVeiculoSelecionado(tipoVeicCarro, tipoVeicMoto, divInputPesquisarCarro, divInputPesquisarMoto);
 });
+
+// Lógica para carregar quantidade de veículos na home
+
+function formatarQntVeic(valor) {  
+    if (valor >= 1000) {
+        let qntCasasMilhar = (String(valor).length) - 3; 
+        
+        let valorString = String(valor);
+
+        let milhar = valorString.slice(0, qntCasasMilhar);
+        let centena = valorString.slice(qntCasasMilhar, valorString.length);
+        
+        return `${milhar}.${centena}`;
+    }
+
+    return valor;
+}
+
+$(document).ready(function() {
+    $.ajax({
+        url: `${BASE_URL}/qnt_veiculos`,
+        success: function(response) {
+
+            // Span de carros
+            $('#qnt-carros').text(formatarQntVeic(response.qnt_carros));
+            
+            // Span de motos
+            $('#qnt-motos').text(formatarQntVeic(response.qnt_motos));
+        },
+        error: function() {
+            alertMessage("Erro ao carregar quantidade de veículos", "error");
+        }
+    })
+})
