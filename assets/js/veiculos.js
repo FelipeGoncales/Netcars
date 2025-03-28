@@ -234,6 +234,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // add filtro visual 
 function addFiltro(tipo, nome, remove, id, tipoInput, input) {
+    if ($(input).val() === '') {            
+        // Remove o filtro de estado ao clicar no X
+        $(`#${id}`).remove();
+        
+        // Remover do informação do objeto
+        delete filtroSelect[tipo];
+
+        // Refaz a contagem de filtros aplicados
+        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+        
+        // Busca novamente os veículos sem o filtro
+        buscarVeiculos();
+        return;
+    }
+    
     let divFiltro = $('#filtros-aplic');
     let removerBtn = remove;
 
@@ -249,6 +264,14 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
                 input.find('option[value=""]').prop('selected', true);
             } else {
                 input.val("");
+            }
+            
+            // Refaz a contagem de filtros aplicados
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+            if (tipo === 'marca') {
+                // Tira o sombreamento roxo da marca selecionada
+                $(".itens-details li").removeClass("active");
             }
 
             // Aplicar filtros a API quando deletar
@@ -316,14 +339,11 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
         categoria2.css('display', 'none');
         marca2.css('display', 'none');
     
-        // Limpando os filtros
-        filtroSelect = {};
-        $("#filtros-aplic").empty();
-        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
-
         tipoVeiculo = tipoFiltro;
 
-        buscarVeiculos();
+        // Limpando os filtros
+        limparFiltros();
+
     }
 }
 divTipoCarro.click(() => {
@@ -395,6 +415,15 @@ $(".itens-details li").on("click", function() {
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');
         $('#filtro-marca').remove();
+
+        // Deletar o filtro de marca
+        delete filtroSelect['marca'];
+
+        // Fazer a recontagem do número de filtros aplicados
+        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+        
+        // Rebuscar veículos sem o filtro de marca
+        buscarVeiculos();
         return;
     }
     
@@ -411,6 +440,10 @@ $(".itens-details li").on("click", function() {
 
 $('#select-categoria-carro').on('change', function() {
     addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-carro'));
+})
+
+$('#select-categoria-moto').on('change', function() {
+    addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-moto'));
 })
 
 // Filtro Localidade
@@ -467,15 +500,41 @@ $(document).ready(function () {
     estadoSelect.on("change", () => {
         addCidades(cidadeSelect, estadoSelect);
 
+        // Deleta as informações das cidades por padrão
+        
+        // Remove o filtro visual de cidade
+        $('#cidade-filtro').remove();
+        $("#cidade-container").remove();
+
+        // Limpar filtros aplicados
+        delete filtroSelect["cidade"];
+
+        // Refaz a contagem de filtros aplicados
+        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
         const estadoId = estadoSelect.val();
         let fluxoFiltro = $('#fluxo-filtro');
         let divFiltro = $('#filtros-aplic');
 
         if (!estadoId) {
+            // Remove o filtro visual de estado
             divFiltro.find('#estado-filtro').remove();
             fluxoFiltro.find("#estado-container").remove();
+            
+            // Remove o filtro visual de cidade
             divFiltro.find('#cidade-filtro').remove();
             fluxoFiltro.find("#cidade-container").remove();
+
+            // Deleta o filtro de estado e cidade
+            delete filtroSelect['cidade'];
+            delete filtroSelect['estado'];
+
+            // Refaz a contagem de filtros aplicados
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+            // Refaz a busca
+            buscarVeiculos();
+            
             return;
         }
 
@@ -544,6 +603,24 @@ $(document).ready(function () {
 
     cidadeSelect.on("change", () => {
         const cidadeNome = cidadeSelect.val();
+
+        if (cidadeNome === "") {
+            // Remove o filtro visual de cidade
+            $('#cidade-filtro').remove();
+            $("#cidade-container").remove();
+
+            // Limpar filtros aplicados
+            delete filtroSelect["cidade"];
+
+            // Refaz a contagem de filtros aplicados
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+            // Refaz a busca
+            buscarVeiculos();
+
+            return;
+        }
+
         let fluxoFiltro = $('#fluxo-filtro');
 
         let chevronRight = $("<i></i>").addClass("fa-solid fa-chevron-right");
@@ -693,6 +770,15 @@ $("#select-ano-min").on("change", function() {
     const optionVazia = $(`<option value="">Ano máximo</option>`);
     $('#select-ano-max').append(optionVazia);
 
+    // Remove a div visual do ano max do filtro
+    $(`#ano-max`).remove();
+
+    // Remover ano max do filtro
+    delete filtroSelect["ano-max"];
+    
+    // Refaz a contagem de filtros aplicados
+    $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
     // For para adicionar todos os anos que forem maiores que ano mínimo
     for (let ano = anoMax; ano > $(this).val(); ano--) {
         const option = $(`<option value="${ano}">${ano}</option>`);
@@ -738,8 +824,16 @@ optionItems.forEach((item) => {
             }
         });
 
-        // Atualiza o filtro de cores
-        filtroSelect['cores'] = cores;
+        if (!cores.length) {
+            // Deleta o filtro de cores
+            delete filtroSelect['cores'];
+        
+            // Refaz a contagem de filtros aplicados
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+        } else {
+            // Atualiza o filtro de cores
+            filtroSelect['cores'] = cores;
+        }
         
         // Atualiza o número de filtros aplicados e chama a função para buscar veículos
         $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
