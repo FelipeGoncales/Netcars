@@ -32,6 +32,9 @@ $(document).ready(() => {
             tipoVeiculo = "carro";
         } else if (tipoVeicLocalStorage === "moto") {
             tipoVeiculo = "moto";
+            // Mostrar tipo moto como selecionado
+            alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  
+            $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'), "moto", false);
         }
 
         localStorage.removeItem('tipo-veiculo');
@@ -317,7 +320,7 @@ const divTipoMoto = $('#tipo-veic-moto');
 const tipoVeicBgSelecionado =  $('#tipo-veic-bg-selecionado');
 
 // Lógica para mudar cor do selecionado
-function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, categoria2, marca1, marca2, tipoFiltro) {
+function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, categoria2, marca1, marca2, tipoFiltro, carregar) {
     if (!tipo1.hasClass('active')) {
         if (texto === 'Carros') {
             $('#h2-titulo').text(`Carros semi-novos e usados`)
@@ -339,11 +342,16 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
         categoria2.css('display', 'none');
         marca2.css('display', 'none');
     
+        // Alterando o tipo de veículo a ser pesquisado
         tipoVeiculo = tipoFiltro;
+
+        // Lógica para funcionar quando abrir a página
+        if (!carregar) {
+            return;
+        }
 
         // Limpando os filtros
         limparFiltros();
-
     }
 }
 divTipoCarro.click(() => {
@@ -501,7 +509,7 @@ $(document).ready(function () {
         addCidades(cidadeSelect, estadoSelect);
 
         // Deleta as informações das cidades por padrão
-        
+
         // Remove o filtro visual de cidade
         $('#cidade-filtro').remove();
         $("#cidade-container").remove();
