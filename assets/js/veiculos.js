@@ -79,8 +79,8 @@ function formatarValor(valor) {
     return precoFormatado;
 }
 
-function buscarVeiculos() {
-    $.ajax({
+async function buscarVeiculos() {
+    await $.ajax({
         method: "POST",
         url: `${BASE_URL}/buscar-${tipoVeiculo}`,
         data: JSON.stringify(filtroSelect),
@@ -91,7 +91,7 @@ function buscarVeiculos() {
 
             // Obtendo a div para inserir os veículos
             const $divVeic = $("#div-veiculos");
-            $divVeic.empty();
+            await $divVeic.empty();
 
             // Obtém a lista de veículos
             const listaVeic = response.veiculos;
@@ -268,7 +268,11 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
     // Adicionar informação no objeto
 
     if ($(input).val()) {
-        filtroSelect[tipo] = $(input).val();
+        if (["preco-min", "preco-max"].includes(tipo)) {
+            filtroSelect[tipo] = desformatarPreco($(input).val());
+        } else {
+            filtroSelect[tipo] = $(input).val();
+        }
     } else {
         filtroSelect[tipo] = nome;
     }
@@ -312,7 +316,10 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
         categoria2.css('display', 'none');
         marca2.css('display', 'none');
     
-        limparFiltros();
+        // Limpando os filtros
+        filtroSelect = {};
+        $("#filtros-aplic").empty();
+        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
 
         tipoVeiculo = tipoFiltro;
 
@@ -332,10 +339,50 @@ divTipoMoto.click(() => {
 // Limpar filtros
 
 function limparFiltros() {
+    // Limpa os filtros
     filtroSelect = {};
+
+    // Limpa a div que mostra os filtros aplicados
     $("#filtros-aplic").empty();
     $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
 
+    // Tira o sombreamento roxo da marca selecionada
+    $(".itens-details li").removeClass("active");
+
+    // Desceleciona as categorias
+    $('#select-categoria-carro').val('');
+    $('#select-categoria-moto').val('');
+
+    // Desceleciona o estado
+    $('#estado-select').val('');
+
+    // Desceleciona e limpa as cidades
+    const optionVazia = $('<option value=""></option>')
+
+    $('#cidade-select').empty().append(optionVazia).attr('disabled', true);
+
+    // Limpa os preços
+    $('#input-preco-min').val('');
+    $('#input-preco-max').val('');
+
+    // Desceleciona os anos
+    $('#select-ano-min').val('');
+    $('#select-ano-max').val('');
+
+    // Fecha o acordeão de cores
+    $('.filtro-cor-header').removeClass('active');
+    $('.filtro-cor-container').removeClass('active');
+
+    // "Descheckar" as options de cores
+    const optionItems = document.querySelectorAll('.option-item');
+    optionItems.forEach((option) => {
+        const checkbox = $(option).find('input[type="checkbox"]');
+        if (checkbox.prop("checked")) {
+            checkbox.prop("checked", false);
+        }
+    })
+
+    // Refaz a busca de veículos sem nenhum filtro
     buscarVeiculos();
 }
 
@@ -353,14 +400,8 @@ $(".itens-details li").on("click", function() {
     
     $(".itens-details li").removeClass("active");
     $(this).addClass("active");
+
     let marca = $(this).attr('marca')
-    let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
-        $("#filtro-marca").remove(); // Remove o filtro de estado ao clicar no X
-        
-        // Retirar objeto do dicionário e recontar a quantidade de filtros aplicados
-        delete filtroSelect['marca'];
-        $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
-    });
 
     addFiltro("marca", marca, null, "filtro-marca", "select", $(this));
 });
@@ -467,6 +508,7 @@ $(document).ready(function () {
                 $("#estado-filtro").remove(); // Remove o filtro de estado ao clicar no X
                 $("#estado-container").remove();
                 $("#estado-select").val(""); // Limpa o estado selecionado
+
                 // Remove a classe ativa do label de cidade
                 // Limpa o select de cidade
                 $("#cidade-select").empty().prop("disabled", true).prev("label").removeClass("active"); 
@@ -482,6 +524,9 @@ $(document).ready(function () {
 
                 // ALterar o número de filtros aplicados exibidos
                 $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+                // Refaz a busca sem o filtro de cidade e estado
+                buscarVeiculos();
             });
 
             addFiltro('estado', estado.nome, removerFiltro, 'estado-filtro', null, null);
@@ -510,7 +555,6 @@ $(document).ready(function () {
             cidadeContainer = $("<span></span>").attr("id", "cidade-container");
             fluxoFiltro.append(cidadeContainer);
         }
-
             
         // Criação do ícone de remoção
         let removerFiltro = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
@@ -528,6 +572,9 @@ $(document).ready(function () {
 
             // ALterar o número de filtros aplicados exibidos
             $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+            // Refaz a busca sem o filtro de cidade
+            buscarVeiculos();
         });
 
         addFiltro("cidade", cidadeNome, removerFiltro, "cidade-filtro", null, null);
@@ -542,6 +589,71 @@ $(document).ready(function () {
 
 // Filtro Preço Mínimo
 
+// Evento de input para formatação em tempo real
+
+function formatarPreco(input) {
+    $(input).on('input', function() {
+        // 1. Limpeza do Input: Remove caracteres não numéricos
+        let valor = $(this).val().replace(/[^\d]/g, '');
+        
+        // Ignora se estiver vazio
+        if (!valor) {
+            $(this).val('');
+            return;
+        }
+        
+        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
+        const centavos = parseInt(valor, 10);
+        const reais = Math.floor(centavos / 100);
+        const centavosFinal = centavos % 100;
+        
+        // Converte para strings para formatação
+        let parteInteira = reais.toString();
+        const parteDecimal = centavosFinal.toString().padStart(2, '0');
+        
+        // 3. Formatação da Parte Inteira
+        // Adiciona pontos a cada 3 dígitos
+        if (parteInteira.length > 3) {
+            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
+        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+        
+        // Atualiza o valor do campo
+        $(this).val(precoFormatado);
+    })
+
+    $(input).on('blur', function() {
+        let valor = $(this).val();
+    
+        // Ignora se campo estiver vazio
+        if (!valor) return;
+        
+        // Se o valor não estiver corretamente formatado, aplica a formatação
+        if (!valor.startsWith('R$')) {
+            $(this).trigger('input');
+        }
+    })
+}
+
+// Desformatar preço
+function desformatarPreco(valorFormatado) {
+    // Remove "R$", espaços e pontos, troca vírgula por ponto
+    let valorLimpo = valorFormatado
+        .replace("R$", "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+    
+        // Aredonda o valor para duas casas decimais
+    return parseFloat(valorLimpo);
+}
+
+// Adicionando formatação de preço
+formatarPreco('#input-preco-min');
+formatarPreco('#input-preco-max');
+
 $("#input-preco-min").on("input", function() {
     addFiltro("preco-min", `Mín: R$${$(this).val()}`, null, "preco-min", "input", $(this));
 })
@@ -552,15 +664,45 @@ $("#input-preco-max").on("input", function() {
     addFiltro("preco-max", `Max: R$${$(this).val()}`, null, "preco-max", "input", $(this));
 })
 
+
+// Rota para adicionar as options do select ano veículo
+
+const anoMin = 1950;
+const anoMax = new Date().getFullYear();
+
+function addAnoInput(input) {
+    for (let ano = anoMax; ano >= anoMin; ano--) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        input.append(option);
+    }
+}
+// Adicionado options aos inputs
+addAnoInput($("#select-ano-min"));
+addAnoInput($("#select-ano-max"));
+
 // Filtro Ano Mínimo
 
-$("#input-ano-min").on("input", function() {
+$("#select-ano-min").on("change", function() {
     addFiltro("ano-min", `Desde ${$(this).val()}`, null, "ano-min", "input", $(this));
+
+    $('#select-ano-max').empty();
+
+    // Lógica para não permitir que ano máximo seja menor ou igual a ano mínimo
+
+    // Adicionadno input vazio
+    const optionVazia = $(`<option value="">Ano máximo</option>`);
+    $('#select-ano-max').append(optionVazia);
+
+    // For para adicionar todos os anos que forem maiores que ano mínimo
+    for (let ano = anoMax; ano > $(this).val(); ano--) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        $('#select-ano-max').append(option);
+    }
 })
 
 // Filtro Ano Máximo
 
-$("#input-ano-max").on("input", function() {
+$("#select-ano-max").on("change", function() {
     addFiltro("ano-max", `Até ${$(this).val()}`, null, "ano-max", "input", $(this));
 })
 
@@ -575,36 +717,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-const optionItems = document.querySelectorAll('.option-item');
 
 // Function para colocar as cores na lista
+const optionItems = document.querySelectorAll('.option-item');
+
 optionItems.forEach((item) => {
-    const label = $(item).find('label');
-
-    label.click(function() {
-        // Objeto com lista de cores
-        cores = [];
-
-        if (!$(this).prop("checked")) {
-            cores.push($(this).text());
-        }
-
-        // Percorre todas as cores para refazer o array
+    // Seleciona o checkbox dentro do item
+    const checkbox = $(item).find('input[type="checkbox"]');
+    
+    // Usa o evento 'change' para capturar marcação e desmarcação
+    checkbox.on("change", function() {
+        let cores = [];
+        
+        // Percorre todos os checkboxes para reconstruir a lista de cores marcadas
         optionItems.forEach((item) => {
-            // Pega o input checkbox dentro do item
-            const checkbox = $(item).find('input[type="checkbox"]');
-            // Pega a label dentro do item
-            const label = $(item).find('label');   
-
-            // Verifica se o input está checkado
-            if (checkbox.prop("checked")) {
-                // Se sim, adiciona a lista de cores
+            const cb = $(item).find('input[type="checkbox"]');
+            if (cb.prop("checked")) {
+                const label = $(item).find('label');
                 cores.push(label.text());
             }
-        })
+        });
 
+        // Atualiza o filtro de cores
         filtroSelect['cores'] = cores;
         
+        // Atualiza o número de filtros aplicados e chama a função para buscar veículos
         $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+        buscarVeiculos();
     });
 });
