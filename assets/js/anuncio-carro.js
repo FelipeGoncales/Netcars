@@ -1,3 +1,50 @@
+// Dicionário com a URL da foto da logo das marcas de carro
+const logo_carros = {
+        "Acura": "assets/img/logo-carro/acura.png",
+        "Alfa Romeo": "assets/img/logo-carro/alfa romeo.png",
+        "Aston Martin": "assets/img/logo-carro/aston martin.png",
+        "Audi": "assets/img/logo-carro/audi.png",
+        "Bentley": "assets/img/logo-carro/bentley.png",
+        "BMW": "assets/img/logo-carro/bmw.png",
+        "BYD": "assets/img/logo-carro/byd.svg",
+        "Bugatti": "assets/img/logo-carro/bugatti.png",
+        "Cadillac": "assets/img/logo-carro/cadillac.png",
+        "Chevrolet": "assets/img/logo-carro/chevrolet.jpg",
+        "Chery": "assets/img/logo-carro/chery.png",
+        "Citroën": "assets/img/logo-carro/citroen.jpg",
+        "Dodge": "assets/img/logo-carro/dodge.jpg",
+        "Ferrari": "assets/img/logo-carro/ferrari.png",
+        "Fiat": "assets/img/logo-carro/fiat.svg",
+        "Ford": "assets/img/logo-carro/ford.png",
+        "GMC": "assets/img/logo-carro/gmc.png",
+        "Honda": "assets/img/logo-carro/honda.jpg",
+        "Hyundai": "assets/img/logo-carro/hyundai.jpg",
+        "Infiniti": "assets/img/logo-carro/infiniti.png",
+        "JAC": "assets/img/logo-carro/jac.png",
+        "Jeep": "assets/img/logo-carro/jeep.svg",
+        "Kia": "assets/img/logo-carro/kia.jpg",
+        "Land Rover": "assets/img/logo-carro/land-rover.png",
+        "Lexus": "assets/img/logo-carro/lexus.jpg",
+        "Maserati": "assets/img/logo-carro/maserati.jpg",
+        "McLaren": "assets/img/logo-carro/mclaren.png",
+        "Mazda": "assets/img/logo-carro/mazda.jpg",
+        "Mini": "assets/img/logo-carro/mini.jpg",
+        "Mitsubishi": "assets/img/logo-carro/mitsubishi.svg",
+        "Nissan": "assets/img/logo-carro/nissan.png",
+        "Peugeot": "assets/img/logo-carro/peugeot.png",
+        "Porsche": "assets/img/logo-carro/porsche.png",
+        "Renault": "assets/img/logo-carro/renault.png",
+        "Rolls-Royce": "assets/img/logo-carro/rolls royce.png",
+        "Saab": "assets/img/logo-carro/saab.png",
+        "Smart": "assets/img/logo-carro/smart.jpg",
+        "Subaru": "assets/img/logo-carro/subaru.jpg",
+        "Suzuki": "assets/img/logo-carro/suzuki.svg",
+        "Tesla": "assets/img/logo-carro/tesla.jpg",
+        "Toyota": "assets/img/logo-carro/toyota.png",
+        "Volkswagen": "assets/img/logo-carro/volkswagem.png",
+        "Volvo": "assets/img/logo-carro/volvo.png"
+    }
+
 // Função para inicializar o carrossel
 function carregarOwlCarrossel() {
     var owl = $("#div-owl-carousel");
@@ -166,27 +213,8 @@ $(document).ready(function() {
             // Input preço venda
             $("#input-preco-venda").val(infoVeic.preco_venda);
 
-            // Lista de extensões que você quer tentar
-            var extensoes = ["png", "jpg", "jpeg", "svg"];
-            var fileName = `assets/img/${infoVeic.marca.toLowerCase()}`;
-            var $img = $("#logo-img");
-
-            function tentarCarregar(i) {
-                if (i >= extensoes.length) {
-                    console.error("Imagem não encontrada para a marca:", infoVeic.marca);
-                    return;
-                }
-
-                // Tenta carregar com a extensão atual
-                $img.attr('src', `${fileName}.${extensoes[i]}`)
-                    .off("error") // Remove qualquer handler anterior para evitar loops
-                    .on("error", function() {
-                        // Se der erro, tenta com a próxima extensão
-                        tentarCarregar(i + 1);
-                    });
-            }
-
-            tentarCarregar(0);
+            // Carregar foto da marca do carro 
+            $("#logo-img").attr('src', `${logo_carros[infoVeic.marca]}`);
         
             carregarInputs();
         },
