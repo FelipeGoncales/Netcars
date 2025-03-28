@@ -34,7 +34,7 @@ $(document).ready(() => {
             tipoVeiculo = "moto";
             // Mostrar tipo moto como selecionado
             alterarTipoSelecionado(divTipoMoto, divTipoCarro, '50%', 'Motos', $('#categorias-moto'),  
-            $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'), "moto", false);
+            $('#categorias-carro'), $('#marcas-moto'), $('#marcas-carro'), "moto", true);
         }
 
         localStorage.removeItem('tipo-veiculo');
@@ -346,7 +346,7 @@ function alterarTipoSelecionado(tipo1, tipo2, posicao, texto, categoria1, catego
         tipoVeiculo = tipoFiltro;
 
         // Lógica para funcionar quando abrir a página
-        if (!carregar) {
+        if (carregar) {
             return;
         }
 
