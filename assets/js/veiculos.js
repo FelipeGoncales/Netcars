@@ -57,6 +57,28 @@ function obterSiglaEstado(estadoVeiculo) {
     });
 }
 
+// Função para formatar os valores
+function formatarValor(valor) {
+    // Ignora se estiver vazio
+    if (!valor) {
+        $(this).val('');
+        return;
+    }
+    
+    // Converte o valor para float
+    const valorFloat = parseFloat(valor);
+    
+    // Separa parte inteira e decimal
+    const parteInteira = Math.floor(valorFloat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const parteDecimal = (Math.round((valorFloat - Math.floor(valorFloat)) * 100))
+                          .toString()
+                          .padStart(2, '0');
+    
+    const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+    
+    return precoFormatado;
+}
+
 function buscarVeiculos() {
     $.ajax({
         method: "POST",
@@ -113,8 +135,9 @@ function buscarVeiculos() {
                 containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
             
                 // Preço do veículo
-                let valor = parseFloat(veiculo.preco_venda).toFixed(2);
-                const h3Price = $("<h3></h3>").text(`R$${valor}`); // Valor
+
+                let valor = formatarValor(veiculo.preco_venda);
+                const h3Price = $("<h3></h3>").text(valor); // Valor
                 
                 // Url para abrir a página de anúncio
                 let urlAnuncio;
