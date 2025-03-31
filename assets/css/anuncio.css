@@ -1,15 +1,17 @@
 .div-contents-pai {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 20px;
     height: 450px;
     position: relative;
     top: -70px;
+    width: 95vw;
 }
 
 .div-content-venda {
     display: flex;
     justify-content: center;
-    align-items: left;
     text-align: left;
     flex-direction: column;
     width: fit-content;
@@ -52,6 +54,14 @@
         color: var(--cor-texto);
     }
 }
+#input-marca {
+    width: 30%;
+}
+
+#input-modelo {
+    width: 45%;
+}
+
 #mirror-input-marca { 
     color: var(--cor-texto);
 }
@@ -105,6 +115,7 @@
 /* Tirando borda preta de todos os inputs quando */
 input {
     outline: none;
+    width: 100%;
 }
 
 .input-info, .input-mirror {
@@ -507,9 +518,14 @@ main {
         }
     }
 
+    .div-content-venda {
+        width: 95vw;
+    }
+
     .div-content-vendas-pai {
         flex-direction: row;
         height: 236px;
+        width: 95vw;
         & .div-content-venda-filho {
             width: 65%;
         }
@@ -595,7 +611,12 @@ main {
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 768px) {
+    
+    #input-marca, #input-modelo {
+        width: 100%;
+    }
+
     .div-title {
         & input {    
             width: 100%;
@@ -681,6 +702,10 @@ main {
     
     .vehicleSub, #mirror-input-subtitle {
         font-size: 13px;
+    }
+
+    #input-subtitle {
+        width: 100%;
     }
     .circleLogo {
         width: 110px;
