@@ -429,17 +429,44 @@ main {
 
 .filtro-users-wrapper {
     display: flex;
-    gap: 0px;
+    gap: 10px;
     width: 100%;
     margin-bottom: 20px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cad-user {
+    background-color: var(--roxo);
+    height: 60px;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    min-width: 30%;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 10px;
+    transition: 0.2s;
+    & i {
+        font-size: 0.7rem;
+    }
+    &:hover {
+        background-color: var(--hover-roxo);
+    }
 }
 
 .search-box, .status-box, .type-box {
-    height: fit-content;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 100%;
 }
 
 .search-label, .status-label, .type-label {
@@ -458,7 +485,8 @@ main {
 
 .search-box input, .status-box select, .type-box select {
     width: 100%;
-    padding: 12px;
+    height: 100%;
+    padding: 15px;
     font-size: 0.9rem;
     border: 2px #e0e1e4 solid;
     border-radius: 8px;
@@ -494,89 +522,8 @@ main {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    & .div-input {
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        width: 420px;
-        & label {
-            font-size: 0.85rem;
-            color: var(--cor-texto-apagado);
-            font-weight: 600;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 16px;
-            background: var(--cor-bg-sec);
-            width: fit-content;
-            transition: 0.3s;
-            z-index: 1;
-            padding: 0 4px;
-            &.active {
-                color: var(--cor-texto-apagado);
-                top: 0;
-                font-size: 0.75rem;
-                z-index: 3;
-            }
-        }
-        & input, select {
-            width: 100%;
-            padding: 12px;
-            font-size: 0.9rem;
-            border: 2px #e0e1e4 solid;
-            border-radius: 8px;
-            outline: none;
-            transition: 0.3s;
-            background: transparent;
-            z-index: 2;
-            &:focus {
-                border: 2px var(--roxo) solid;
-            }
-        }
-        &:focus-within label {
-            color: var(--roxo);
-            top: 0;
-            font-size: 0.75rem;
-            z-index: 3;
-        }
-        & i {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            position: absolute;
-            right: 20px;
-            top: 54%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            z-index: 99;
-            font-size: 1.1rem;
-            color: var(--cor-texto-apagado);
-        }
-    }
 }
 
-.container-login {
-    background-color: var(--cor-bg-sec);
-    padding: 40px;
-    padding-bottom: 55px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    position: relative;
-}
-
-.title {
-    font-weight: 500;
-    font-size: 20px;
-    text-align: center;
-}
-  
 .btn-acao {
     background-color: var(--roxo);
     color: var(--cor-bg-sec);
@@ -719,36 +666,13 @@ tbody tr.tipo2 {
         margin-top: 10px;
     }
 
-    .container-login {
-        padding: 30px 20px;
-        width: 130%;
-        max-width: 130%;
-    }
-
     .div-input {
         width: 100% !important;
         max-width: 100% !important;
     }
-
-    .btn-acao {
-        width: 250% !important;
-        max-width: 250% !important;
-    }
-
-    .title {
-        font-size: 18px;
-    }
 }
 
 @media (max-width: 320px) {
-    .container-login {
-        padding: 20px 15px;
-    }
-
-    .title {
-        font-size: 16px;
-    }
-
     .div-input input, 
     .div-input select {
         padding: 10px;
@@ -834,20 +758,54 @@ tbody tr.tipo2 {
     background-color: var(--cor-bg-sec);
     padding: 40px;
     padding-bottom: 55px;
+    width: 450px;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 30px;
-    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 19;
+    & .div-input, .divButtonSubmit {
+        width: 100%;
+    }
+    & #close-modal-cad-user {
+        position: absolute;
+        cursor: pointer;
+        top: 15px;
+        right: 15px;
+        font-size: 1.3rem;
+        padding: 5px;
+    }
 }
 
 .title {
     font-weight: 500;
     font-size: 20px;
     text-align: center;
+}
+
+@media (max-width: 470px) {
+    .container-login {
+        width: 90vw;
+        gap: 20px;
+        & .div-input {
+            & input, select {
+                padding: 10px;
+            }
+        }
+        & .btn-acao {
+            font-size: 0.85rem;
+        }
+        & .title {
+            font-size: 1.2rem;
+        }
+    }
 }
   
 .btn-acao {
@@ -857,7 +815,7 @@ tbody tr.tipo2 {
     font-size: 15px;
     font-weight: 500;
     border: none;
-    width: 420px;
+    width: 100%;
     height: 50px;
     transition: 0.1s;
     cursor: pointer;
@@ -888,11 +846,6 @@ tbody tr.tipo2 {
         height: 64px;
         padding: 12px 25px;
     }
-
-    .container-login {
-        padding: 35px 25px;
-        padding-bottom: 47px;
-    }
     
     #mensagemError {
         bottom: -25px;
@@ -904,7 +857,7 @@ tbody tr.tipo2 {
         }
     }
     .btn-acao {
-        width: 300px;
+        width: 100%;
     }
 
     footer {
@@ -941,7 +894,7 @@ tbody tr.tipo2 {
         }
     }
     .btn-acao {
-        width: 250px;
+        width: 100%;
     }
 }
 
@@ -963,9 +916,6 @@ tbody tr.tipo2 {
     
     #mensagemError {
         bottom: -25px;
-    }
-    .btn-acao {
-        width: 230px;
     }
 }
 
@@ -1476,6 +1426,14 @@ footer {
 }
 
 @media (max-width: 660px) {
+    
+    .filtro-users-wrapper {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 165px;
+        margin-bottom: 115px;
+    }
+
     header {
         height: 64px;
         padding: 12px 25px;
@@ -1508,10 +1466,9 @@ footer {
         width: 100%;
     }
 
-    .filtro-users-wrapper {
-        margin-top: 70px;
-        flex-direction: column;
-        gap: 10px;
+    .cad-user {
+        padding: 20px;
+        width: 100%;
     }
 
     main .container-minha-conta {

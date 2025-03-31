@@ -173,28 +173,42 @@
             <h4>Marcas ofertadas - Carros</h4>
             <div class="div-carrossel">
                 <div class="div-marcas">
-                    <div>
-                        <img src="assets/img/logo-carro/bmw.png" alt="BMW Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-carro/byd.svg" alt="BYD Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-carro/toyota.png" alt="Toyota Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-carro/volkswagem.png" alt="Volkswagem Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-carro/fiat.svg" alt="Fiat Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-carro/ford.png" alt="Ford Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-carro/nissan.png" alt="Nissan Logo">
-                    </div>
-                </div>
+                    <a class="a-marcas-car" href="veiculos.html" marca="BMW">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/bmw.png" alt="BMW Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-car" href="veiculos.html" marca="BYD">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/byd.svg" alt="BYD Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-car" href="veiculos.html" marca="Toyota">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/toyota.png" alt="Toyota Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-car" href="veiculos.html" marca="Volkswagem">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/volkswagem.png" alt="Volkswagem Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-car" href="veiculos.html" marca="Fiat">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/fiat.svg" alt="Fiat Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-car" href="veiculos.html" marca="Ford">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/ford.png" alt="Ford Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-car" href="veiculos.html" marca="Nissan">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-carro/nissan.png" alt="Nissan Logo">
+                        </div>
+                    </a>
+                </div>                
             </div>
         </section>
 
@@ -202,26 +216,40 @@
             <h4> Principais modelos - Carros</h4>
             <div class="div-carrossel">
                 <div class="div-modelos">
-                    <div class="eletricos">
-                        <p>Elétricos</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="hatchback">
-                        <p>Hatchback</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="picapes">
-                        <p>Picapes</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="sedans">
-                        <p>Sedans</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="suvs">
-                        <p>SUVs</p>
-                        <div class="overlay"></div>
-                    </div>
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Elétrico">
+                        <div class="eletricos">
+                            <p>Elétricos</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Hatchback">
+                        <div class="hatchback">
+                            <p>Hatchback</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Picape">
+                        <div class="picapes">
+                            <p>Picapes</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Sedã">
+                        <div class="sedans">
+                            <p>Sedans</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="SUV">
+                        <div class="suvs">
+                            <p>SUVs</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -278,4 +306,61 @@
         <p id="closeModalLogin">&times;</p>
     </div>
 </body>
+<script>
+     $(document).ready(function() {
+        $(".div-modelos a").on("click", function(e) {
+            e.preventDefault(); // Previne o comportamento padrão do link
+
+            // Pega o valor da categoria que foi clicada
+            const tipo = $(this).attr("tipo-veiculo");
+
+            localStorage.setItem('tipo-veiculo', tipo);
+
+            // Pega o valor da categoria que foi clicada
+            const categoria = $(this).attr("categoria");
+
+            // Salva a categoria no localStorage
+            localStorage.setItem("filtro-categoria", categoria);
+
+            // Redireciona para a página de veículos
+            window.location.href = "veiculos.html";
+        });
+    });
+
+    $(document).ready(function() {
+    $(".div-modelos a").on("click", function(e) {
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        // Pega a categoria da moto
+        const categoria = $(this).attr("categoria");
+        const tipo = $(this).attr("tipo-veiculo");
+        
+
+        // Salva no localStorage
+        localStorage.setItem("tipo-veiculo", tipo);
+        localStorage.setItem("filtro-categoria", categoria);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";
+    });
+});
+
+$(document).ready(function() {
+    $(".a-marcas-car").on("click", function(e) {
+
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        localStorage.setItem('tipo-veiculo', 'carro');
+
+        // Pegamos o id do elemento clicado
+        const marca = $(this).attr("marca");
+
+        // Salvamos no localStorage para usar na próxima página
+        localStorage.setItem("filtro-marca", marca);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";  
+    });
+});
+</script>
 </html>
