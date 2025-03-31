@@ -234,8 +234,8 @@ h4 {
 .big-trail {
     background-image: url(../img/banner-moto/big-trail.jpg);
 }
-.supermoto {
-    background-image: url(../img/banner-moto/supermoto.jpg);
+.motocustom {
+    background-image: url(../img/banner-moto/motocustom.png);
 }
 
 /* Fim do Main */
@@ -308,6 +308,7 @@ h4 {
             width: fit-content;
         }
     }
+    
     .sec-modelos {
         width: 100%;
         & .div-carrossel {
