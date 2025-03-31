@@ -302,43 +302,43 @@
 </body>
 <script>
 
-    $(document).ready(function() {
+        $(document).ready(function() {
+            $(".div-modelos a").on("click", function(e) {
+                e.preventDefault(); // Previne o comportamento padrão do link
+
+                // Pega o valor da categoria que foi clicada
+                const tipo = $(this).attr("tipo-veiculo");
+
+                localStorage.setItem('tipo-veiculo', tipo);
+
+                // Pega o valor da categoria que foi clicada
+                const categoria = $(this).attr("categoria");
+
+                // Salva a categoria no localStorage
+                localStorage.setItem("filtro-categoria", categoria);
+
+                // Redireciona para a página de veículos
+                window.location.href = "veiculos.html";
+            });
+        });
+
+        $(document).ready(function() {
         $(".div-modelos a").on("click", function(e) {
             e.preventDefault(); // Previne o comportamento padrão do link
 
-            // Pega o valor da categoria que foi clicada
-            const tipo = $(this).attr("tipo-veiculo");
-
-            localStorage.setItem('tipo-veiculo', tipo);
-
-            // Pega o valor da categoria que foi clicada
+            // Pega a categoria da moto
             const categoria = $(this).attr("categoria");
+            const tipo = $(this).attr("tipo-veiculo");
+            
 
-            // Salva a categoria no localStorage
+            // Salva no localStorage
+            localStorage.setItem("tipo-veiculo", tipo);
             localStorage.setItem("filtro-categoria", categoria);
 
             // Redireciona para a página de veículos
             window.location.href = "veiculos.html";
         });
     });
-
-    $(document).ready(function() {
-    $(".div-modelos a").on("click", function(e) {
-        e.preventDefault(); // Previne o comportamento padrão do link
-
-        // Pega a categoria da moto
-        const categoria = $(this).attr("categoria");
-        const tipo = $(this).attr("tipo-veiculo");
-        
-
-        // Salva no localStorage
-        localStorage.setItem("tipo-veiculo", tipo);
-        localStorage.setItem("filtro-categoria", categoria);
-
-        // Redireciona para a página de veículos
-        window.location.href = "veiculos.html";
-    });
-});
 
 </script>
 </html>

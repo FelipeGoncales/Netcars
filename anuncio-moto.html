@@ -191,27 +191,41 @@
             <h4>Marcas ofertadas - Motos</h4>
             <div class="div-carrossel">
                 <div class="div-marcas">
-                    <div>
-                        <img src="assets/img/logo-moto/bmw.png" alt="BMW Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-moto/yamaha.png" alt="Yamaha Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-moto/honda.png" alt="Honda Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-moto/ducati.png" alt="Ducati Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-moto/kawasaki.png" alt="Kawasaki Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-moto/suzuki.svg" alt="Suzuki Logo">
-                    </div>
-                    <div>
-                        <img src="assets/img/logo-moto/harley_davidson.jpg" alt="Harley Davidson Logo">
-                    </div>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="BMW">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/bmw.png" alt="BMW Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="Yamaha">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/yamaha.png" alt="Yamaha Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="Honda">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/honda.png" alt="Honda Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="Ducati">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/ducati.png" alt="Ducati Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="Kawasaki">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/kawasaki.png" alt="Kawasaki Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="Suzuki">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/suzuki.svg" alt="Suzuki Logo">
+                        </div>
+                    </a>
+                    <a class="a-marcas-moto" href="veiculos.html" marca="Harley-Davidson">
+                        <div class="div-marca">
+                            <img src="assets/img/logo-moto/harley_davidson.jpg" alt="Harley Davidson Logo">
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -220,26 +234,40 @@
             <h4>Principais modelos - Motos</h4>
             <div class="div-carrossel">
                 <div class="div-modelos">
-                    <div class="esportivas">
-                        <p>Esportivas</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="street">
-                        <p>Street</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="trail">
-                        <p>Trail</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="big-trail">
-                        <p>Big Trail</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="supermoto">
-                        <p>Supermoto</p>
-                        <div class="overlay"></div>
-                    </div>
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Esportiva">
+                        <div class="esportivas">
+                            <p>Esportivas</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Street">
+                        <div class="street">
+                            <p>Street</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Trail">
+                        <div class="trail">
+                            <p>Trail</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Big Trail">
+                        <div class="big-trail">
+                            <p>Big Trail</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto"categoria="Custom">
+                        <div class="motocustom">
+                            <p>Custom</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -297,5 +325,61 @@
     </div>
 
 </body>
+<script>
+         $(document).ready(function() {
+        $(".div-modelos a").on("click", function(e) {
+            e.preventDefault(); // Previne o comportamento padrão do link
 
+            // Pega o valor da categoria que foi clicada
+            const tipo = $(this).attr("tipo-veiculo");
+
+            localStorage.setItem('tipo-veiculo', tipo);
+
+            // Pega o valor da categoria que foi clicada
+            const categoria = $(this).attr("categoria");
+
+            // Salva a categoria no localStorage
+            localStorage.setItem("filtro-categoria", categoria);
+
+            // Redireciona para a página de veículos
+            window.location.href = "veiculos.html";
+        });
+    });
+
+    $(document).ready(function() {
+    $(".div-modelos a").on("click", function(e) {
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        // Pega a categoria da moto
+        const categoria = $(this).attr("categoria");
+        const tipo = $(this).attr("tipo-veiculo");
+        
+
+        // Salva no localStorage
+        localStorage.setItem("tipo-veiculo", tipo);
+        localStorage.setItem("filtro-categoria", categoria);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";
+    });
+});
+
+$(document).ready(function() {
+    $(".a-marcas-moto").on("click", function(e) {
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        localStorage.setItem('tipo-veiculo', 'moto');
+
+        // Pegamos o id do elemento clicado
+        const marca = $(this).attr("marca");
+
+        // Salvamos no localStorage para usar na próxima página
+        localStorage.setItem("filtro-marca", marca);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";  
+    });
+});
+
+</script>
 </html>
