@@ -216,11 +216,12 @@ main {
     display: flex;
     justify-self: center;
     align-items: center;
+    width: 100%;
     & p, input{
         color: var(--cor-texto) !important;
         font-size: 30px !important;
         font-weight: 500 !important;
-        max-width: 200px;
+        width: 100%;
     }
 }
 

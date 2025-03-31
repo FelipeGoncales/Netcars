@@ -90,6 +90,128 @@ function carregarInputs() {
     })
 }
 
+// Evento de input para formatação em tempo real
+
+function formatarPreco(input) {
+    $(input).on('input', function() {
+        // 1. Limpeza do Input: Remove caracteres não numéricos
+        let valor = $(this).val().replace(/[^\d]/g, '');
+        
+        // Ignora se estiver vazio
+        if (!valor) {
+            $(this).val('');
+            return;
+        }
+        
+        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
+        const centavos = parseInt(valor, 10);
+        const reais = Math.floor(centavos / 100);
+        const centavosFinal = centavos % 100;
+        
+        // Converte para strings para formatação
+        let parteInteira = reais.toString();
+        const parteDecimal = centavosFinal.toString().padStart(2, '0');
+        
+        // 3. Formatação da Parte Inteira
+        // Adiciona pontos a cada 3 dígitos
+        if (parteInteira.length > 3) {
+            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
+        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+        
+        // Atualiza o valor do campo
+        $(this).val(precoFormatado);
+    })
+
+    $(input).on('blur', function() {
+        let valor = $(this).val();
+    
+        // Ignora se campo estiver vazio
+        if (!valor) return;
+        
+        // Se o valor não estiver corretamente formatado, aplica a formatação
+        if (!valor.startsWith('R$')) {
+            $(this).trigger('input');
+        }
+    })
+}
+
+// Desformatar preço
+function desformatarPreco(valorFormatado) {
+    // Remove "R$", espaços e pontos, troca vírgula por ponto
+    let valorLimpo = valorFormatado
+        .replace("R$", "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+    
+        // Aredonda o valor para duas casas decimais
+    return parseFloat(valorLimpo);
+}
+
+// Função para formatar os valores
+function formatarValor(valor) {
+    // Ignora se estiver vazio
+    if (!valor) {
+        $(this).val('');
+        return;
+    }
+    
+    // Converte o valor para float
+    const valorFloat = parseFloat(valor);
+    
+    // Separa parte inteira e decimal
+    const parteInteira = Math.floor(valorFloat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const parteDecimal = (Math.round((valorFloat - Math.floor(valorFloat)) * 100))
+                          .toString()
+                          .padStart(2, '0');
+    
+    const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+    
+    return precoFormatado;
+}
+
+// Formatar quilometragem
+function formatarQuilometragem(quilometragem) {
+    const km = Number(quilometragem);
+    if (isNaN(km)) {
+        return "";
+    }
+
+    // Formata o número com separador de milhar
+    let formatted = km.toLocaleString('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+    return `${formatted} km`;
+}
+
+function formatarQuilometragemInput(input) {
+    $(input).on('input', function() {
+        formatarQuilometragem($(input).val());
+    })
+
+    $(input).on('blur', function() {
+        formatarQuilometragem($(input).val());
+    })
+}
+
+formatarQuilometragem("#input-quilometragem");
+
+// Extrair números
+function extrairNumeros(valor) {
+    // Remove qualquer caractere que não seja número
+    let valorNumerico = valor.replace(/[^\d]/g, '');
+    
+    return valorNumerico;
+}
+
+// Adicionando formatação de preço
+formatarPreco('#input-preco-venda');
+
 
 // Declarando a variável id_carro fora da função para usá-la depois
 let id_carro = '';
@@ -189,7 +311,7 @@ $(document).ready(function() {
             $('#input-ano').val(`${infoVeic.ano_modelo}/${infoVeic.ano_fabricacao}`);
 
             // Input quilometragem
-            $('#input-quilometragem').val(`${infoVeic.quilometragem} Km`);
+            $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
 
             // Input câmbio
             $('#input-cambio').val(infoVeic.cambio);
@@ -212,7 +334,7 @@ $(document).ready(function() {
             $('#input-placa').val(ultimoCaracterPlaca)
 
             // Input preço venda
-            $("#input-preco-venda").val(infoVeic.preco_venda);
+            $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
 
             // Carregar foto da marca do carro 
             $("#logo-img").attr('src', `${logo_carros[infoVeic.marca]}`);
