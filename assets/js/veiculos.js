@@ -23,6 +23,28 @@ let filtroSelect = {};
 
 let tipoVeiculo = "";
 
+// Aplicar filtro caso exista no local storage
+$(document).ready(() => {
+    const marcaSelecionada = localStorage.getItem("filtro-marca");
+
+    if (marcaSelecionada) {
+        // Itera por cada li da lista de marcas
+        $('.itens-details li').each(function() {
+            let $li = $(this);  // Garante que $li seja um objeto jQuery
+            $li.removeClass('active');  // Remove classe "active" de todos
+
+            // Se o atributo 'marca' do li for igual à marca selecionada...
+            if ($li.attr('marca') === marcaSelecionada) {
+                $li.addClass('active');  // Adiciona a classe "active" ao elemento correspondente
+                addFiltro("marca", marcaSelecionada, null, "filtro-marca", "select", $li);
+            }
+        });
+
+        // Limpa a marca salva para evitar que o filtro se repita
+        localStorage.removeItem("filtro-marca");
+    }
+});
+
 // Carregar veículos ao abrir a página
 $(document).ready(() => {
     const tipoVeicLocalStorage = localStorage.getItem('tipo-veiculo');
