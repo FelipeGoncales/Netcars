@@ -436,6 +436,15 @@ main {
     border-radius: 500px;
 }
 
+#fecharFiltro {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px;
+    color: var(--cor-texto);
+    font-size: 1.7rem;
+}
 
 /* Responsivo Computador */
 @media (max-width: 1520px) {
@@ -492,12 +501,6 @@ main {
 
     #fecharFiltro {
         display: flex;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        padding: 5px;
-        color: var(--cor-texto);
-        font-size: 1.7rem;
     }
 
     .div-qts-anuncios {
