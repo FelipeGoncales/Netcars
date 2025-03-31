@@ -433,8 +433,248 @@ let fasesMoto = [
     $('#fase-5')
 ]
 
+// VALIDAÇÃO FASES
+
+// Função para validar campos na ordem visual
+function validarCamposEmOrdem(containerId) {
+    const campos = $(`#${containerId} .div-input:visible`).find('input, select').toArray();
+    
+    for(let campo of campos) {
+        const $campo = $(campo);
+        const label = $campo.prev('label').text().replace('*', '').trim();
+        
+        // Validação básica de preenchimento
+        if (!$campo.val()) {
+            alertMessage(`${label} é obrigatório!`, 'error');
+            $campo.focus();
+            return false;
+        }
+        
+        // Validações específicas por tipo de campo
+        if (campo.id === 'placa' && !validarPlaca()) return false;
+        
+        if (campo.id.includes('renavam') && !renavamValidity[campo.id]) {
+            alertMessage(`${label} inválido!`, 'error');
+            $campo.focus();
+            return false;
+        }
+        
+        if (campo.id.includes('preco') && isNaN(desformatarPreco($campo.val()))) {
+            alertMessage(`${label} inválido!`, 'error');
+            $campo.focus();
+            return false;
+        }
+    }
+    return true;
+}
+
+// Funções de validação para cada fase
+function validarFaseAtiva() {
+    const faseAtiva = $('.container-branco > div:visible').attr('id');
+    
+    switch(faseAtiva) {
+        case 'fase-1':
+            if (!validarCamposEmOrdem('fase-1')) return false;
+            return validarPlaca();
+
+        case 'fase-2':
+            if (!$('.veiculo.active').length) {
+                alertMessage("Selecione o tipo de veículo!", 'error');
+                return false;
+            }
+            return true;
+
+        case 'fase-3-carro':
+            return validarCamposEmOrdem('fase-3-carro');
+
+        case 'fase-3-moto':
+            return validarCamposEmOrdem('fase-3-moto');
+
+        case 'fase-4-carro':
+            return validarCamposEmOrdem('fase-4-carro');
+
+        case 'fase-4-moto':
+            return validarCamposEmOrdem('fase-4-moto');
+
+        case 'fase-5-moto':
+            return validarCamposEmOrdem('fase-5-moto');
+
+        case 'fase-5':
+            if ($('#preview-container').children().length < 3) {
+                alertMessage("Adicione pelo menos 3 imagens!", 'error');
+                return false;
+            }
+            return true;
+
+        default:
+            return true;
+    }
+}
+
+function validarFase1() {
+    const placa = $('#placa').val();
+    if (!placa) {
+        alertMessage("Preencha a placa do veículo!", 'error');
+        return false;
+    }
+    return validarPlaca(); // Já existe a função de validação da placa
+}
+
+function validarFase2() {
+    const tipoSelecionado = $('.veiculo.active').length;
+    if (!tipoSelecionado) {
+        alertMessage("Selecione o tipo de veículo!", 'error');
+        return false;
+    }
+    return true;
+}
+
+function validarFase3() {
+    let valido = true;
+    const tipoVeiculo = $('.veiculo.active').attr('id');
+    
+    // Validações comuns para ambos
+    const elementos = tipoVeiculo === 'tipo-carro' ? {
+        marca: '#marca-carro',
+        modelo: '#modelo-carro',
+        anoModelo: '#ano-modelo-carro',
+        anoFabricacao: '#ano-fabricacao-carro',
+        cor: '#cor-carro',
+        renavam: '#renavam-carro'
+    } : {
+        marca: '#marca-moto',
+        modelo: '#modelo-moto',
+        anoModelo: '#ano-modelo-moto',
+        anoFabricacao: '#ano-fabricacao-moto',
+        cor: '#cor-moto',
+        renavam: '#renavam-moto'
+    };
+
+    // Verificar cada campo
+    Object.entries(elementos).forEach(([campo, seletor]) => {
+        const valor = $(seletor).val();
+        if (!valor) {
+            alertMessage(`Preencha o campo ${campo.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, 'error');
+            valido = false;
+        }
+    });
+
+    // Validação específica do RENAVAM
+    if (tipoVeiculo === 'tipo-carro' && !renavamValidity['renavam-carro']) {
+        alertMessage("RENAVAM inválido para o carro!", 'error');
+        valido = false;
+    }
+    if (tipoVeiculo === 'tipo-moto' && !renavamValidity['renavam-moto']) {
+        alertMessage("RENAVAM inválido para a moto!", 'error');
+        valido = false;
+    }
+
+    return valido;
+}
+
+function validarFase4() {
+    const tipoVeiculo = $('.veiculo.active').attr('id');
+    let valido = true;
+
+    if (tipoVeiculo === 'tipo-carro') {
+        if (!validarNumeros($('#quilometragem-carro'), 'quilometragem')) return false;
+        if (!validarNumeros($('#preco_c-carro'), 'preço de compra')) return false;
+        if (!validarNumeros($('#preco_v-carro'), 'preço de venda')) return false;
+    }
+
+    if (tipoVeiculo === 'tipo-carro') {
+        const elementos = {
+            cambio: '#cambio-carro',
+            combustivel: '#combustivel-carro',
+            categoria: '#categoria-carro',
+            quilometragem: '#quilometragem-carro',
+            estado: '#estado-carro',
+            cidade: '#cidade-carro',
+            precoCompra: '#preco_c-carro',
+            precoVenda: '#preco_v-carro'
+        };
+
+        Object.entries(elementos).forEach(([campo, seletor]) => {
+            const valor = $(seletor).val();
+            if (!valor) {
+                alertMessage(`Preencha o campo ${campo.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, 'error');
+                valido = false;
+            }
+        });
+    } else {
+        const elementos = {
+            marchas: '#marchas-moto',
+            partida: '#partida-moto',
+            tipoMotor: '#tipo-motor-moto',
+            cilindradas: '#cilindradas-moto',
+            freio: '#freio-moto',
+            refrigeracao: '#refrigeracao-moto',
+            estado: '#estado-moto',
+            cidade: '#cidade-moto'
+        };
+
+        Object.entries(elementos).forEach(([campo, seletor]) => {
+            const valor = $(seletor).val();
+            if (!valor) {
+                alertMessage(`Preencha o campo ${campo.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, 'error');
+                valido = false;
+            }
+        });
+    }
+
+    return valido;
+}
+
+function validarFase5Moto() {
+    let valido = true;
+    const elementos = {
+        alimentacao: '#alimentacao-moto',
+        quilometragem: '#quilometragem-moto',
+        precoCompra: '#preco_c-moto',
+        precoVenda: '#preco_v-moto'
+    };
+
+    if (!validarNumeros($('#quilometragem-moto'), 'quilometragem')) return false;
+    if (!validarNumeros($('#preco_c-moto'), 'preço de compra')) return false;
+    if (!validarNumeros($('#preco_v-moto'), 'preço de venda')) return false;
+
+    Object.entries(elementos).forEach(([campo, seletor]) => {
+        const valor = $(seletor).val();
+        if (!valor) {
+            alertMessage(`Preencha o campo ${campo.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, 'error');
+            valido = false;
+        }
+    });
+
+    return valido;
+}
+
+function validarFase5() {
+    const files = $('#upload-imagem')[0].files;
+    if (files.length < 3) {
+        alertMessage("Adicione pelo menos 3 imagens!", 'error');
+        return false;
+    }
+    return true;
+}
+
+function validarNumeros(input, campo) {
+    const valor = extrairNumeros(input.val());
+    if (!valor || isNaN(valor)) {
+        alertMessage(`Valor inválido para ${campo}!`, 'error');
+        return false;
+    }
+    return true;
+}
+
+// FIM VALIDAÇÃO FASES
+
 // Função para continuar
 $('#btn-continuar').click(function () {
+    if (!validarFaseAtiva()) {
+        return;
+    }
+
     let divCerta = -1;
 
     function continuarBtn(listaFases) {
@@ -755,6 +995,7 @@ function formatarPreco(input) {
         // Ignora se estiver vazio
         if (!valor) {
             $(this).val('');
+            $(this).css('border-color', '#AEAEBA');
             return;
         }
         
@@ -776,21 +1017,30 @@ function formatarPreco(input) {
         // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
         const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
         
-        // Atualiza o valor do campo
-        $(this).val(precoFormatado);
-    })
+        // 5. Validação e atualização
+        if (isNaN(centavos)) {
+            $(this).css('border-color', '#ff0000');
+        } else {
+            $(this).css('border-color', '#0bd979');
+            $(this).val(precoFormatado);
+        }
+    });
 
     $(input).on('blur', function() {
         let valor = $(this).val();
-    
-        // Ignora se campo estiver vazio
-        if (!valor) return;
         
-        // Se o valor não estiver corretamente formatado, aplica a formatação
-        if (!valor.startsWith('R$')) {
+        // Força formatação se estiver incompleto
+        if (!valor.startsWith('R$') || valor === 'R$ ') {
             $(this).trigger('input');
         }
-    })
+        
+        // Validação final
+        const valorNumerico = $(this).val().replace(/[^\d]/g, '');
+        if (!valorNumerico || isNaN(valorNumerico)) {
+            $(this).css('border-color', '#ff0000');
+            alertMessage("Preço inválido!", 'error');
+        }
+    });
 }
 
 // Adicionando formatação de preço
