@@ -137,3 +137,8 @@ $('#pagina-veiculo-moto').click(function() {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })
+
+$('#footer-motos-usadas').click(function() {
+    localStorage.setItem('tipo-veiculo', 'moto');
+    window.location.href = "veiculos.html";
+})
