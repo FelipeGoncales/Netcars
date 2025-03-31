@@ -1,49 +1,49 @@
 // Dicionário com a URL da foto da logo das marcas de carro
 const logo_carros = {
-        "Acura": "assets/img/logo-carro/acura.png",
-        "Alfa Romeo": "assets/img/logo-carro/alfa romeo.png",
-        "Aston Martin": "assets/img/logo-carro/aston martin.png",
-        "Audi": "assets/img/logo-carro/audi.png",
-        "Bentley": "assets/img/logo-carro/bentley.png",
-        "BMW": "assets/img/logo-carro/bmw.png",
-        "BYD": "assets/img/logo-carro/byd.svg",
-        "Bugatti": "assets/img/logo-carro/bugatti.png",
-        "Cadillac": "assets/img/logo-carro/cadillac.png",
-        "Chevrolet": "assets/img/logo-carro/chevrolet.jpg",
-        "Chery": "assets/img/logo-carro/chery.png",
-        "Citroën": "assets/img/logo-carro/citroen.jpg",
-        "Dodge": "assets/img/logo-carro/dodge.jpg",
-        "Ferrari": "assets/img/logo-carro/ferrari.png",
-        "Fiat": "assets/img/logo-carro/fiat.svg",
-        "Ford": "assets/img/logo-carro/ford.png",
-        "GMC": "assets/img/logo-carro/gmc.png",
-        "Honda": "assets/img/logo-carro/honda.jpg",
-        "Hyundai": "assets/img/logo-carro/hyundai.jpg",
-        "Infiniti": "assets/img/logo-carro/infiniti.png",
-        "JAC": "assets/img/logo-carro/jac.png",
-        "Jeep": "assets/img/logo-carro/jeep.svg",
-        "Kia": "assets/img/logo-carro/kia.jpg",
-        "Land Rover": "assets/img/logo-carro/land-rover.png",
-        "Lexus": "assets/img/logo-carro/lexus.jpg",
-        "Maserati": "assets/img/logo-carro/maserati.jpg",
-        "McLaren": "assets/img/logo-carro/mclaren.png",
-        "Mazda": "assets/img/logo-carro/mazda.jpg",
-        "Mini": "assets/img/logo-carro/mini.jpg",
-        "Mitsubishi": "assets/img/logo-carro/mitsubishi.svg",
-        "Nissan": "assets/img/logo-carro/nissan.png",
-        "Peugeot": "assets/img/logo-carro/peugeot.png",
-        "Porsche": "assets/img/logo-carro/porsche.png",
-        "Renault": "assets/img/logo-carro/renault.png",
-        "Rolls-Royce": "assets/img/logo-carro/rolls royce.png",
-        "Saab": "assets/img/logo-carro/saab.png",
-        "Smart": "assets/img/logo-carro/smart.jpg",
-        "Subaru": "assets/img/logo-carro/subaru.jpg",
-        "Suzuki": "assets/img/logo-carro/suzuki.svg",
-        "Tesla": "assets/img/logo-carro/tesla.jpg",
-        "Toyota": "assets/img/logo-carro/toyota.png",
-        "Volkswagen": "assets/img/logo-carro/volkswagem.png",
-        "Volvo": "assets/img/logo-carro/volvo.png"
-    }
+    "Acura": "assets/img/logo-carro/acura.png",
+    "Alfa Romeo": "assets/img/logo-carro/alfa romeo.png",
+    "Aston Martin": "assets/img/logo-carro/aston martin.png",
+    "Audi": "assets/img/logo-carro/audi.png",
+    "Bentley": "assets/img/logo-carro/bentley.png",
+    "BMW": "assets/img/logo-carro/bmw.png",
+    "BYD": "assets/img/logo-carro/byd.svg",
+    "Bugatti": "assets/img/logo-carro/bugatti.png",
+    "Cadillac": "assets/img/logo-carro/cadillac.png",
+    "Chevrolet": "assets/img/logo-carro/chevrolet.jpg",
+    "Chery": "assets/img/logo-carro/chery.png",
+    "Citroën": "assets/img/logo-carro/citroen.jpg",
+    "Dodge": "assets/img/logo-carro/dodge.jpg",
+    "Ferrari": "assets/img/logo-carro/ferrari.png",
+    "Fiat": "assets/img/logo-carro/fiat.svg",
+    "Ford": "assets/img/logo-carro/ford.png",
+    "GMC": "assets/img/logo-carro/gmc.png",
+    "Honda": "assets/img/logo-carro/honda.jpg",
+    "Hyundai": "assets/img/logo-carro/hyundai.jpg",
+    "Infiniti": "assets/img/logo-carro/infiniti.png",
+    "JAC": "assets/img/logo-carro/jac.png",
+    "Jeep": "assets/img/logo-carro/jeep.svg",
+    "Kia": "assets/img/logo-carro/kia.jpg",
+    "Land Rover": "assets/img/logo-carro/land-rover.png",
+    "Lexus": "assets/img/logo-carro/lexus.jpg",
+    "Maserati": "assets/img/logo-carro/maserati.jpg",
+    "McLaren": "assets/img/logo-carro/mclaren.png",
+    "Mazda": "assets/img/logo-carro/mazda.jpg",
+    "Mini": "assets/img/logo-carro/mini.jpg",
+    "Mitsubishi": "assets/img/logo-carro/mitsubishi.svg",
+    "Nissan": "assets/img/logo-carro/nissan.png",
+    "Peugeot": "assets/img/logo-carro/peugeot.png",
+    "Porsche": "assets/img/logo-carro/porsche.png",
+    "Renault": "assets/img/logo-carro/renault.png",
+    "Rolls-Royce": "assets/img/logo-carro/rolls royce.png",
+    "Saab": "assets/img/logo-carro/saab.png",
+    "Smart": "assets/img/logo-carro/smart.jpg",
+    "Subaru": "assets/img/logo-carro/subaru.jpg",
+    "Suzuki": "assets/img/logo-carro/suzuki.svg",
+    "Tesla": "assets/img/logo-carro/tesla.jpg",
+    "Toyota": "assets/img/logo-carro/toyota.png",
+    "Volkswagen": "assets/img/logo-carro/volkswagem.png",
+    "Volvo": "assets/img/logo-carro/volvo.png"
+}
 
 // Função para inicializar o carrossel
 function carregarOwlCarrossel() {
@@ -93,44 +93,44 @@ function carregarInputs() {
 // Evento de input para formatação em tempo real
 
 function formatarPreco(input) {
-    $(input).on('input', function() {
+    $(input).on('input', function () {
         // 1. Limpeza do Input: Remove caracteres não numéricos
         let valor = $(this).val().replace(/[^\d]/g, '');
-        
+
         // Ignora se estiver vazio
         if (!valor) {
             $(this).val('');
             return;
         }
-        
+
         // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
         const centavos = parseInt(valor, 10);
         const reais = Math.floor(centavos / 100);
         const centavosFinal = centavos % 100;
-        
+
         // Converte para strings para formatação
         let parteInteira = reais.toString();
         const parteDecimal = centavosFinal.toString().padStart(2, '0');
-        
+
         // 3. Formatação da Parte Inteira
         // Adiciona pontos a cada 3 dígitos
         if (parteInteira.length > 3) {
             parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
-        
+
         // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
         const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
-        
+
         // Atualiza o valor do campo
         $(this).val(precoFormatado);
     })
 
-    $(input).on('blur', function() {
+    $(input).on('blur', function () {
         let valor = $(this).val();
-    
+
         // Ignora se campo estiver vazio
         if (!valor) return;
-        
+
         // Se o valor não estiver corretamente formatado, aplica a formatação
         if (!valor.startsWith('R$')) {
             $(this).trigger('input');
@@ -146,8 +146,8 @@ function desformatarPreco(valorFormatado) {
         .replace(/\s/g, "")
         .replace(/\./g, "")
         .replace(",", ".");
-    
-        // Aredonda o valor para duas casas decimais
+
+    // Aredonda o valor para duas casas decimais
     return parseFloat(valorLimpo);
 }
 
@@ -158,18 +158,18 @@ function formatarValor(valor) {
         $(this).val('');
         return;
     }
-    
+
     // Converte o valor para float
     const valorFloat = parseFloat(valor);
-    
+
     // Separa parte inteira e decimal
     const parteInteira = Math.floor(valorFloat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     const parteDecimal = (Math.round((valorFloat - Math.floor(valorFloat)) * 100))
-                          .toString()
-                          .padStart(2, '0');
-    
+        .toString()
+        .padStart(2, '0');
+
     const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
-    
+
     return precoFormatado;
 }
 
@@ -190,13 +190,13 @@ function formatarQuilometragem(quilometragem) {
 }
 
 function formatarQuilometragemInput(input) {
-    $(input).on('input', function() {
+    $(input).on('input', function () {
         let valorNumerico = extrairNumeros($(input).val());
         $(input).val(formatarQuilometragem(valorNumerico));
     })
 
-    $(input).on('blur', function() {
-        let valorNumerico = extrairNumeros($(input).val()); 
+    $(input).on('blur', function () {
+        let valorNumerico = extrairNumeros($(input).val());
         $(input).val(formatarQuilometragem(valorNumerico));
     })
 }
@@ -207,7 +207,7 @@ formatarQuilometragemInput("#input-quilometragem");
 function extrairNumeros(valor) {
     // Remove qualquer caractere que não seja número
     let valorNumerico = valor.replace(/[^\d]/g, '');
-    
+
     return valorNumerico;
 }
 
@@ -218,7 +218,7 @@ formatarPreco('#input-preco-venda');
 // Declarando a variável id_carro fora da função para usá-la depois
 let id_carro = '';
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Recupera a query string da URL
     const urlFrontEnd = window.location.search;
@@ -241,7 +241,7 @@ $(document).ready(function() {
             'id': id_carro
         }),
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
             const infoVeic = response.veiculos[0];
             const divCarrossel = $('#div-owl-carousel');
 
@@ -256,7 +256,7 @@ $(document).ready(function() {
 
             // Verifica se urlImagens existe e é iterável
             if (!urlImagens || !Array.isArray(urlImagens)) {
-                window.location.href = "veiculos.html";    
+                window.location.href = "veiculos.html";
             }
 
             // Limpa o conteúdo atual do carrossel
@@ -265,12 +265,12 @@ $(document).ready(function() {
             for (const imagem of urlImagens) {
                 // CSS para ficar todas as fotos do mesmo tamanho
                 const divImg = $('<div></div>')
-                                .css({
-                                    "position": "relative",
-                                    "min-height": "350px",
-                                    "min-height": "400px",
-                                    "overflow": "hidden"
-                                })
+                    .css({
+                        "position": "relative",
+                        "min-height": "350px",
+                        "min-height": "400px",
+                        "overflow": "hidden"
+                    })
                 divImg.append($('<img>').attr('src', imagem).css({
                     "position": "absolute",
                     "top": "50%",
@@ -280,7 +280,7 @@ $(document).ready(function() {
                     "min-width": "100%",
                     "width": "auto"
                 }))
-                                
+
                 divCarrossel.append(divImg);
             }
 
@@ -294,7 +294,7 @@ $(document).ready(function() {
             // Input versao
             $("#input-subtitle").val(infoVeic.versao);
             // Input cidade - estado
-            $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
+            $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function (estados) {
                 let siglaEstado = '';
 
                 for (estado of estados) {
@@ -326,7 +326,7 @@ $(document).ready(function() {
 
             // Input cor
             $('#input-cor').val(infoVeic.cor);
-            
+
             // Input licenciado
             let textoLicenciado = infoVeic.licenciado == 1 ? "Sim" : "Não";
             $('#input-licenciado').val(textoLicenciado);
@@ -340,10 +340,10 @@ $(document).ready(function() {
 
             // Carregar foto da marca do carro 
             $("#logo-img").attr('src', `${logo_carros[infoVeic.marca]}`);
-        
+
             carregarInputs();
         },
-        error: function(response) {
+        error: function (response) {
             alert('Erro ao carregar os dados do veículo.');
             console.log(response);
         }
@@ -352,7 +352,7 @@ $(document).ready(function() {
 
 // Deletar veículo
 
-$('#deletar-veiculo').click( function () {
+$('#deletar-veiculo').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Você está prestes a deletar os dados desse veículo para sempre.",
@@ -361,8 +361,8 @@ $('#deletar-veiculo').click( function () {
         confirmButtonColor: "#0bd979",
         cancelButtonColor: "#f71445",
         confirmButtonText: "Confirmar",
-        cancelButtonText: "Cancelar" 
-      }).then((result) => {
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "DELETE",
@@ -370,10 +370,10 @@ $('#deletar-veiculo').click( function () {
                 headers: {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                 },
-                success: function(response) {
+                success: function (response) {
                     // Definir mensagem de sucesso
                     localStorage.setItem('msgCadVeic', response.success);
-        
+
                     // Redirecionar para a página de perfil
                     if (response.tipo_usuario === 1) {
                         window.location.href = 'administrador-perfil.html';
@@ -382,10 +382,64 @@ $('#deletar-veiculo').click( function () {
                         window.location.href = 'vendedor-perfil.html';
                     }
                 },
-                error: function(response) {
+                error: function (response) {
                     alertMessage(response.responseJSON.error, 'error');
                 }
             })
         }
-      });
+    });
+})
+
+// Reservar carro
+
+$('#reservar-btn').click(function () {
+    Swal.fire({
+        title: "Deseja reservar esse veículo?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const id_usuario = JSON.parse(localStorage.getItem('dadosUser')).id_usuario;
+
+            const envia = {
+                "id_usuario": id_usuario,
+                "id_veiculo": id_carro,
+                "tipo_veiculo": "carro"
+            }
+
+            $.ajax({
+                method: "POST",
+                url: `${BASE_URL}/reservar_veiculo`,
+                contentType: 'application/json',
+                data: JSON.stringify(envia),
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: response.success,
+                        icon: "success",
+                        confirmButtonColor: "#0bd979",
+                        confirmButtonText: "Confirmar"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem('msgReserva', 'Veja as informações da sua reserva clicando em "Reservas".')
+                            window.location.href = "cliente-perfil.html";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        title: "Algo deu errado...",
+                        text: response.responseJSON.error,
+                        icon: "error"
+                    })
+                }
+            })
+        }
+    });
 })

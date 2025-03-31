@@ -44,11 +44,11 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+const mensagemLocalStorage = localStorage.getItem('msgReserva');
 
-if (mensagemCadVeic) {
-    alertMessage(mensagemCadVeic, 'success');
-    localStorage.removeItem('msgCadVeic')
+if (mensagemLocalStorage) {
+    alertMessage(mensagemLocalStorage, 'success');
+    localStorage.removeItem('msgReserva')
 };
 
 // Fazer o nav funcionar
