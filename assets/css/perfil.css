@@ -1400,16 +1400,28 @@ footer {
 }
 /* Fim do Footer */
 
+/* Responsivo Tabela */
+
+@media (max-width: 1360px) {
+    .table-container {
+        width: 100%;
+    }
+    
+    .container-edit-user {
+        width: 90%;
+    }
+
+    .search-box, .status-box, .type-box {
+        width: 33%;
+    }
+}
+
 
 /* Responsivo Header - Footer */
 
 @media (max-width: 980px) {
     footer {
         z-index: 9;
-    }
-
-    .table-container {
-        width: 90vw;
     }
 
     header {
@@ -1491,6 +1503,11 @@ footer {
     .alertMessage {
         max-width: 85vw;
     }
+
+    .search-box, .status-box, .type-box {
+        width: 100%;
+    }
+
     .filtro-users-wrapper {
         margin-top: 70px;
         flex-direction: column;
