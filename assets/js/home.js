@@ -55,3 +55,40 @@ $(document).ready(function() {
         }
     })
 })
+
+// Salvar marca veículo no Local Storage
+
+$(document).ready(function() {
+    $(".a-marcas-car").on("click", function(e) {
+
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        localStorage.setItem('tipo-veiculo', 'carro');
+
+        // Pegamos o id do elemento clicado
+        const marca = $(this).attr("marca");
+
+        // Salvamos no localStorage para usar na próxima página
+        localStorage.setItem("filtro-marca", marca);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";  
+    });
+});
+
+$(document).ready(function() {
+    $(".a-marcas-moto").on("click", function(e) {
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        localStorage.setItem('tipo-veiculo', 'moto');
+
+        // Pegamos o id do elemento clicado
+        const marca = $(this).attr("marca");
+
+        // Salvamos no localStorage para usar na próxima página
+        localStorage.setItem("filtro-marca", marca);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";  
+    });
+});
