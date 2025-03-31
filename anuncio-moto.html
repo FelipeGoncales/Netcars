@@ -18,13 +18,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Owl Carousel JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Scripts das funções essenciais do Header -->
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
-
+    <!-- JS de anúncio -->
     <script src="assets/js/anuncio.js" defer></script>
+    <!-- JS anúncio de carro -->
+    <script src="assets/js/anuncio-moto.js" defer></script>
 </head>
 
 <body>
@@ -51,7 +54,7 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li id="nav-veiculos"><a href="">Veículos</a></li>
+                    <li id="nav-veiculos"><a href="veiculos.html">Veículos</a></li>
                     <li><a href="#footer">Contato</a></li>
                 </ul>
             </nav>
@@ -69,26 +72,19 @@
     <main>
         <div class="div-pai-banner-venda">
             <div class="container">
-                <div class="owl-carousel">
-                    <div> <img src="assets/img/bmwS1000RR/img1.jpg" alt="Imagem 1"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img2.jpg" alt="Imagem 2"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img3.jpg" alt="Imagem 3"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img4.jpg" alt="Imagem 4"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img5.jpg" alt="Imagem 5"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img6.jpg" alt="Imagem 6"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img7.jpg" alt="Imagem 7"> </div>
-                    <div> <img src="assets/img/bmwS1000RR/img8.jpg" alt="Imagem 8"> </div>
-                </div>
+                <!-- Carrossel de imagens -->
+                <div class="owl-carousel" id="div-owl-carousel"></div>
+
                 <button id="nextSlide" class="botao-carrossel right"><i class="fa-solid fa-arrow-right"></i></button>
                 <button id="prevSlide" class="botao-carrossel left"><i class="fa-solid fa-arrow-left"></i></button>
             </div>
             <div class="div-contents-pai">
                 <div class="div-content-venda">
-                    <div class="div-title-venda">  
+                    <div class="div-title-venda">
                         <div class="div-title">
-                            <input class="vehicleTitle marca" value="BMW" id="input-marca" disabled></input>
+                            <input class="vehicleTitle marca" id="input-marca" disabled></input>
                             <p class="input-mirror" id="mirror-input-marca"></p>
-                            <input class="vehicleTitle modelo" value="S 1000 RR" id="input-modelo" disabled></input>
+                            <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
                             <p class="input-mirror" id="mirror-input-modelo"></p>
                             <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
                         </div>
@@ -96,7 +92,7 @@
                     <form class="itens-details">
                         <div>
                             <p class="itemcss-title">Cidade</p>
-                            <input class="input-info" type="text" value="Birigui-SP" id="input-cidade" disabled>
+                            <input class="input-info" type="text" id="input-cidade" disabled>
                             <p class="input-mirror" id="mirror-input-cidade"></p>
                         </div>
                         <div class="li-vazia-1"></div>
@@ -104,62 +100,62 @@
                         <div class="li-vazia-3"></div>
                         <div>
                             <p class="itemcss-title">Ano</p>
-                            <input class="input-info" value="2023/2023" id="input-ano" disabled />
+                            <input class="input-info" id="input-ano" disabled />
                             <p class="input-mirror" id="mirror-input-ano"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Marchas</p>
-                            <input class="input-info" value="6" id="input-marchas" disabled />
+                            <input class="input-info" id="input-marchas" disabled />
                             <p class="input-mirror" id="mirror-input-marchas"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Quilometragem</p>
-                            <input class="input-info" value="16.000" id="input-km" disabled />
-                            <p class="input-mirror" id="mirror-input-km"></p>
+                            <input class="input-info" id="input-quilometragem" disabled />
+                            <p class="input-mirror" id="mirror-input-quilometragem"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Tipo de motor</p>
-                            <input class="input-info" value="4 tempos" id="input-tipo-motor" disabled />
+                            <input class="input-info" id="input-tipo-motor" disabled />
                             <p class="input-mirror" id="mirror-input-tipo-motor"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Cor</p>
-                            <input class="input-info" value="Preto-Laranja" id="input-cor" disabled />
+                            <input class="input-info" id="input-cor" disabled />
                             <p class="input-mirror" id="mirror-input-cor"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Refrigeração</p>
-                            <input class="input-info" value="Líquida" id="input-refrigeracao" disabled />
+                            <input class="input-info" id="input-refrigeracao" disabled />
                             <p class="input-mirror" id="mirror-input-refrigeracao"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Categoria</p>
-                            <input class="input-info" value="Esportiva" id="input-categoria" disabled />
+                            <input class="input-info" id="input-categoria" disabled />
                             <p class="input-mirror" id="mirror-input-categoria"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Cilindrada</p>
-                            <input class="input-info" value="1000" id="input-cilindrada" disabled />
+                            <input class="input-info" id="input-cilindrada" disabled />
                             <p class="input-mirror" id="mirror-input-cilindrada"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Partida</p>
-                            <input class="input-info" value="Elétrica" id="input-partida" disabled />
+                            <input class="input-info" id="input-partida" disabled />
                             <p class="input-mirror" id="mirror-input-partida"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Freio dianteiro/traseiro</p>
-                            <input class="input-info" value="disco/disco" id="input-freio" disabled />
+                            <input class="input-info" id="input-freio" disabled />
                             <p class="input-mirror" id="mirror-input-freio"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Alimentação</p>
-                            <input class="input-info" value="Injeção eletrônica" id="input-alimentacao" disabled />
+                            <input class="input-info" id="input-alimentacao" disabled />
                             <p class="input-mirror" id="mirror-input-alimentacao"></p>
                         </div>
                         <div>
                             <p class="itemcss-title">Final da Placa</p>
-                            <input class="input-info" value="6" disabled id="input-placa" />
+                            <input class="input-info" disabled id="input-placa" />
                             <p class="input-mirror" id="mirror-input-placa"></p>
                         </div>
                     </form>
@@ -167,9 +163,8 @@
                 <div class="div-content-vendas-pai">
                     <div class="div-content-venda-filho">
                         <div class="div-preco">
-                            <p>R$</p>
-                            <input class="input-info" type="text" value="94.000" id="input-preco-venda">
-                            <p class="input-mirror" id="mirror-input-preco-venda"></p>
+                            <input class="input-info" type="text" id="input-preco-venda">
+                            <p class="input-mirror" id="mirror-input-preco-venda">21.900</p>
                         </div>
 
                         <p class="mensagem" id="mensagem-user">Gostou do veículo? Reserve já!</p>
@@ -177,7 +172,7 @@
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
                             <button class="salvar-btn" id="salvar-alteracoes">Salvar alterações</button>
-                            <i class="fa-solid fa-trash icon-trash"></i>
+                            <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
                         </div>
                         <div class="div-buttons cliente" id="div-button-cliente">
                             <button class="salvar-btn" id="reservar-btn">Reservar agora</button>
@@ -185,7 +180,7 @@
                     </div>
                     <div class="div-content-venda-filho2">
                         <div class="circleLogo">
-                            <img src="assets/img/ford.png" alt="Ford Logo">
+                            <img src="" id="logo-img" alt="Logo Marca">
                         </div>
                     </div>
                 </div>
@@ -301,31 +296,6 @@
         <p id="closeModalLogin">&times;</p>
     </div>
 
-    <!-- Script de inicialização -->
-    <script>
-       document.addEventListener("DOMContentLoaded", function () {
-            var owl = $(".owl-carousel");
-
-            owl.owlCarousel({
-                loop: false,
-                nav: false,
-                margin: 10,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 2 },
-                    1000: { items: 3 }
-                }
-            });
-
-            document.getElementById("nextSlide").addEventListener("click", function () {
-                owl.trigger("next.owl.carousel");
-            });
-
-            document.getElementById("prevSlide").addEventListener("click", function () {
-                owl.trigger("prev.owl.carousel");
-            });
-        });
-    </script>
 </body>
 
 </html>

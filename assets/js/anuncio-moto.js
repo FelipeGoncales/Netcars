@@ -1,3 +1,29 @@
+// Dicionário com a URL da foto da logo das marcas de moto
+
+const logo_motos = {
+    "Aprilia": "assets/img/logo-moto/aprilla.png",
+    "Benelli": "assets/img/logo-moto/benelli.png",
+    "BMW": "assets/img/logo-moto/bmw.png",
+    "Bultaco": "assets/img/logo-moto/bultaco.png",
+    "Cagiva": "assets/img/logo-moto/cagiva.png",
+    "CFMoto": "assets/img/logo-moto/cfmoto.png",
+    "Ducati": "assets/img/logo-moto/ducati.png",
+    "Haojue": "assets/img/logo-moto/haojue.png",
+    "Harley-Davidson": "assets/img/logo-moto/harley_davidson.jpg",
+    "Honda": "assets/img/logo-moto/honda.png",
+    "Husqvarna": "assets/img/logo-moto/husqvarna.png",
+    "Indian Motorcycle": "assets/img/logo-moto/indian-motorcycles.png",
+    "Kawasaki": "assets/img/logo-moto/kawasaki.png",
+    "KTM": "assets/img/logo-moto/ktm.png",
+    "Kymco": "assets/img/logo-moto/kymco.png",
+    "MV Agusta": "assets/img/logo-moto/mv-agusta.png",
+    "Royal Enfield": "assets/img/logo-moto/royal-enfield.png",
+    "Suzuki": "assets/img/logo-moto/suzuki.svg",
+    "Triumph": "assets/img/logo-moto/triumph.png",
+    "Yamaha": "assets/img/logo-moto/yamaha.png",
+    "Zero Motorcycles": "assets/img/logo-moto/zero-motorcycles.png"
+}
+
 // Função para inicializar o carrossel
 function carregarOwlCarrossel() {
     var owl = $("#div-owl-carousel");
@@ -16,8 +42,8 @@ function carregarOwlCarrossel() {
         margin: 10,
         responsive: {
             0: { items: 1 },
-            600: { items: 2 },
-            1000: { items: 3 }
+            560: { items: 2 },
+            1240: { item: 3 }
         }
     });
 
@@ -43,11 +69,134 @@ function carregarInputs() {
     })
 }
 
+// Evento de input para formatação em tempo real
 
-// Declarando a variável id_carro fora da função para usá-la depois
-let id_carro = '';
+function formatarPreco(input) {
+    $(input).on('input', function () {
+        // 1. Limpeza do Input: Remove caracteres não numéricos
+        let valor = $(this).val().replace(/[^\d]/g, '');
 
-$(document).ready(function() {
+        // Ignora se estiver vazio
+        if (!valor) {
+            $(this).val('');
+            return;
+        }
+
+        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
+        const centavos = parseInt(valor, 10);
+        const reais = Math.floor(centavos / 100);
+        const centavosFinal = centavos % 100;
+
+        // Converte para strings para formatação
+        let parteInteira = reais.toString();
+        const parteDecimal = centavosFinal.toString().padStart(2, '0');
+
+        // 3. Formatação da Parte Inteira
+        // Adiciona pontos a cada 3 dígitos
+        if (parteInteira.length > 3) {
+            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
+        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+
+        // Atualiza o valor do campo
+        $(this).val(precoFormatado);
+    })
+
+    $(input).on('blur', function () {
+        let valor = $(this).val();
+
+        // Ignora se campo estiver vazio
+        if (!valor) return;
+
+        // Se o valor não estiver corretamente formatado, aplica a formatação
+        if (!valor.startsWith('R$')) {
+            $(this).trigger('input');
+        }
+    })
+}
+
+// Desformatar preço
+function desformatarPreco(valorFormatado) {
+    // Remove "R$", espaços e pontos, troca vírgula por ponto
+    let valorLimpo = valorFormatado
+        .replace("R$", "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+
+    // Aredonda o valor para duas casas decimais
+    return parseFloat(valorLimpo);
+}
+
+// Função para formatar os valores
+function formatarValor(valor) {
+    // Ignora se estiver vazio
+    if (!valor) {
+        $(this).val('');
+        return;
+    }
+
+    // Converte o valor para float
+    const valorFloat = parseFloat(valor);
+
+    // Separa parte inteira e decimal
+    const parteInteira = Math.floor(valorFloat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const parteDecimal = (Math.round((valorFloat - Math.floor(valorFloat)) * 100))
+        .toString()
+        .padStart(2, '0');
+
+    const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+
+    return precoFormatado;
+}
+
+// Formatar quilometragem
+function formatarQuilometragem(quilometragem) {
+    const km = Number(quilometragem);
+    if (isNaN(km)) {
+        return "";
+    }
+
+    // Formata o número com separador de milhar
+    let formatted = km.toLocaleString('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+    return `${formatted} km`;
+}
+
+function formatarQuilometragemInput(input) {
+    $(input).on('input', function () {
+        let valorNumerico = extrairNumeros($(input).val());
+        $(input).val(formatarQuilometragem(valorNumerico));
+    })
+
+    $(input).on('blur', function () {
+        let valorNumerico = extrairNumeros($(input).val());
+        $(input).val(formatarQuilometragem(valorNumerico));
+    })
+}
+
+formatarQuilometragemInput("#input-quilometragem");
+
+// Extrair números
+function extrairNumeros(valor) {
+    // Remove qualquer caractere que não seja número
+    let valorNumerico = valor.replace(/[^\d]/g, '');
+
+    return valorNumerico;
+}
+
+// Adicionando formatação de preço
+formatarPreco('#input-preco-venda');
+
+// Declarando a variável id_moto fora da função para usá-la depois
+let id_moto = '';
+
+$(document).ready(function () {
 
     // Recupera a query string da URL
     const urlFrontEnd = window.location.search;
@@ -56,21 +205,24 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(urlFrontEnd);
 
     // Obtém o valor do parâmetro 'id'
-    id_carro = urlParams.get('id');
+    id_moto = urlParams.get('id');
 
-    if (!id_carro) {
+    if (!id_moto) {
         window.location.href = "veiculos.html";
     }
 
     // Carregar dados do veículo
     $.ajax({
         method: "post",
-        url: `${BASE_URL}/buscar-carro`, // URL da API para carros
+        url: `${BASE_URL}/buscar-moto`, // URL da API para motos
         data: JSON.stringify({
-            'id': id_carro
+            'id': id_moto
         }),
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
+
+            console.log(response);
+
             const infoVeic = response.veiculos[0];
             const divCarrossel = $('#div-owl-carousel');
 
@@ -85,15 +237,31 @@ $(document).ready(function() {
 
             // Verifica se urlImagens existe e é iterável
             if (!urlImagens || !Array.isArray(urlImagens)) {
-                window.location.href = "veiculos.html";    
+                window.location.href = "veiculos.html";
             }
 
             // Limpa o conteúdo atual do carrossel
             divCarrossel.empty();
 
             for (const imagem of urlImagens) {
-                const divImg = $('<div></div>');
-                divImg.append($('<img>').attr('src', imagem));
+                // CSS para ficar todas as fotos do mesmo tamanho
+                const divImg = $('<div></div>')
+                    .css({
+                        "position": "relative",
+                        "min-height": "350px",
+                        "min-height": "400px",
+                        "overflow": "hidden"
+                    })
+                divImg.append($('<img>').attr('src', imagem).css({
+                    "position": "absolute",
+                    "top": "50%",
+                    "left": "50%",
+                    "transform": "translate(-50%, -50%)",
+                    "height": "100%",
+                    "min-width": "100%",
+                    "width": "auto"
+                }))
+
                 divCarrossel.append(divImg);
             }
 
@@ -104,10 +272,9 @@ $(document).ready(function() {
             $("#input-marca").val(infoVeic.marca);
             // Input modelo
             $("#input-modelo").val(infoVeic.modelo);
-            // Input versao
-            $("#input-subtitle").val(infoVeic.versao);
+            
             // Input cidade - estado
-            $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function(estados) {
+            $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function (estados) {
                 let siglaEstado = '';
 
                 for (estado of estados) {
@@ -125,57 +292,49 @@ $(document).ready(function() {
             // Input ano
             $('#input-ano').val(`${infoVeic.ano_modelo}/${infoVeic.ano_fabricacao}`);
 
-            // Input quilometragem
-            $('#input-quilometragem').val(`${infoVeic.quilometragem} Km`);
+            // Input marchas
+            $('#input-marchas').val(infoVeic.marchas);
 
-            // Input câmbio
-            $('#input-cambio').val(infoVeic.cambio);
+            // Input quilometragem
+            $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
+
+            // Input tipo motor
+            $('#input-tipo-motor').val(infoVeic.tipo_motor);
+
+            // Input cor
+            $('#input-cor').val(infoVeic.cor);
+
+            // Input refrigeração
+            $('#input-refrigeracao').val(infoVeic.refrigeracao);
 
             // Input categoria
             $('#input-categoria').val(infoVeic.categoria);
 
-            // Input combustível
-            $('#input-combustivel').val(infoVeic.combustivel);
+            // Input cilindrada
+            $('#input-cilindrada').val(infoVeic.cilindrada);
 
-            // Input cor
-            $('#input-cor').val(infoVeic.cor);
-            
-            // Input licenciado
-            let textoLicenciado = infoVeic.licenciado == 1 ? "Sim" : "Não";
-            $('#input-licenciado').val(textoLicenciado);
+            // Input partida
+            $('#input-partida').val(infoVeic.partida);
+
+            // Input freio
+            $('#input-freio').val(infoVeic.freio_dianteiro_traseiro);
+
+            // Input alimentacao
+            $('#input-alimentacao').val(infoVeic.alimentacao);
 
             // Input final placa
             const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
             $('#input-placa').val(ultimoCaracterPlaca)
 
             // Input preço venda
-            $("#input-preco-venda").val(infoVeic.preco_venda);
+            $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
 
-            // Lista de extensões que você quer tentar
-            var extensoes = ["png", "jpg", "jpeg", "svg"];
-            var fileName = `assets/img/${infoVeic.marca.toLowerCase()}`;
-            var $img = $("#logo-img");
+            // Carregar foto da marca da moto
+            $("#logo-img").attr('src', `${logo_motos[infoVeic.marca]}`);
 
-            function tentarCarregar(i) {
-                if (i >= extensoes.length) {
-                    console.error("Imagem não encontrada para a marca:", infoVeic.marca);
-                    return;
-                }
-
-                // Tenta carregar com a extensão atual
-                $img.attr('src', `${fileName}.${extensoes[i]}`)
-                    .off("error") // Remove qualquer handler anterior para evitar loops
-                    .on("error", function() {
-                        // Se der erro, tenta com a próxima extensão
-                        tentarCarregar(i + 1);
-                    });
-            }
-
-            tentarCarregar(0);
-        
             carregarInputs();
         },
-        error: function(response) {
+        error: function (response) {
             alert('Erro ao carregar os dados do veículo.');
             console.log(response);
         }
@@ -184,7 +343,7 @@ $(document).ready(function() {
 
 // Deletar veículo
 
-$('#deletar-veiculo').click( function () {
+$('#deletar-veiculo').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Você está prestes a deletar os dados desse veículo para sempre.",
@@ -193,19 +352,19 @@ $('#deletar-veiculo').click( function () {
         confirmButtonColor: "#0bd979",
         cancelButtonColor: "#f71445",
         confirmButtonText: "Confirmar",
-        cancelButtonText: "Cancelar" 
-      }).then((result) => {
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "DELETE",
-                url: `${BASE_URL}/carro/${id_carro}`,
+                url: `${BASE_URL}/moto/${id_moto}`,
                 headers: {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                 },
-                success: function(response) {
+                success: function (response) {
                     // Definir mensagem de sucesso
                     localStorage.setItem('msgCadVeic', response.success);
-        
+
                     // Redirecionar para a página de perfil
                     if (response.tipo_usuario === 1) {
                         window.location.href = 'administrador-perfil.html';
@@ -214,10 +373,10 @@ $('#deletar-veiculo').click( function () {
                         window.location.href = 'vendedor-perfil.html';
                     }
                 },
-                error: function(response) {
+                error: function (response) {
                     alertMessage(response.responseJSON.error, 'error');
                 }
             })
         }
-      });
+    })
 })
