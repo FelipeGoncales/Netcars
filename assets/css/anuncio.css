@@ -611,15 +611,12 @@ main {
     }
 }
 
-<<<<<<< HEAD
 @media (max-width: 768px) {
     
     #input-marca, #input-modelo {
         width: 100%;
     }
 
-=======
->>>>>>> abf4103f1caf6bc4fd57e1e9c9f5b8ccfd3cc572
     .div-title {
         & input {    
             width: 100%;
