@@ -163,6 +163,8 @@
                             <option value="Off-road">Off-road</option>
                             <option value="Naked">Naked</option>
                             <option value="Touring">Touring</option>
+                            <option value="Trail">Trail</option>
+                            <option value="Big Trail">Big Trail</option>
                         </select>
                     </div>
                 </div>
@@ -313,4 +315,23 @@
         <p id="closeModalLogin">&times;</p>
     </div>
 </body>
+    <script>
+        $(document).ready(function() {
+        const tipoVeiculo = localStorage.getItem("tipo-veiculo");
+        const categoriaSelecionada = localStorage.getItem("filtro-categoria");
+
+        if (categoriaSelecionada) {
+
+            if(tipoVeiculo === "carro") {
+                // Define o valor do <select> de acordo com a categoria salva
+                $('#select-categoria-carro').val(categoriaSelecionada).change();  // Muda a opção do select
+                localStorage.removeItem("filtro-categoria");  // Limpa o filtro após o uso
+            } else {
+                $("#select-categoria-moto").val(categoriaSelecionada).change();
+                localStorage.removeItem("filtro-categoria");
+            }
+        }
+    });
+
+    </script>
 </html>

@@ -126,26 +126,40 @@
             <h4> Principais modelos - Carros</h4>
             <div class="div-carrossel">
                 <div class="div-modelos">
-                    <div class="eletricos">
-                        <p>Elétricos</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="hatchback">
-                        <p>Hatchback</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="picapes">
-                        <p>Picapes</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="sedans">
-                        <p>Sedans</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="suvs">
-                        <p>SUVs</p>
-                        <div class="overlay"></div>
-                    </div>
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Elétrico">
+                        <div class="eletricos">
+                            <p>Elétricos</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Hatchback">
+                        <div class="hatchback">
+                            <p>Hatchback</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Picape">
+                        <div class="picapes">
+                            <p>Picapes</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="Sedã">
+                        <div class="sedans">
+                            <p>Sedans</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                
+                    <a href="veiculos.html" tipo-veiculo="carro" categoria="SUV">
+                        <div class="suvs">
+                            <p>SUVs</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -197,26 +211,40 @@
             <h4>Principais modelos - Motos</h4>
             <div class="div-carrossel">
                 <div class="div-modelos">
-                    <div class="esportivas">
-                        <p>Esportivas</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="street">
-                        <p>Street</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="trail">
-                        <p>Trail</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="big-trail">
-                        <p>Big Trail</p>
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="supermoto">
-                        <p>Supermoto</p>
-                        <div class="overlay"></div>
-                    </div>
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Esportiva">
+                        <div class="esportivas">
+                            <p>Esportivas</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Street">
+                        <div class="street">
+                            <p>Street</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Trail">
+                        <div class="trail">
+                            <p>Trail</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Big Trail">
+                        <div class="big-trail">
+                            <p>Big Trail</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="veiculos.html" tipo-veiculo="moto"categoria="Custom">
+                        <div class="motocustom">
+                            <p>Custom</p>
+                            <div class="overlay"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -272,4 +300,45 @@
         <p id="closeModalLogin">&times;</p>
     </div>
 </body>
+<script>
+
+    $(document).ready(function() {
+        $(".div-modelos a").on("click", function(e) {
+            e.preventDefault(); // Previne o comportamento padrão do link
+
+            // Pega o valor da categoria que foi clicada
+            const tipo = $(this).attr("tipo-veiculo");
+
+            localStorage.setItem('tipo-veiculo', tipo);
+
+            // Pega o valor da categoria que foi clicada
+            const categoria = $(this).attr("categoria");
+
+            // Salva a categoria no localStorage
+            localStorage.setItem("filtro-categoria", categoria);
+
+            // Redireciona para a página de veículos
+            window.location.href = "veiculos.html";
+        });
+    });
+
+    $(document).ready(function() {
+    $(".div-modelos a").on("click", function(e) {
+        e.preventDefault(); // Previne o comportamento padrão do link
+
+        // Pega a categoria da moto
+        const categoria = $(this).attr("categoria");
+        const tipo = $(this).attr("tipo-veiculo");
+        
+
+        // Salva no localStorage
+        localStorage.setItem("tipo-veiculo", tipo);
+        localStorage.setItem("filtro-categoria", categoria);
+
+        // Redireciona para a página de veículos
+        window.location.href = "veiculos.html";
+    });
+});
+
+</script>
 </html>
