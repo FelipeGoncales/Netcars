@@ -136,12 +136,18 @@ $('#forgot-password').click( function() {
                         }, 1000);
                     },
                     error: function(response) {
+                        // Reabilita o botão para poder clicar novamente
+                        $('#enviar-novamente').prop('disabled', false); // Reabilita o botão
+
                         alertMessage(response.responseJSON.error, 'error');
                     }
                 })
             })
         },
         error: function(response) {
+            // Reabilita o botão para poder clicar novamente
+            $(this).prop('disabled', false);
+
             alertMessage(response.responseJSON.error, 'error');
         }
     })

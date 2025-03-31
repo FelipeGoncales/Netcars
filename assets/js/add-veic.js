@@ -520,6 +520,7 @@ $('#form-add-veic').on('submit', function (e) {
 
     if ($('#btn-continuar').attr('disabled')) return;
 
+    // Desabilita o botão
     $('#btn-continuar').attr('disabled', true);
 
     let data = new FormData(this);
@@ -548,6 +549,8 @@ $('#form-add-veic').on('submit', function (e) {
 
         for (const key in envia) {
             if (!envia[key]) {
+                // Reabilita o botão
+                $('#btn-continuar').attr('disabled', false);
                 alertMessage(`Informações faltando: ${key}.`, 'error');
                 return;
             }
@@ -558,11 +561,15 @@ $('#form-add-veic').on('submit', function (e) {
         const files = $('#upload-imagem')[0].files; // Obter os arquivos
 
         if (!files.length) {
+            // Reabilita o botão
+            $('#btn-continuar').attr('disabled', false);
             alertMessage(`Informações faltando: Imagens.`, 'error');
             return;
         }
 
         if (files.length < 3) {
+            // Reabilita o botão
+            $('#btn-continuar').attr('disabled', false);
             alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
             return;
         }
@@ -609,13 +616,17 @@ $('#form-add-veic').on('submit', function (e) {
                         }
                     },
                     error: function (response) {
+                        // Reabilita o botão
+                        $('#btn-continuar').attr('disabled', false);
                         alertMessage(`${response.responseJSON.error}`, 'error');
                     }
                 });
             },
             error: function (response) {
-                alertMessage(`${response.responseJSON.error}`, 'error');
+                // Reabilita o botão
                 $('#btn-continuar').attr('disabled', false);
+
+                alertMessage(`${response.responseJSON.error}`, 'error');
             }
         })
     }
@@ -651,6 +662,8 @@ $('#form-add-veic').on('submit', function (e) {
 
         for (const key in envia) {
             if (!envia[key]) {
+                // Reabilita o botão
+                $('#btn-continuar').attr('disabled', false);
                 alertMessage(`Informações faltando: ${key}.`, 'error');
                 return;
             }
@@ -661,11 +674,15 @@ $('#form-add-veic').on('submit', function (e) {
         const files = $('#upload-imagem')[0].files; // Obter os arquivos
 
         if (!files.length) {
+            // Reabilita o botão
+            $('#btn-continuar').attr('disabled', false);
             alertMessage(`Informações faltando: Imagens.`, 'error');
             return;
         }
 
         if (files.length < 3) {
+            // Reabilita o botão
+            $('#btn-continuar').attr('disabled', false);
             alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
             return;
         }
@@ -717,6 +734,8 @@ $('#form-add-veic').on('submit', function (e) {
                 });
             },
             error: function (response) {
+                // Reabilita o botão
+                $('#btn-continuar').attr('disabled', false);
                 alertMessage(`${response.responseJSON.error}`, 'error');
             }
         })
