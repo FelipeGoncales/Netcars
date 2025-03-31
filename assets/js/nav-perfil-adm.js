@@ -89,7 +89,6 @@ function selecionarA(clicado) {
 function exibirRelatorio(tipo) {
     // Esconder todas as telas de relatório
     $('#minha-conta').css('display', 'none');
-    $('#cadUser').css('display', 'none');
     $('#editUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
 
@@ -109,7 +108,6 @@ $(document).ready(function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'flex');
-        $('#cadUser').css('display', 'none');
         $('#editUser').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
@@ -122,7 +120,6 @@ $(document).ready(function () {
         const elementoClicado = this;
         if ($(elementoClicado).hasClass('selecionado')) {
             $('#minha-conta').css('display', 'flex');
-            $('#cadUser').css('display', 'none');
             $('#editUser').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
             $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
@@ -142,24 +139,10 @@ $(document).ready(function () {
         }
     });
 
-    $("#link_cadUser").on("click", function () {
-        const elementoClicado = this;
-        selecionarA(elementoClicado);
-        $('#minha-conta').css('display', 'none');
-        $('#cadUser').css('display', 'flex');
-        $('#editUser').css('display', 'none');
-        $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
-        if ($(window).width() <= 980) {
-            fecharBarraLateral();
-        }
-    });
-
     $("#link_editUser").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'none');
-        $('#cadUser').css('display', 'none');
         $('#editUser').css('display', 'flex');
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
@@ -542,6 +525,19 @@ $('table').on('click', '.edit-icon', function () {
     });
 })
 
+// Fechar modal editar
+$('#btn-modal-cad-user').click(function() {
+    $('#formCadastroUsuario').css('display', 'flex');
+    $('#overlay-bg-modal-edit').css('display', 'flex');
+})
+
+$("#close-modal-cad-user").click(function () {
+    $('#formCadastroUsuario').css('display', 'none');
+    $('#overlay-bg-modal-edit').css('display', 'none');
+})
+
+// Abrir modal ao clicar no botão
+
 // Verificar se usuário foi editado
 $(document).ready(() => {
     const userEditado = JSON.parse(localStorage.getItem('usuario-editado'));
@@ -549,7 +545,6 @@ $(document).ready(() => {
     if (userEditado) {
         // Aparecer a tabela logo ao abrir a página 
         $('#minha-conta').css('display', 'none');
-        $('#cadUser').css('display', 'none');
         $('#editUser').css('display', 'flex');
         // Código para selecionar o ícone de editar usuário
         const editA = $('#link_editUser');

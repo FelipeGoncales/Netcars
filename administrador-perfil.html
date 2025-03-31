@@ -47,8 +47,7 @@
             <nav>
                 <a href="veiculos.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar Anúncio</a>
                 <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
-                <a id="link_cadUser"><i class="fa fa-user-plus" aria-hidden="true"></i>Cadastrar usuário</a>
-                <a id="link_editUser"><i class="fa-solid fa-user-pen"></i>Editar usuário</a>
+                <a id="link_editUser"><i class="fa-solid fa-user-pen"></i>Editar usuários</a>
                 <a id="link_relatorios"><i class="fas fa-file-alt"></i>Relatórios</a>
                 <div class="submenu-relatorios" style="display: none;">
                     <a class="sub-relatorio" id="movimentacao">Movimentação</a>
@@ -108,37 +107,6 @@
                 </div>
             </div>
 
-            <!-- Div Cadastrar User -->
-            <div class="container-cad-user" id="cadUser">
-                <form class="container-login" id="formCadastroUsuario">
-                    <h1 class="title">Cadastre um novo usuário</h1>
-                    <div class="div-input">
-                        <label for="input">Nome completo</label>
-                        <input class="input" name="nome_completo" type="text" required />
-                    </div>
-                    <div class="div-input">
-                        <label for="input">Email</label>
-                        <input class="input" name="email" type="text" required />
-                    </div>
-                    <div class="div-input">
-                        <label for="input">Senha</label>
-                        <input name="senha_hash" type="password" id="input-senha" required />
-                        <i class="fa-solid fa-eye" id="mostrarSenha"></i>
-                    </div>
-                    <div class="div-input">
-                        <label for="input">Tipo de usuário</label>
-                        <select name="tipo_user" id="select-tipo-user">
-                            <option value=""></option>
-                            <option value="1">Administrador</option>
-                            <option value="2">Vendedor</option>
-                        </select>
-                    </div>
-                    <div class="divButtonSubmit">
-                        <button class="btn-acao" type="submit">Criar conta</button>
-                    </div>
-                </form>
-            </div>
-
             <!-- Div Edit User -->
             <div class="container-edit-user" id="editUser">
 
@@ -164,6 +132,8 @@
                             <option value="3">Cliente</option>
                         </select>
                     </div>
+
+                    <button class="cad-user" id="btn-modal-cad-user">Cadastrar usuário <i class="fa fa-user-plus"></i></button>
                 </div>
                 <div class="table-container">
                     <table class="user-table">
@@ -426,6 +396,37 @@
             </div>
             <button type="submit">Salvar alterações</button>
         </form>
+
+        <!-- Form Div Cadastrar User -->
+        <form class="container-login" id="formCadastroUsuario">
+            <i class="fa-solid fa-xmark" id="close-modal-cad-user"></i>
+            <h1 class="title">Cadastre um novo usuário</h1>
+            <div class="div-input">
+                <label for="input">Nome completo</label>
+                <input class="input" name="nome_completo" type="text" required />
+            </div>
+            <div class="div-input">
+                <label for="input">Email</label>
+                <input class="input" name="email" type="text" required />
+            </div>
+            <div class="div-input">
+                <label for="input">Senha</label>
+                <input name="senha_hash" type="password" id="input-senha" required />
+                <i class="fa-solid fa-eye" id="mostrarSenha"></i>
+            </div>
+            <div class="div-input">
+                <label for="input">Tipo de usuário</label>
+                <select name="tipo_user" id="select-tipo-user">
+                    <option value=""></option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Vendedor</option>
+                </select>
+            </div>
+            <div class="divButtonSubmit">
+                <button class="btn-acao" type="submit">Criar conta</button>
+            </div>
+        </form>
+
         <!-- Overlay -->
         <div class="overlay-bg" id="overlay-bg-modal-edit"></div>
     </main>
