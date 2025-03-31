@@ -63,8 +63,8 @@ function carregarOwlCarrossel() {
         margin: 10,
         responsive: {
             0: { items: 1 },
-            600: { items: 2 },
-            1000: { items: 3 }
+            560: { items: 2 },
+            1240: { item: 3 }
         }
     });
 
@@ -144,7 +144,7 @@ $(document).ready(function() {
                                 .css({
                                     "position": "relative",
                                     "min-height": "350px",
-                                    "height": "500px",
+                                    "min-height": "400px",
                                     "overflow": "hidden"
                                 })
                 divImg.append($('<img>').attr('src', imagem).css({

@@ -593,9 +593,7 @@ main {
         position: relative;
         top: 0px;
     }
-}
 
-@media (max-width: 450px) {
     .div-title {
         & input {    
             width: 100%;
