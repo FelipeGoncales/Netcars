@@ -191,15 +191,17 @@ function formatarQuilometragem(quilometragem) {
 
 function formatarQuilometragemInput(input) {
     $(input).on('input', function() {
-        formatarQuilometragem($(input).val());
+        let valorNumerico = extrairNumeros($(input).val());
+        $(input).val(formatarQuilometragem(valorNumerico));
     })
 
     $(input).on('blur', function() {
-        formatarQuilometragem($(input).val());
+        let valorNumerico = extrairNumeros($(input).val()); 
+        $(input).val(formatarQuilometragem(valorNumerico));
     })
 }
 
-formatarQuilometragem("#input-quilometragem");
+formatarQuilometragemInput("#input-quilometragem");
 
 // Extrair números
 function extrairNumeros(valor) {
