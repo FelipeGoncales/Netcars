@@ -235,7 +235,11 @@ $("#formCadastroUsuario").on("submit", function (e) {
         data: envia,
         contentType: "application/json",
         success: function (response) {
-            alertMessage(response.success, 'success');
+            localStorage.setItem('usuario-editado', JSON.stringify({
+                success: response.success
+            }));
+
+            window.location.reload();
         },
         error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
