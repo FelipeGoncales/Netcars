@@ -537,4 +537,15 @@ main {
             font-size: 0.8rem;
         }
     }
+
+    .div-pai-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsivo Mobile */
+@media (max-width: 600px) {
+    .div-pai-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
