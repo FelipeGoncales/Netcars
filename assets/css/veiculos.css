@@ -282,10 +282,11 @@ main {
 
 .card{
     background: var(--cor-bg-sec);
-    width: 300px;
-    padding-bottom: 14px;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: hidden;    
+    width: 100%;
+    height: auto;
+    padding-bottom: 15px;
     & img{
         width: 100%;
         border-top-left-radius: 10px;
@@ -411,6 +412,7 @@ main {
 .div-qts-anuncios{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-top: 91px;
     & p{
         color: #2e2d37;
@@ -418,10 +420,118 @@ main {
     }
 }
 
-@media (min-width: 1560px) {
-    .card {
+/* Botão de filtro */
+#btn-filtro {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    color: var(--cor-bg-sec);
+    font-size: 0.92rem;
+    font-weight: 600;
+    background-color: var(--cor-texto);
+    padding: 9px 13px;
+    border-radius: 500px;
+}
+
+
+/* Responsivo Computador */
+@media (max-width: 1520px) {
+    .div-pai-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsivo Computador */
+@media (max-width: 1210px) {
+    .div-pai-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* Animação aparecer filtro */
+@keyframes aparecerFiltro {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: 270px;
+    }
+}
+
+/* Animação sumir filtro */
+@keyframes sumirFiltro {
+    0% {
+        top: 270px;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+/* Responsivo Tablet */
+@media (max-width: 860px) {
+    .div-pai-filtro {
+        border-radius: 20px;
+        display: none;
+        left: 0 !important;
+        width: 100vw !important;
+        top: 270px;
+        position: fixed !important;
+        padding-bottom: 170px;
+        animation: aparecerFiltro 0.85s ease-in-out;
+    }
+
+    @media (max-height: 800px) {
+        .div-pai-filtro {
+            padding-bottom: 210px;
+        }
+    }
+
+    #fecharFiltro {
+        display: flex;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 5px;
+        color: var(--cor-texto);
+        font-size: 1.7rem;
+    }
+
+    .div-qts-anuncios {
+        margin: 0;
+    }
+
+    #btn-filtro {
+        display: flex;
+    }
+
+    main {
+        flex-direction: column;
+        width: 90%;
+        & section {
+            width: 100%;
+        }
+    }
+
+    .sec-filtro {
         width: 100%;
-        height: auto;
-        padding-bottom: 15px;
+        min-width: 0px;
+    }
+}
+
+
+/* Responsivo mobile */
+@media (max-width: 860px) {
+    /* Diminuindo um pouco o tamanho do botão de filtro */
+    #btn-filtro {
+        font-size: 0.75rem;
+        gap: 7px;
+        padding: 7px 12px;
+        & i {
+            font-size: 0.8rem;
+        }
     }
 }

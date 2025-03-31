@@ -178,61 +178,63 @@ async function buscarVeiculos() {
 
 // Lógica para funcionar o scroll
 document.addEventListener('DOMContentLoaded', function() {
-    // Seleciona os elementos necessários
-    const divPaiFiltro = document.querySelector('.div-pai-filtro');
-    const secVeiculos = document.querySelector('.sec-veiculos'); // Utiliza a seção correta de veículos
+    if ($(window).width() > 860) {
+        // Seleciona os elementos necessários
+        const divPaiFiltro = document.querySelector('.div-pai-filtro');
+        const secVeiculos = document.querySelector('.sec-veiculos'); // Utiliza a seção correta de veículos
 
-    // Estilos originais e fixos para o filtro
-    const originalStyle = {
-        width: '100%',
-        position: 'static',
-        top: '20px'
-    };
-    const fixedStyle = {
-        width: '430px',
-        position: 'fixed',
-        top: '86px'
-    };
-    const fixThreshold = 128.8; // Ponto de scroll a partir do qual o filtro se fixa
+        // Estilos originais e fixos para o filtro
+        const originalStyle = {
+            width: '100%',
+            position: 'static',
+            top: '20px'
+        };
+        const fixedStyle = {
+            width: '430px',
+            position: 'fixed',
+            top: '86px'
+        };
+        const fixThreshold = 128.8; // Ponto de scroll a partir do qual o filtro se fixa
 
-    function verificarScroll() {
-        const scrollPosition = window.scrollY;
-        const finalSecVeiculos = secVeiculos.offsetTop + secVeiculos.offsetHeight;
-        const alturaFiltro = divPaiFiltro.offsetHeight;
-        // Ponto onde o filtro deve parar de estar fixo
-        const posicaoParada = finalSecVeiculos - alturaFiltro;
+        function verificarScroll() {
+            const scrollPosition = window.scrollY;
+            const finalSecVeiculos = secVeiculos.offsetTop + secVeiculos.offsetHeight;
+            const alturaFiltro = divPaiFiltro.offsetHeight;
+            // Ponto onde o filtro deve parar de estar fixo
+            const posicaoParada = finalSecVeiculos - alturaFiltro;
 
-        if (scrollPosition < fixThreshold) {
-            // Antes do ponto de fixação, restaura o estilo original
-            Object.assign(divPaiFiltro.style, {
-                width: originalStyle.width,
-                position: originalStyle.position,
-                top: originalStyle.top,
-                left: ''
-            });
-        } else if (scrollPosition >= fixThreshold && scrollPosition < posicaoParada - parseFloat(fixedStyle.top)) {
-            // Entre o ponto de fixação e o ponto de parada, mantém o filtro fixo
-            Object.assign(divPaiFiltro.style, {
-                width: fixedStyle.width,
-                position: fixedStyle.position,
-                top: fixedStyle.top,
-                left: ''
-            });
-        } else {
-            // Após o ponto de parada, posiciona o filtro de forma absoluta para que ele não ultrapasse a seção
-            Object.assign(divPaiFiltro.style, {
-                width: fixedStyle.width,
-                position: 'absolute',
-                top: posicaoParada + 'px',
-                left: ''
-            });
+            if (scrollPosition < fixThreshold) {
+                // Antes do ponto de fixação, restaura o estilo original
+                Object.assign(divPaiFiltro.style, {
+                    width: originalStyle.width,
+                    position: originalStyle.position,
+                    top: originalStyle.top,
+                    left: ''
+                });
+            } else if (scrollPosition >= fixThreshold && scrollPosition < posicaoParada - parseFloat(fixedStyle.top)) {
+                // Entre o ponto de fixação e o ponto de parada, mantém o filtro fixo
+                Object.assign(divPaiFiltro.style, {
+                    width: fixedStyle.width,
+                    position: fixedStyle.position,
+                    top: fixedStyle.top,
+                    left: ''
+                });
+            } else {
+                // Após o ponto de parada, posiciona o filtro de forma absoluta para que ele não ultrapasse a seção
+                Object.assign(divPaiFiltro.style, {
+                    width: fixedStyle.width,
+                    position: 'absolute',
+                    top: posicaoParada + 'px',
+                    left: ''
+                });
+            }
         }
-    }
 
-    // Eventos para atualizar o estilo conforme o scroll e redimensionamento da janela
-    window.addEventListener('scroll', verificarScroll);
-    window.addEventListener('resize', verificarScroll);
-    verificarScroll(); // Verifica a posição inicial ao carregar
+        // Eventos para atualizar o estilo conforme o scroll e redimensionamento da janela
+        window.addEventListener('scroll', verificarScroll);
+        window.addEventListener('resize', verificarScroll);
+        verificarScroll(); // Verifica a posição inicial ao carregar
+    }
 });
 
 // add filtro visual 
@@ -848,3 +850,46 @@ optionItems.forEach((item) => {
         buscarVeiculos();
     });
 });
+
+// Função para funcionar botão de filtro
+
+function aparecerSumirFiltro() {
+    // Verifica se o filtro está sendo exibido
+    if ($('.div-pai-filtro').css('display') === "none") {
+        // Aparecer o filtro e garantir que a animação seja aparecer filtro
+        $('.div-pai-filtro').css({
+            "display": "flex",
+            "animation": "0.65s aparecerFiltro"
+        })
+
+        // Apenas para não bugar o display
+        $('.div-pai-filtro').on('animationend', function() {
+            $(this).css("display", "flex");
+        })
+    } else {
+        // Trocar a animação para sumir filtro
+        $('.div-pai-filtro').css({
+            "animation": "0.65s sumirFiltro"
+        })
+
+        // Dar display none quando a animação terminar
+        $('.div-pai-filtro').on('animationend', function() {
+            $(this).css("display", "none");
+        })    
+    }
+}
+
+// Adicionando função aos botões
+$(document).ready(function() {
+    // Caso a tela seja menor que 860px (responsivo)
+    if ($(window).width() < 860) {
+        // Adiciona um evento click ao botão de filtro
+        $('#btn-filtro').click(function() {
+            aparecerSumirFiltro();
+        })
+
+        $('#fecharFiltro').click(function() {
+            aparecerSumirFiltro();
+        })
+    }
+})
