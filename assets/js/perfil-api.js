@@ -435,3 +435,8 @@ $('#deletar-usuario').click(function() {
         }
       });
  })
+
+ $('#footer-motos-usadas').click(function() {
+    localStorage.setItem('tipo-veiculo', 'moto');
+    window.location.href = "veiculos.html";
+})
