@@ -193,9 +193,8 @@ function extrairNumeros(valor) {
 // Adicionando formatação de preço
 formatarPreco('#input-preco-venda');
 
-
 // Alterar botão
-function alterarBotao() {
+async function alterarBotao() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
 
     if (dadosUser) {
@@ -214,7 +213,7 @@ function alterarBotao() {
             headers: {
                 "Authorization": "Bearer " + token
             },
-            success: function(response) {
+            success: await async function(response) {
                 const tipoUser = response.tipo_usuario;
 
                 if (tipoUser === 2 || tipoUser === 1) {
@@ -241,7 +240,7 @@ function alterarBotao() {
                     $('#editarAnuncio').css('display', 'none');
                 }
             },
-            error: function(response) {
+            error: await function(response) {
                 localStorage.removeItem('dadosUser');
                 localStorage.setItem('mensagem', JSON.stringify({
                     "error": response.responseJSON.error
@@ -265,10 +264,6 @@ function alterarBotao() {
 let id_moto = '';
 
 $(document).ready(async function () {
-
-    // Lógica para alterar os botões
-    await alterarBotao();
-
     // Recupera a query string da URL
     const urlFrontEnd = window.location.search;
 
@@ -408,11 +403,63 @@ $(document).ready(async function () {
             $("#logo-img").attr('src', `${logo_motos[infoVeic.marca]}`);
 
             carregarInputs();
+
+            if (response.reserva == true) {
+                // Função para mudar o botão para cancelar reserva
+                $('#div-button-vendedor').css('display', 'none');
+                $('#div-button-cliente').css('display', 'none');
+                $('#div-button-cancelar-reserva').css('display', 'flex');
+
+                // Função para mudar a frase que aparece caso seja o cliente que reservou
+                $('#mensagem-user').css('display', 'none');
+                $('#mensagem-adm').css('display', 'none');
+                $('#mensagem-reserva').css('display', 'flex');
+            } else {
+                // Lógica para alterar os botões
+                alterarBotao();
+            }
         },
         error: function () {
             window.location.href = "veiculos.html";
         }
     });
+})
+
+// Cancelar reserva
+
+$('#cancelar-reserva').click(function() {
+    Swal.fire({
+        title: "Você tem certeza?",
+        text: "Você está prestes a cancelar a reserva desse veículo.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "DELETE",
+                url: `${BASE_URL}/cancelar-reserva-moto/${id_moto}`, // URL da API para motos
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                },
+                contentType: "application/json",
+                success: function (response) {
+                    localStorage.setItem('msgReserva', response.success);
+                    window.location.href = "cliente-perfil.html";
+                },
+                error: function(response) {
+                    Swal.fire({
+                        title: "Algo deu errado...",
+                        text: response.responseJSON.error,
+                        icon: "error"
+                    })
+                }
+            })
+        }
+    })
 })
 
 // Deletar veículo
