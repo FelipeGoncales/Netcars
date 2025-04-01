@@ -81,13 +81,13 @@ function carregarOwlCarrossel() {
 // Função para pegar as informações do input e passar para o parágrafo
 
 function carregarInputs() {
-    $('input').each(function () {
+    $('input, select').each(function () {
         const id = $(this).attr('id');
-        const spanMirror = $(`#mirror-${id}`)
+        const spanMirror = $(`#mirror-${id}`);
 
         $(this).css('display', 'none');
         spanMirror.text($(this).val()).css('display', 'flex');
-    })
+    });
 }
 
 // Evento de input para formatação em tempo real
@@ -172,6 +172,21 @@ function formatarValor(valor) {
 
     return precoFormatado;
 }
+
+const anoMin = 1950;
+const anoMax = new Date().getFullYear();
+const anoModelo = $('#select-ano-modelo');
+const anoFabricacao = $('#select-ano-fabricacao');
+
+function addAnoInput(input) {
+    for (let ano = anoMax; ano >= anoMin; ano--) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        input.append(option);
+    }
+}
+// Adicionado options aos inputs
+addAnoInput(anoModelo);
+addAnoInput(anoFabricacao);
 
 // Formatar quilometragem
 function formatarQuilometragem(quilometragem) {
@@ -364,49 +379,89 @@ $(document).ready(async function () {
             carregarOwlCarrossel();
 
             // Input marca
-            $("#input-marca").val(infoVeic.marca);
+            $("#select-marca").val(infoVeic.marca);
+
             // Input modelo
             $("#input-modelo").val(infoVeic.modelo);
+
             // Input versao
             $("#input-subtitle").val(infoVeic.versao);
-            // Input cidade - estado
-            $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`, function (estados) {
-                let siglaEstado = '';
+            
+            $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
+                let selectEstado = $("#input-estado");
 
-                for (estado of estados) {
-                    if (estado.nome == infoVeic.estado) {
-                        siglaEstado = estado.sigla;
-                        break;
+                // Popula os estados
+                estados.forEach(estado => {
+                    selectEstado.append(`<option value="${estado.sigla}">${estado.nome}</option>`);
+                });
+
+                // Verifica se o estado do banco é sigla ou nome completo
+                const estadoBanco = infoVeic.estado;
+                if (estadoBanco) {
+                    const estadoEncontrado = estados.find(estado => 
+                        estado.sigla.toUpperCase() === estadoBanco.toUpperCase() || 
+                        estado.nome.toLowerCase() === estadoBanco.toLowerCase()
+                    );
+
+                    if (estadoEncontrado) {
+                        selectEstado.val(estadoEncontrado.sigla);
+                        $("#mirror-input-estado").text(estadoEncontrado.sigla); // Atualiza o espelho
+                        carregarCidades(estadoEncontrado.sigla, infoVeic.cidade);
                     }
                 }
+            });
 
-                $("#input-cidade").val(`${infoVeic.cidade} - ${siglaEstado}`);
-                // É necessário chamar a função carregarInputs dentro do ajax novamente
-                carregarInputs();
-            })
+            // Função para carregar cidades
+            function carregarCidades(uf, cidadeBanco) {
+                $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
+                  .done(function(cidades) {
+                      let selectCidade = $("#input-cidade");
+              
+                      cidades.forEach(cidade => {
+                          selectCidade.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
+                      });
+              
+                      if (cidadeBanco) {
+                          const cidadeNormalizada = cidadeBanco.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                          console.log("Cidade do banco normalizada:", cidadeNormalizada);
+              
+                          const cidadeEncontrada = cidades.find(c => {
+                              const nomeNormalizado = c.nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                              console.log("Comparando com cidade:", nomeNormalizado);
+                              return nomeNormalizado === cidadeNormalizada;
+                          });
+              
+                          if (cidadeEncontrada) {
+                              selectCidade.val(cidadeEncontrada.nome);
+                              $("#mirror-input-cidade").text(cidadeEncontrada.nome);
+                          }
+                      }
+                  })
+            }
 
-            // Input ano
-            $('#input-ano').val(`${infoVeic.ano_modelo}/${infoVeic.ano_fabricacao}`);
+            // Preencher os selects de ano modelo e ano fabricação
+            $("#select-ano-modelo").val(infoVeic.ano_modelo);
+            $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
 
             // Input quilometragem
             $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
 
-            // Input câmbio
-            $('#input-cambio').val(infoVeic.cambio);
+            // select câmbio
+            $("#select-cambio").val(infoVeic.cambio);
 
-            // Input categoria
-            $('#input-categoria').val(infoVeic.categoria);
+            // select categoria
+            $("#select-categoria").val(infoVeic.categoria);
+              
 
-            // Input combustível
-            $('#input-combustivel').val(infoVeic.combustivel);
+            // select combustível
+            $("#select-combustivel").val(infoVeic.combustivel);
 
-            // Input cor
-            $('#input-cor').val(infoVeic.cor);
+            // select cor
+            $("#select-cor").val(infoVeic.cor);
 
-            // Input licenciado
-            let textoLicenciado = infoVeic.licenciado == 1 ? "Sim" : "Não";
-            $('#input-licenciado').val(textoLicenciado);
-
+            // select licenciado
+            $("#select-licenciado").val(infoVeic.licenciado);
+            
             // Input final placa
             const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
             $('#input-placa').val(ultimoCaracterPlaca)
@@ -516,3 +571,74 @@ $('#reservar-btn').click(function () {
         }
     });
 })
+
+$("#editarAnuncio").on("click", function () {
+
+    $("input, select").prop("disabled", false);
+
+    $("input, select").css("display", "block");
+
+    $("p.input-mirror, p.select-mirror").css("display", "none");
+  });
+
+
+  function coletarDadosAtualizados() {
+    return {
+        marca: $("#select-marca").val(),
+        modelo: $("#input-modelo").val(),
+        ano_modelo: $("#select-ano-modelo").val(),
+        ano_fabricacao: $("#select-ano-fabricacao").val(),
+        versao: $("#input-subtitle").val(),
+        cor: $("#select-cor").val(),
+        renavam: $("#input-renavam") ? $("#input-renavam").val() : "",
+        cambio: $("#select-cambio").val(),
+        combustivel: $("#select-combustivel").val(),
+        categoria: $("#select-categoria").val(),
+        quilometragem: extrairNumeros($("#input-quilometragem").val()),
+        cidade: $("#input-cidade").val(),
+        preco_venda: desformatarPreco($("#input-preco-venda").val()),
+        licenciado: $("#select-licenciado").val() === "Sim" ? 1 : 0,
+        placa: $("#input-placa").val().toUpperCase(),
+        ativo: 1
+    };
+}
+
+
+$("#salvar-alteracoes").on("click", function (e) {
+    e.preventDefault();
+
+    // Coleta os dados atualizados
+    const dadosAtualizados = coletarDadosAtualizados();
+
+    $.ajax({
+        method: "PUT",
+        url: `${BASE_URL}/carro/${id_carro}`,
+        data: JSON.stringify(dadosAtualizados),
+        contentType: "application/json",
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: function(response) {
+            // Exibe uma mensagem de sucesso (pode usar SweetAlert2)
+            Swal.fire({
+                title: "Sucesso!",
+                text: response.success,
+                icon: "success",
+                confirmButtonText: "Ok"
+            });
+            
+            // Se necessário, desabilite os inputs novamente e atualize os "mirrors"
+            $("input").prop("disabled", true);
+            carregarInputs();
+        },
+        error: function(response) {
+            // Exibe mensagem de erro
+            Swal.fire({
+                title: "Erro",
+                text: response.responseJSON.error,
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+        }
+    });
+});
