@@ -328,12 +328,17 @@ main {
 
 /* Fim do card */
 
-
 .itens-details {
     display: grid;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow-y: auto; 
+    overflow-x: hidden;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
+    padding: 5px;
     list-style: none;
+    max-height: 345px; /* Alterar tamanho no responsivo */
     & li {   
         transition: 0.2s;
         cursor: pointer;
