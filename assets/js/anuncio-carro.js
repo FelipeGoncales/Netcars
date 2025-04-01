@@ -402,10 +402,8 @@ $('#reservar-btn').click(function () {
         confirmButtonText: "Confirmar"
     }).then((result) => {
         if (result.isConfirmed) {
-            const id_usuario = JSON.parse(localStorage.getItem('dadosUser')).id_usuario;
 
             const envia = {
-                "id_usuario": id_usuario,
                 "id_veiculo": id_carro,
                 "tipo_veiculo": "carro"
             }

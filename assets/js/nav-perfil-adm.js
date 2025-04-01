@@ -91,6 +91,7 @@ function exibirRelatorio(tipo) {
     $('#minha-conta').css('display', 'none');
     $('#editUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
+    $('#reservas').css('display', 'none');
 
     // Mostrar apenas o relatório selecionado
     $(`#relatorio-${tipo}`).css('display', 'flex');
@@ -110,6 +111,7 @@ $(document).ready(function () {
         $('#minha-conta').css('display', 'flex');
         $('#editUser').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
+        $('#reservas').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
             fecharBarraLateral();
@@ -121,6 +123,7 @@ $(document).ready(function () {
         if ($(elementoClicado).hasClass('selecionado')) {
             $('#minha-conta').css('display', 'flex');
             $('#editUser').css('display', 'none');
+            $('#reservas').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
             $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
 
@@ -144,12 +147,28 @@ $(document).ready(function () {
         selecionarA(elementoClicado);
         $('#minha-conta').css('display', 'none');
         $('#editUser').css('display', 'flex');
+        $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
     });
+
+    $("#link_reservas").on("click", function() {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#minha-conta').css('display', 'none');
+        $('#editUser').css('display', 'none');
+        $('#reservas').css('display', 'flex');
+        $('.container-relatorios').css('display', 'none');
+        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    })
 
     // Ação ao clicar nos itens do submenu
     $("#movimentacao").on("click", function () {
@@ -589,3 +608,156 @@ function fetchFiltroUsuarios() {
 $('#search-user-input').on('input', () => fetchFiltroUsuarios());
 $('#status-select').on('change', () => fetchFiltroUsuarios());
 $('#type-select').on('change', () => fetchFiltroUsuarios());
+
+// Função para obter sigla dos estados
+function obterSiglaEstado(estadoVeiculo) {
+    return new Promise((resolve, reject) => {
+        $.getJSON('https://servicodados.ibge.gov.br/api/v1/localidades/estados', function(estados) {
+            for (let estado of estados) {
+                if (estado.nome === estadoVeiculo) {
+                    resolve(estado.sigla);
+                    return;
+                }
+            }
+            resolve(false);
+        }).fail(reject);
+    });
+}
+
+// Função para formatar os valores
+function formatarValor(valor) {
+    // Ignora se estiver vazio
+    if (!valor) {
+        $(this).val('');
+        return;
+    }
+    
+    // Converte o valor para float
+    const valorFloat = parseFloat(valor);
+    
+    // Separa parte inteira e decimal
+    const parteInteira = Math.floor(valorFloat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const parteDecimal = (Math.round((valorFloat - Math.floor(valorFloat)) * 100))
+                          .toString()
+                          .padStart(2, '0');
+    
+    const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+    
+    return precoFormatado;
+}
+
+// Função para gerar o card
+async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
+    for (veiculo of listaVeic) {
+        // Cria a div card
+        const divCard = $("<div></div>").addClass("card");
+
+        const img = $("<div></div>")
+                    .css({
+                        "background-image": `url(${veiculo.imagens[0]})`,
+                        "background-position": "center",
+                        "background-repeat": "no-repeat",
+                        "background-size": "cover",
+                        "height": "225px"
+                    })
+
+        const pReservadoPor = $('<p></p>').addClass('reservado-por').html(`Reservado por <span>${veiculo.nome_cliente}</span>`)
+    
+        // Cria a div de itens do card
+        const divItensCard = $("<div></div>").addClass("itens-card");
+    
+        // Título do veículo
+        const h3Title = $("<h3></h3>").text(`${veiculo.marca} ${veiculo.modelo}`); // Inserir nome do carro
+    
+        // Descrição do veículo
+        const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+    
+        // Container das informações adicionais
+        const containerInfoCard = $("<div></div>").addClass("container-info-card");
+    
+        // Ano do veículo
+        const iconCalendar = $("<i></i>").addClass("fa-solid fa-calendar-days");
+        const pYear = $("<p></p>").text(veiculo.ano_modelo); // Ano veículo
+
+        let siglaEstado = await obterSiglaEstado(veiculo.estado);
+            
+        // Localização
+        const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
+        const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
+
+        // Monta a div infoCard com ícones e textos
+        containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
+    
+        // Preço do veículo
+
+        let valor = formatarValor(veiculo.preco_venda);
+        const h3Price = $("<h3></h3>").text(valor); // Valor
+        
+        // Url para abrir a página de anúncio
+        let urlAnuncio;
+
+        if (tipoVeiculo === "carro") {
+            urlAnuncio = "anuncio-carro.html";
+        } else {
+            urlAnuncio = "anuncio-moto.html";
+        }
+
+        // Botão para ver detalhes
+        const buttonDetalhes = $("<a></a>")
+            .attr("href", `${urlAnuncio}?id=${veiculo.id}`) // Url para anúncio veículos passando id pela url
+            .text("Ver detalhes")
+            .addClass("ver-detalhes");
+    
+        // Adiciona todos os itens na div itens-card
+        divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
+    
+        // Junta a imagem e os itens ao card
+        divCard.append(img, pReservadoPor, divItensCard);
+    
+        // Insere o card no container desejado na página
+        divAppend.append(divCard);
+    }
+}
+
+// Buscar reservas
+function buscarReservas() {
+    $.ajax({
+        url: `${BASE_URL}/buscar_reservas`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: async function (response) {
+            listaVeicCarro = response.carros;
+
+            listaVeicMotos = response.motos;
+        
+            const $divReservas = $('#div-reservas');
+
+            if (!listaVeicCarro.length && !listaVeicMotos.length) {
+                const divPai = $('<div></div>').addClass('div-pai');
+                const icon = $('<i></i>').addClass('fa-solid fa-thumbs-down icon');
+                const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Buscar veículos <i class="fa-solid fa-magnifying-glass"></i>`)
+                const msg = ($('<p></p>').addClass('nada-encontrado').text('Você ainda não possui nenhuma reserva.'));
+
+                divPai.append(icon, msg, btnBuscar);
+                $divReservas.append(divPai);
+                return;
+            }
+
+            if (listaVeicCarro.length) {
+                await gerarCard(listaVeicCarro, $divReservas, "carro");
+            }
+
+            if (listaVeicMotos.length) {
+                await gerarCard(listaVeicMotos, $divReservas, "moto");
+            }
+        },
+        error: function (response) {
+            alert(response.responseJSON.error);
+        }
+    })
+}
+
+$(document).ready(() =>{
+    buscarReservas()
+});

@@ -380,3 +380,56 @@ $('#deletar-veiculo').click(function () {
         }
     })
 })
+
+
+// Reservar moto
+
+$('#reservar-btn').click(function () {
+    Swal.fire({
+        title: "Deseja reservar esse veículo?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            const envia = {
+                "id_veiculo": id_moto,
+                "tipo_veiculo": "moto"
+            }
+
+            $.ajax({
+                method: "POST",
+                url: `${BASE_URL}/reservar_veiculo`,
+                contentType: 'application/json',
+                data: JSON.stringify(envia),
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: response.success,
+                        icon: "success",
+                        confirmButtonColor: "#0bd979",
+                        confirmButtonText: "Confirmar"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem('msgReserva', 'Veja as informações da sua reserva clicando em "Reservas".')
+                            window.location.href = "cliente-perfil.html";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        title: "Algo deu errado...",
+                        text: response.responseJSON.error,
+                        icon: "error"
+                    })
+                }
+            })
+        }
+    });
+})
