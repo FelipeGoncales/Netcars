@@ -736,8 +736,8 @@ function buscarReservas() {
             if (!listaVeicCarro.length && !listaVeicMotos.length) {
                 const divPai = $('<div></div>').addClass('div-pai');
                 const icon = $('<i></i>').addClass('fa-solid fa-thumbs-down icon');
-                const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Buscar veículos <i class="fa-solid fa-magnifying-glass"></i>`)
-                const msg = ($('<p></p>').addClass('nada-encontrado').text('Você ainda não possui nenhuma reserva.'));
+                const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Gerenciar anúncios <i class="fa-solid fa-magnifying-glass"></i>`)
+                const msg = ($('<p></p>').addClass('nada-encontrado').text('Nenhuma reserva encontrada até o momento.'));
 
                 divPai.append(icon, msg, btnBuscar);
                 $divReservas.append(divPai);

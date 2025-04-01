@@ -193,10 +193,81 @@ function extrairNumeros(valor) {
 // Adicionando formatação de preço
 formatarPreco('#input-preco-venda');
 
+
+// Alterar botão
+function alterarBotao() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
+
+    if (dadosUser) {
+        const token = dadosUser.token;
+
+        if (!token) {
+            localStorage.removeItem('dadosUser');
+            localStorage.setItem('mensagem', JSON.stringify({
+                "error": "Sessão não iniciada."
+            }))
+            window.location.href = 'login.html';
+        }
+    
+        $.ajax({
+            url: `${BASE_URL}/obter_tipo_usuario`,
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                const tipoUser = response.tipo_usuario;
+
+                if (tipoUser === 2 || tipoUser === 1) {
+                    $('#div-button-vendedor').css('display', 'flex');
+                    $('#div-button-cliente').css('display', 'none');
+                    $('#div-button-cancelar-reserva').css('display', 'none');
+
+                    // Função para mudar a frase que aparece caso seja cliente ou usuário
+                    $('#mensagem-user').css('display', 'none');
+                    $('#mensagem-adm').css('display', 'flex');
+                    $('#mensagem-reserva').css('display', 'none');
+
+                    $('#editarAnuncio').css('display', 'flex');
+                } else {
+                    $('#div-button-vendedor').css('display', 'none');
+                    $('#div-button-cliente').css('display', 'flex');
+                    $('#div-button-cancelar-reserva').css('display', 'none');
+
+                    // Função para mudar a frase que aparece caso seja cliente ou usuário
+                    $('#mensagem-user').css('display', 'flex');
+                    $('#mensagem-adm').css('display', 'none');
+                    $('#mensagem-reserva').css('display', 'none');
+
+                    $('#editarAnuncio').css('display', 'none');
+                }
+            },
+            error: function(response) {
+                localStorage.removeItem('dadosUser');
+                localStorage.setItem('mensagem', JSON.stringify({
+                    "error": response.responseJSON.error
+                }))
+                window.location.href = "login.html";
+            }
+        })
+    } else {
+        $('#div-button-vendedor').css('display', 'none');
+        $('#div-button-cliente').css('display', 'flex');
+
+        // Função para mudar a frase que aparece caso seja cliente ou usuário
+        $('#mensagem-user').css('display', 'flex');
+        $('#mensagem-adm').css('display', 'none');
+
+        $('#editarAnuncio').css('display', 'none');
+    }
+}
+
 // Declarando a variável id_moto fora da função para usá-la depois
 let id_moto = '';
 
-$(document).ready(function () {
+$(document).ready(async function () {
+
+    // Lógica para alterar os botões
+    await alterarBotao();
 
     // Recupera a query string da URL
     const urlFrontEnd = window.location.search;
@@ -211,6 +282,12 @@ $(document).ready(function () {
         window.location.href = "veiculos.html";
     }
 
+    const dadosUser = localStorage.getItem('dadosUser');
+    const headers = {};
+    if (dadosUser) {
+        headers["Authorization"] = "Bearer " + JSON.parse(dadosUser).token;
+    }
+
     // Carregar dados do veículo
     $.ajax({
         method: "post",
@@ -218,11 +295,9 @@ $(document).ready(function () {
         data: JSON.stringify({
             'id': id_moto
         }),
+        headers: headers,
         contentType: "application/json",
         success: function (response) {
-
-            console.log(response);
-
             const infoVeic = response.veiculos[0];
             const divCarrossel = $('#div-owl-carousel');
 
@@ -334,9 +409,8 @@ $(document).ready(function () {
 
             carregarInputs();
         },
-        error: function (response) {
-            alert('Erro ao carregar os dados do veículo.');
-            console.log(response);
+        error: function () {
+            window.location.href = "veiculos.html";
         }
     });
 })

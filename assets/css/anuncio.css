@@ -233,10 +233,23 @@ main {
     display: none;
     width: 100%;
     gap: 10px;
-    &.cliente {
+    &.cliente{
         display: flex;
         & .salvar-btn {
             width: 100% !important;
+        }
+    }
+    &.cancelar-reserva {
+        width: 100%;
+        & button {
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            & i {
+                font-size: 1.2rem;
+            }
         }
     }
     & .salvar-btn{

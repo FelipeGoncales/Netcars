@@ -1014,11 +1014,11 @@ tbody tr.tipo2 {
         color: var(--cor-texto-apagado);
         background-color: var(--cor-bg-sec);
         padding: 10px;
-        padding-right: 30px;
+        padding-right: 25px;
         position: absolute;
         left: -1px;
         top: -1px;/* Define a forma com um corte diagonal na parte inferior */
-        clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
         & span {
             font-size: 0.85rem;
             font-weight: 600;
