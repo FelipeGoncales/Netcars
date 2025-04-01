@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.118:5000";
+var BASE_URL = "http://192.168.1.119:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
 
