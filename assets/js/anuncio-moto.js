@@ -57,16 +57,27 @@ function carregarOwlCarrossel() {
     });
 }
 
-// Função para pegar as informações do input e passar para o parágrafo
-
-function carregarInputs() {
+// Função para carregar os valores dos inputs e selects para seus respectivos mirrors
+function carregarInputsESelects() {
+    // Carregar valores dos inputs
     $('input').each(function () {
         const id = $(this).attr('id');
-        const spanMirror = $(`#mirror-${id}`)
+        if (id) {
+            const mirrorElement = $(`#mirror-${id}`);
+            $(this).css('display', 'none');
+            mirrorElement.text($(this).val()).css('display', 'flex');
+        }
+    });
 
-        $(this).css('display', 'none');
-        spanMirror.text($(this).val()).css('display', 'flex');
-    })
+    // Carregar valores dos selects
+    $('select').each(function () {
+        const id = $(this).attr('id');
+        if (id) {
+            const mirrorElement = $(`#mirror-${id}`);
+            $(this).css('display', 'none');
+            mirrorElement.text($(this).val()).css('display', 'flex');
+        }
+    });
 }
 
 // Evento de input para formatação em tempo real
@@ -286,7 +297,7 @@ $(document).ready(function () {
 
                 $("#input-cidade").val(`${infoVeic.cidade} - ${siglaEstado}`);
                 // É necessário chamar a função carregarInputs dentro do ajax novamente
-                carregarInputs();
+                carregarInputsESelects();
             })
 
             // Input ano
@@ -332,7 +343,7 @@ $(document).ready(function () {
             // Carregar foto da marca da moto
             $("#logo-img").attr('src', `${logo_motos[infoVeic.marca]}`);
 
-            carregarInputs();
+            carregarInputsESelects();
         },
         error: function (response) {
             alert('Erro ao carregar os dados do veículo.');
@@ -340,6 +351,116 @@ $(document).ready(function () {
         }
     });
 })
+
+// Lógica do botão salvar alterações
+$('#salvar-alteracoes').click(function () {
+    if (editarOn === true) {
+        // Obter todos os valores dos inputs
+        const marca = $('#input-marca').val();
+        const modelo = $('#input-modelo').val();
+        const cidade = $('#input-cidade').val();
+        const ano = $('#input-ano').val();
+        const marchas = $('#input-marchas').val();
+        const quilometragem = extrairNumeros($('#input-quilometragem').val());
+        const tipoMotor = $('#input-tipo-motor').val();
+        const cor = $('#input-cor').val();
+        const freio = $('#input-freio').val();
+        const direcaoEletrica = $('#input-direcao-eletrica').val();
+        const computadorBordo = $('#input-computador-bordo').val();
+        const alarme = $('#input-alarme').val();
+        const cilindrada = $('#input-cilindrada').val();
+        const precoVenda = desformatarPreco($('#input-preco-venda').val());
+
+        // Preparando dados para enviar ao backend
+        const dadosMoto = {
+            id: id_moto,
+            marca: marca,
+            modelo: modelo,
+            quilometragem: quilometragem,
+            cor: cor,
+            marchas: marchas,
+            tipo_motor: tipoMotor,
+            freio: freio,
+            direcao_eletrica: direcaoEletrica,
+            computador_bordo: computadorBordo,
+            alarme: alarme,
+            cilindrada: cilindrada,
+            preco_venda: precoVenda
+        };
+
+        // Ano normalmente vem no formato "2020/2021", separando ano de fabricação e modelo
+        if (ano && ano.includes('/')) {
+            const [anoFabricacao, anoModelo] = ano.split('/');
+            dadosMoto.ano_fabricacao = anoFabricacao;
+            dadosMoto.ano_modelo = anoModelo;
+        }
+
+        // Cidade normalmente vem no formato "Cidade - UF", separando a cidade e o estado
+        if (cidade && cidade.includes(' - ')) {
+            const [cidadeNome, estado] = cidade.split(' - ');
+            dadosMoto.cidade = cidadeNome;
+            dadosMoto.estado = estado;
+        }
+
+        // Requisição AJAX para atualizar o anúncio da moto
+        $.ajax({
+            method: "PUT",
+            url: `${BASE_URL}/moto/${id_moto}`,
+            data: JSON.stringify(dadosMoto),
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+            },
+            success: function (response) {
+                // Desativa o modo de edição
+                editarOn = false;
+                
+                // Exibe mensagem de sucesso
+                alertMessage('Alterações salvas com sucesso!', 'success');
+                
+                // Atualiza os inputs e selects visuais
+                carregarInputsESelects();
+            },
+            error: function (response) {
+                alertMessage(response.responseJSON.error || 'Erro ao salvar alterações!', 'error');
+                console.log(response);
+            }
+        });
+    }
+});
+
+// Sobrescrever a função de edição do anuncio.js para funcionar com selects também
+$('#editarAnuncio').off('click').on('click', function () {
+    if (editarOn === false) {
+        editarOn = true;
+
+        // Habilitar e mostrar inputs
+        $('input').each(function () {
+            const id = $(this).attr('id');
+            if (id) {
+                const mirrorElement = $(`#mirror-${id}`);
+                $(this).css('display', 'flex').attr('disabled', false);
+                mirrorElement.css('display', 'none');
+            }
+        });
+
+        // Habilitar e mostrar selects
+        $('select').each(function () {
+            const id = $(this).attr('id');
+            if (id) {
+                const mirrorElement = $(`#mirror-${id}`);
+                $(this).css('display', 'flex').attr('disabled', false);
+                mirrorElement.css('display', 'none');
+            }
+        });
+    } else {
+        editarOn = false;
+        alertMessage('Alterações salvas com sucesso!', 'success');
+
+        // Lógica para salvar no banco será executada no botão salvar alterações
+        carregarInputsESelects();
+    }
+});
 
 // Deletar veículo
 
