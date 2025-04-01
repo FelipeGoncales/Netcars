@@ -54,6 +54,11 @@ $(document).ready(function() {
             alertMessage("Erro ao carregar quantidade de veículos", "error");
         }
     })
+
+    // Atualizar data das reservas
+    $.ajax({
+        url: `${BASE_URL}/atualizar_reservas`
+    })
 })
 
 // Salvar marca veículo no Local Storage

@@ -936,66 +936,132 @@ tbody tr.tipo2 {
         font-size: 1.4rem;
     }
     & .div-carrossel {
-        width: calc(100%);
+        width: 100%;
         overflow: auto;
         display: flex;
         justify-content: flex-start;
         align-items: center;
-    }
-    & .conteudo {
-        display: flex;
-        gap: 20px;
-        align-items: flex-start;
-        justify-content: center;
+        position: relative;
     }
 }
 
 /* Card Padrão */
-.card{
-    background: var(--cor-bg-sec);
-    width: 300px;
-    height: 470px;
-    border-radius: 10px;
-    & img{
+
+#div-reservas {
+    min-height: 475px;
+    display: flex;
+    width: fit-content;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    & .div-pai {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: 100%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    } & .itens-card{
         display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
-        padding: 0px 15px;
-        gap: 15px;
-        & h3{
-            font-size: 1.5rem;
-            font-weight: 600;
-        } & p{
-            font-size: 0.8rem;
-            color: var(--cor-titles);
-            font-weight: 400;
-        } & button{
-            background: var(--roxo);
+        gap: 20px;
+        align-self: center;
+        justify-self: center;
+        & .icon {
+            color: var(--cor-texto-apagado);
+            font-size: 6rem;
+        }
+        & .nada-encontrado {
+            color: var(--cor-texto-apagado);
+            font-size: 1.1rem;
+        }
+        & .buscar-btn {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--roxo);
             color: var(--cor-bg-sec);
-            padding: 12px;
-            font-weight: 40000;
-            border-radius: 10px;
+            font-weight: 600;
+            border-radius: 500px;
+            font-size: 0.9rem;
+            padding: 10px 30px;
             border: none;
             cursor: pointer;
             transition: 0.2s;
             &:hover {
                 background-color: var(--hover-roxo);
             }
-        }& .container-info-card{
+        }
+    }
+}
+
+.card{
+    background: var(--cor-bg-sec);
+    border-radius: 10px;
+    overflow: hidden;    
+    width: 300px;
+    height: 100%;
+    padding-bottom: 15px;
+    position: relative;
+    & img{
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    } 
+    & .reservado-por {
+        font-size: 0.8rem;
+        color: var(--cor-texto-apagado);
+        background-color: var(--cor-bg-sec);
+        padding: 10px;
+        padding-right: 30px;
+        position: absolute;
+        left: -1px;
+        top: -1px;/* Define a forma com um corte diagonal na parte inferior */
+        clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+        & span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--roxo);
+        }
+    }
+    & .itens-card{                              
+        display: flex;
+        flex-direction: column;
+        padding: 0px 15px;
+        gap: 15px;
+        & h3{
+            margin-top: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000;
+        } 
+        & p{
+            font-size: 0.8rem;
+            color: var(--cor-titles);
+            font-weight: 400;
+        } 
+        & .ver-detalhes{
+            background: var(--roxo);
+            color: #fff;
+            padding: 12px;
+            font-weight: 400;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            &:hover {
+                background-color: var(--hover-roxo);
+            }
+        }
+        & .container-info-card{
             color: var(--cor-titles);
             display: flex;
             gap: 10px;
             align-items: center;
-            & .info-card{
-                display: flex;
-                gap: 10px;
-                align-items: center;
-            }
         }
-    }
+    }    
 }
 
 /* END DIVS PERFIL CLIENTE */
