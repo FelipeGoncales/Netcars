@@ -668,6 +668,9 @@ $("#editarAnuncio").on("click", function () {
     // Verifica se os inputs não estão visíveis
     if (editarOn === false) {
         editarOn = true;
+        
+        // Alterar ícone do botão de editar para X
+        $(this).removeClass('fa-pencil').addClass('fa-xmark');
 
         $('input').each(function () {
             const id = $(this).attr('id');
@@ -695,6 +698,9 @@ $("#editarAnuncio").on("click", function () {
         $('#salvar-alteracoes').prop('disabled', false);
     } else {
         editarOn = false;
+
+        // Alterar ícone do botão de editar para a caneta
+        $(this).removeClass('fa-xmark').addClass('fa-pencil');
 
         $("input, select").prop("disabled", true);
 
@@ -791,10 +797,16 @@ $("#salvar-alteracoes").on("click", function (e) {
             // Passar o valor dos inputs pros mirrors
             carregarInputs();
 
+            // Alterar ícone do botão de editar para a caneta
+            $('#editarAnuncio').removeClass('fa-xmark').addClass('fa-pencil');
+
             // Desabilita o botão de salvar alterações
             $('#salvar-alteracoes').prop('disabled', true);
         },
         error: function (response) {
+            // Reabilita o botão caso dê erro
+            $('#salvar-alteracoes').prop('disabled', false);
+            
             // Exibe mensagem de erro
             Swal.fire({
                 title: "Erro",

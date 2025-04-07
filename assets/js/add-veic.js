@@ -151,9 +151,39 @@ function addAnoInput(input) {
 }
 // Adicionado options aos inputs
 addAnoInput(anoModeloCarro);
-addAnoInput(anoFabricacaoCarro);
 addAnoInput(anoModeloMoto);
-addAnoInput(anoFabricacaoMoto);
+
+// Função para que ano de fabricação possa ser apenas 1 ano maior que ano modelo
+function anoModeloInput(inputMod, inputFab) {
+    $(inputMod).on('change', function() {
+        let anoMin = parseInt(inputMod.val());
+
+        if (!anoMin) {
+            $(inputFab).empty().prop('disabled', true);
+            $(`label[for="${$(inputFab).attr('id')}"]`).removeClass('active');
+            return;
+        }
+
+        $(inputFab)
+            .empty()
+            .append($(`<option value=""></option>`))
+            .prop('disabled', false);
+
+        let anoSeguinte = anoMin + 1;
+
+        if (anoSeguinte > anoMax) {
+            anoSeguinte = anoMin;
+        }
+
+        for (let ano = anoMin; ano <= anoSeguinte; ano++) {
+            const option = $(`<option value="${ano}">${ano}</option>`);
+            inputFab.append(option);
+        }
+    })
+}
+
+anoModeloInput(anoModeloCarro, anoFabricacaoCarro);
+anoModeloInput(anoModeloMoto, anoFabricacaoMoto);
 
 // Função para validar o RENAVAM (tanto de carros quanto de motos)
 function validarRENAVAM(seletor) {

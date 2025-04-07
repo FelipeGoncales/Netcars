@@ -71,22 +71,27 @@
     color: var(--cor-texto);
 }
 
-
-#editarAnuncio { 
+.fa-pencil, .fa-xmark { 
     display: none;
-}
-
-.fa-pencil {
     background-color: #ECEDF2;
     color: var(--roxo);
     font-size: 20px;
-    padding: 8px;
+    padding: 20px;
     border-radius: 50%;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
     transition: 0.3s;
+    box-sizing: border-box;
     &:hover {
         scale: 1.1;
     }
+}
+.fa-xmark {
+    font-size: 25px;
+    padding-top: 22px;
 }
 
 .vehicleSub, #mirror-input-subtitle{
@@ -473,6 +478,9 @@ main {
 }
 .supermoto {
     background-image: url(../img/banner-moto/supermoto.jpg);
+}
+.motocustom {
+    background-image: url(../img/banner-moto/motocustom.png);
 }
 
 /* Fim do Main */
