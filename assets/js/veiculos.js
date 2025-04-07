@@ -121,6 +121,15 @@ async function buscarVeiculos() {
             // Obtém a lista de veículos
             const listaVeic = response.veiculos;
 
+            if (listaVeic.length === 0) {
+                const cardInvisivel = $("<div></div>").addClass("card-invisivel").css({
+                    height: "300px",
+                    visibility: "hidden"
+                });
+                $("#div-veiculos").append(cardInvisivel);
+                return;
+            }            
+
             for (veiculo of listaVeic) {
                 // Cria a div card
                 const divCard = $("<div></div>").addClass("card");
