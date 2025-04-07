@@ -283,7 +283,7 @@ main {
         cursor: pointer;
         transition: 0.2s;
         &:disabled {
-            background-color: #b6b6b6;
+            background-color: #d4d4d4;
             cursor: not-allowed;    
             &:hover {
                 scale: 1;   
