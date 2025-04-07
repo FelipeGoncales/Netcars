@@ -39,8 +39,9 @@ function formatarQntVeic(valor) {
     return valor;
 }
 
-$(document).ready(function() {
-    $.ajax({
+$(document).ready(async function() {
+    
+    await $.ajax({
         url: `${BASE_URL}/qnt_veiculos`,
         success: function(response) {
 
@@ -56,7 +57,7 @@ $(document).ready(function() {
     })
 
     // Atualizar data das reservas
-    $.ajax({
+    await $.ajax({
         url: `${BASE_URL}/atualizar_reservas`
     })
 })

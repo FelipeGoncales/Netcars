@@ -24,10 +24,8 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
-    <!-- JS de anúncio -->
-    <script src="assets/js/anuncio.js" defer></script>
     <!-- JS anúncio de carro -->
-     <script src="assets/js/anuncio-carro.js" defer></script>
+    <script src="assets/js/anuncio-carro.js" defer></script>
 </head>
 
 <body>
@@ -141,15 +139,17 @@
                         <div>
                             <p class="itemcss-title">Cidade/Estado</p>
                             <div class="formataçãoInput">
-                            <select class="select-info" id="input-cidade" disabled>
-                                <option value=""></option>
-                            </select>
+                                <select class="select-info" id="input-cidade" disabled>
+                                    <option value=""></option>
+                                </select>
+                                <span id="dash-cidade-select">-</span>
                                 <select class="select-info" id="input-estado" disabled>
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="formataçãoInput">
                                 <p class="select-mirror" id="mirror-input-cidade"></p>
+                                <span id="dash-cidade-mirror">-</span>
                                 <p class="select-mirror" id="mirror-input-estado"></p>
                             </div>
                         </div>
@@ -164,12 +164,14 @@
                                 <select class="select-info" id="select-ano-modelo" disabled>
                                     <option value=""></option>
                                 </select>
+                                <span id="barra-ano-select">/</span>
                                 <select class="select-info" id="select-ano-fabricacao" disabled>
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="formataçãoInput">
                                 <p class="select-mirror" id="mirror-select-ano-modelo"></p>
+                                <span id="barra-ano-mirror">/</span>
                                 <p class="select-mirror" id="mirror-select-ano-fabricacao"></p>
                             </div>
                         </div>
@@ -253,7 +255,7 @@
                             <p class="select-mirror" id="mirror-select-licenciado"></p>
                         </div>                        
                         <div>
-                            <p class="itemcss-title">Final da Placa</p>
+                            <p class="itemcss-title" id="label-placa">Final da Placa</p>
                             <input class="input-info" id="input-placa" disabled />
                             <p class="input-mirror" id="mirror-input-placa"></p>
                         </div>
@@ -271,7 +273,7 @@
                         <p class="mensagem" id="mensagem-reserva">Não deseja mais o veículo? Cancele sua reserva :(</p>
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
-                            <button class="salvar-btn" id="salvar-alteracoes">Salvar alterações</button>
+                            <button class="salvar-btn" id="salvar-alteracoes" disabled>Salvar alterações</button>
                             <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
                         </div>
                         <div class="div-buttons cancelar-reserva" id="div-button-cancelar-reserva">

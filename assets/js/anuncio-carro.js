@@ -80,14 +80,37 @@ function carregarOwlCarrossel() {
 
 // Função para pegar as informações do input e passar para o parágrafo
 
-function carregarInputs() {
-    $('input, select').each(function () {
+async function carregarInputs() {
+    // Passar o valor dos inputs para os mirrors
+    await $('input, select').each(function () {
         const id = $(this).attr('id');
         const spanMirror = $(`#mirror-${id}`);
 
         $(this).css('display', 'none');
         spanMirror.text($(this).val()).css('display', 'flex');
     });
+
+    // Função especial para o input de licenciado (Sim ou Não)
+    const selectLicenciado = $('#select-licenciado');
+    const spanMirror = $(`#mirror-select-licenciado`);
+
+    selectLicenciado.css('display', 'none');
+    let valorLicenciado;
+
+    if (selectLicenciado.val() === '1') {
+        valorLicenciado = 'Sim';
+    } else {
+        valorLicenciado = 'Não';
+    }
+
+    spanMirror.text(valorLicenciado).css('display', 'flex');
+
+    // Lógica para mostrar as barras do ano e traço da cidade
+    $('#barra-ano-mirror').css('display', 'flex');
+    $('#barra-ano-select').css('display', 'none');
+
+    $('#dash-cidade-mirror').css('display', 'flex');
+    $('#dash-cidade-select').css('display', 'none');
 }
 
 // Evento de input para formatação em tempo real
@@ -229,61 +252,72 @@ function extrairNumeros(valor) {
 // Adicionando formatação de preço
 formatarPreco('#input-preco-venda');
 
+var tipoUser;
+
+// Obter tipo de usuário
+function obterTipoUser() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    const token = dadosUser.token;
+
+    if (!token) {
+        localStorage.removeItem('dadosUser');
+        localStorage.setItem('mensagem', JSON.stringify({
+            "error": "Sessão não iniciada."
+        }))
+        window.location.href = 'login.html';
+    }
+
+    return $.ajax({
+        url: `${BASE_URL}/obter_tipo_usuario`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function (response) {
+            tipoUser = response.tipo_usuario;
+            return;
+        },
+        error: function (response) {
+            localStorage.removeItem('dadosUser');
+            localStorage.setItem('mensagem', JSON.stringify({
+                "error": response.responseJSON.error
+            }))
+            return window.location.href = "login.html";
+        }
+    })
+}
+
 // Alterar botão
 async function alterarBotao() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
 
     if (dadosUser) {
-        const token = dadosUser.token;
+        await obterTipoUser();
 
-        if (!token) {
-            localStorage.removeItem('dadosUser');
-            localStorage.setItem('mensagem', JSON.stringify({
-                "error": "Sessão não iniciada."
-            }))
-            window.location.href = 'login.html';
+        if (tipoUser === 2 || tipoUser === 1) {
+            $('#div-button-vendedor').css('display', 'flex');
+            $('#div-button-cliente').css('display', 'none');
+            $('#div-button-cancelar-reserva').css('display', 'none');
+
+            // Função para mudar a frase que aparece caso seja cliente ou usuário
+            $('#mensagem-user').css('display', 'none');
+            $('#mensagem-adm').css('display', 'flex');
+            $('#mensagem-reserva').css('display', 'none');
+
+            $('#editarAnuncio').css('display', 'flex');
+        } else {
+            $('#div-button-vendedor').css('display', 'none');
+            $('#div-button-cliente').css('display', 'flex');
+            $('#div-button-cancelar-reserva').css('display', 'none');
+
+            // Função para mudar a frase que aparece caso seja cliente ou usuário
+            $('#mensagem-user').css('display', 'flex');
+            $('#mensagem-adm').css('display', 'none');
+            $('#mensagem-reserva').css('display', 'none');
+
+            $('#editarAnuncio').css('display', 'none');
         }
-    
-        $.ajax({
-            url: `${BASE_URL}/obter_tipo_usuario`,
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            success: await async function(response) {
-                const tipoUser = response.tipo_usuario;
 
-                if (tipoUser === 2 || tipoUser === 1) {
-                    $('#div-button-vendedor').css('display', 'flex');
-                    $('#div-button-cliente').css('display', 'none');
-                    $('#div-button-cancelar-reserva').css('display', 'none');
-
-                    // Função para mudar a frase que aparece caso seja cliente ou usuário
-                    $('#mensagem-user').css('display', 'none');
-                    $('#mensagem-adm').css('display', 'flex');
-                    $('#mensagem-reserva').css('display', 'none');
-
-                    $('#editarAnuncio').css('display', 'flex');
-                } else {
-                    $('#div-button-vendedor').css('display', 'none');
-                    $('#div-button-cliente').css('display', 'flex');
-                    $('#div-button-cancelar-reserva').css('display', 'none');
-
-                    // Função para mudar a frase que aparece caso seja cliente ou usuário
-                    $('#mensagem-user').css('display', 'flex');
-                    $('#mensagem-adm').css('display', 'none');
-                    $('#mensagem-reserva').css('display', 'none');
-
-                    $('#editarAnuncio').css('display', 'none');
-                }
-            },
-            error: await function(response) {
-                localStorage.removeItem('dadosUser');
-                localStorage.setItem('mensagem', JSON.stringify({
-                    "error": response.responseJSON.error
-                }))
-                window.location.href = "login.html";
-            }
-        })
     } else {
         $('#div-button-vendedor').css('display', 'none');
         $('#div-button-cliente').css('display', 'flex');
@@ -328,7 +362,7 @@ $(document).ready(async function () {
         }),
         headers: headers,
         contentType: "application/json",
-        success: function (response) {
+        success: async function (response) {
             const infoVeic = response.veiculos[0];
             const divCarrossel = $('#div-owl-carousel');
 
@@ -382,7 +416,7 @@ $(document).ready(async function () {
 
             // Input versao
             $("#input-subtitle").val(infoVeic.versao);
-            
+
             $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
                 let selectEstado = $("#input-estado");
 
@@ -394,8 +428,8 @@ $(document).ready(async function () {
                 // Verifica se o estado do banco é sigla ou nome completo
                 const estadoBanco = infoVeic.estado;
                 if (estadoBanco) {
-                    const estadoEncontrado = estados.find(estado => 
-                        estado.sigla.toUpperCase() === estadoBanco.toUpperCase() || 
+                    const estadoEncontrado = estados.find(estado =>
+                        estado.sigla.toUpperCase() === estadoBanco.toUpperCase() ||
                         estado.nome.toLowerCase() === estadoBanco.toLowerCase()
                     );
 
@@ -410,27 +444,27 @@ $(document).ready(async function () {
             // Função para carregar cidades
             function carregarCidades(uf, cidadeBanco) {
                 $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
-                  .done(function(cidades) {
-                      let selectCidade = $("#input-cidade");
-              
-                      cidades.forEach(cidade => {
-                          selectCidade.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
-                      });
-              
-                      if (cidadeBanco) {
-                          const cidadeNormalizada = cidadeBanco.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-              
-                          const cidadeEncontrada = cidades.find(c => {
-                              const nomeNormalizado = c.nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                              return nomeNormalizado === cidadeNormalizada;
-                          });
-              
-                          if (cidadeEncontrada) {
-                              selectCidade.val(cidadeEncontrada.nome);
-                              $("#mirror-input-cidade").text(cidadeEncontrada.nome);
-                          }
-                      }
-                  })
+                    .done(function (cidades) {
+                        let selectCidade = $("#input-cidade");
+
+                        cidades.forEach(cidade => {
+                            selectCidade.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
+                        });
+
+                        if (cidadeBanco) {
+                            const cidadeNormalizada = cidadeBanco.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+                            const cidadeEncontrada = cidades.find(c => {
+                                const nomeNormalizado = c.nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                                return nomeNormalizado === cidadeNormalizada;
+                            });
+
+                            if (cidadeEncontrada) {
+                                selectCidade.val(cidadeEncontrada.nome);
+                                $("#mirror-input-cidade").text(cidadeEncontrada.nome);
+                            }
+                        }
+                    })
             }
 
             // Preencher os selects de ano modelo e ano fabricação
@@ -445,7 +479,7 @@ $(document).ready(async function () {
 
             // select categoria
             $("#select-categoria").val(infoVeic.categoria);
-              
+
 
             // select combustível
             $("#select-combustivel").val(infoVeic.combustivel);
@@ -455,10 +489,17 @@ $(document).ready(async function () {
 
             // select licenciado
             $("#select-licenciado").val(infoVeic.licenciado);
-            
+
             // Input final placa
-            const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
-            $('#input-placa').val(ultimoCaracterPlaca)
+            await obterTipoUser();
+
+            if (tipoUser in [1, 2]) {
+                $('#label-placa').text('Placa')
+                $('#input-placa').val(infoVeic.placa);
+            } else {
+                const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
+                $('#input-placa').val(ultimoCaracterPlaca);
+            }
 
             // Input preço venda
             $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
@@ -492,7 +533,7 @@ $(document).ready(async function () {
 
 // Cancelar reserva
 
-$('#cancelar-reserva').click(function() {
+$('#cancelar-reserva').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Você está prestes a cancelar a reserva desse veículo.",
@@ -515,7 +556,7 @@ $('#cancelar-reserva').click(function() {
                     localStorage.setItem('msgReserva', response.success);
                     window.location.href = "cliente-perfil.html";
                 },
-                error: function(response) {
+                error: function (response) {
                     Swal.fire({
                         title: "Algo deu errado...",
                         text: response.responseJSON.error,
@@ -619,17 +660,87 @@ $('#reservar-btn').click(function () {
     });
 })
 
+
+// Variável para saber se a edição está ativa ou não
+let editarOn = false;
+
 $("#editarAnuncio").on("click", function () {
+    // Verifica se os inputs não estão visíveis
+    if (editarOn === false) {
+        editarOn = true;
 
-    $("input, select").prop("disabled", false);
+        $('input').each(function () {
+            const id = $(this).attr('id');
+            const spanMirror = $(`#mirror-${id}`)
 
-    $("input, select").css("display", "block");
+            $(this).css('display', 'flex').attr('disabled', false);
+            spanMirror.css('display', 'none');
+        })
 
-    $("p.input-mirror, p.select-mirror").css("display", "none");
-  });
+        $("input, select").prop("disabled", false);
 
+        $("input, select").css("display", "block");
+    
+        // Barra (/) do ano
+        $('#barra-ano-mirror').css('display', 'none');
+        $('#barra-ano-select').css('display', 'flex');
+    
+        // Traço (-) da cidade
+        $('#dash-cidade-mirror').css('display', 'none');
+        $('#dash-cidade-select').css('display', 'flex');
+    
+        $("p.input-mirror, p.select-mirror").css("display", "none");
+    
+        // Habilita o botão de salvar alterações
+        $('#salvar-alteracoes').prop('disabled', false);
+    } else {
+        editarOn = false;
 
-  function coletarDadosAtualizados() {
+        $("input, select").prop("disabled", true);
+
+        $("input, select").css("display", "none");
+    
+        // Barra (/) do ano
+        $('#barra-ano-mirror').css('display', 'flex');
+        $('#barra-ano-select').css('display', 'none');
+    
+        // Traço (-) da cidade
+        $('#dash-cidade-mirror').css('display', 'flex');
+        $('#dash-cidade-select').css('display', 'none');
+    
+        $("p.input-mirror, p.select-mirror").css("display", "flex");
+    
+        // Habilita o botão de salvar alterações
+        $('#salvar-alteracoes').prop('disabled', true);
+
+        // Voltar o valor anterior aos inputs
+        $('input, select').each(function () {
+            const input = $(this);
+            const id = input.attr('id');
+            const spanMirror = $(`#mirror-${id}`);
+
+            console.log(spanMirror.text())
+            input.val(spanMirror.text());
+        });
+
+        // Função especial para o input de licenciado (Sim ou Não)
+        const selectLicenciado = $('#select-licenciado');
+        const spanMirror = $(`#mirror-select-licenciado`);
+
+        let valorLicenciado;
+
+        if (spanMirror.val() === 'Sim') {
+            valorLicenciado = '1';
+        } else {
+            valorLicenciado = '0';
+        }
+
+        selectLicenciado.val(valorLicenciado);
+    }
+});
+
+// Coletar dados
+function coletarDadosAtualizados() {
     return {
         marca: $("#select-marca").val(),
         modelo: $("#input-modelo").val(),
@@ -644,13 +755,13 @@ $("#editarAnuncio").on("click", function () {
         quilometragem: extrairNumeros($("#input-quilometragem").val()),
         cidade: $("#input-cidade").val(),
         preco_venda: desformatarPreco($("#input-preco-venda").val()),
-        licenciado: $("#select-licenciado").val() === "Sim" ? 1 : 0,
+        licenciado: $("#select-licenciado").val(),
         placa: $("#input-placa").val().toUpperCase(),
         ativo: 1
     };
 }
 
-
+// Salvar alterações
 $("#salvar-alteracoes").on("click", function (e) {
     e.preventDefault();
 
@@ -665,7 +776,7 @@ $("#salvar-alteracoes").on("click", function (e) {
         headers: {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
-        success: function(response) {
+        success: function (response) {
             // Exibe uma mensagem de sucesso (pode usar SweetAlert2)
             Swal.fire({
                 title: "Sucesso!",
@@ -673,12 +784,17 @@ $("#salvar-alteracoes").on("click", function (e) {
                 icon: "success",
                 confirmButtonText: "Ok"
             });
-            
+
             // Se necessário, desabilite os inputs novamente e atualize os "mirrors"
             $("input").prop("disabled", true);
+
+            // Passar o valor dos inputs pros mirrors
             carregarInputs();
+
+            // Desabilita o botão de salvar alterações
+            $('#salvar-alteracoes').prop('disabled', true);
         },
-        error: function(response) {
+        error: function (response) {
             // Exibe mensagem de erro
             Swal.fire({
                 title: "Erro",

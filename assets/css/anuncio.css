@@ -239,6 +239,10 @@ main {
     width: 100%;
 }
 
+#barra-ano-select, #dash-cidade-select {
+    display: none;
+}
+
 .div-buttons {
     display: none;
     width: 100%;
@@ -273,6 +277,13 @@ main {
         background-color: #6C1DE9;
         cursor: pointer;
         transition: 0.2s;
+        &:disabled {
+            background-color: #b6b6b6;
+            cursor: not-allowed;    
+            &:hover {
+                scale: 1;   
+            }
+        }
     }
     & .salvar-btn:hover{
         scale: 1.03;
@@ -635,9 +646,13 @@ main {
     }
 }
 
+#select-marca {
+    width: 290px;
+}
+
 @media (max-width: 768px) {
     
-    #input-marca, #input-modelo {
+    #select-marca, #input-modelo {
         width: 100%;
     }
 
