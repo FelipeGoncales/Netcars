@@ -64,7 +64,6 @@
             </a>
             <p id="fecharBarraLateral">&times;</p>
         </div>
-        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
         <div class="div-pai-banner-venda">
@@ -420,7 +419,7 @@
             <p>Comprar motos</p>
         </div>
     </div>
-
+    <!-- Modal Login -->
     <div id="modal-login">
         <p class="title">Faça login para uma experiência
             ainda melhor! ;D</p>
@@ -428,62 +427,30 @@
         <p class="subtitle">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
         <p id="closeModalLogin">&times;</p>
     </div>
+
+    <!-- Modal editar imagens -->
+    <form id="modal-editar-imagem">
+        <i class="fa-solid fa-xmark" id="closeModalEditarImagem"></i>
+
+        <p class="titulo">Edite aqui as imagens do seu veículo</p>
+        <p class="subtitulo">Insira no mínimo 3 imagens</p>
+
+        <!-- Input de upload de imagem -->
+        <label for="upload-imagem" class="upload-label">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        </label>
+        <!-- Altere o atributo name para "imagens" -->
+            <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" multiple />
+
+        <!-- Container onde as imagens serão exibidas -->
+        <div class="div-preview-container-pai">
+            <div id="preview-container"></div>
+        </div>
+
+        <button type="submit">Salvar alterações</button>
+    </form>
+
+    <!-- Overlay -->
+    <div class="overlay-bg" id="overlay-bg"></div>
 </body>
-<script>
-     $(document).ready(function() {
-        $(".div-modelos a").on("click", function(e) {
-            e.preventDefault(); // Previne o comportamento padrão do link
-
-            // Pega o valor da categoria que foi clicada
-            const tipo = $(this).attr("tipo-veiculo");
-
-            localStorage.setItem('tipo-veiculo', tipo);
-
-            // Pega o valor da categoria que foi clicada
-            const categoria = $(this).attr("categoria");
-
-            // Salva a categoria no localStorage
-            localStorage.setItem("filtro-categoria", categoria);
-
-            // Redireciona para a página de veículos
-            window.location.href = "veiculos.html";
-        });
-    });
-
-    $(document).ready(function() {
-    $(".div-modelos a").on("click", function(e) {
-        e.preventDefault(); // Previne o comportamento padrão do link
-
-        // Pega a categoria da moto
-        const categoria = $(this).attr("categoria");
-        const tipo = $(this).attr("tipo-veiculo");
-        
-
-        // Salva no localStorage
-        localStorage.setItem("tipo-veiculo", tipo);
-        localStorage.setItem("filtro-categoria", categoria);
-
-        // Redireciona para a página de veículos
-        window.location.href = "veiculos.html";
-    });
-});
-
-$(document).ready(function() {
-    $(".a-marcas-car").on("click", function(e) {
-
-        e.preventDefault(); // Previne o comportamento padrão do link
-
-        localStorage.setItem('tipo-veiculo', 'carro');
-
-        // Pegamos o id do elemento clicado
-        const marca = $(this).attr("marca");
-
-        // Salvamos no localStorage para usar na próxima página
-        localStorage.setItem("filtro-marca", marca);
-
-        // Redireciona para a página de veículos
-        window.location.href = "veiculos.html";  
-    });
-});
-</script>
 </html>

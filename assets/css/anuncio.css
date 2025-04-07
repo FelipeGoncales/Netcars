@@ -71,7 +71,7 @@
     color: var(--cor-texto);
 }
 
-.fa-pencil, .fa-xmark { 
+#editarAnuncio.fa-pencil, #editarAnuncio.fa-xmark { 
     display: none;
     background-color: #ECEDF2;
     color: var(--roxo);
@@ -89,7 +89,7 @@
         scale: 1.1;
     }
 }
-.fa-xmark {
+#editarAnuncio.fa-xmark {
     font-size: 25px;
     padding-top: 22px;
 }
@@ -283,7 +283,7 @@ main {
         cursor: pointer;
         transition: 0.2s;
         &:disabled {
-            background-color: #d4d4d4;
+            background-color: #c6c6c6;
             cursor: not-allowed;    
             &:hover {
                 scale: 1;   
@@ -534,6 +534,146 @@ main {
     scale: 1;
 }
 
+/* Modal Editar Imagens */
+#overlay-bg {
+    display: none;
+    background-color: rgba(0,0,0,0.25);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 110;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#modal-editar-imagem {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    background-color: #FFF;
+    padding: 50px 80px;
+    padding-bottom: 280px;
+    border-radius: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 120;
+    & .titulo {
+        color: #000;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 19px;
+        text-align: center;
+    }
+    & button {
+        width: calc(100% - 160px);
+        padding: 15px;
+        border-radius: 999px;
+        font-weight: 600;
+        color: var(--cor-bg-sec);
+        font-size: 1rem;
+        position: absolute;
+        bottom: 50px;
+        border: none;
+        background-color: var(--roxo);
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+}
+
+#closeModalEditarImagem {
+    font-size: 1.6rem;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+#upload-imagem {
+    display: none;
+    /* Esconde o input padrão */
+}
+
+.upload-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    & i {
+        font-size: 2.3rem;
+        color: var(--cor-texto-apagado);
+    }
+}
+
+.div-preview-container-pai {
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 330px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 430px;
+    box-sizing: content-box;
+    height: 100px;
+    height: fit-content;
+    overflow: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#preview-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 100px;
+}
+
+.preview-item {
+    width: 100px;  
+    height: 100px; 
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    display: inline-block;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 3px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 @media (max-width:1420px) {
     .div-content-venda {
         padding-right: 0;
@@ -547,7 +687,6 @@ main {
         display: none;
     }
 }
-
 
 @media (max-width: 1240px) {
     .div-contents-pai {
