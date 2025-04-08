@@ -434,6 +434,10 @@ function limparFiltros() {
     $('.filtro-cor-header').removeClass('active');
     $('.filtro-cor-container').removeClass('active');
 
+    // Remover a sigla e nome da cidade acima do filtro
+    $("#cidade-container").remove();
+    $("#estado-container").remove();
+
     // "Descheckar" as options de cores
     const optionItems = document.querySelectorAll('.option-item');
     optionItems.forEach((option) => {
