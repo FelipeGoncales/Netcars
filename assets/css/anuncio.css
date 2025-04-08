@@ -67,7 +67,7 @@
     width: 45%;
 }
 
-#input-placa {
+#input-placa, #mirror-input-placa {
     text-transform: uppercase;
 }
 

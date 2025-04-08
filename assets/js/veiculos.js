@@ -23,8 +23,35 @@ let filtroSelect = {};
 
 let tipoVeiculo = "";
 
-// Aplicar filtro caso exista no local storage
+// Aplicar filtro caso exista nome veículo no local storage
+
+// Aplicar filtro caso exista marca no local storage
 $(document).ready(() => {
+    // Nome veículo like
+    const nomeVeic = localStorage.getItem("nome-veic");
+
+    if (nomeVeic) {
+        let listaNomeVeic = nomeVeic.split(' ');
+        let marcaVeic = listaNomeVeic[0];
+
+        $('.itens-details li').each(function() {
+            let $li = $(this);  // Garante que $li seja um objeto jQuery
+            $li.removeClass('active');  // Remove classe "active" de todos
+
+            // Se o atributo 'marca' do li for igual à marca selecionada...
+            if ($li.attr('marca').toLowerCase() === marcaVeic.toLowerCase()) {
+                $li.addClass('active');  // Adiciona a classe "active" ao elemento correspondente
+                if (listaNomeVeic.length === 1) {
+                    addFiltro("marca", $li.attr('marca'), null, "filtro-marca", "select", $li);
+                }
+            }
+        });
+
+        // Limpa a marca salva para evitar que o filtro se repita
+        localStorage.removeItem("nome-veic");
+    }
+
+    // Buscar marca selecionada
     const marcaSelecionada = localStorage.getItem("filtro-marca");
 
     if (marcaSelecionada) {
@@ -43,10 +70,8 @@ $(document).ready(() => {
         // Limpa a marca salva para evitar que o filtro se repita
         localStorage.removeItem("filtro-marca");
     }
-});
 
-// Carregar veículos ao abrir a página
-$(document).ready(() => {
+    // Obter tipo veículo
     const tipoVeicLocalStorage = localStorage.getItem('tipo-veiculo');
 
     if (tipoVeicLocalStorage) {
@@ -65,7 +90,8 @@ $(document).ready(() => {
     }
 
     buscarVeiculos();
-})
+});
+
 
 // Função para obter sigla dos estados
 function obterSiglaEstado(estadoVeiculo) {

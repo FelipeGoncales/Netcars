@@ -67,15 +67,34 @@
                     <p class="veiculo-selecionado" id="veiculo-carro">Comprar carros</p>
                     <p class="veiculo-nao-selecionado" id="veiculo-moto">Comprar motos</p>
                 </div>
+
                 <div class="div-input-pesquisar" id="div-input-pesquisar-carro">
-                    <input type="text" placeholder="Digite a marca ou modelo do carro" id="inputPesquisarModelo">
-                    <a href="veiculos.html">Ofertas disponíveis (<span id="qnt-carros"></span>)</a>
+                    <!-- Input pesquisar ofertas carros -->
+                    <input type="text" placeholder="Digite a marca ou modelo do carro" id="inputPesquisarModeloCarro">
+                    <p class="pesquisar" id="pesquisar-carros">Ofertas disponíveis (<span id="qnt-carros"></span>)</p>
                     <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <!-- Sugestões -->
+                    <div class="div-sugestoes" id="sugestoes-carros">
+                        <div class="div-marcas" id="div-marcas-carros"></div>
+                        <div class="div-modelos" id="div-modelos-carros"></div>
+                    </div>
                 </div>
+
                 <div class="div-input-pesquisar" id="div-input-pesquisar-moto">
-                    <input type="text" placeholder="Digite a marca ou modelo da moto" id="inputPesquisarModelo">
-                    <a href="veiculos.html">Ofertas disponíveis (<span id="qnt-motos"></span>)</a>
+                    <!-- Input pesquisar ofertas motos -->
+                    <input type="text" placeholder="Digite a marca ou modelo da moto" id="inputPesquisarModeloMoto">
+                    <p class="pesquisar" id="pesquisar-motos">Ofertas disponíveis (<span id="qnt-motos"></span>)</p>
                     <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <!-- Sugestões -->
+                    <div class="div-sugestoes" id="sugestoes-carros">
+                        <p class="sugestao"><i class="fa-solid fa-magnifying-glass"></i> HYUNDAI IX35</p>
+                        <p class="sugestao"><i class="fa-solid fa-magnifying-glass"></i> HYUNDAI IX35</p>
+                        <p class="sugestao"><i class="fa-solid fa-magnifying-glass"></i> HYUNDAI IX35</p>
+                        <p class="sugestao"><i class="fa-solid fa-magnifying-glass"></i> HYUNDAI IX35</p>
+                        <p class="sugestao"><i class="fa-solid fa-magnifying-glass"></i> HYUNDAI IX35</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -98,9 +117,9 @@
                             <img src="assets/img/logo-carro/toyota.png" alt="Toyota Logo">
                         </div>
                     </a>
-                    <a class="a-marcas-car" href="veiculos.html" marca="Volkswagem">
+                    <a class="a-marcas-car" href="veiculos.html" marca="Volkswagen">
                         <div class="div-marca">
-                            <img src="assets/img/logo-carro/volkswagem.png" alt="Volkswagem Logo">
+                            <img src="assets/img/logo-carro/volkswagem.png" alt="Volkswagen Logo">
                         </div>
                     </a>
                     <a class="a-marcas-car" href="veiculos.html" marca="Fiat">
@@ -300,43 +319,4 @@
         <p id="closeModalLogin">&times;</p>
     </div>
 </body>
-<script>
-        $(document).ready(function() {
-            $(".div-modelos a").on("click", function(e) {
-                e.preventDefault(); // Previne o comportamento padrão do link
-
-                // Pega o valor da categoria que foi clicada
-                const tipo = $(this).attr("tipo-veiculo");
-
-                localStorage.setItem('tipo-veiculo', tipo);
-
-                // Pega o valor da categoria que foi clicada
-                const categoria = $(this).attr("categoria");
-
-                // Salva a categoria no localStorage
-                localStorage.setItem("filtro-categoria", categoria);
-
-                // Redireciona para a página de veículos
-                window.location.href = "veiculos.html";
-            });
-        });
-
-        $(document).ready(function() {
-        $(".div-modelos a").on("click", function(e) {
-            e.preventDefault(); // Previne o comportamento padrão do link
-
-            // Pega a categoria da moto
-            const categoria = $(this).attr("categoria");
-            const tipo = $(this).attr("tipo-veiculo");
-            
-
-            // Salva no localStorage
-            localStorage.setItem("tipo-veiculo", tipo);
-            localStorage.setItem("filtro-categoria", categoria);
-
-            // Redireciona para a página de veículos
-            window.location.href = "veiculos.html";
-        });
-    });
-</script>
 </html>
