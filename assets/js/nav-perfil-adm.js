@@ -104,6 +104,7 @@ function exibirRelatorio(tipo) {
     $('#editUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
     $('#reservas').css('display', 'none');
+    $('#manutencao').css('display','none')
 
     // Mostrar apenas o relatório selecionado
     $(`#relatorio-${tipo}`).css('display', 'flex');
@@ -124,6 +125,7 @@ $(document).ready(function () {
         $('#editUser').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
         $('#reservas').css('display', 'none');
+        $('#manutencao').css('display','none')
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
             fecharBarraLateral();
@@ -136,6 +138,7 @@ $(document).ready(function () {
             $('#minha-conta').css('display', 'flex');
             $('#editUser').css('display', 'none');
             $('#reservas').css('display', 'none');
+            $('#manutencao').css('display','none')
             $('.container-relatorios').css('display', 'none');
             $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
 
@@ -160,6 +163,7 @@ $(document).ready(function () {
         $('#minha-conta').css('display', 'none');
         $('#editUser').css('display', 'flex');
         $('#reservas').css('display', 'none');
+        $('#manutencao').css('display','none')
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
         if ($(window).width() <= 980) {
@@ -174,6 +178,23 @@ $(document).ready(function () {
         $('#minha-conta').css('display', 'none');
         $('#editUser').css('display', 'none');
         $('#reservas').css('display', 'flex');
+        $('#manutencao').css('display','none')
+        $('.container-relatorios').css('display', 'none');
+        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    })
+
+    $("#link_manuVeic").on("click", function() {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#minha-conta').css('display', 'none');
+        $('#editUser').css('display', 'none');
+        $('#reservas').css('display', 'none');
+        $('#manutencao').css('display','flex')
         $('.container-relatorios').css('display', 'none');
         $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
 
@@ -423,7 +444,7 @@ function carregarUsuarios(usuarios_lista) {
     $.ajax({
         url: `${BASE_URL}/cadastro`,
         success: function (response) {
-            const tbody = $("tbody");
+            const tbody = $("#tbody-users");
 
             let usuarios = usuarios_lista;
             // Caso não tiver parâmetro lista, usar resposta API
@@ -475,9 +496,69 @@ function carregarUsuarios(usuarios_lista) {
     })
 }
 
+function carregarManutencao(manutencao_lista) {
+    $.ajax({
+        url: `${BASE_URL}/cadastro`,
+        success: function (response) {
+            const tbody = $("#tbody-manu");
+
+            let manutencao = manutencao_lista;
+            // Caso não tiver parâmetro lista, usar resposta API
+            if (!manutencao_lista) {
+                manutencao = response.manutencao;
+            }
+
+            // Limpa o tbody antes de carregar os outros elementos
+            tbody.empty();
+
+            for (index in manutencao) {
+                // Cria um elemento <tr> para agrupar as colunas
+                const $tr = $('<tr>');
+
+                if (index % 2 === 0) {
+                    $tr.addClass('tipo2');
+                } else {
+                    $tr.addClass('tipo1');
+                }
+
+                // Cria os tds que irão conter as informações
+                const $tdIcon = $('<td>');
+                const $icone = $('<i>').addClass('fa-solid fa-pen-to-square edit-icon').attr('id', manutencao[index].id_usuario);
+                $tdIcon.append($icone);
+
+                const $tdNome = $('<td>').text(manutencao[index].nome_completo).addClass('nome-td');
+                const $tdEmail = $('<td>').text(manutencao[index].email).addClass('email-td');
+                const $tdTelefone = $('<td>').text(manutencao[index].telefone).addClass('telefone-td');
+
+                let textoAtivo = manutencao[index].ativo === 1 ? "Ativo" : "Inativo";
+                const $tdAtivo = $('<td>').text(textoAtivo).addClass('ativo-td');
+
+                let textoTipoUser = manutencao[index].tipo_usuario === 1 ? "Administrador" : manutencao[index].tipo_usuario === 2 ? "Vendedor" : "Cliente";
+                const $tdTipoUsuario = $('<td>').text(textoTipoUser).addClass('tipo-user-td');
+
+                $tr.append($tdIcon)
+                    .append($tdNome)
+                    .append($tdEmail)
+                    .append($tdTelefone)
+                    .append($tdAtivo)
+                    .append($tdTipoUsuario);
+
+                tbody.append($tr);
+            }
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+}
+
+
 // Chamar a função ao abrir a página
 
-$(document).ready(() => carregarUsuarios());
+$(document).ready(() => {
+    carregarUsuarios();
+    carregarManutencao();
+});
 
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
