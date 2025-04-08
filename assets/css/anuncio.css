@@ -67,6 +67,10 @@
     width: 45%;
 }
 
+#input-placa {
+    text-transform: uppercase;
+}
+
 #mirror-select-marca { 
     color: var(--cor-texto);
 }

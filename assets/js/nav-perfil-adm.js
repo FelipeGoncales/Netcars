@@ -41,6 +41,24 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
+$(document).ready(function() {
+    // Exibir mensagem de reserva
+    const mensagemLocalStorage = localStorage.getItem('msgReserva');
+
+    if (mensagemLocalStorage) {
+        alertMessage(mensagemLocalStorage, 'success');
+        localStorage.removeItem('msgReserva')
+    };
+
+    // Exibir mensagem de cadastro de veículo
+    const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+
+    if (mensagemCadVeic) {
+        alertMessage(mensagemCadVeic, 'success');
+        localStorage.removeItem('msgCadVeic')
+    };
+})
+
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
 
 // Ao carregar o documento, adiciona a classe "active" ao label anterior se o input/select tiver valor
@@ -66,12 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-const mensagemCadVeic = localStorage.getItem('msgCadVeic');
-if (mensagemCadVeic) {
-    alertMessage(mensagemCadVeic, 'success');
-    localStorage.removeItem('msgCadVeic')
-};
 
 // Fazer o nav funcionar
 // Função para trocar a borda roxa do A que for clicado

@@ -23,6 +23,10 @@ var tipoUser;
 function obterTipoUser() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
+    if (!dadosUser) {
+        return;
+    }
+
     const token = dadosUser.token;
 
     if (!token) {
@@ -413,10 +417,12 @@ async function alterarBotao() {
     } else {
         $('#div-button-vendedor').css('display', 'none');
         $('#div-button-cliente').css('display', 'flex');
+        $('#div-button-cancelar-reserva').css('display', 'none');
 
         // Função para mudar a frase que aparece caso seja cliente ou usuário
         $('#mensagem-user').css('display', 'flex');
         $('#mensagem-adm').css('display', 'none');
+        $('#mensagem-reserva').css('display', 'none');
 
         $('#editarAnuncio').css('display', 'none');
     }
@@ -442,7 +448,10 @@ $(document).ready(async function () {
     const dadosUser = localStorage.getItem('dadosUser');
     const headers = {};
     if (dadosUser) {
-        headers["Authorization"] = "Bearer " + JSON.parse(dadosUser).token;
+        const token = JSON.parse(dadosUser).token;
+        if (token) {
+            headers["Authorization"] = "Bearer " + token;
+        }
     }
 
     // Carregar dados do veículo
@@ -847,6 +856,25 @@ $(document).ready(function() {
     }
 })
 
+// Função para validar a placa
+function validarPlaca() {
+    const placa = $('#input-placa').val(); // Pega o valor da placa
+    const regexMercosul = /^[A-Za-z]{3}[0-9]{1}[A-Za-z]{1}[0-9]{2}$/; // Formato ABC1D23
+    const regexAntigo = /^[A-Za-z]{3}[0-9]{4}$/; // Formato ABC1234
+
+    if (!regexMercosul.test(placa) && !regexAntigo.test(placa)) {
+        alertMessage("Formato de placa inválido.", 'error');
+        return false; // Retorna falso se não passar na validação
+    }
+
+    return true; // Retorna verdadeiro se for válido
+}
+
+// Adicionando evento blur ao input de placa para exibir mensagem caso esteja em um formato inválido
+$('#input-placa').on('blur', function() {
+    validarPlaca();
+})
+
 // Cancelar reserva
 $('#cancelar-reserva').click(function () {
     Swal.fire({
@@ -869,7 +897,16 @@ $('#cancelar-reserva').click(function () {
                 contentType: "application/json",
                 success: function (response) {
                     localStorage.setItem('msgReserva', response.success);
-                    window.location.href = "cliente-perfil.html";
+                    // Obter tipo usuário
+                    obterTipoUser();
+
+                    if (tipoUser === 1) {
+                        window.location.href = "administrador-perfil.html";
+                    } else if (tipoUser === 2) {
+                        window.location.href = "vendedor-perfil.html";
+                    } else {
+                        window.location.href = "cliente-perfil.html";
+                    }
                 },
                 error: function (response) {
                     Swal.fire({
@@ -924,6 +961,32 @@ $('#deletar-veiculo').click(function () {
 
 // Reservar carro
 $('#reservar-btn').click(function () {
+    // Busca os dados do usuário
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    // Verificar se existe dadosUser no local storage
+    if (!dadosUser) {
+        // Caso não, define uma mensagem e redireciona para login
+        localStorage.setItem('mensagem', JSON.stringify({
+            'success': 'Faça login para concluir sua reserva!'
+        }))
+        // e redireciona para login
+        window.location.href = "login.html";
+    }
+
+    // Busca o token
+    const token = JSON.parse(dadosUser).token;
+
+    // Verificar se existe dadosUser no local storage
+    if (!token) {
+        // Caso não, define uma mensagem
+        localStorage.setItem('mensagem', JSON.stringify({
+            'success': 'Faça login para concluir sua reserva!'
+        }))
+        // e redireciona para login
+        window.location.href = "login.html";
+    }
+
     Swal.fire({
         title: "Deseja reservar esse veículo?",
         icon: "warning",
@@ -945,7 +1008,7 @@ $('#reservar-btn').click(function () {
                 contentType: 'application/json',
                 data: JSON.stringify(envia),
                 headers: {
-                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    "Authorization": "Bearer " + token
                 },
                 success: function (response) {
                     Swal.fire({
@@ -1089,6 +1152,11 @@ function coletarDadosAtualizados() {
 $("#salvar-alteracoes").on("click", function (e) {
     e.preventDefault();
 
+    let validacaoPlaca = validarPlaca();
+    if (!validacaoPlaca) {
+        return;
+    }
+
     // Coleta os dados atualizados
     const dadosAtualizados = coletarDadosAtualizados();
 
@@ -1123,6 +1191,9 @@ $("#salvar-alteracoes").on("click", function (e) {
 
             // Desabilita o botão de salvar alterações
             $('#salvar-alteracoes').prop('disabled', true);
+            
+            // Redefinindo a variável de editar para false (Não está editando)
+            editarOn = false;
         },
         error: function (response) {
             // Reabilita o botão caso dê erro

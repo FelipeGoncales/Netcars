@@ -44,12 +44,15 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-const mensagemLocalStorage = localStorage.getItem('msgReserva');
+// Exibir mensagem de reserva
+$(document).ready(function() {
+    const mensagemLocalStorage = localStorage.getItem('msgReserva');
 
-if (mensagemLocalStorage) {
-    alertMessage(mensagemLocalStorage, 'success');
-    localStorage.removeItem('msgReserva')
-};
+    if (mensagemLocalStorage) {
+        alertMessage(mensagemLocalStorage, 'success');
+        localStorage.removeItem('msgReserva')
+    };
+})
 
 // Fazer o nav funcionar
 

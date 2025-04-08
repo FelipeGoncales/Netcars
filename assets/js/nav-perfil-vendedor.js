@@ -44,12 +44,22 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+// Exibir mensagem de reserva
+$(document).ready(function() {
+    const mensagemLocalStorage = localStorage.getItem('msgReserva');
 
-if (mensagemCadVeic) {
-    alertMessage(mensagemCadVeic, 'success');
-    localStorage.removeItem('msgCadVeic')
-};
+    if (mensagemLocalStorage) {
+        alertMessage(mensagemLocalStorage, 'success');
+        localStorage.removeItem('msgReserva')
+    };
+
+    const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+
+    if (mensagemCadVeic) {
+        alertMessage(mensagemCadVeic, 'success');
+        localStorage.removeItem('msgCadVeic')
+    };
+})
 
 // Fazer o nav funcionar
 
