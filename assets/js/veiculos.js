@@ -40,12 +40,76 @@ $(document).ready(() => {
 
             // Se o atributo 'marca' do li for igual à marca selecionada...
             if ($li.attr('marca').toLowerCase() === marcaVeic.toLowerCase()) {
-                $li.addClass('active');  // Adiciona a classe "active" ao elemento correspondente
-                if (listaNomeVeic.length === 1) {
-                    addFiltro("marca", $li.attr('marca'), null, "filtro-marca", "select", $li);
-                }
+                // Adiciona a classe "active" a imagem da logomarca correspondente
+                $li.addClass('active');
+
+                let removerBtn = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+                    // Remove o filtro de estado ao clicar no X
+                    $(`#filtro-marca`).remove();
+                    $(`#filtro-modelo`).remove();
+
+                    // Remover do informação do objeto
+                    delete filtroSelect['marca'];
+                    delete filtroSelect['nome-veic'];
+                    
+                    // Refaz a contagem de filtros aplicados
+                    $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+                    // Tira o sombreamento roxo da marca selecionada
+                    $(".itens-details li").removeClass("active");
+        
+                    // Aplicar filtros a API quando deletar
+                    buscarVeiculos();
+                });
+
+                // Adiciona o filtro de marca
+                addFiltro("marca", $li.attr('marca'), removerBtn, "filtro-marca", "select", $li, false); // Parâmetro false para evitar chamar a função buscar veículos
             }
         });
+
+        // Se a lista tiver mais de 1 item, ou seja, marca e modelo, adiciona o modelo
+        if (listaNomeVeic.length > 1) {
+            // Removendo o primeiro elemento (marca)
+            listaNomeVeic.splice(0, 1);
+
+            // Juntando os outros nomes para formar o modelo
+            let modelo = listaNomeVeic.join(' ');
+
+            // Obtém a div de filtro
+            let divFiltro = $('#filtros-aplic');
+
+            // Cria o botão de remover o filtro de modelo
+            removerBtnModelo = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+                // Remove o filtro de estado ao clicar no X
+                $(`#filtro-modelo`).remove();
+                // Remover do informação do objeto
+                delete filtroSelect['nome-veic'];
+                
+                // Refaz a contagem de filtros aplicados
+                $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+                // Aplicar filtros a API quando deletar
+                buscarVeiculos();
+            });
+
+            // Cria a div
+            let div = $("<div></div>").attr('id','filtro-modelo').addClass('filtro');
+
+            // Adiciona o nome do modelo a div e o botão de remover o filtro
+            div.append($('<p></p>').text(modelo)).append(removerBtnModelo);
+            
+            // Adicionar o filtro a div de filtros
+            divFiltro.append(div);
+            
+            // Adicionar informação no filtro
+            filtroSelect['nome-veic'] = modelo;
+
+            // Fazendo a recontagem da quantidade de filtros aplicados
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+
+            // Busca por veículos
+            buscarVeiculos();
+        }
 
         // Limpa a marca salva para evitar que o filtro se repita
         localStorage.removeItem("nome-veic");
@@ -63,7 +127,7 @@ $(document).ready(() => {
             // Se o atributo 'marca' do li for igual à marca selecionada...
             if ($li.attr('marca') === marcaSelecionada) {
                 $li.addClass('active');  // Adiciona a classe "active" ao elemento correspondente
-                addFiltro("marca", marcaSelecionada, null, "filtro-marca", "select", $li);
+                addFiltro("marca", marcaSelecionada, null, "filtro-marca", "select", $li, true);
             }
         });
 
@@ -295,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // add filtro visual 
-function addFiltro(tipo, nome, remove, id, tipoInput, input) {
+function addFiltro(tipo, nome, remove, id, tipoInput, input, buscarVeiculosVal) {
     if ($(input).val() === '') {            
         // Remove o filtro de estado ao clicar no X
         $(`#${id}`).remove();
@@ -368,8 +432,10 @@ function addFiltro(tipo, nome, remove, id, tipoInput, input) {
 
     $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
 
-    // Aplicar filtros e enviar para a API
-    buscarVeiculos();
+    if (buscarVeiculosVal) {
+        // Aplicar filtros e enviar para a API
+        buscarVeiculos();
+    }
 }
 
 // Função para trocar o filtro entre carro e moto
@@ -503,18 +569,18 @@ $(".itens-details li").on("click", function() {
 
     let marca = $(this).attr('marca')
 
-    addFiltro("marca", marca, null, "filtro-marca", "select", $(this));
+    addFiltro("marca", marca, null, "filtro-marca", "select", $(this), true);
 });
 
 
 // Filtro categoria
 
 $('#select-categoria-carro').on('change', function() {
-    addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-carro'));
+    addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-carro'), true);
 })
 
 $('#select-categoria-moto').on('change', function() {
-    addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-moto'));
+    addFiltro('categoria', $(this).val(), null, "categoria-veic", "select", $('#select-categoria-moto'), true);
 })
 
 // Filtro Localidade
@@ -659,7 +725,7 @@ $(document).ready(function () {
                 buscarVeiculos();
             });
 
-            addFiltro('estado', estado.nome, removerFiltro, 'estado-filtro', null, null);
+            addFiltro('estado', estado.nome, removerFiltro, 'estado-filtro', null, null, true);
 
             // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
             estadoContainer.empty().append(chevronRight).append(estadoLink);
@@ -725,7 +791,7 @@ $(document).ready(function () {
             buscarVeiculos();
         });
 
-        addFiltro("cidade", cidadeNome, removerFiltro, "cidade-filtro", null, null);
+        addFiltro("cidade", cidadeNome, removerFiltro, "cidade-filtro", null, null, true);
 
         // Atualiza o container com os novos elementos (substituindo o estado anterior, se houver)
         cidadeContainer.empty().append(chevronRight).append(cidadeLink);
@@ -803,13 +869,13 @@ formatarPreco('#input-preco-min');
 formatarPreco('#input-preco-max');
 
 $("#input-preco-min").on("input", function() {
-    addFiltro("preco-min", `Mín: R$${$(this).val()}`, null, "preco-min", "input", $(this));
+    addFiltro("preco-min", `Mín: R$${$(this).val()}`, null, "preco-min", "input", $(this), true);
 })
 
 // Filtro Preço Máximo
 
 $("#input-preco-max").on("input", function() {
-    addFiltro("preco-max", `Max: R$${$(this).val()}`, null, "preco-max", "input", $(this));
+    addFiltro("preco-max", `Max: R$${$(this).val()}`, null, "preco-max", "input", $(this), true);
 })
 
 
@@ -831,7 +897,7 @@ addAnoInput($("#select-ano-max"));
 // Filtro Ano Mínimo
 
 $("#select-ano-min").on("change", function() {
-    addFiltro("ano-min", `Desde ${$(this).val()}`, null, "ano-min", "input", $(this));
+    addFiltro("ano-min", `Desde ${$(this).val()}`, null, "ano-min", "input", $(this), true);
 
     $('#select-ano-max').empty();
 
@@ -860,7 +926,7 @@ $("#select-ano-min").on("change", function() {
 // Filtro Ano Máximo
 
 $("#select-ano-max").on("change", function() {
-    addFiltro("ano-max", `Até ${$(this).val()}`, null, "ano-max", "input", $(this));
+    addFiltro("ano-max", `Até ${$(this).val()}`, null, "ano-max", "input", $(this), true);
 })
 
 // Filtro Cores

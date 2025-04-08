@@ -568,6 +568,7 @@ $(document).ready(async function () {
                 divCarrossel.append(divImg);
 
                 // Realiza o fetch da imagem e obtém o Blob
+                
                 const response = await fetch(imagem);
                 const blob = await response.blob();
 

@@ -173,101 +173,129 @@ function buscarMarcaModelo(texto, tipo) {
     window.location.href = "veiculos.html";  
 }
 
-// Buscar veículos pelo nome da marca ou modelo
+// Adicionar sugestão
 
-$('#inputPesquisarModeloCarro').on('input', function() {
-    
-    if ($(this).val() === '') {
-        $('#sugestoes-carros').css('display', 'none');
-        return;
-    }
+function addSugestao(texto, div, tipo) {
+    const pSug = $('<p></p>').addClass('sugestao');
 
-    $.ajax({
-        method: "post",
-        url: `${BASE_URL}/buscar-carro`, // URL da API para carros
-        data: JSON.stringify({
-            'nome-veic': $(this).val()
-        }),
-        contentType: "application/json",
-        success: function(response) {
-            // Div de sugestões
-            $('#sugestoes-carros')
-                .css('display', 'flex')
-                
-            // Div sugestões marcas
-            $('#div-marcas-carros')
-                .empty()
-                .append($('<p></p>').addClass('title-sug').text('Marcas'));
+    const iconSearch = $('<i></i>').addClass('fa-solid fa-magnifying-glass');
 
-            // Div sugestões modelos
-            $('#div-modelos-carros')
-                .empty()
-                .append($('<p></p>').addClass('title-sug').text('Modelos'));
+    pSug.append(iconSearch).append(texto);
 
-            let listaMarcas = [];
+    pSug.on('click', function() {
+        buscarMarcaModelo(texto, tipo);
+    });
 
-            const veiculos = response.veiculos;
+    $(div).append(pSug);
+}
 
-            if (!veiculos.length) {
+// Função para buscar veículos pelo nome da marca ou modelo
+function barraPesquisar(tipo, input, divSugestoes, divMarcas, divModelos) {
+    $(input).on('input', function() {
+        
+        if ($(this).val() === '') {
+            $(divSugestoes).css('display', 'none');
+            return;
+        }
+
+        $.ajax({
+            method: "post",
+            url: `${BASE_URL}/buscar-${tipo}`, // URL da API para carros
+            data: JSON.stringify({
+                'nome-veic': $(input).val()
+            }),
+            contentType: "application/json",
+            success: function(response) {
                 // Div de sugestões
-                $('#div-modelos-carros')
-                    .empty();
+                $(divSugestoes).css('display', 'flex');
+                    
+                // Div sugestões marcas
+                $(divMarcas)
+                    .empty()
+                    .append($('<p></p>').addClass('title-sug').text('Marcas'));
 
-                // Div de sugestões
-                $('#div-marcas-carros').empty();
+                // Div sugestões modelos
+                $(divModelos)
+                    .empty()
+                    .append($('<p></p>').addClass('title-sug').text('Modelos'));
 
-                // Cria o p de veículo não encontrado
-                const pSug = $('<p></p>').addClass('sugestao');
-                const iconSearch = $('<i></i>').addClass('fa-solid fa-magnifying-glass');
-                pSug.append(iconSearch).append('Nenhum veículo encontrado.');
+                const veiculos = response.veiculos;
 
-                // Da append no p
-                $('#div-modelos-carros').append(pSug);
+                if (!veiculos.length) {
+                    // Div de sugestões
+                    $(divModelos)
+                        .empty();
 
-                // Retorna
-                return;
-            }
+                    // Div de sugestões
+                    $(divMarcas).empty();
 
-            // Função para buscar até 10 veículos
-            let count = Math.min(10, veiculos.length);
+                    // Cria o p de veículo não encontrado
+                    const pSug = $('<p></p>').addClass('sugestao nada-encontrado');
+                    const iconSearch = $('<i></i>').addClass('fa-solid fa-magnifying-glass');
+                    pSug.append(iconSearch).append('Nenhum veículo encontrado.');
 
-            for (let i = 0; i < count; i++) {
-                if (!listaMarcas.includes(veiculos[i].marca)) {
-                    listaMarcas.push(veiculos[i].marca);
+                    // Da append no p
+                    $(divModelos).append(pSug);
+
+                    // Retorna
+                    return;
                 }
 
-                const pSug = $('<p></p>').addClass('sugestao');
-                const iconSearch = $('<i></i>').addClass('fa-solid fa-magnifying-glass');
-                const marcaModelo = veiculos[i].marca + ' ' + veiculos[i].modelo;
-                pSug.append(iconSearch).append(marcaModelo);
+                // Criando a lista de nome veículo (marca + modelo) 
+                let listaMarcaModelo = [];
+                
+                // Criando a lista de marcas 
+                let listaMarcas = [];
 
-                pSug.on('click', function() {
-                    buscarMarcaModelo(marcaModelo, 'carro');
-                });
+                // Função para buscar até 10 veículos
+                let count = Math.min(10, veiculos.length);
 
-                $('#div-modelos-carros').append(pSug);
+                // Percore 10 vezes ou o tamanho da lista
+                for (let i = 0; i < count; i++) {
+                    // Criando o nome do veículo (Unindo marca e modelo)
+                    const marcaModelo = veiculos[i].marca + ' ' + veiculos[i].modelo;
+
+                    // Adicionando a lista para evitar duplicações
+                    if (!listaMarcaModelo.includes(veiculos[i].marca)) {
+                        listaMarcaModelo.push(marcaModelo);
+                    }
+
+                    // Adicionando a lista para evitar duplicações
+                    if (!listaMarcas.includes(veiculos[i].marca)) {
+                        listaMarcas.push(veiculos[i].marca);
+                    }
+                }
+
+                // Adiciona as sugestões com base nas marcas adicionadas a lista
+                for (i in listaMarcas) {
+                    const marca = listaMarcas[i];
+
+                    // Chamando função de adicionar sugestão
+                    addSugestao(marca, divMarcas, tipo);
+                }
+
+                // Adiciona as sugestões com base nos nomes de veículos adicionados a lista
+                for (i in listaMarcaModelo) {
+                    const marcaModelo = listaMarcaModelo[i];
+
+                    // Chamando função de adicionar sugestão
+                    addSugestao(marcaModelo, divModelos, tipo);
+                }
+            },
+            error: function() {
+                alertMessage("Erro ao carregar as sugestões de veículos.", "error");
             }
-
-            for (i in listaMarcas) {
-                const marca = listaMarcas[i];
-
-                const pSug = $('<p></p>').addClass('sugestao');
-
-                const iconSearch = $('<i></i>').addClass('fa-solid fa-magnifying-glass');
-
-                pSug.append(iconSearch).append(marca);
-
-                pSug.on('click', function() {
-                    buscarMarcaModelo(marca, 'carro');
-                });
-
-                $('#div-marcas-carros').append(pSug);
-            }
-        },
-        error: function() {
-            alertMessage("Erro ao carregar quantidade de motos", "error");
-        }
+        })
     })
+}
+
+// Ao carregar a página
+$(document).ready(function() {
+    // Adicionando a função ao input de carros
+    barraPesquisar('carro', '#inputPesquisarModeloCarro', '#sugestoes-carros', '#div-marcas-carros', '#div-modelos-carros');
+    
+    // Adicionando a função ao input de motos
+    barraPesquisar('moto', '#inputPesquisarModeloMoto', '#sugestoes-motos', '#div-marcas-motos', '#div-modelos-motos');
 })
 
 $('#inputPesquisarModeloCarro').on('blur', function() {

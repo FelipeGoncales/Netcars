@@ -108,6 +108,7 @@ main {
     }
 }
 
+/* Div de sugestões (auto increment) */
 .div-sugestoes {
     display: flex;
     flex-direction: column;
@@ -132,29 +133,37 @@ main {
             top: 0;
             left: 0;
         }
-    }
-    & .sugestao {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 12px;
-        padding: 12px 15px;
-        font-size: 0.9rem;
-        color: var(--cor-texto-apagado);
-        background-color: #fff;
-        cursor: pointer;
-        transition: 0.1s;
-        &:hover {
-            background-color: #fafafa;
-            color: var(--cor-texto);
-        }
-        & i {
-            position: static;
-            left: auto;
-            top: auto;
-            transform: inherit;
-            font-size: inherit;
-            color: inherit;
+        & .sugestao {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 12px 15px;
+            font-size: 0.9rem;
+            color: var(--cor-texto-apagado);
+            background-color: #fff;
+            cursor: pointer;
+            transition: 0.1s;
+            /* Classe para quando aparecer nada encontrado */
+            &.nada-encontrado {
+                cursor: auto;
+                &:hover {
+                    background-color: #fff;
+                    color: var(--cor-texto-apagado);
+                }
+            }
+            &:hover {
+                background-color: #fafafa;
+                color: var(--cor-texto);
+            }
+            & i {
+                position: static;
+                left: auto;
+                top: auto;
+                transform: inherit;
+                font-size: inherit;
+                color: inherit;
+            }
         }
     }
 }
@@ -315,19 +324,6 @@ h4 {
                 padding-left: 50px;
                 font-size: 0.9rem;
             }
-            & .div-sugestoes {
-                width: 350px;
-                & .sugestao {
-                    & i {
-                        position: static;
-                        left: auto;
-                        top: auto;
-                        transform: inherit;
-                        font-size: inherit;
-                        color: inherit;
-                    }
-                }
-            }
             & p {
                 height: 60px;
                 padding: 0 20px;
@@ -343,6 +339,29 @@ h4 {
             }
         }
     }
+
+    .div-sugestoes {
+        width: 350px;
+        & .div-marcas, .div-modelos {
+            & .title-sug {
+                width: 100%;
+                height: auto;
+            }
+            & .sugestao {
+                width: 100%;
+                height: auto;
+                & i {
+                    position: static;
+                    left: auto;
+                    top: auto;
+                    transform: inherit;
+                    font-size: inherit;
+                    color: inherit;
+                }
+            }
+        }
+    }
+
     body {
         display: flex;
         flex-direction: column;

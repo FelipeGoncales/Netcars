@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.113:5000";
+var BASE_URL = "http://192.168.1.11:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
 
@@ -440,3 +440,54 @@ $('#deletar-usuario').click(function() {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })
+
+
+
+const nomeVeic = localStorage.getItem("nome-veic");
+
+if (nomeVeic) {
+    let listaNomeVeic = nomeVeic.split(' ');
+    let marcaVeic = listaNomeVeic[0];
+    let hasModelo = listaNomeVeic.length > 1;
+    let modeloVeic = hasModelo ? listaNomeVeic[1] : null;
+
+    // Variável para verificar se a marca foi encontrada
+    let marcaEncontrada = false;
+
+    $('.itens-details li').each(function() {
+        let $li = $(this);
+        $li.removeClass('active');
+
+        if ($li.attr('marca').toLowerCase() === marcaVeic.toLowerCase()) {
+            $li.addClass('active');
+            marcaEncontrada = true;
+
+            // Adiciona o filtro de marca (apenas uma vez)
+            addFiltro("marca", $li.attr('marca'), null, "filtro-marca", "select", $li);
+        }
+    });
+
+    // Apenas se houver modelo e a marca foi encontrada
+    if (hasModelo && marcaEncontrada) {
+        let divFiltro = $('#filtros-aplic');
+        
+        // Verifica se o filtro já existe para evitar duplicação
+        if (!$('#filtro-modelo').length) {
+            let removerBtnModelo = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+                $('#filtro-modelo').remove();
+                delete filtroSelect['nome-veic'];
+                $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+                buscarVeiculos();
+            });
+
+            let div = $("<div></div>").attr('id', 'filtro-modelo').addClass('filtro');
+            div.append($('<p></p>').text(modeloVeic)).append(removerBtnModelo);
+            divFiltro.append(div);
+
+            filtroSelect['nome-veic'] = modeloVeic;
+            $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);
+        }
+    }
+
+    localStorage.removeItem("nome-veic");
+}
