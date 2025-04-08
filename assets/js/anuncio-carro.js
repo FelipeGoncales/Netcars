@@ -300,7 +300,43 @@ function addAnoInput(input) {
 }
 // Adicionado options aos inputs
 addAnoInput(anoModelo);
-addAnoInput(anoFabricacao);
+
+// Função para que ano de fabricação possa ser apenas 1 ano maior que ano modelo
+// Função para adicionar options ano modelo
+function addOptionsAnoFab(inputMod, inputFab) {
+    let anoMin = parseInt(inputMod.val());
+
+    if (!anoMin) {
+        $(inputFab).empty().prop('disabled', true);
+        $(`label[for="${$(inputFab).attr('id')}"]`).removeClass('active');
+        return;
+    }
+
+    $(inputFab)
+        .empty()
+        .prop('disabled', false);
+
+    let anoSeguinte = anoMin + 1;
+
+    if (anoSeguinte > anoMax) {
+        anoSeguinte = anoMin;
+    }
+
+    for (let ano = anoMin; ano <= anoSeguinte; ano++) {
+        const option = $(`<option value="${ano}">${ano}</option>`);
+        inputFab.append(option);
+    }
+}
+
+// Função para adicionar ano modelo ao alterar
+function anoModeloInput(inputMod, inputFab) {
+    $(inputMod).on('change', function() {
+        addOptionsAnoFab(inputMod, inputFab);
+    })
+}
+
+// Adicionar o evento change ao input ano modelo
+anoModeloInput(anoModelo, anoFabricacao);
 
 // Formatar quilometragem
 function formatarQuilometragem(quilometragem) {
@@ -479,7 +515,7 @@ $(document).ready(async function () {
                         "left": "0",
                         "width": "100%",
                         "height": "100%",
-                        "background-color": "rgba(0, 0, 0, 0.5)", // Cor escura com transparência
+                        "background-color": "rgba(0, 0, 0, 0.3)", // Cor escura com transparência
                         "display": "flex",
                         "align-items": "center",
                         "justify-content": "center",
@@ -505,14 +541,18 @@ $(document).ready(async function () {
                     divImg.append(overlay);
 
                     // Adicionando eventos de hover para mostrar/ocultar o overlay
-                    divImg.hover(
-                        function() {
-                            overlay.css("opacity", "1");
-                        },
-                        function() {
-                            overlay.css("opacity", "0");
-                        }
-                    );
+                    if ($(window).width() < 768) {
+                        overlay.css("opacity", "1");
+                    } else {
+                        divImg.hover(
+                            function() {
+                                overlay.css("opacity", "1");
+                            },
+                            function() {
+                                overlay.css("opacity", "0");
+                            }
+                        );
+                    }
                 }
 
                 // Adicionando divImg ao carrossel ou ao elemento desejado
@@ -602,6 +642,9 @@ $(document).ready(async function () {
 
             // Preencher os selects de ano modelo e ano fabricação
             $("#select-ano-modelo").val(infoVeic.ano_modelo);
+            
+            await addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
+            
             $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
 
             // Input quilometragem
@@ -998,7 +1041,6 @@ $("#editarAnuncio").on("click", function () {
             const id = input.attr('id');
             const spanMirror = $(`#mirror-${id}`);
 
-            console.log(spanMirror.text())
             input.val(spanMirror.text());
         });
 
@@ -1008,7 +1050,7 @@ $("#editarAnuncio").on("click", function () {
 
         let valorLicenciado;
 
-        if (spanMirror.val() === 'Sim') {
+        if (spanMirror.text() === 'Sim') {
             valorLicenciado = '1';
         } else {
             valorLicenciado = '0';
