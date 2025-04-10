@@ -24,9 +24,7 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
-    <!-- JS de anúncio -->
-    <script src="assets/js/anuncio.js" defer></script>
-    <!-- JS anúncio de carro -->
+    <!-- JS anúncio de moto -->
     <script src="assets/js/anuncio-moto.js" defer></script>
 </head>
 
@@ -66,7 +64,6 @@
             </a>
             <p id="fecharBarraLateral">&times;</p>
         </div>
-        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
 
     <main>
@@ -82,8 +79,33 @@
                 <div class="div-content-venda">
                     <div class="div-title-venda">
                         <div class="div-title">
-                            <input class="vehicleTitle marca" id="input-marca" disabled></input>
-                            <p class="input-mirror" id="mirror-input-marca"></p>
+                            <!-- Select marca -->
+                            <select class="vehicleTitle marca" id="select-marca" disabled>
+                                <option value="Aprilia">Aprilia</option>
+                                <option value="Benelli">Benelli</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Bultaco">Bultaco</option>
+                                <option value="Cagiva">Cagiva</option>
+                                <option value="CFMoto">CFMoto</option>
+                                <option value="Ducati">Ducati</option>
+                                <option value="Harley-Davidson">Harley-Davidson</option>
+                                <option value="Haojue">Haojue</option>
+                                <option value="Honda">Honda</option>
+                                <option value="Husqvarna">Husqvarna</option>
+                                <option value="Indian Motorcycle">Indian Motorcycle</option>
+                                <option value="Kawasaki">Kawasaki</option>
+                                <option value="KTM">KTM</option>
+                                <option value="Kymco">Kymco</option>
+                                <option value="MV Agusta">MV Agusta</option>
+                                <option value="Royal Enfield">Royal Enfield</option>
+                                <option value="Suzuki">Suzuki</option>
+                                <option value="Triumph">Triumph</option>
+                                <option value="Yamaha">Yamaha</option>
+                                <option value="Zero Motorcycles">Zero Motorcycles</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-marca"></p>
+
+                            <!-- Input modelo -->
                             <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
                             <p class="input-mirror" id="mirror-input-modelo"></p>
                             <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
@@ -91,71 +113,185 @@
                     </div>
                     <form class="itens-details">
                         <div>
-                            <p class="itemcss-title">Cidade</p>
-                            <input class="input-info" type="text" id="input-cidade" disabled>
-                            <p class="input-mirror" id="mirror-input-cidade"></p>
+                            <p class="itemcss-title">Cidade - Estado</p>
+                            <div class="formataçãoInput">
+                                <select class="select-info" id="input-cidade" disabled></select>
+                                <span id="dash-cidade-select">-</span>
+                                <select class="select-info" id="input-estado" disabled></select>
+                            </div>
+                            <div class="formataçãoInput">
+                                <p class="select-mirror" id="mirror-input-cidade"></p>
+                                <span id="dash-cidade-mirror">-</span>
+                                <p class="select-mirror" id="mirror-input-estado"></p>
+                            </div>
                         </div>
+
                         <div class="li-vazia-1"></div>
                         <div class="li-vazia-2"></div>
                         <div class="li-vazia-3"></div>
+
                         <div>
-                            <p class="itemcss-title">Ano</p>
-                            <input class="input-info" id="input-ano" disabled />
-                            <p class="input-mirror" id="mirror-input-ano"></p>
+                            <p class="itemcss-title">Ano Modelo / Fabricação</p>
+                            <div class="formataçãoInput">
+                                <select class="select-info" id="select-ano-modelo" disabled></select>
+                                <span id="barra-ano-select">/</span>
+                                <select class="select-info" id="select-ano-fabricacao" disabled></select>
+                            </div>
+                            <div class="formataçãoInput">
+                                <p class="select-mirror" id="mirror-select-ano-modelo"></p>
+                                <span id="barra-ano-mirror">/</span>
+                                <p class="select-mirror" id="mirror-select-ano-fabricacao"></p>
+                            </div>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Marchas</p>
-                            <input class="input-info" id="input-marchas" disabled />
-                            <p class="input-mirror" id="mirror-input-marchas"></p>
+                            <select class="input-info" id="select-marchas" disabled>
+                                <option value="Automático">Automático</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-marchas"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Quilometragem</p>
                             <input class="input-info" id="input-quilometragem" disabled />
                             <p class="input-mirror" id="mirror-input-quilometragem"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Tipo de motor</p>
                             <input class="input-info" id="input-tipo-motor" disabled />
                             <p class="input-mirror" id="mirror-input-tipo-motor"></p>
                         </div>
+
+
                         <div>
                             <p class="itemcss-title">Cor</p>
-                            <input class="input-info" id="input-cor" disabled />
-                            <p class="input-mirror" id="mirror-input-cor"></p>
+                            <select class="select-info" id="select-cor" disabled>
+                                <option value="Branco">Branco</option>
+                                <option value="Preto">Preto</option>
+                                <option value="Prata">Prata</option>
+                                <option value="Cinza">Cinza</option>
+                                <option value="Vermelho">Vermelho</option>
+                                <option value="Vermelho">Vermelho Escuro</option>
+                                <option value="Azul">Azul</option>
+                                <option value="Azul Marinho">Azul Escuro</option>
+                                <option value="Verde Escuro">Verde</option>
+                                <option value="Verde Escuro">Verde Escuro</option>
+                                <option value="Marrom">Marrom</option>
+                                <option value="Dourado">Dourado</option>
+                                <option value="Laranja">Laranja</option>
+                                <option value="Amarelo">Amarelo</option>
+                                <option value="Roxo">Roxo</option>
+                            </select>
+                            <p class="select-mirror" id="mirror-select-cor"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Refrigeração</p>
-                            <input class="input-info" id="input-refrigeracao" disabled />
-                            <p class="input-mirror" id="mirror-input-refrigeracao"></p>
+                            <select class="input-info" id="select-refrigeracao" disabled>
+                                <option value="Ar">Ar</option>
+                                <option value="Óleo">Óleo</option>
+                                <option value="Líquida">Líquida</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-refrigeracao"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Categoria</p>
-                            <input class="input-info" id="input-categoria" disabled />
-                            <p class="input-mirror" id="mirror-input-categoria"></p>
+                            <select class="input-info" id="select-categoria" disabled>
+                                <option value="Esportiva">Esportiva</option>
+                                <option value="Custom">Custom</option>
+                                <option value="Street">Street</option>
+                                <option value="Scooter">Scooter</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Off-road">Off-road</option>
+                                <option value="Naked">Naked</option>
+                                <option value="Touring">Touring</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-categoria"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Cilindrada</p>
-                            <input class="input-info" id="input-cilindrada" disabled />
-                            <p class="input-mirror" id="mirror-input-cilindrada"></p>
+                            <select class="input-info" id="select-cilindrada" disabled>
+                                <option value="50">50 cc</option>
+                                <option value="110">110 cc</option>
+                                <option value="125">125 cc</option>
+                                <option value="150">150 cc</option>
+                                <option value="160">160 cc</option>
+                                <option value="180">180 cc</option>
+                                <option value="200">200 cc</option>
+                                <option value="250">250 cc</option>
+                                <option value="300">300 cc</option>
+                                <option value="350">350 cc</option>
+                                <option value="400">400 cc</option>
+                                <option value="450">450 cc</option>
+                                <option value="500">500 cc</option>
+                                <option value="600">600 cc</option>
+                                <option value="650">650 cc</option>
+                                <option value="700">700 cc</option>
+                                <option value="750">750 cc</option>
+                                <option value="800">800 cc</option>
+                                <option value="900">900 cc</option>
+                                <option value="1000">1000 cc</option>
+                                <option value="1100">1100 cc</option>
+                                <option value="1200">1200 cc</option>
+                                <option value="1300">1300 cc</option>
+                                <option value="1500">1500 cc</option>
+                                <option value="1800">1800 cc</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-cilindrada"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Partida</p>
-                            <input class="input-info" id="input-partida" disabled />
-                            <p class="input-mirror" id="mirror-input-partida"></p>
+                            <select class="input-info" id="select-partida" disabled>
+                                <option value="Elétrica">Elétrica</option>
+                                <option value="Pedal">Pedal</option>
+                                <option value="Mista (Elétrica + Pedal)">Mista (Elétrica + Pedal)</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-partida"></p>
                         </div>
+
                         <div>
-                            <p class="itemcss-title">Freio dianteiro/traseiro</p>
-                            <input class="input-info" id="input-freio" disabled />
-                            <p class="input-mirror" id="mirror-input-freio"></p>
+                            <p class="itemcss-title">Freio dianteiro / traseiro</p>
+                            <select class="input-info" id="select-freio" disabled>
+                                <option value="Tambor / Tambor">Tambor / Tambor</option>
+                                <option value="Tambor / Disco">Tambor / Disco</option>
+                                <option value="Disco / Tambor">Disco / Tambor</option>
+                                <option value="Disco / Disco">Disco / Disco</option>
+                                <option value="ABS / Tambor">ABS / Tambor</option>
+                                <option value="ABS / Disco">ABS / Disco</option>
+                                <option value="Disco ventilado / Disco">Disco ventilado / Disco</option>
+                                <option value="Disco ventilado / Tambor">Disco ventilado / Tambor</option>
+                                <option value="Cerâmico / Disco">Cerâmico / Disco</option>
+                                <option value="CBS / Tambor">CBS / Tambor</option>
+                                <option value="CBS / Disco">CBS / Disco</option>
+                                <option value="ABS / ABS">ABS / ABS</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-freio"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Alimentação</p>
-                            <input class="input-info" id="input-alimentacao" disabled />
-                            <p class="input-mirror" id="mirror-input-alimentacao"></p>
+                            <select class="input-info" id="select-alimentacao" disabled>
+                                <option value="Carburador">Carburador</option>
+                                <option value="Injeção Eletrônica">Injeção Eletrônica</option>
+                            </select>
+                            <p class="input-mirror" id="mirror-select-alimentacao"></p>
                         </div>
+
                         <div>
-                            <p class="itemcss-title">Final da Placa</p>
-                            <input class="input-info" disabled id="input-placa" />
+                            <p class="itemcss-title" id="label-placa">Final da Placa</p>
+                            <input class="input-info" id="input-placa" maxlength="7" disabled />
                             <p class="input-mirror" id="mirror-input-placa"></p>
                         </div>
                     </form>
@@ -176,7 +312,8 @@
                             <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
                         </div>
                         <div class="div-buttons cancelar-reserva" id="div-button-cancelar-reserva">
-                            <button class="salvar-btn" id="cancelar-reserva">Cancelar reserva <i class="fa-solid fa-trash-can"></i></button>
+                            <button class="salvar-btn" id="cancelar-reserva">Cancelar reserva <i
+                                    class="fa-solid fa-trash-can"></i></button>
                         </div>
                         <div class="div-buttons cliente" id="div-button-cliente">
                             <button class="salvar-btn" id="reservar-btn">Reservar agora</button>
@@ -184,6 +321,7 @@
                     </div>
                     <div class="div-content-venda-filho2">
                         <div class="circleLogo">
+                            <!-- Imagem da Marca do Veículo -->
                             <img src="" id="logo-img" alt="Logo Marca">
                         </div>
                     </div>
@@ -244,29 +382,29 @@
                             <div class="overlay"></div>
                         </div>
                     </a>
-                    
+
                     <a href="veiculos.html" tipo-veiculo="moto" categoria="Street">
                         <div class="street">
                             <p>Street</p>
                             <div class="overlay"></div>
                         </div>
                     </a>
-                    
+
                     <a href="veiculos.html" tipo-veiculo="moto" categoria="Trail">
                         <div class="trail">
                             <p>Trail</p>
                             <div class="overlay"></div>
                         </div>
                     </a>
-                    
+
                     <a href="veiculos.html" tipo-veiculo="moto" categoria="Big Trail">
                         <div class="big-trail">
                             <p>Big Trail</p>
                             <div class="overlay"></div>
                         </div>
                     </a>
-                    
-                    <a href="veiculos.html" tipo-veiculo="moto"categoria="Custom">
+
+                    <a href="veiculos.html" tipo-veiculo="moto" categoria="Custom">
                         <div class="motocustom">
                             <p>Custom</p>
                             <div class="overlay"></div>
@@ -283,8 +421,10 @@
         <div class="div-contato">
             <div>
                 <p class="footer-title">Cidades</p>
-                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Birigui - SP</a>
-                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Araçatuba - SP</a>
+                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Birigui - SP</a>
+                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Araçatuba - SP</a>
             </div>
             <div>
                 <p class="footer-title">Comprar</p>
@@ -320,6 +460,7 @@
         </div>
     </div>
 
+    <!-- Modal Login -->
     <div id="modal-login">
         <p class="title">Faça login para uma experiência
             ainda melhor! ;D</p>
@@ -328,62 +469,30 @@
         <p id="closeModalLogin">&times;</p>
     </div>
 
+    <!-- Modal editar imagens -->
+    <form id="modal-editar-imagem">
+        <i class="fa-solid fa-xmark" id="closeModalEditarImagem"></i>
+
+        <p class="titulo">Edite aqui as imagens do seu veículo</p>
+        <p class="subtitulo">Insira no mínimo 3 imagens</p>
+
+        <!-- Input de upload de imagem -->
+        <label for="upload-imagem" class="upload-label">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        </label>
+        <!-- Altere o atributo name para "imagens" -->
+        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" multiple />
+
+        <!-- Container onde as imagens serão exibidas -->
+        <div class="div-preview-container-pai">
+            <div id="preview-container"></div>
+        </div>
+
+        <button type="submit">Salvar alterações</button>
+    </form>
+
+    <!-- Overlay -->
+    <div class="overlay-bg" id="overlay-bg"></div>
 </body>
-<script>
-         $(document).ready(function() {
-        $(".div-modelos a").on("click", function(e) {
-            e.preventDefault(); // Previne o comportamento padrão do link
 
-            // Pega o valor da categoria que foi clicada
-            const tipo = $(this).attr("tipo-veiculo");
-
-            localStorage.setItem('tipo-veiculo', tipo);
-
-            // Pega o valor da categoria que foi clicada
-            const categoria = $(this).attr("categoria");
-
-            // Salva a categoria no localStorage
-            localStorage.setItem("filtro-categoria", categoria);
-
-            // Redireciona para a página de veículos
-            window.location.href = "veiculos.html";
-        });
-    });
-
-    $(document).ready(function() {
-    $(".div-modelos a").on("click", function(e) {
-        e.preventDefault(); // Previne o comportamento padrão do link
-
-        // Pega a categoria da moto
-        const categoria = $(this).attr("categoria");
-        const tipo = $(this).attr("tipo-veiculo");
-        
-
-        // Salva no localStorage
-        localStorage.setItem("tipo-veiculo", tipo);
-        localStorage.setItem("filtro-categoria", categoria);
-
-        // Redireciona para a página de veículos
-        window.location.href = "veiculos.html";
-    });
-});
-
-$(document).ready(function() {
-    $(".a-marcas-moto").on("click", function(e) {
-        e.preventDefault(); // Previne o comportamento padrão do link
-
-        localStorage.setItem('tipo-veiculo', 'moto');
-
-        // Pegamos o id do elemento clicado
-        const marca = $(this).attr("marca");
-
-        // Salvamos no localStorage para usar na próxima página
-        localStorage.setItem("filtro-marca", marca);
-
-        // Redireciona para a página de veículos
-        window.location.href = "veiculos.html";  
-    });
-});
-
-</script>
 </html>

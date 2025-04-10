@@ -162,6 +162,14 @@ $('#pesquisar-carros').click(function() {
     window.location.href = "veiculos.html";  
 })
 
+// Ao clicar no botão de pesquisar carro
+$('#pesquisar-motos').click(function() {
+    // Define o tipo de veículo como moto
+    localStorage.setItem('tipo-veiculo', 'moto'); 
+    // Redireciona para a página de veículos
+    window.location.href = "veiculos.html";  
+})
+
 function buscarMarcaModelo(texto, tipo) {
     // Define o tipo do veículo como carro
     localStorage.setItem('tipo-veiculo', tipo); 

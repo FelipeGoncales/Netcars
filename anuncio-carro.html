@@ -65,12 +65,13 @@
             <p id="fecharBarraLateral">&times;</p>
         </div>
     </header>
+
     <main>
         <div class="div-pai-banner-venda">
             <div class="container">
                 <!-- Carrossel de imagens -->
                 <div class="owl-carousel" id="div-owl-carousel"></div>
-                
+
                 <button id="nextSlide" class="botao-carrossel right"><i class="fa-solid fa-arrow-right"></i></button>
                 <button id="prevSlide" class="botao-carrossel left"><i class="fa-solid fa-arrow-left"></i></button>
             </div>
@@ -78,6 +79,7 @@
                 <div class="div-content-venda">
                     <div class="div-title-venda">
                         <div class="div-title">
+                            <!-- Select marca -->
                             <select class="vehicleTitle marca" id="select-marca" disabled>
                                 <option value="Acura">Acura</option>
                                 <option value="Alfa Romeo">Alfa Romeo</option>
@@ -124,19 +126,19 @@
                                 <option value="Volkswagen">Volkswagen</option>
                                 <option value="Volvo">Volvo</option>
                             </select>
-                             <p class="select-mirror" id="mirror-select-marca"></p>                          
+                            <p class="select-mirror" id="mirror-select-marca"></p>
 
+                            <!-- Input modelo -->
                             <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
                             <p class="input-mirror" id="mirror-input-modelo"></p>
                             <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
                         </div>
-                        <input class="vehicleSub" id="input-subtitle"
-                            disabled></input>
+                        <input class="vehicleSub" id="input-subtitle" disabled></input>
                         <p class="input-mirror" id="mirror-input-subtitle"></p>
                     </div>
                     <form class="itens-details">
                         <div>
-                            <p class="itemcss-title">Cidade/Estado</p>
+                            <p class="itemcss-title">Cidade - Estado</p>
                             <div class="formataçãoInput">
                                 <select class="select-info" id="input-cidade" disabled></select>
                                 <span id="dash-cidade-select">-</span>
@@ -148,7 +150,7 @@
                                 <p class="select-mirror" id="mirror-input-estado"></p>
                             </div>
                         </div>
-                        
+
                         <div class="li-vazia-1"></div>
                         <div class="li-vazia-2"></div>
                         <div class="li-vazia-3"></div>
@@ -166,12 +168,13 @@
                                 <p class="select-mirror" id="mirror-select-ano-fabricacao"></p>
                             </div>
                         </div>
-                        
+
                         <div>
                             <p class="itemcss-title">Quilometragem</p>
                             <input class="input-info" id="input-quilometragem" disabled />
                             <p class="input-mirror" id="mirror-input-quilometragem"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Câmbio</p>
                             <select class="select-info" id="select-cambio" disabled>
@@ -184,23 +187,25 @@
                             </select>
                             <p class="select-mirror" id="mirror-select-cambio"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Categoria</p>
                             <select class="select-info" id="select-categoria" disabled>
                                 <option value="SUV">SUV</option>
-                                    <option value="Sedã">Sedã</option>
-                                    <option value="Hatchback">Hatchback</option>
-                                    <option value="Picape">Picape</option>
-                                    <option value="Crossover">Crossover</option>
-                                    <option value="Minivan">Minivan</option>
-                                    <option value="Esportivo">Esportivo</option>
-                                    <option value="Luxo">Luxo</option>
-                                    <option value="Compacto">Compacto</option>
-                                    <option value="Elétrico">Elétrico</option>
-                                    <option value="Híbrido">Híbrido</option>
+                                <option value="Sedã">Sedã</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Picape">Picape</option>
+                                <option value="Crossover">Crossover</option>
+                                <option value="Minivan">Minivan</option>
+                                <option value="Esportivo">Esportivo</option>
+                                <option value="Luxo">Luxo</option>
+                                <option value="Compacto">Compacto</option>
+                                <option value="Elétrico">Elétrico</option>
+                                <option value="Híbrido">Híbrido</option>
                             </select>
                             <p class="select-mirror" id="mirror-select-categoria"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Combustível</p>
                             <select class="select-info" id="select-combustivel" disabled>
@@ -215,28 +220,30 @@
                             </select>
                             <p class="select-mirror" id="mirror-select-combustivel"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Cor</p>
                             <select class="select-info" id="select-cor" disabled>
                                 <option value=""></option>
-                                    <option value="Branco">Branco</option>
-                                    <option value="Preto">Preto</option>
-                                    <option value="Prata">Prata</option>
-                                    <option value="Cinza">Cinza</option>
-                                    <option value="Vermelho">Vermelho</option>
-                                    <option value="Vermelho">Vermelho Escuro</option>
-                                    <option value="Azul">Azul</option>
-                                    <option value="Azul Marinho">Azul Escuro</option>
-                                    <option value="Verde Escuro">Verde</option>
-                                    <option value="Verde Escuro">Verde Escuro</option>
-                                    <option value="Marrom">Marrom</option>
-                                    <option value="Dourado">Dourado</option>
-                                    <option value="Laranja">Laranja</option>
-                                    <option value="Amarelo">Amarelo</option>
-                                    <option value="Roxo">Roxo</option>
-                                </select>
+                                <option value="Branco">Branco</option>
+                                <option value="Preto">Preto</option>
+                                <option value="Prata">Prata</option>
+                                <option value="Cinza">Cinza</option>
+                                <option value="Vermelho">Vermelho</option>
+                                <option value="Vermelho">Vermelho Escuro</option>
+                                <option value="Azul">Azul</option>
+                                <option value="Azul Marinho">Azul Escuro</option>
+                                <option value="Verde Escuro">Verde</option>
+                                <option value="Verde Escuro">Verde Escuro</option>
+                                <option value="Marrom">Marrom</option>
+                                <option value="Dourado">Dourado</option>
+                                <option value="Laranja">Laranja</option>
+                                <option value="Amarelo">Amarelo</option>
+                                <option value="Roxo">Roxo</option>
+                            </select>
                             <p class="select-mirror" id="mirror-select-cor"></p>
                         </div>
+
                         <div>
                             <p class="itemcss-title">Licenciado</p>
                             <select id="select-licenciado" class="select-info" disabled>
@@ -244,13 +251,14 @@
                                 <option value="0">Não</option>
                             </select>
                             <p class="select-mirror" id="mirror-select-licenciado"></p>
-                        </div>                        
+                        </div>
+
                         <div>
                             <p class="itemcss-title" id="label-placa">Final da Placa</p>
                             <input class="input-info" id="input-placa" maxlength="7" disabled />
                             <p class="input-mirror" id="mirror-input-placa"></p>
                         </div>
-                    </form>                    
+                    </form>
                 </div>
                 <div class="div-content-vendas-pai">
                     <div class="div-content-venda-filho">
@@ -268,7 +276,8 @@
                             <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
                         </div>
                         <div class="div-buttons cancelar-reserva" id="div-button-cancelar-reserva">
-                            <button class="salvar-btn" id="cancelar-reserva">Cancelar reserva <i class="fa-solid fa-trash-can"></i></button>
+                            <button class="salvar-btn" id="cancelar-reserva">Cancelar reserva <i
+                                    class="fa-solid fa-trash-can"></i></button>
                         </div>
                         <div class="div-buttons cliente" id="div-button-cliente">
                             <button class="salvar-btn" id="reservar-btn">Reservar agora</button>
@@ -276,6 +285,7 @@
                     </div>
                     <div class="div-content-venda-filho2">
                         <div class="circleLogo">
+                            <!-- Imagem da Marca do Veículo -->
                             <img src="" id="logo-img" alt="Logo Marca">
                         </div>
                     </div>
@@ -322,7 +332,7 @@
                             <img src="assets/img/logo-carro/nissan.png" alt="Nissan Logo">
                         </div>
                     </a>
-                </div>                
+                </div>
             </div>
         </section>
 
@@ -336,28 +346,28 @@
                             <div class="overlay"></div>
                         </div>
                     </a>
-                
+
                     <a href="veiculos.html" tipo-veiculo="carro" categoria="Hatchback">
                         <div class="hatchback">
                             <p>Hatchback</p>
                             <div class="overlay"></div>
                         </div>
                     </a>
-                
+
                     <a href="veiculos.html" tipo-veiculo="carro" categoria="Picape">
                         <div class="picapes">
                             <p>Picapes</p>
                             <div class="overlay"></div>
                         </div>
                     </a>
-                
+
                     <a href="veiculos.html" tipo-veiculo="carro" categoria="Sedã">
                         <div class="sedans">
                             <p>Sedans</p>
                             <div class="overlay"></div>
                         </div>
                     </a>
-                
+
                     <a href="veiculos.html" tipo-veiculo="carro" categoria="SUV">
                         <div class="suvs">
                             <p>SUVs</p>
@@ -375,8 +385,10 @@
         <div class="div-contato">
             <div>
                 <p class="footer-title">Cidades</p>
-                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Birigui - SP</a>
-                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Araçatuba - SP</a>
+                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Birigui - SP</a>
+                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Araçatuba - SP</a>
             </div>
             <div>
                 <p class="footer-title">Comprar</p>
@@ -411,6 +423,7 @@
             <p>Comprar motos</p>
         </div>
     </div>
+
     <!-- Modal Login -->
     <div id="modal-login">
         <p class="title">Faça login para uma experiência
@@ -432,7 +445,7 @@
             <i class="fa-solid fa-arrow-up-from-bracket"></i>
         </label>
         <!-- Altere o atributo name para "imagens" -->
-            <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" multiple />
+        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" multiple />
 
         <!-- Container onde as imagens serão exibidas -->
         <div class="div-preview-container-pai">
@@ -445,4 +458,5 @@
     <!-- Overlay -->
     <div class="overlay-bg" id="overlay-bg"></div>
 </body>
+
 </html>

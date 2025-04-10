@@ -306,6 +306,7 @@ function addAnoInput(input) {
 addAnoInput(anoModelo);
 
 // Função para que ano de fabricação possa ser apenas 1 ano maior que ano modelo
+
 // Função para adicionar options ano modelo
 function addOptionsAnoFab(inputMod, inputFab) {
     let anoMin = parseInt(inputMod.val());
@@ -1036,7 +1037,6 @@ $('#reservar-btn').click(function () {
         }
     });
 })
-
 
 // Variável para saber se a edição está ativa ou não
 let editarOn = false;

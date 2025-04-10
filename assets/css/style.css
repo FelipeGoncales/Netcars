@@ -78,6 +78,7 @@ main {
             border: 2px solid var(--cor-texto-apagado);
             border-radius: 10px;
             padding-left: 50px;
+            outline: none;
         }
         & .pesquisar {
             cursor: pointer;
