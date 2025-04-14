@@ -83,8 +83,8 @@ const logo_motos = {
 }
 
 // Função para funcionar filtro de categorias
-$(document).ready(function() {
-    $(".div-modelos a").on("click", function(e) {
+$(document).ready(function () {
+    $(".div-modelos a").on("click", function (e) {
         e.preventDefault(); // Previne o comportamento padrão do link
 
         // Pega a categoria da moto
@@ -100,22 +100,30 @@ $(document).ready(function() {
     });
 });
 
-// Função para funcionar filtro de marcas
-$(document).ready(function() {
-    $(".a-marcas-moto").on("click", function(e) {
-        e.preventDefault(); // Previne o comportamento padrão do link
+function aplicarFiltroMarca(e, div) {
+    e.preventDefault(); // Previne o comportamento padrão do link
 
-        localStorage.setItem('tipo-veiculo', 'moto');
+    localStorage.setItem('tipo-veiculo', 'moto');
 
-        // Pegamos o id do elemento clicado
-        const marca = $(this).attr("marca");
+    // Pegamos o id do elemento clicado
+    const marca = $(div).attr("marca");
 
-        // Salvamos no localStorage para usar na próxima página
-        localStorage.setItem("filtro-marca", marca);
+    // Salvamos no localStorage para usar na próxima página
+    localStorage.setItem("filtro-marca", marca);
 
-        // Redireciona para a página de veículos
-        window.location.href = "veiculos.html";  
+    // Redireciona para a página de veículos
+    window.location.href = "veiculos.html";
+}
+
+// Adicionando o evento aos elementos
+$(document).ready(function () {
+    $(".a-marcas-moto").click(function (e) {
+        aplicarFiltroMarca(e, this);
     });
+
+    $('#logo-img').click(function(e) {
+        aplicarFiltroMarca(e, this);
+    })
 });
 
 // Função para inicializar o carrossel
@@ -320,7 +328,7 @@ function addOptionsAnoFab(inputMod, inputFab) {
 
 // Função para adicionar ano modelo ao alterar
 function anoModeloInput(inputMod, inputFab) {
-    $(inputMod).on('change', function() {
+    $(inputMod).on('change', function () {
         addOptionsAnoFab(inputMod, inputFab);
     })
 }
@@ -414,10 +422,54 @@ async function alterarBotao() {
     }
 }
 
+// Função para carregar os estados do IBGE
+function carregarEstados(select) {
+    return $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
+        // Ordena os estados por nome
+        estados.sort((a, b) => a.nome.localeCompare(b.nome));
+
+        // Para cada estado, adiciona uma opção no select
+        $.each(estados, function (index, estado) {
+            select.append(`<option value="${estado.nome}" id_estado="${estado.id}">${estado.nome}</option>`);
+        });
+    });
+}
+
+// Função para carregar as cidades com base no estado selecionado
+function carregarCidades(estadoId, select) {
+    return $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`, function (cidades) {
+        select.empty(); // Limpa as opções anteriores do select de cidades
+
+        // Adiciona cada cidade como opção
+        $.each(cidades, function (index, cidade) {
+            select.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
+        });
+    });
+}
+
 // Declarando a variável id_moto fora da função para usá-la depois
 let id_moto = '';
 
 $(document).ready(async function () {
+    // Obtém o select estado e de cidade
+    const estadoSelect = $("#input-estado");
+    const cidadeSelect = $("#input-cidade");
+
+    // Adiciona o evento change ao select
+    estadoSelect.on("change", () => {
+        const estadoId = $(estadoSelect).find(':selected').attr('id_estado');
+
+        if (!estadoId) {
+            window.location.reload();
+        }
+
+        // Carrega as cidades referentes ao estado
+        carregarCidades(estadoId, cidadeSelect);
+    });
+
+    // Carrega os estados assim que a página é carregada
+    await carregarEstados(estadoSelect);
+
     // Recupera a query string da URL
     const urlFrontEnd = window.location.search;
 
@@ -540,10 +592,10 @@ $(document).ready(async function () {
                         overlay.css("opacity", "1");
                     } else {
                         divImg.hover(
-                            function() {
+                            function () {
                                 overlay.css("opacity", "1");
                             },
-                            function() {
+                            function () {
                                 overlay.css("opacity", "0");
                             }
                         );
@@ -554,7 +606,7 @@ $(document).ready(async function () {
                 divCarrossel.append(divImg);
 
                 // Realiza o fetch da imagem e obtém o Blob
-                
+
                 const response = await fetch(imagem);
                 const blob = await response.blob();
 
@@ -563,7 +615,7 @@ $(document).ready(async function () {
 
                 // Cria um objeto File com o Blob
                 const file = new File([blob], fileName, { type: blob.type });
-                
+
                 // Adiciona o arquivo ao DataTransfer
                 dt.items.add(file);
             }
@@ -579,65 +631,30 @@ $(document).ready(async function () {
 
             // Input marca
             $("#select-marca").val(infoVeic.marca);
+
             // Input modelo
             $("#input-modelo").val(infoVeic.modelo);
-            
-            // Select cidade
-            $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
-                let selectEstado = $("#input-estado");
 
-                // Popula os estados
-                estados.forEach(estado => {
-                    selectEstado.append(`<option value="${estado.sigla}">${estado.nome}</option>`);
-                });
+            // Seleciona o estado do select
+            estadoSelect.val(infoVeic.estado);
 
-                // Verifica se o estado do banco é sigla ou nome completo
-                const estadoBanco = infoVeic.estado;
-                if (estadoBanco) {
-                    const estadoEncontrado = estados.find(estado =>
-                        estado.sigla.toUpperCase() === estadoBanco.toUpperCase() ||
-                        estado.nome.toLowerCase() === estadoBanco.toLowerCase()
-                    );
+            // Obtém o id do estado
+            const estadoId = $(estadoSelect).find(':selected').attr('id_estado');
 
-                    if (estadoEncontrado) {
-                        selectEstado.val(estadoEncontrado.sigla);
-                        $("#mirror-input-estado").text(estadoEncontrado.sigla); // Atualiza o espelho
-                        carregarCidades(estadoEncontrado.sigla, infoVeic.cidade);
-                    }
-                }
-            });
+            // Caso exista estado id
+            if (estadoId) {
+                // Carregar cidades
+                await carregarCidades(estadoId, cidadeSelect);
 
-            // Função para carregar cidades
-            function carregarCidades(uf, cidadeBanco) {
-                $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
-                    .done(function (cidades) {
-                        let selectCidade = $("#input-cidade");
-
-                        cidades.forEach(cidade => {
-                            selectCidade.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
-                        });
-
-                        if (cidadeBanco) {
-                            const cidadeNormalizada = cidadeBanco.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-                            const cidadeEncontrada = cidades.find(c => {
-                                const nomeNormalizado = c.nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                                return nomeNormalizado === cidadeNormalizada;
-                            });
-
-                            if (cidadeEncontrada) {
-                                selectCidade.val(cidadeEncontrada.nome);
-                                $("#mirror-input-cidade").text(cidadeEncontrada.nome);
-                            }
-                        }
-                    })
+                // Seleciona a cidade
+                cidadeSelect.val(infoVeic.cidade);
             }
 
             // Preencher os selects de ano modelo e ano fabricação
             $("#select-ano-modelo").val(infoVeic.ano_modelo);
-            
+
             await addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
-            
+
             $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
 
             // Input marchas
@@ -685,8 +702,12 @@ $(document).ready(async function () {
             $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
 
             // Carregar foto da marca da moto
-            $("#logo-img").attr('src', `${logo_motos[infoVeic.marca]}`);
-
+            $("#logo-img")
+                .attr({
+                    'src': `${logo_motos[infoVeic.marca]}`,
+                    'marca': infoVeic.marca
+                })
+                
             carregarInputs();
 
             if (response.reserva == true) {
@@ -718,10 +739,10 @@ function carregarPreviewImg() {
     const inputFile = document.getElementById('upload-imagem');
     const newFiles = Array.from(inputFile.files);
     currentFiles = new DataTransfer();
-    
+
     // Adiciona novos arquivos ao DataTransfer
     newFiles.forEach(file => currentFiles.items.add(file));
-    
+
     // Atualiza o input com os novos arquivos
     inputFile.files = currentFiles.files;
 
@@ -733,7 +754,7 @@ function carregarPreviewImg() {
         if (file.type.startsWith("image/")) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const imgContainer = $('<div>')
                     .addClass('preview-item')
                     .css('background-image', `url(${e.target.result})`);
@@ -741,21 +762,21 @@ function carregarPreviewImg() {
                 const removeBtn = $('<i>')
                     .addClass('fa-solid fa-xmark remove-btn')
                     // No callback de remoção, em vez de currentFiles.items.remove(index):
-                    .on('click', function() {
+                    .on('click', function () {
                         // Cria um novo DataTransfer para armazenar apenas os arquivos que você quer manter
                         let dtTemp = new DataTransfer();
                         const inputFiles = document.getElementById('upload-imagem').files;
-                        
+
                         // Reconstroi a lista, pulando o arquivo removido (identificado pelo index atual)
                         Array.from(inputFiles).forEach((file, i) => {
-                            if(i !== index){
+                            if (i !== index) {
                                 dtTemp.items.add(file);
                             }
                         });
-                        
+
                         // Atualiza o input com o novo FileList
                         document.getElementById('upload-imagem').files = dtTemp.files;
-                        
+
                         // Atualiza o preview para refletir a nova lista de arquivos
                         carregarPreviewImg();
                     });
@@ -770,7 +791,7 @@ function carregarPreviewImg() {
 }
 
 // Adicionar o evento carregar preview toda vez que input file for alterado
-$("#upload-imagem").on("change", function(event) {
+$("#upload-imagem").on("change", function (event) {
     carregarPreviewImg();
 });
 
@@ -787,18 +808,18 @@ function abrirModalEditarImagem() {
 }
 
 // Fechar modal editar imagem ao clicar no X
-$('#closeModalEditarImagem').click(function() {
-   fecharModalEditarImagem();
+$('#closeModalEditarImagem').click(function () {
+    fecharModalEditarImagem();
 })
 
 // Associando o evento de clique usando delegação de eventos
-$(document).on('click', '.overlay-img-carrossel', function() {
+$(document).on('click', '.overlay-img-carrossel', function () {
     abrirModalEditarImagem();
 });
 
 // Editar imagens
 
-$('#modal-editar-imagem').on('submit', function(e) {
+$('#modal-editar-imagem').on('submit', function (e) {
     e.preventDefault();
 
     // Caso queira inspecionar os arquivos:
@@ -822,14 +843,14 @@ $('#modal-editar-imagem').on('submit', function(e) {
         },
         processData: false,
         contentType: false,
-        success: function() {
+        success: function () {
             // Define uma mensagem de sucesso para quando recarregar a página exibir ao usuário
             localStorage.setItem('mensagemEditado', 'Imagens do veículo editadas com sucesso!');
 
             // Recarrega a página para que as aplicações sejam feitas
             window.location.reload();
-        }, 
-        error: function(response) {
+        },
+        error: function (response) {
             // Caso dê erro, exibe a mensagem
             alertMessage(response.responseJSON.error, 'error');
         }
@@ -837,7 +858,7 @@ $('#modal-editar-imagem').on('submit', function(e) {
 })
 
 // Caso dê certo o editar, exibir mensagem de sucesso ao abrir a página
-$(document).ready(function() {
+$(document).ready(function () {
     // Obtêm o item do local storage
     const mensagemEditado = localStorage.getItem('mensagemEditado');
 
@@ -865,13 +886,13 @@ function validarPlaca() {
 }
 
 // Adicionando evento blur ao input de placa para exibir mensagem caso esteja em um formato inválido
-$('#input-placa').on('blur', function() {
+$('#input-placa').on('blur', function () {
     validarPlaca();
 })
 
 // Cancelar reserva
 
-$('#cancelar-reserva').click(function() {
+$('#cancelar-reserva').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Você está prestes a cancelar a reserva desse veículo.",
@@ -894,7 +915,7 @@ $('#cancelar-reserva').click(function() {
                     localStorage.setItem('msgReserva', response.success);
                     window.location.href = "cliente-perfil.html";
                 },
-                error: function(response) {
+                error: function (response) {
                     Swal.fire({
                         title: "Algo deu errado...",
                         text: response.responseJSON.error,
@@ -959,7 +980,7 @@ $('#reservar-btn').click(function () {
         confirmButtonText: "Confirmar"
     }).then((result) => {
         if (result.isConfirmed) {
-            
+
             const envia = {
                 "id_veiculo": id_moto,
                 "tipo_veiculo": "moto"
@@ -1060,12 +1081,32 @@ $("#editarAnuncio").on("click", function () {
 
         // Habilita o botão de salvar alterações
         $('#salvar-alteracoes').prop('disabled', true);
-        
+
         // Carrega o ano modelo
         $('#select-ano-modelo').val($('#mirror-select-ano-modelo').text());
-        
+
         // Adiciona os anos de fabricação
         addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
+
+        // Seleciona o estado do mirror
+        $('#input-estado').val($('#mirror-input-estado').text());
+
+        // Obtém o id do estado
+        const estadoId = $('#input-estado').find(':selected').attr('id_estado');
+
+        // Caso exista estado id
+        if (estadoId) {
+            // Função para adicionar cidades
+            async function addCidades() {
+                // Carrega as cidades do estado do mirror
+                await carregarCidades(estadoId, $('#input-cidade'));
+
+                // Seleciona a cidade do mirror
+                $('#input-cidade').val($('#mirror-input-cidade').text());
+            }
+            // Chamando a função
+            addCidades();
+        }
 
         // Voltar o valor anterior aos inputs
         $('input, select').each(function () {
@@ -1151,7 +1192,7 @@ $("#salvar-alteracoes").on("click", function (e) {
 
             // Desabilita o botão de salvar alterações
             $('#salvar-alteracoes').prop('disabled', true);
-            
+
             // Redefinindo a variável de editar para false (Não está editando)
             editarOn = false;
         },

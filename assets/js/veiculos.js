@@ -236,8 +236,12 @@ async function buscarVeiculos() {
                 // Cria a div de itens do card
                 const divItensCard = $("<div></div>").addClass("itens-card");
             
+                const spanModelo = $(`<span></span>`)
+                    .text(veiculo.modelo);
+
                 // Título do veículo
-                const h3Title = $("<h3></h3>").text(`${veiculo.marca} ${veiculo.modelo}`); // Inserir nome do carro
+                const h3Title = $("<h3></h3>")
+                    .append(`${veiculo.marca} `).append(spanModelo) // Inserir nome do carro
             
                 // Descrição do veículo
                 const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
@@ -673,17 +677,6 @@ $(document).ready(function () {
             buscarVeiculos();
             
             return;
-        }
-
-        if (!estadoId) {
-            let divEstado = divFiltro.find('#estado-filtro'); // Pega o filtro do estado
-            let estadoContainer = fluxoFiltro.find("#estado-container"); // Pega o container do estado
-        
-            divEstado.remove(); // Remove o filtro de estado
-            estadoContainer.remove(); // Remove o container do estado
-            cidadeSelect.empty().append('<option value="">Todas</option>').prop("disabled", true); // Reset no select de cidade
-            cidadeSelect.prev("label").removeClass("active"); // Remove classe ativa do label de cidade
-            return; // Para evitar que o restante do código seja executado
         }
         
         // Requisição para obter detalhes do estado

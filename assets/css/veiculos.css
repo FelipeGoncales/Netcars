@@ -297,10 +297,16 @@ main {
         flex-direction: column;
         padding: 0px 15px;
         gap: 15px;
-        & h3{
+        & h3 {
             font-size: 1.5rem;
             font-weight: 600;
             color: #000;
+            text-transform: uppercase;
+            & span {
+                font-size: inherit;
+                color: var(--roxo);
+                text-transform: uppercase;
+            }
         } & p{
             font-size: 0.8rem;
             color: var(--cor-titles);
