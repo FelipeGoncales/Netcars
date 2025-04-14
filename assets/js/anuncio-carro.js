@@ -1099,6 +1099,12 @@ $("#editarAnuncio").on("click", function () {
         // Habilita o botão de salvar alterações
         $('#salvar-alteracoes').prop('disabled', true);
 
+        // Carrega o ano modelo
+        $('#select-ano-modelo').val($('#mirror-select-ano-modelo').text());
+        
+        // Adiciona os anos de fabricação
+        addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
+
         // Voltar o valor anterior aos inputs
         $('input, select').each(function () {
             const input = $(this);

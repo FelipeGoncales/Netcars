@@ -1,6 +1,6 @@
 // URL API
 
-const BASE_URL = "http://192.168.1.11:5000";
+const BASE_URL = "http://192.168.1.114:5000";
 
 // Funções para auxiliar no funcionamento dos inputs
 
