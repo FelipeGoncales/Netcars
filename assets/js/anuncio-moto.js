@@ -502,229 +502,233 @@ $(document).ready(async function () {
         headers: headers,
         contentType: "application/json",
         success: async function (response) {
-            const infoVeic = response.veiculos[0];
-            const divCarrossel = $('#div-owl-carousel');
-
-            // Verifica se há pelo menos um veículo retornado
-            if (!response.veiculos.length) {
-                // Retorna para a página veículos
-                window.location.href = "veiculos.html";
-            }
-
-            // Acessa as imagens do primeiro veículo
-            const urlImagens = infoVeic.imagens;
-
-            // Verifica se urlImagens existe e é iterável
-            if (!urlImagens || !Array.isArray(urlImagens)) {
-                window.location.href = "veiculos.html";
-            }
-
-            // Limpa o conteúdo atual do carrossel
-            divCarrossel.empty();
-
-            const dt = new DataTransfer(); // Cria um objeto DataTransfer
-
-            for (const imagem of urlImagens) {
-
-                // CSS para ficar todas as fotos do mesmo tamanho
-                const divImg = $('<div></div>')
-                    .css({
-                        "position": "relative",
-                        "min-height": "350px",
-                        "min-height": "400px",
-                        "overflow": "hidden"
-                    })
-
-                // Adicionando a imagem
-                const img = $('<img>').attr('src', imagem).css({
-                    "height": "100%",
-                    "min-width": "100%",
-                    "width": "auto",
-                    "display": "block",
-                    "position": "absolute",
-                    "top": "50%",
-                    "left": "50%",
-                    "transform": "translate(-50%, -50%)"
-                });
-
-                // Adicionando a imagem e o overlay à div principal
-                divImg.append(img);
-
+            try {
+                const infoVeic = response.veiculos[0];
+                const divCarrossel = $('#div-owl-carousel');
+    
+                // Verifica se há pelo menos um veículo retornado
+                if (!response.veiculos.length) {
+                    // Retorna para a página veículos
+                    window.location.href = "veiculos.html";
+                }
+    
+                // Acessa as imagens do primeiro veículo
+                const urlImagens = infoVeic.imagens;
+    
+                // Verifica se urlImagens existe e é iterável
+                if (!urlImagens || !Array.isArray(urlImagens)) {
+                    window.location.href = "veiculos.html";
+                }
+    
+                // Limpa o conteúdo atual do carrossel
+                divCarrossel.empty();
+    
+                const dt = new DataTransfer(); // Cria um objeto DataTransfer
+    
+                for (const imagem of urlImagens) {
+    
+                    // CSS para ficar todas as fotos do mesmo tamanho
+                    const divImg = $('<div></div>')
+                        .css({
+                            "position": "relative",
+                            "min-height": "350px",
+                            "min-height": "400px",
+                            "overflow": "hidden"
+                        })
+    
+                    // Adicionando a imagem
+                    const img = $('<img>').attr('src', imagem).css({
+                        "height": "100%",
+                        "min-width": "100%",
+                        "width": "auto",
+                        "display": "block",
+                        "position": "absolute",
+                        "top": "50%",
+                        "left": "50%",
+                        "transform": "translate(-50%, -50%)"
+                    });
+    
+                    // Adicionando a imagem e o overlay à div principal
+                    divImg.append(img);
+    
+                    // Input final placa
+                    await obterTipoUser();
+    
+                    if (tipoUser in [1, 2]) {
+                        // Criando o overlay
+                        const overlay = $('<div></div>').css({
+                            "cursor": "pointer",
+                            "position": "absolute",
+                            "top": "0",
+                            "left": "0",
+                            "width": "100%",
+                            "height": "100%",
+                            "background-color": "rgba(0, 0, 0, 0.3)", // Cor escura com transparência
+                            "display": "flex",
+                            "align-items": "center",
+                            "justify-content": "center",
+                            "flex-direction": "column",
+                            "opacity": "0",
+                            "transition": "opacity 0.3s ease"
+                        }).addClass('overlay-img-carrossel');
+    
+                        // Adicionando o ícone e o texto ao overlay
+                        const icon = $('<i class="fa-solid fa-arrow-up-from-bracket"></i>').css({
+                            "font-size": "2rem",
+                            "color": "#FFF",
+                            "margin-bottom": "0.5rem"
+                        });
+                        const text = $('<span>Editar imagens</span>').css({
+                            "color": "#FFF",
+                            "font-size": "1rem"
+                        });
+    
+                        overlay.append(icon, text);
+    
+                        // Adicionando a imagem e o overlay à div principal
+                        divImg.append(overlay);
+    
+                        // Adicionando eventos de hover para mostrar/ocultar o overlay
+                        if ($(window).width() < 768) {
+                            overlay.css("opacity", "1");
+                        } else {
+                            divImg.hover(
+                                function () {
+                                    overlay.css("opacity", "1");
+                                },
+                                function () {
+                                    overlay.css("opacity", "0");
+                                }
+                            );
+                        }
+                    }
+    
+                    // Adicionando divImg ao carrossel ou ao elemento desejado
+                    divCarrossel.append(divImg);
+    
+                    // Realiza o fetch da imagem e obtém o Blob
+    
+                    const response = await fetch(imagem);
+                    const blob = await response.blob();
+    
+                    // Extrai o nome do arquivo da URL
+                    const fileName = imagem.substring(imagem.lastIndexOf('/') + 1);
+    
+                    // Cria um objeto File com o Blob
+                    const file = new File([blob], fileName, { type: blob.type });
+    
+                    // Adiciona o arquivo ao DataTransfer
+                    dt.items.add(file);
+                }
+    
+                // Atribui os arquivos ao input file
+                document.getElementById('upload-imagem').files = dt.files;
+    
+                // Carregar a miniatura das imagens atuais
+                carregarPreviewImg();
+    
+                // Inicializa o carrossel após adicionar os itens
+                carregarOwlCarrossel();
+    
+                // Input marca
+                $("#select-marca").val(infoVeic.marca);
+    
+                // Input modelo
+                $("#input-modelo").val(infoVeic.modelo);
+    
+                // Seleciona o estado do select
+                estadoSelect.val(infoVeic.estado);
+    
+                // Obtém o id do estado
+                const estadoId = $(estadoSelect).find(':selected').attr('id_estado');
+    
+                // Caso exista estado id
+                if (estadoId) {
+                    // Carregar cidades
+                    await carregarCidades(estadoId, cidadeSelect);
+    
+                    // Seleciona a cidade
+                    cidadeSelect.val(infoVeic.cidade);
+                }
+    
+                // Preencher os selects de ano modelo e ano fabricação
+                $("#select-ano-modelo").val(infoVeic.ano_modelo);
+    
+                await addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
+    
+                $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
+    
+                // Input marchas
+                $('#select-marchas').val(infoVeic.marchas);
+    
+                // Input quilometragem
+                $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
+    
+                // Input tipo motor
+                $('#input-tipo-motor').val(infoVeic.tipo_motor);
+    
+                // Input cor
+                $('#select-cor').val(infoVeic.cor);
+    
+                // Input refrigeração
+                $('#select-refrigeracao').val(infoVeic.refrigeracao);
+    
+                // Input categoria
+                $('#select-categoria').val(infoVeic.categoria);
+    
+                // Input cilindrada
+                $('#select-cilindrada').val(infoVeic.cilindrada);
+    
+                // Input partida
+                $('#select-partida').val(infoVeic.partida);
+    
+                // Input freio
+                $('#select-freio').val(infoVeic.freio_dianteiro_traseiro);
+    
+                // Input alimentacao
+                $('#select-alimentacao').val(infoVeic.alimentacao);
+    
                 // Input final placa
                 await obterTipoUser();
-
+    
                 if (tipoUser in [1, 2]) {
-                    // Criando o overlay
-                    const overlay = $('<div></div>').css({
-                        "cursor": "pointer",
-                        "position": "absolute",
-                        "top": "0",
-                        "left": "0",
-                        "width": "100%",
-                        "height": "100%",
-                        "background-color": "rgba(0, 0, 0, 0.3)", // Cor escura com transparência
-                        "display": "flex",
-                        "align-items": "center",
-                        "justify-content": "center",
-                        "flex-direction": "column",
-                        "opacity": "0",
-                        "transition": "opacity 0.3s ease"
-                    }).addClass('overlay-img-carrossel');
-
-                    // Adicionando o ícone e o texto ao overlay
-                    const icon = $('<i class="fa-solid fa-arrow-up-from-bracket"></i>').css({
-                        "font-size": "2rem",
-                        "color": "#FFF",
-                        "margin-bottom": "0.5rem"
-                    });
-                    const text = $('<span>Editar imagens</span>').css({
-                        "color": "#FFF",
-                        "font-size": "1rem"
-                    });
-
-                    overlay.append(icon, text);
-
-                    // Adicionando a imagem e o overlay à div principal
-                    divImg.append(overlay);
-
-                    // Adicionando eventos de hover para mostrar/ocultar o overlay
-                    if ($(window).width() < 768) {
-                        overlay.css("opacity", "1");
-                    } else {
-                        divImg.hover(
-                            function () {
-                                overlay.css("opacity", "1");
-                            },
-                            function () {
-                                overlay.css("opacity", "0");
-                            }
-                        );
-                    }
+                    $('#label-placa').text('Placa')
+                    $('#input-placa').val(infoVeic.placa);
+                } else {
+                    const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
+                    $('#input-placa').val(ultimoCaracterPlaca);
                 }
-
-                // Adicionando divImg ao carrossel ou ao elemento desejado
-                divCarrossel.append(divImg);
-
-                // Realiza o fetch da imagem e obtém o Blob
-
-                const response = await fetch(imagem);
-                const blob = await response.blob();
-
-                // Extrai o nome do arquivo da URL
-                const fileName = imagem.substring(imagem.lastIndexOf('/') + 1);
-
-                // Cria um objeto File com o Blob
-                const file = new File([blob], fileName, { type: blob.type });
-
-                // Adiciona o arquivo ao DataTransfer
-                dt.items.add(file);
-            }
-
-            // Atribui os arquivos ao input file
-            document.getElementById('upload-imagem').files = dt.files;
-
-            // Carregar a miniatura das imagens atuais
-            carregarPreviewImg();
-
-            // Inicializa o carrossel após adicionar os itens
-            carregarOwlCarrossel();
-
-            // Input marca
-            $("#select-marca").val(infoVeic.marca);
-
-            // Input modelo
-            $("#input-modelo").val(infoVeic.modelo);
-
-            // Seleciona o estado do select
-            estadoSelect.val(infoVeic.estado);
-
-            // Obtém o id do estado
-            const estadoId = $(estadoSelect).find(':selected').attr('id_estado');
-
-            // Caso exista estado id
-            if (estadoId) {
-                // Carregar cidades
-                await carregarCidades(estadoId, cidadeSelect);
-
-                // Seleciona a cidade
-                cidadeSelect.val(infoVeic.cidade);
-            }
-
-            // Preencher os selects de ano modelo e ano fabricação
-            $("#select-ano-modelo").val(infoVeic.ano_modelo);
-
-            await addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
-
-            $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
-
-            // Input marchas
-            $('#select-marchas').val(infoVeic.marchas);
-
-            // Input quilometragem
-            $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
-
-            // Input tipo motor
-            $('#input-tipo-motor').val(infoVeic.tipo_motor);
-
-            // Input cor
-            $('#select-cor').val(infoVeic.cor);
-
-            // Input refrigeração
-            $('#select-refrigeracao').val(infoVeic.refrigeracao);
-
-            // Input categoria
-            $('#select-categoria').val(infoVeic.categoria);
-
-            // Input cilindrada
-            $('#select-cilindrada').val(infoVeic.cilindrada);
-
-            // Input partida
-            $('#select-partida').val(infoVeic.partida);
-
-            // Input freio
-            $('#select-freio').val(infoVeic.freio_dianteiro_traseiro);
-
-            // Input alimentacao
-            $('#select-alimentacao').val(infoVeic.alimentacao);
-
-            // Input final placa
-            await obterTipoUser();
-
-            if (tipoUser in [1, 2]) {
-                $('#label-placa').text('Placa')
-                $('#input-placa').val(infoVeic.placa);
-            } else {
-                const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
-                $('#input-placa').val(ultimoCaracterPlaca);
-            }
-
-            // Input preço venda
-            $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
-
-            // Carregar foto da marca da moto
-            $("#logo-img")
-                .attr({
-                    'src': `${logo_motos[infoVeic.marca]}`,
-                    'marca': infoVeic.marca
-                })
-                
-            carregarInputs();
-
-            if (response.reserva == true) {
-                // Função para mudar o botão para cancelar reserva
-                $('#div-button-vendedor').css('display', 'none');
-                $('#div-button-cliente').css('display', 'none');
-                $('#div-button-cancelar-reserva').css('display', 'flex');
-
-                // Função para mudar a frase que aparece caso seja o cliente que reservou
-                $('#mensagem-user').css('display', 'none');
-                $('#mensagem-adm').css('display', 'none');
-                $('#mensagem-reserva').css('display', 'flex');
-
-                $('.overlay-img-carrossel').css('display', 'none');
-            } else {
-                // Lógica para alterar os botões
-                alterarBotao();
+    
+                // Input preço venda
+                $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
+    
+                // Carregar foto da marca da moto
+                $("#logo-img")
+                    .attr({
+                        'src': `${logo_motos[infoVeic.marca]}`,
+                        'marca': infoVeic.marca
+                    })
+                    
+                carregarInputs();
+    
+                if (response.reserva == true) {
+                    // Função para mudar o botão para cancelar reserva
+                    $('#div-button-vendedor').css('display', 'none');
+                    $('#div-button-cliente').css('display', 'none');
+                    $('#div-button-cancelar-reserva').css('display', 'flex');
+    
+                    // Função para mudar a frase que aparece caso seja o cliente que reservou
+                    $('#mensagem-user').css('display', 'none');
+                    $('#mensagem-adm').css('display', 'none');
+                    $('#mensagem-reserva').css('display', 'flex');
+    
+                    $('.overlay-img-carrossel').css('display', 'none');
+                } else {
+                    // Lógica para alterar os botões
+                    alterarBotao();
+                }
+            } finally {
+                $('#bg-carregamento').css('display', 'none');
             }
         },
         error: function () {
