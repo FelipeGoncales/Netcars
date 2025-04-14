@@ -720,6 +720,8 @@ $(document).ready(async function () {
                 $('#mensagem-user').css('display', 'none');
                 $('#mensagem-adm').css('display', 'none');
                 $('#mensagem-reserva').css('display', 'flex');
+
+                $('.overlay-img-carrossel').css('display', 'none');
             } else {
                 // Lógica para alterar os botões
                 alterarBotao();
@@ -971,6 +973,32 @@ $('#deletar-veiculo').click(function () {
 // Reservar moto
 
 $('#reservar-btn').click(function () {
+    // Busca os dados do usuário
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    // Verificar se existe dadosUser no local storage
+    if (!dadosUser) {
+        // Caso não, define uma mensagem e redireciona para login
+        localStorage.setItem('mensagem', JSON.stringify({
+            'success': 'Faça login para concluir sua reserva!'
+        }))
+        // e redireciona para login
+        window.location.href = "login.html";
+    }
+
+    // Busca o token
+    const token = JSON.parse(dadosUser).token;
+
+    // Verificar se existe dadosUser no local storage
+    if (!token) {
+        // Caso não, define uma mensagem
+        localStorage.setItem('mensagem', JSON.stringify({
+            'success': 'Faça login para concluir sua reserva!'
+        }))
+        // e redireciona para login
+        window.location.href = "login.html";
+    }
+
     Swal.fire({
         title: "Deseja reservar esse veículo?",
         icon: "warning",
@@ -992,7 +1020,7 @@ $('#reservar-btn').click(function () {
                 contentType: 'application/json',
                 data: JSON.stringify(envia),
                 headers: {
-                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    "Authorization": "Bearer " + token
                 },
                 success: function (response) {
                     Swal.fire({
