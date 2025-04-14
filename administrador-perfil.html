@@ -57,7 +57,6 @@
                     <a class="sub-relatorio" id="clientes">Clientes</a>
                 </div>
                 <a href="adicionar-veiculo.html"><i class="fa-solid fa-car"></i>Adicionar Veiculo</a>
-                <a id="link_manuVeic"><i class="fa-solid fa-screwdriver-wrench"></i>Manutenção Veículo</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
             <p id="fecharBarraLateral">&times;</p>
@@ -365,49 +364,6 @@
                 <h3>Veículos reservados</h3>
                 <div class="div-carrossel">
                     <div class="conteudo" id="div-reservas"></div>
-                </div>
-            </div>
-
-            <!-- Div de manutenção -->
-            <div class="container-edit-user" id="manutencao">
-                <div class="filtro-users-wrapper">
-                    <div class="search-box">
-                        <input type="text" id="search-user-input" placeholder="Buscar usuário">
-                        <i class="fa-solid fa-search"></i>
-                    </div>
-
-                    <div class="status-box">
-                        <select id="status-select">
-                            <option value="">Situação</option>
-                            <option value="1">Manutenção</option>
-                            <option value="0">Normal</option>
-                        </select>
-                    </div>
-
-                    <div class="type-box">
-                        <select id="type-select">
-                            <option value="">Tipo</option>
-                            <option value="1">Administrador</option>
-                            <option value="2">Vendedor</option>
-                            <option value="3">Cliente</option>
-                        </select>
-                    </div>
-
-                    <button class="cad-user" id="btn-modal-cad-manu">Adicionar manutenção <i class="fa-solid fa-wrench"></i></button>
-                </div>
-                <div class="table-container">
-                    <table class="user-table">
-                        <thead>
-                            <tr>
-                                <th><i class="fa-solid fa-screwdriver-wrench" style="color: #000000;"></i></th>
-                                <th>Serviço realizado</th>
-                                <th>Valor</th>
-                                <th>Situação</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody-manu"></tbody>
-                    </table>
                 </div>
             </div>
 

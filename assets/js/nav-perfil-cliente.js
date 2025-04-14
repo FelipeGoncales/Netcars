@@ -173,9 +173,14 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
     
         // Cria a div de itens do card
         const divItensCard = $("<div></div>").addClass("itens-card");
-    
+
+        // Modelo
+        const spanModelo = $(`<span></span>`)
+            .text(veiculo.modelo);
+
         // Título do veículo
-        const h3Title = $("<h3></h3>").text(`${veiculo.marca} ${veiculo.modelo}`); // Inserir nome do carro
+        const h3Title = $("<h3></h3>")
+            .append(`${veiculo.marca} `).append(spanModelo) // Inserir nome do carro
     
         // Descrição do veículo
         const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
