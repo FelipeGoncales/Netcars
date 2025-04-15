@@ -81,8 +81,27 @@
 }
 
 #editarAnuncio.fa-pencil,
-#editarAnuncio.fa-xmark {
+#editarAnuncio.fa-xmark{
     display: none;
+    background-color: #ECEDF2;
+    color: var(--roxo);
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    box-sizing: border-box;
+
+    &:hover {
+        scale: 1.1;
+    }
+}
+#manutençãoAdd.fa-screwdriver-wrench{
+    display: flex;
     background-color: #ECEDF2;
     color: var(--roxo);
     font-size: 20px;
@@ -584,6 +603,126 @@ main {
 
 .botao-carrossel:active {
     scale: 1;
+}
+
+.modal-manu{
+    background: #ffffff ;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 850px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    border-radius: 20px;
+    & p{
+        font-weight: 600;
+        font-size: 1.6em;
+        text-align: center;
+    } & .div-info{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        & p {
+            font-size: 1.1em;
+        } 
+        & input{
+            border: 3px solid #EDECF2 ;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+    } & .div-buttons{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+        & button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            padding: 13px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 33%;
+            transition: 0.3s;
+            font-size: 14px;
+            outline: none;
+            border: none;
+        }
+        & .button-cel{
+            background: #ECEDF2 ;
+            color: #6C1DE9;
+            font-size: 14px;
+            &:hover {
+                background-color: #e3e3e3;
+            }
+        } & .button-add {
+            background: #6C1DE9;
+            color: #ffffff;
+            &:hover {
+                background-color: var(--hover-roxo);
+            }
+        }
+    }
+}
+
+/* Tablea */
+
+.table-container {
+    max-height: 200px; /* Ajuste a altura conforme necessário */
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+    border-radius: 15px;
+    border: 1px solid #c0c0c0;
+}
+
+.icon-col {
+    width: 40px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    border-bottom: 1px solid #c0c0c0;
+    border-right: 1px solid #c0c0c0;
+    padding: 20px 30px;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.user-table th {
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+    font-weight: 600;
+}
+
+tbody tr.tipo1 {
+    background-color: var(--cor-bg-sec);
+}
+
+tbody tr.tipo2 {
+    background-color: #ECE1FE;
+}
+
+.edit-icon {
+    color: var(--cor-texto);
+    cursor: pointer;
+    padding: 5px;
 }
 
 /* Modal Editar Imagens */

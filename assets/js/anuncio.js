@@ -142,8 +142,10 @@ async function carregarInputs() {
         const id = $(this).attr('id');
         const spanMirror = $(`#mirror-${id}`);
 
-        $(this).css('display', 'none');
-        spanMirror.text($(this).val()).css('display', 'flex');
+        if (spanMirror.length) {
+            $(this).css('display', 'none');
+            spanMirror.text($(this).val()).css('display', 'flex');
+        }
     });
 
     // Função especial para o input de licenciado (Sim ou Não)
