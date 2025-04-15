@@ -276,14 +276,6 @@ main {
     width: 100%;
     gap: 10px;
 
-    &.cliente {
-        display: flex;
-
-        & .salvar-btn {
-            width: 100% !important;
-        }
-    }
-
     &.cancelar-reserva {
         width: 100%;
 
@@ -301,17 +293,16 @@ main {
     }
 
     & .salvar-btn {
-        width: 82%;
+        width: 20%;
         height: 60px;
         border-radius: 12px;
         border: none;
         font-size: 17px;
         font-weight: 700;
-        color: #fff;
-        background-color: #6C1DE9;
+        color: #6C1DE9;
+        background-color: var();
         cursor: pointer;
         transition: 0.2s;
-
         &:disabled {
             background-color: #c6c6c6;
             cursor: not-allowed;
@@ -320,6 +311,37 @@ main {
                 scale: 1;
             }
         }
+    }
+    & .comprar-btn {
+        width: 80%;
+        height: 60px;
+        border-radius: 12px;
+        border: none;
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        background-color: #6C1DE9;
+        cursor: pointer;
+        transition: 0.2s;
+    
+        &:hover {
+            scale: 1.03;
+        }
+    
+        &:disabled {
+            background-color: #c6c6c6;
+            cursor: not-allowed;
+    
+            &:hover {
+                scale: 1;
+            }
+        }
+    }
+    
+
+    & .fa-calendar-check {
+        color: #6C1DE9;
+        font-size: 1.7rem;
     }
 
     & .salvar-btn:hover {
@@ -1108,6 +1130,9 @@ main {
             width: 100%;
 
             & .salvar-btn {
+                font-size: 14px;
+            }
+            & .comprar-btn {
                 font-size: 14px;
             }
         }
