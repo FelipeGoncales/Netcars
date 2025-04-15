@@ -37,7 +37,8 @@ $(document).ready(() => {
         $('.itens-details li').each(function() {
             let $li = $(this);  // Garante que $li seja um objeto jQuery
             $li.removeClass('active');  // Remove classe "active" de todos
-
+            
+            
             // Se o atributo 'marca' do li for igual à marca selecionada...
             if ($li.attr('marca').toLowerCase() === marcaVeic.toLowerCase()) {
                 // Adiciona a classe "active" a imagem da logomarca correspondente
@@ -209,6 +210,8 @@ async function buscarVeiculos() {
 
             // Limpa a div antes de adicionar outros veículos
             $divVeic.empty();
+            
+            $('html, body').animate({ scrollTop: 0 }, 300);
 
             // Obtém a lista de veículos
             const listaVeic = response.veiculos;
