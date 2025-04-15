@@ -154,6 +154,21 @@ $(document).ready(() => {
         tipoVeiculo = "carro";
     }
 
+    // Buscar marca selecionada
+    const categoriaSelecionada = localStorage.getItem("filtro-categoria");
+
+    if (categoriaSelecionada) {
+        // Seleciona a categoria
+        $(`#select-categoria-${tipoVeiculo}`).val(categoriaSelecionada);
+
+        // Adiciona o filtro visual
+        addFiltro('categoria', categoriaSelecionada, null, "categoria-veic", "select", $(`#select-categoria-${tipoVeiculo}`), false);
+
+        // Limpa a marca salva para evitar que o filtro se repita
+        localStorage.removeItem("filtro-categoria");
+    }
+
+    // Buscar Veículos com os filtros aplicados
     buscarVeiculos();
 });
 
