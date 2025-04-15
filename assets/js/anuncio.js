@@ -364,7 +364,7 @@ async function alterarBotao() {
             $('#mensagem-adm').css('display', 'flex');
             $('#mensagem-reserva').css('display', 'none');
 
-            $('#editarAnuncio').css('display', 'flex');
+            $('#div-icons-actions').css('display', 'flex');
         } else {
             $('#div-button-vendedor').css('display', 'none');
             $('#div-button-cliente').css('display', 'flex');
@@ -375,7 +375,7 @@ async function alterarBotao() {
             $('#mensagem-adm').css('display', 'none');
             $('#mensagem-reserva').css('display', 'none');
 
-            $('#editarAnuncio').css('display', 'none');
+            $('#div-icons-actions').css('display', 'none');
         }
 
     } else {
@@ -388,7 +388,7 @@ async function alterarBotao() {
         $('#mensagem-adm').css('display', 'none');
         $('#mensagem-reserva').css('display', 'none');
 
-        $('#editarAnuncio').css('display', 'none');
+        $('#div-icons-actions').css('display', 'none');
     }
 }
 
@@ -416,3 +416,299 @@ function carregarCidades(estadoId, select) {
         });
     });
 }
+
+// Modal Manutenção
+function modalManutencao() {
+    if ($('.modal-manu').css('display') === 'flex') {
+        $('.modal-manu').css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
+    } else {
+        $('.modal-manu').css('display', 'flex');
+        $('#overlay-bg').css('display', 'flex');
+    }
+}
+
+// Ao clicar no ícone de X do modal de manutenção
+$('#fecharModalManu').click(function() {
+    // Fechar modal de manutenção
+    modalManutencao();
+    // Reabre o display da div de carregamento
+    $('.bg-carregamento-manu').css('display', 'flex');
+})
+
+// Ao clicar no botão de manutenção
+$('#addManutencao').click(async function() {
+    // Obtém o item do local storage
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+    
+    // Verifica se existe os dados do usuário
+    if (!dadosUser) {
+        return;
+    }
+
+    // Desabilita os botões de add serviço e cancelar
+    $('#add-servico').prop('disabled', true);
+    $('#cancelar-manu').prop('disabled', true);
+
+    // Limpa os inputs
+    $('#titleManutencao').text('');
+    $('#input-date').val('');        
+    $('#input-obs').val('');
+    $('#valor-total-manu').text(formatarPreco(0));
+    $('#input-id-manutencao').val('');
+    $('#tbody-servicos').empty();
+
+    // Acessa a função de obter os dados da manutenção veículo
+    try {
+        $.ajax({
+            url: `${BASE_URL}/manutencao_veic/${id_carro}/carro`,
+            headers: {
+                "Authorization": "Bearer " + dadosUser.token
+            },
+            success: await async function(response) {
+                // Pega a primeira manutenção da lista
+                const manutencao = response.manutencao[0];
+
+                // Formatando a data para inserir no input
+                const dataOriginal = new Date(manutencao.data_manutencao);
+                const dataFormatada = dataOriginal.toISOString().split('T')[0];
+
+                // Obtendo dia, mês e ano
+                const dia = String(dataOriginal.getDate() + 1).padStart(2, '0');
+                const mes = String(dataOriginal.getMonth() + 1).padStart(2, '0'); // Janeiro = 0
+                const ano = dataOriginal.getFullYear();
+
+                // Formatando a data para exibição
+                const dataFormatadaBr = `${dia}/${mes}/${ano}`;
+
+                // Altera o texto para a data da manutenção
+                $('#titleManutencao').text(`Manutenção - ${dataFormatadaBr}`);
+
+                // Inserindo a data formatada no input type date
+                $('#input-date').val(dataFormatada);        
+
+                // Adicionando a observação ao input
+                $('#input-obs').val(manutencao.observacao);
+
+                // Inserindo o preço formatado no p
+                $('#valor-total-manu').text(formatarPreco(manutencao.valor_total));
+
+                // Insere o ID da manutenção no input hidden
+                $('#input-id-manutencao').val(manutencao.id_manutencao);
+
+                // Reabilita o botão de manutenção
+                $('#add-servico').prop('disabled', false);
+
+                // Reabilita o botão de cancelar manutenção
+                $('#cancelar-manu').prop('disabled', false).css('transition', '0.3s');
+
+                // Adiciona os serviços
+                await obterServicosManutencao(manutencao.id_manutencao);
+            },
+            error: function(response) {
+                // Altera o texto para adicionar manutenção
+                $('#titleManutencao').text('Adicionar manutenção');
+            }
+        })
+    } finally {
+        // Inserindo um pequeno delay para carregar tudo corretamente
+        setTimeout(() => $('.bg-carregamento-manu').css('display', 'none'), 200)
+    }
+
+    // Abrir modal de manutenção
+    modalManutencao();
+})
+
+// Obter serviços da manutenção
+function obterServicosManutencao(id_manu) {    // Obtém o item do local storage
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+    
+    // Verifica se existe os dados do usuário
+    if (!dadosUser) {
+        return;
+    }
+
+    // Obter os serviços da manutenção
+    $.ajax({
+        url: `${BASE_URL}/manutencao_servicos/${id_manu}`,
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        success: function(response) {
+            // Limpa os elementos da tabela antes de adicionar novos
+            $('#tbody-servicos').empty();
+
+            // Armazena os serviços em uma variável
+            const servicos = response.servicos;
+
+            for (index in servicos) {
+                // Cria um elemento <tr> para agrupar as colunas
+                const $tr = $('<tr>');
+
+                if (index % 2 === 0) {
+                    $tr.addClass('tipo2');
+                } else {
+                    $tr.addClass('tipo1');
+                }
+
+                // Cria os tds que irão conter as informações
+                const $tdIcon = $('<td>');
+                const $icone = $('<i>')
+                    .addClass('fa-solid fa-pen-to-square editarServico')
+                    .attr('id_servico', servicos[index].id_servicos)
+                    .css('cursor', 'pointer');
+
+                $tdIcon.append($icone);
+
+                const $tdDescricao = $('<td>').text(servicos[index].descricao).addClass('descricao-td');
+                const $tdValor = $('<td>').text(formatarValor(servicos[index].valor)).addClass('valor-td');
+
+                $tr.append($tdIcon)
+                    .append($tdDescricao)
+                    .append($tdValor)
+
+                $('#tbody-servicos').append($tr);
+            }
+        },
+        error: function() {
+            return;
+        }
+    })
+}
+
+// Salvar Manutenção
+$('#salvar-manu').click(function() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    if (!dadosUser) {
+        window.location.href = 'login.html';
+    }
+
+    // Verifica se existe o id da manutenção
+    const id_manutencao = $('#input-id-manutencao').val();
+
+    // Caso não exista, cria uma manutneção
+    if (!id_manutencao) {
+        let envia = {
+            "id_veic": id_carro,
+            "tipo_veic": "carro",
+            "data": $('#input-date').val(),
+            "observacao": $('#input-obs').val()
+        }
+    
+        $.ajax({
+            method: "POST",
+            url: `${BASE_URL}/manutencao`,
+            contentType: 'application/json',
+            data: JSON.stringify(envia),
+            headers: {
+                "Authorization": "Bearer " + dadosUser.token
+            },
+            success: function(response) {
+                // Exibe mensagem de sucesso
+                alertMessage(response.success, 'success');
+                // Colocando o id da manutenção no input hidden
+                $('#input-id-manutencao').val(response.id_manutencao);
+                // Reabilita o botão de manutenção
+                $('#add-servico').prop('disabled', false).css('transition', '0.3s');
+                // Reabilita o botão de cancelar manutenção
+                $('#cancelar-manu').prop('disabled', false).css('transition', '0.3s');
+
+                // Data do objeto
+                const dataObj = new Date($('#input-date').val());
+
+                // Extraindo dia, mês e ano
+                const dia = String(dataObj.getDate() + 1).padStart(2, '0');
+                const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+                const ano = dataObj.getFullYear();
+            
+                // Formatando da forma correta
+                const dataFormatadaBr = `${dia}/${mes}/${ano}`;
+            
+                // Passando o título para o parágrafo
+                $('#titleManutencao').text(`Manutenção - ${dataFormatadaBr}`);
+            },
+            error: function(response) {
+                // Exibe mensagem de erro
+                alertMessage(response.responseJSON.error, 'error');
+            }
+        })
+
+        return;
+    }
+
+    // Caso exista, atualiza a manutenção existente
+    let envia = {
+        "id_veic": id_carro,
+        "tipo_veic": "carro",
+        "data": $('#input-date').val(),
+        "observacao": $('#input-obs').val(),
+        "id_manutencao": id_manutencao
+    }
+
+    $.ajax({
+        method: "PUT",
+        url: `${BASE_URL}/manutencao/${id_carro}`,
+        contentType: 'application/json',
+        data: JSON.stringify(envia),
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        success: function(response) {
+            alertMessage(response.success, 'success');
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+})
+
+// Ao clicar no botão de cancelar manutenção
+$('#cancelar-manu').click(function() {
+    Swal.fire({
+        title: "Deseja cancelar essa manutenção?",
+        icon: "warning",
+        text: "Os dados dessa manutenção nunca mais ficarão disponíveis.",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Obtém os dados do usuário
+            const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+            // Caso não tenha, redireciona para login
+            if (!dadosUser) {
+                window.location.href = 'login.html';
+            }
+
+            // Verifica se existe o id da manutenção
+            const id_manutencao = $('#input-id-manutencao').val();
+
+            // Caso não exista id manutenção
+            if (!id_manutencao) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Acessa a rota ajax
+            $.ajax({
+                method: "DELETE",
+                url: `${BASE_URL}/manutencao/${id_manutencao}`,
+                headers: {
+                    "Authorization": "Bearer " + dadosUser.token
+                },
+                success: function(response) {
+                    // Fecha o modal de manutenção
+                    modalManutencao();
+                    // Exibe a mensagem de sucesso
+                    alertMessage(response.success, 'success');
+                },
+                error: function(response) {
+                    alertMessage(response.responseJSON.error, 'error');
+                }
+            })
+        }
+    })
+})

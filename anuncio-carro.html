@@ -136,8 +136,10 @@
                             <!-- Input modelo -->
                             <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
                             <p class="input-mirror" id="mirror-input-modelo"></p>
-                            <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
-                            <i class="fa-solid fa-screwdriver-wrench" id="manutençãoAdd"></i>
+                            <div id="div-icons-actions">
+                                <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
+                                <i class="fa-solid fa-screwdriver-wrench" id="addManutencao"></i>
+                            </div>
                         </div>
                         <input class="vehicleSub" id="input-subtitle" disabled></input>
                         <p class="input-mirror" id="mirror-input-subtitle"></p>
@@ -433,25 +435,40 @@
 
     <!-- Modal manutenção -->
     <div class="modal-manu">
-        <p>Manutenção</p>
+        <div class="bg-carregamento-manu">
+            <div class="dot-spinner">
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+            </div>
+        </div>
+
+        <i class="fa-solid fa-xmark" id="fecharModalManu"></i>
+        <p id="titleManutencao">Manutenção</p>
         <div class="div-info">
-            <div class="div-input">
-                <label for="input">Data</label>
+            <input type="hidden" id="input-id-manutencao">
+            <div class="div-input date">
+                <label for="input-date">Data</label>
                 <input class="input" name="input-date" id="input-date" type="date" required />
             </div>
-            <div class="div-input">
-                <label for="input">Observação</label>
+            <div class="div-input obs">
+                <label for="input-obs">Observação</label>
                 <input class="input" name="input-obs" id="input-obs" type="text" placeholder="Descreva o que está ocorrendo" required />
             </div>
-            <div class="div-input">
-                <label for="input">Valor total</label>
-                <p>R$ 99,999,999.00</p>
+            <div class="div-input valor">
+                <label>Valor total</label>
+                <p id="valor-total-manu">R$ 0,00</p>
             </div>
         </div>
         <div class="div-buttons">
-            <button class="button-cel">Cancelar<i class="fa-solid fa-xmark"></i></button>
-            <button class="button-add">Adiconar serviços</button>
-            <button class="button-add">Salvar</button>
+            <button class="button-cel" id="cancelar-manu" disabled>Cancelar<i class="fa-solid fa-xmark"></i></button>
+            <button class="button-add" id="add-servico" disabled>Adiconar serviço</button>
+            <button class="button-add" id="salvar-manu">Salvar</button>
         </div>
         <div class="table-container">
             <table class="user-table">
@@ -462,31 +479,14 @@
                         <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody id="tbody-users">
-                    <tr class="tipo2">
-                        <td class="icon-col"><i class="fa-solid fa-wrench"></i></td>
-                        <td>Troca de óleo</td>
-                        <td>R$ 80,00</td>
-                    </tr>
-                    <tr class="tipo1">
-                        <td class="icon-col"><i class="fa-solid fa-wrench"></i></td>
-                        <td>Troca de óleo</td>
-                        <td>R$ 80,00</td>
-                    </tr>
-                    <tr class="tipo2">
-                        <td class="icon-col"><i class="fa-solid fa-wrench"></i></td>
-                        <td>Troca de óleo</td>
-                        <td>R$ 80,00</td>
-                    </tr>
-                </tbody>
+                <tbody id="tbody-servicos"></tbody>
             </table>
         </div>
     </div>
 
     <!-- Modal Login -->
     <div id="modal-login">
-        <p class="title">Faça login para uma experiência
-            ainda melhor! ;D</p>
+        <p class="title">Faça login para uma experiência ainda melhor! ;D</p>
         <a href="login.html" class="btn-login">Fazer login</a>
         <p class="subtitle">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
         <p id="closeModalLogin">&times;</p>
