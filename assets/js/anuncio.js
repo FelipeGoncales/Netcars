@@ -75,10 +75,8 @@ $(document).ready(function () {
 });
 
 // Função de aplicar filtro
-function aplicarFiltroMarca(e, div) {
-    e.preventDefault(); // Previne o comportamento padrão do link
-
-    localStorage.setItem('tipo-veiculo', 'carro');
+function aplicarFiltroMarca(div) {
+    localStorage.setItem('tipo-veiculo', TIPO_VEIC);
 
     // Pegamos o id do elemento clicado
     const marca = $(div).attr("marca");
@@ -92,12 +90,12 @@ function aplicarFiltroMarca(e, div) {
 
 // Adicionando o evento aos elementos
 $(document).ready(function () {
-    $(".a-marcas-carro").click(function (e) {
-        aplicarFiltroMarca(e, this);
+    $(`.a-marcas-${TIPO_VEIC}`).click(function (e) {
+        aplicarFiltroMarca(this);
     });
 
-    $('#logo-img').click(function(e) {
-        aplicarFiltroMarca(e, this);
+    $('#logo-img').click(function() {
+        aplicarFiltroMarca(this);
     })
 });
 
@@ -438,9 +436,13 @@ $('#fecharModalManu').click(function() {
 
 // Ao clicar no botão de manutenção
 $('#addManutencao').click(async function() {
+    await carregarManutencao();
+})
+
+async function carregarManutencao() {
     // Obtém o item do local storage
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     // Verifica se existe os dados do usuário
     if (!dadosUser) {
         return;
@@ -460,8 +462,11 @@ $('#addManutencao').click(async function() {
 
     // Acessa a função de obter os dados da manutenção veículo
     try {
+        // Verifica qual o tipo de veículo
+        let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+    
         $.ajax({
-            url: `${BASE_URL}/manutencao_veic/${id_carro}/carro`,
+            url: `${BASE_URL}/manutencao_veic/${id_veic}/${TIPO_VEIC}`,
             headers: {
                 "Authorization": "Bearer " + dadosUser.token
             },
@@ -517,7 +522,7 @@ $('#addManutencao').click(async function() {
 
     // Abrir modal de manutenção
     modalManutencao();
-})
+}
 
 // Obter serviços da manutenção
 function obterServicosManutencao(id_manu) {    // Obtém o item do local storage
@@ -540,6 +545,10 @@ function obterServicosManutencao(id_manu) {    // Obtém o item do local storage
 
             // Armazena os serviços em uma variável
             const servicos = response.servicos;
+
+            if (!servicos.length) {
+                return;
+            }
 
             for (index in servicos) {
                 // Cria um elemento <tr> para agrupar as colunas
@@ -590,8 +599,8 @@ $('#salvar-manu').click(function() {
     // Caso não exista, cria uma manutneção
     if (!id_manutencao) {
         let envia = {
-            "id_veic": id_carro,
-            "tipo_veic": "carro",
+            "id_veic": TIPO_VEIC == 'carro' ? id_carro : id_moto,
+            "tipo_veic": TIPO_VEIC,
             "data": $('#input-date').val(),
             "observacao": $('#input-obs').val()
         }
@@ -633,22 +642,24 @@ $('#salvar-manu').click(function() {
                 alertMessage(response.responseJSON.error, 'error');
             }
         })
-
+        // Retorna para não continuar a função
         return;
     }
 
     // Caso exista, atualiza a manutenção existente
     let envia = {
-        "id_veic": id_carro,
-        "tipo_veic": "carro",
+        "tipo_veic": TIPO_VEIC,
         "data": $('#input-date').val(),
         "observacao": $('#input-obs').val(),
         "id_manutencao": id_manutencao
     }
 
+    // Verifica se é carro ou moto
+    const id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+
     $.ajax({
         method: "PUT",
-        url: `${BASE_URL}/manutencao/${id_carro}`,
+        url: `${BASE_URL}/manutencao/${id_veic}`,
         contentType: 'application/json',
         data: JSON.stringify(envia),
         headers: {
@@ -709,6 +720,150 @@ $('#cancelar-manu').click(function() {
                     alertMessage(response.responseJSON.error, 'error');
                 }
             })
+        }
+    })
+})
+
+// Abrir add serviço
+$('#add-servico').click(function() {
+    $('.modal-manu').css('display', 'none');
+    $('#formAddServico').css('display', 'flex');
+})
+
+// Fechar add serviço
+$('#fecharModalAddServico').click(function() {
+    $('.modal-manu').css('display', 'flex');
+    $('#formAddServico').css('display', 'none');
+})
+
+// Enviar form de add serviço
+$('#formAddServico').on('submit', function(e) {
+    e.preventDefault();
+    
+    // Obtém dados user
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    if (!dadosUser) {
+        window.location.href = "login.html";
+    }
+
+    const data = new FormData(this);
+
+    let envia = {
+        "descricao": data.get('descricao-servico'),
+        "valor": desformatarPreco(data.get('valor-servico')),
+        "id_manutencao": $('#input-id-manutencao').val()
+    }
+
+    $.ajax({
+        method: "POST",
+        url: `${BASE_URL}/servicos`,
+        data: JSON.stringify(envia),
+        contentType: "application/json",
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        success: function(response) {
+            // Salvando variável no local storage
+            localStorage.setItem("servico-add", response.success);
+            // Recarregando a página
+            window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+})
+
+$(document).ready(async function() {
+    // Adidiona formatação ao input de preço
+    formatarPreco($('#valor-servico'));
+    formatarPreco($('#valor-editar-servico'));
+})
+
+// Abre o modal de editar
+$(document).on('click', '.editarServico', function() {
+    const id_servico = $(this).attr('id_servico');
+
+    if (!id_servico) {
+        window.location.reload();
+        return;
+    }
+    
+    // Obtém dados user
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    if (!dadosUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    $.ajax({
+        url: `${BASE_URL}/servicos/${id_servico}`,
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        success: function(response) {
+            // Fecha o modal de manutenção e abre o de editar
+            $('.modal-manu').css('display', 'none');
+            $('#formEditarServico').css('display', 'flex');
+            
+            // Obtém a resposta
+            const servico = response.servico;
+
+            // Carrega os valores no modal de editar
+            $('#id-editar-servico').val(servico.id_servicos);
+            $('#descricao-editar-servico').val(servico.descricao);
+            $('#valor-editar-servico').val(formatarValor(servico.valor));
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+});
+
+// Fecha o modal de editar
+$('#fecharModalEditarServico').click(function() {
+    $('.modal-manu').css('display', 'flex');
+    $('#formEditarServico').css('display', 'none');
+})
+
+
+// Enviar form de editar serviço
+$('#formEditarServico').on('submit', function(e) {
+    e.preventDefault();
+    
+    // Obtém dados user
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    if (!dadosUser) {
+        window.location.href = "login.html";
+    }
+
+    const data = new FormData(this);
+
+    let envia = {
+        "descricao": data.get('descricao-editar-servico'),
+        "valor": desformatarPreco(data.get('valor-editar-servico')),
+        "id_servicos": data.get('id-editar-servico')
+    }
+
+    $.ajax({
+        method: "PUT",
+        url: `${BASE_URL}/servicos`,
+        data: JSON.stringify(envia),
+        contentType: "application/json",
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        success: function(response) {
+            // Salvando variável no local storage
+            localStorage.setItem("servico-add", response.success);
+            // Recarregando a página
+            window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
         }
     })
 })

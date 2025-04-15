@@ -48,6 +48,8 @@ const logo_carros = {
 // Declarando a variável id_carro fora da função para usá-la depois
 let id_carro = '';
 
+var TIPO_VEIC = 'carro';
+
 $(document).ready(async function () {
     // Obtém o select estado e de cidade
     const estadoSelect = $("#input-estado");
@@ -79,6 +81,22 @@ $(document).ready(async function () {
 
     if (!id_carro) {
         window.location.href = "veiculos.html";
+    }
+
+    // ESSA FUNÇÂO ESTÁ NO ANUNCIO.JS
+
+    // Verifica se um serviço foi adicionado 
+    const servicoAdd = localStorage.getItem('servico-add');
+
+    if (servicoAdd) {
+        // Carrega os dados da manutenção
+        await carregarManutencao();
+        
+        // Exibe mensagem
+        alertMessage(servicoAdd, 'success');
+        
+        // Remove o item do local storage
+        localStorage.removeItem('servico-add');
     }
 
     const dadosUser = localStorage.getItem('dadosUser');
