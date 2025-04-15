@@ -206,7 +206,9 @@ async function buscarVeiculos() {
 
             // Obtendo a div para inserir os veículos
             const $divVeic = $("#div-veiculos");
-            await $divVeic.empty();
+
+            // Limpa a div antes de adicionar outros veículos
+            $divVeic.empty();
 
             // Obtém a lista de veículos
             const listaVeic = response.veiculos;

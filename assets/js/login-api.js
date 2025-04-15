@@ -1,6 +1,6 @@
 // URL API
 
-const BASE_URL = "http://192.168.1.114:5000";
+const BASE_URL = "http://192.168.1.10:5000";
 
 // Funções para auxiliar no funcionamento dos inputs
 
@@ -45,21 +45,23 @@ function alertMessage(text, type) {
         .fadeIn(400)
         .delay(3500)
         .fadeOut(400);
-
-        // Limpar o local storage para evitar que a mensagem de novo ao recarregar a página
-        localStorage.clear();
 }
 
 // Função para exibir mensagem (se existir) logo ao abrir a página
 $(document).ready(() => {
     const mensagem = JSON.parse(localStorage.getItem('mensagem'));
-
+    
     if (mensagem) {
-        if (mensagem.error) {
-            alertMessage(mensagem.error, 'error');
+        try {
+            if (mensagem.error) {
+                alertMessage(mensagem.error, 'error');
+            }
+            if (mensagem.success) {
+                alertMessage(mensagem.success, 'success');
+            }
         }
-        if (mensagem.success) {
-            alertMessage(mensagem.success, 'success');
+        finally {
+            localStorage.removeItem('mensagem');
         }
     }
 })
@@ -111,14 +113,36 @@ $("#formCadastroUsuario").on("submit", function (e) {
                 token: response.dados.token
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
+
+            // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
+            const id_carro_salvo = localStorage.getItem('id_carro_salvo');
+
+            // Caso encontre
+            if (id_carro_salvo) {
+                // Remove o item do local storage
+                localStorage.removeItem('id_carro_salvo');
+                // Redireciona para a página do anúncio
+                window.location.href = `anuncio-carro.html?id=${id_carro_salvo}`;
+                return;
+            }
+
+            // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
+            const id_moto_salva = localStorage.getItem('id_moto_salva');
+            
+            // Caso encontre
+            if (id_moto_salva) {
+                // Remove o item do local storage
+                localStorage.removeItem('id_moto_salva');
+                // Redireciona para a página do anúncio
+                window.location.href = `anuncio-moto.html?id=${id_moto_salva}`;
+                return;
+            }
+
+            // Redireciona para home
             window.location.href = 'index.html';
         },
         error: function (response) {
-            $("#mensagemError")
-                .fadeIn(400)
-                .text(response.responseJSON.error).css('display', 'block')
-                .delay(4000)
-                .fadeOut(400)
+            alertMessage(response.responseJSON.error, 'error');
         }
     })
 })
@@ -154,14 +178,36 @@ $("#formLoginUsuario").on('submit', function (e) {
                 token: response.dados.token
             }
             localStorage.setItem('dadosUser', JSON.stringify(dados));
-            window.location.href = 'index.html';
+
+            // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
+            const id_carro_salvo = localStorage.getItem('id_carro_salvo');
+
+            // Caso encontre
+            if (id_carro_salvo) {
+                // Remove o item do local storage
+                localStorage.removeItem('id_carro_salvo');
+                // Redireciona para a página do anúncio
+                window.location.href = `anuncio-carro.html?id=${id_carro_salvo}`;
+                return;
+            }
+
+            // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
+            const id_moto_salva = localStorage.getItem('id_moto_salva');
+
+            // Caso encontre
+            if (id_moto_salva) {
+                // Remove o item do local storage
+                localStorage.removeItem('id_moto_salva');
+                // Redireciona para a página do anúncio
+                window.location.href = `anuncio-moto.html?id=${id_moto_salva}`;
+                return;
+            }
+
+            // Redireciona para a home
+            window.location.href = "index.html";
         },
         error: function (response) {
-            $("#mensagemError")
-                .fadeIn(400)
-                .text(response.responseJSON.error).css('display', 'block')
-                .delay(4000)
-                .fadeOut(400)
+            alertMessage(response.responseJSON.error, 'error');
         }
     })
 })

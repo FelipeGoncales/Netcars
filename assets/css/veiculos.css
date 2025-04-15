@@ -281,6 +281,27 @@ main {
 
 /* Início do Card */
 
+.card-loading {
+    width: 100%;
+    height: 455px;
+    border-radius: 10px;
+    background-color: var(--cor-texto-apagado);
+    transition: 0.2s;
+    animation: piscarCorDeFundo 1.8s infinite ease-in-out;
+}
+
+@keyframes piscarCorDeFundo {
+    0% {
+        background-color: #dbdbdb;
+    }
+    50% {
+        background-color: #c6c5c7;
+    }
+    100% {
+        background-color: #dbdbdb;
+    }
+}
+
 .card{
     background: var(--cor-bg-sec);
     border-radius: 10px;

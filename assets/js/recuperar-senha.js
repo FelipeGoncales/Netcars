@@ -13,9 +13,6 @@ function alertMessage(text, type) {
         .fadeIn(400)
         .delay(3500)
         .fadeOut(400);
-
-        // Limpar o local storage para evitar que a mensagem de novo ao recarregar a página
-        localStorage.clear();
 }
 
 // Função para manipular a inserção do código de 6 dígito
