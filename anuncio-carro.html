@@ -137,6 +137,7 @@
                             <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
                             <p class="input-mirror" id="mirror-input-modelo"></p>
                             <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
+                            <i class="fa-solid fa-screwdriver-wrench" id="manutençãoAdd"></i>
                         </div>
                         <input class="vehicleSub" id="input-subtitle" disabled></input>
                         <p class="input-mirror" id="mirror-input-subtitle"></p>
@@ -427,6 +428,58 @@
         <div id="pagina-veiculo-moto">
             <i class="fa-solid fa-motorcycle"></i>
             <p>Comprar motos</p>
+        </div>
+    </div>
+
+    <!-- Modal manutenção -->
+    <div class="modal-manu">
+        <p>Manutenção</p>
+        <div class="div-info">
+            <div class="div-input">
+                <label for="input">Data</label>
+                <input class="input" name="input-date" id="input-date" type="date" required />
+            </div>
+            <div class="div-input">
+                <label for="input">Observação</label>
+                <input class="input" name="input-obs" id="input-obs" type="text" placeholder="Descreva o que está ocorrendo" required />
+            </div>
+            <div class="div-input">
+                <label for="input">Valor total</label>
+                <p>R$ 99,999,999.00</p>
+            </div>
+        </div>
+        <div class="div-buttons">
+            <button class="button-cel">Cancelar<i class="fa-solid fa-xmark"></i></button>
+            <button class="button-add">Adiconar serviços</button>
+            <button class="button-add">Salvar</button>
+        </div>
+        <div class="table-container">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th  class="icon-col"><i class="fa-solid fa-screwdriver-wrench"></i></th>
+                        <th>Serviço</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-users">
+                    <tr class="tipo2">
+                        <td class="icon-col"><i class="fa-solid fa-wrench"></i></td>
+                        <td>Troca de óleo</td>
+                        <td>R$ 80,00</td>
+                    </tr>
+                    <tr class="tipo1">
+                        <td class="icon-col"><i class="fa-solid fa-wrench"></i></td>
+                        <td>Troca de óleo</td>
+                        <td>R$ 80,00</td>
+                    </tr>
+                    <tr class="tipo2">
+                        <td class="icon-col"><i class="fa-solid fa-wrench"></i></td>
+                        <td>Troca de óleo</td>
+                        <td>R$ 80,00</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
