@@ -1211,9 +1211,25 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 .container-dashboard   {
     max-width: 900px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
     width: 50vw;
+    gap: 10px;
+    & button{
+        border: none;
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: var(--roxo);
+        color: var(--cor-bg-sec);
+        font-weight: 600;
+        transition: 0.3s;
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
 }
-
 #mov-recietas, #mov-despesas{
     cursor: pointer;
 }
@@ -1331,9 +1347,32 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     border-radius: 12px;
     padding: 20px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    gap: 8px;
+    max-height: 238px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    & .card-despesa, .card-receita{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+        border-radius: 20px;
+        padding: 10px 12px;
+        & .div-desc{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+    } & .card-receita{
+        background: rgba(0, 255, 0, 0.25);
+    } & .card-despesa{
+        background: rgba(255, 0, 0, 0.25);
+    }
 }
 
 .transaction-header {
