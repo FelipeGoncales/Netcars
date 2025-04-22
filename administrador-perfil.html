@@ -165,25 +165,70 @@
 
                     <div class="dashboard-grid">
                         <div class="transactions-card">
-                            <div class="transaction-header">
-                                <div class="transaction-title">Receitas</div>
-                            </div>
-                            <div class="transaction-amount">R$ 0,00</div>
+                            <div id="mov-recietas">
+                                <div class="transaction-header">
+                                    <div class="transaction-title">Receitas</div>
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
+                                <div class="transaction-amount">R$ 0,00</div>
+                           </div>
 
                             <div class="transaction-divider"></div>
 
-                            <div class="transaction-header">
-                                <div class="transaction-title">Despesas</div>
+                            <div id="mov-despesas">
+                                <div class="transaction-header">
+                                    <div class="transaction-title">Despesas</div>
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
+                                <div class="transaction-amount">R$ 0,00</div>
                             </div>
-                            <div class="transaction-amount">R$ 0,00</div>
                         </div>
-
                         <div class="charts-card">
-                            <div class="charts-text">gráficos/filtros</div>
+                            <div class="card-despesa">
+                                <div class="div-desc">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <div>
+                                        <p class="p-tipo">Manutenção</p>
+                                        <p class="p-descri">Soltando coco</p>
+                                    </div>
+                                </div>
+                                <div class="div-valr">
+                                    <p class="p-valor">R$999,99</p>
+                                    <p class="p-data">10/10/2010</p>
+                                </div>
+                            </div>
+                            <div class="card-receita">
+                                <div class="div-desc">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <div>
+                                        <p class="p-tipo">Venda de carro</p>
+                                        <p class="p-descri">Audi 123</p>
+                                    </div>
+                                </div>
+                                <div class="div-valr">
+                                    <p class="p-valor">R$999.999.999,00</p>
+                                    <p class="p-data">01/02/1920</p>
+                                </div>
+                            </div>
+                            <div class="card-despesa">
+                                <div class="div-desc">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <div>
+                                        <p class="p-tipo">Compra de carro</p>
+                                        <p class="p-descri">Audi 123</p>
+                                    </div>
+                                </div>
+                                <div class="div-valr">
+                                    <p class="p-valor">R$999.999.999,00</p>
+                                    <p class="p-data">01/02/1920</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <button> Visualizar/Gerar PDF <i class="fa-solid fa-arrow-up-from-bracket"></i></button>
                 </div>
-                <!-- Aqui você pode adicionar conteúdo específico para movimentações -->
+
+
             </div>
 
             <!-- Div Relatórios - Carros -->
@@ -405,6 +450,49 @@
             </div>
             <button type="submit">Salvar alterações</button>
         </form>
+    
+            <!-- Modal Receita -->
+            <form id="modal-receita" class="modal-system">
+                <i class="fa-solid fa-xmark" id="close-modal-receita"></i>
+                <h2>Adicionar Receita</h2>
+                <div class="div-input">
+                    <label for="descricao-receita">Descrição</label>
+                    <input type="text" name="descricao-receita" id="descricao-receita" required />
+                </div>
+                <div class="div-info">
+                    <div class="div-input">
+                        <label for="data-receita">Data</label>
+                        <input type="date" name="data-receita" id="data-receita" required />
+                    </div>
+                    <div class="div-input">
+                        <label for="valor-receita">Valor</label>
+                        <input type="number" name="valor-receita" id="valor-receita" required />
+                    </div>
+                </div>
+                <button type="submit">Adicionar</button>
+            </form>
+    
+            <!-- Modal Despesa -->
+            <form id="modal-despesa" class="modal-system">
+                <i class="fa-solid fa-xmark" id="close-modal-despesa"></i>
+                <h2>Adicionar Despesa</h2>
+                <div class="div-input">
+                    <label for="descricao-despesa">Descrição</label>
+                    <input type="text" name="descricao-despesa" id="descricao-despesa" required />
+                </div>
+                <div class="div-info">
+                    <div class="div-input">
+                        <label for="data-despesa">Data</label>
+                        <input type="date" name="data-despesa" id="data-despesa" required />
+                    </div>
+                    <div class="div-input">
+                        <label for="valor-despesa">Valor</label>
+                        <input type="number" name="valor-despesa" id="valor-despesa" required />
+                    </div>
+                    
+                </div>
+                <button type="submit">Adicionar</button>
+            </form>
 
         <!-- Form Div Cadastrar User -->
         <form class="container-login" id="formCadastroUsuario">
