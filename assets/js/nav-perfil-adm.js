@@ -391,6 +391,8 @@ $('#pdf-movimentacao').click(() => {
 });
 
 
+
+
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
 
 // Ao carregar o documento, adiciona a classe "active" ao label anterior se o input/select tiver valor
@@ -569,7 +571,27 @@ $("#close-modal-cad-user").click(function () {
     $('#overlay-bg-modal-edit').css('display', 'none');
 })
 
-// Abrir modal ao clicar no botão
+ // Abre modal de receitas
+ $('#mov-recietas').on('click', function() {
+    $('.overlay-bg').css('display', 'block');
+    $('#modal-receita').css('display', 'flex');
+  })
+
+  // Fecha modal de receitas (X e overlay)
+  $('#close-modal-receita, .overlay-bg').on('click', function() {
+    $('.overlay-bg, #modal-receita').css('display', 'none');
+  })
+
+  // Abre modal de despesas
+  $('#mov-despesas').on('click', function() {
+    $('.overlay-bg').css('display', 'block');
+    $('#modal-despesa').css('display', 'flex');
+  })
+
+  // Fecha modal de despesas (X e overlay)
+  $('#close-modal-despesa, .overlay-bg').on('click', function() {
+    $('.overlay-bg, #modal-despesa').css('display', 'none');
+  })
 
 // Verificar se usuário foi editado
 $(document).ready(() => {
