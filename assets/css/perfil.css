@@ -1214,8 +1214,9 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     display: flex;
     flex-direction: column;
     width: 50vw;
-    gap: 10px;
+    gap: 15px;
     & button{
+        margin-top: 5px;
         border: none;
         width: 100%;
         padding: 15px;
@@ -1361,11 +1362,30 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         gap: 10px;
         border-radius: 20px;
         padding: 10px 12px;
-        & .div-desc{
+        & .div-desc, .div-va{
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 10px; 
+            & .p-tipo{
+                font-size: 0.9em;
+                font-weight: 600;
+            }& .p-descri{
+                font-size: 0.8em;
+                font-weight: 500;
+            }
+        } & .div-valr{
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            flex-direction: column;
+            & .p-data{
+                font-weight: 500;
+                font-size: 0.8em;
+            } & .p-valor{
+                font-size: 0.9em;
+                font-weight: 500;
+            }
         }
 
     } & .card-receita{
