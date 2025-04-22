@@ -300,14 +300,14 @@ main {
     }
 
     & .salvar-btn {
-        width: 20%;
+        width: 80%;
         height: 60px;
         border-radius: 12px;
         border: none;
         font-size: 17px;
         font-weight: 700;
-        color: #6C1DE9;
-        background-color: var();
+        color: var(--cor-bg-sec);
+        background-color: var(--roxo);
         cursor: pointer;
         transition: 0.2s;
         &:disabled {
@@ -317,6 +317,11 @@ main {
             &:hover {
                 scale: 1;
             }
+        }
+        &.reservar-cliente {
+            width: 20%;
+            color: var(--roxo);
+            background-color: var(--cor-bg);
         }
     }
     & .comprar-btn {
@@ -779,6 +784,13 @@ main {
         transition: 0.3s;
         &:hover {
             background-color: var(--hover-roxo);
+        }
+        &#excluir-servico {
+            background-color: var(--cor-bg);
+            color: var(--roxo);
+            &:hover {
+                background-color: #dedfe7;
+            }
         }
     }
     & #fecharModalAddServico, #fecharModalEditarServico {

@@ -149,7 +149,7 @@ $(document).ready(async function () {
                     // Input final placa
                     await obterTipoUser();
     
-                    if (tipoUser in [1, 2]) {
+                    if (tipoUser === 1 || tipoUser === 2) {
                         // Criando o overlay
                         const overlay = $('<div></div>').css({
                             "cursor": "pointer",
@@ -286,7 +286,7 @@ $(document).ready(async function () {
                 // Input final placa
                 await obterTipoUser();
     
-                if (tipoUser in [1, 2]) {
+                if (tipoUser === 1 || tipoUser === 2) {
                     $('#label-placa').text('Placa')
                     $('#input-placa').val(infoVeic.placa);
                 } else {

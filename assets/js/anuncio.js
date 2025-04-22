@@ -456,7 +456,7 @@ async function carregarManutencao() {
     $('#titleManutencao').text('');
     $('#input-date').val('');        
     $('#input-obs').val('');
-    $('#valor-total-manu').text(formatarPreco(0));
+    $('#valor-total-manu').text(formatarValor(0));
     $('#input-id-manutencao').val('');
     $('#tbody-servicos').empty();
 
@@ -496,7 +496,7 @@ async function carregarManutencao() {
                 $('#input-obs').val(manutencao.observacao);
 
                 // Inserindo o preço formatado no p
-                $('#valor-total-manu').text(formatarPreco(manutencao.valor_total));
+                $('#valor-total-manu').text(formatarValor(manutencao.valor_total));
 
                 // Insere o ID da manutenção no input hidden
                 $('#input-id-manutencao').val(manutencao.id_manutencao);
@@ -828,7 +828,6 @@ $('#fecharModalEditarServico').click(function() {
     $('#formEditarServico').css('display', 'none');
 })
 
-
 // Enviar form de editar serviço
 $('#formEditarServico').on('submit', function(e) {
     e.preventDefault();
@@ -864,6 +863,45 @@ $('#formEditarServico').on('submit', function(e) {
         },
         error: function(response) {
             alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+})
+
+$('#excluir-servico').click(function() {
+    Swal.fire({
+        title: "Deseja excluir esse serviço?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Obtém dados user
+            const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+            if (!dadosUser) {
+                window.location.href = "login.html";
+            }
+
+            let id_servico_editar = $('#id-editar-servico').val();
+
+            $.ajax({
+                method: "DELETE",
+                url: `${BASE_URL}/servicos/${id_servico_editar}`,
+                headers: {
+                    "Authorization": "Bearer " + dadosUser.token
+                },
+                success: function(response) {
+                    // Salvando variável no local storage
+                    localStorage.setItem("servico-add", response.success);
+                    // Recarregando a página
+                    window.location.reload();
+                },
+                error: function(response) {
+                    alertMessage(response.responseJSON.error, 'error');
+                }
+            })
         }
     })
 })
