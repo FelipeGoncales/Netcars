@@ -409,6 +409,7 @@ $("#upload-imagem").on("change", function (event) {
     carregarPreviewImg();
 });
 
+
 $(document).ready(function () {
     $('#comprar-btn').on('click', function () {
         $('#modal-comprar').css('display', 'flex');
@@ -417,6 +418,8 @@ $(document).ready(function () {
 
     $('.fechar-modal').on('click', function () {
         $('#modal-comprar').css('display', 'none');
+        $('#modal-pix').css('display', 'none');
+        $('#modal-financiamento').css('display', 'none');
         $('#overlay-bg').css('display', 'none');
     });
 
@@ -426,10 +429,17 @@ $(document).ready(function () {
         $('#overlay-bg').css('display', 'none');
     });
 
-    $('btn-pix').on('click', function () {
+    $('#btn-pix').on('click', function () {
         $('#modal-comprar').css('display', 'none');
+        $('#modal-pix').css('display', 'flex');
+    })
+
+    $('#btn-financiamento').on('click', function () {
+        $('#modal-comprar').css('display', 'none');
+        $('#modal-financiamento').css('display', 'flex');
     })
   });
+
 
 // Função de fechar modal de editar
 function fecharModalEditarImagem() {

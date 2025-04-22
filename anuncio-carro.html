@@ -439,30 +439,57 @@
         <p class="title-forma">Forma de pagamento</p>
         <div class="div-pagar">
             <div class="div-fpagamento" id="btn-pix">
-                <p>Via Pix</p>
-                <i class="fa-brands fa-pix"></i>
+                <p>À vista</p>
+                <i class="fa-solid fa-money-bill"></i>
             </div>
 
-            <div class="div-fpagamento" id="btn-pix">
+            <div class="div-fpagamento" id="btn-financiamento">
                 <p>Financiamento</p>
                 <i class="fa-solid fa-handshake"></i>
             </div>
         </div>
     </div>
     
-    <!-- Modal Financiamento -->
-    <div class="modal-pix" id="modal-financiamento">
+    <!-- Modal pix -->
+    <div class="modal-pix" id="modal-pix">
         <i class="fa-solid fa-xmark fechar-modal"></i>
-            <p></p>
+        <p class="title-forma">QR CODE</p>
+        <div class="div-pagar">
+            <div class="div-fpagamento" id="btn-pix">
+                <img class="img-qrcode" src="assets/img/qrcode.png" alt="">
+            </div>
+        </div>
+    </div>
 
-       <div>
-            <p></p>
-            <select name="" id=""></select>
-       </div>
+    <!-- Modal finaciamento -->
+    <div class="modal-finaciamento" id="modal-financiamento">
+        <i class="fa-solid fa-xmark fechar-modal"></i>
+        <p class="title-forma">Financiamento</p>
+        <div class="div-pagar">
+            <div class="div-fpagamento-financiamento">
+                <div class="div-f-financiamento">
+                    <p class="valor-title">Será parcelado em quantas vezes:</p>
+                    <select id="select-parcelas" name="Parcelas">
+                    <option value=""></option>
+                    <option value="12">12x</option>
+                    <option value="18">18x</option>
+                    <option value="24">24x</option>
+                    <option value="30">30x</option>
+                    <option value="36">36x</option>
+                    <option value="42">42x</option>
+                    <option value="48">48x</option>
+                    <option value="54">54x</option>
+                    <option value="60">60x</option>
+                  </select>
+                </div>
 
-       <div>
-            <p></p> 
-       </div>
+                <div class="div-f-financiamento">
+                    <p class="valor-parcela">Valor de cada parcela:</p>
+                    <p class="valor-result">$$$$$$</p>
+                </div>
+                <button class="btn-pagar-parcelas" id="pay-parcelas">Pagar parcelas</button>
+            </div>
+        </div>
     </div>
     
     <!-- Modal manutenção -->
