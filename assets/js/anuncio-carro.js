@@ -409,6 +409,28 @@ $("#upload-imagem").on("change", function (event) {
     carregarPreviewImg();
 });
 
+$(document).ready(function () {
+    $('#comprar-btn').on('click', function () {
+        $('#modal-comprar').css('display', 'flex');
+        $('#overlay-bg').css('display', 'block');
+    });
+
+    $('.fechar-modal').on('click', function () {
+        $('#modal-comprar').css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
+    });
+
+    // Fechar modal se clicar fora dela (opcional)
+    $('#overlay').on('click', function () {
+        $('#modal-comprar').css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
+    });
+
+    $('btn-pix').on('click', function () {
+        $('#modal-comprar').css('display', 'none');
+    })
+  });
+
 // Função de fechar modal de editar
 function fecharModalEditarImagem() {
     $('#modal-editar-imagem').css('display', 'none');
