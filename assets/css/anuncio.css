@@ -1022,6 +1022,9 @@ main {
     &#manutencao-voltar {
         left: 60px;
     }
+    &.disabled {
+        color: var(--cor-texto-apagado);
+    }
 }
 
 #formAddServico, #formEditarServico {
