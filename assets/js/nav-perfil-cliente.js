@@ -75,7 +75,9 @@ $(document).ready(function() {
 
         $('#minha-conta').css('display', 'flex');
         $('#reservas').css('display', 'none');
+        $('#financiamento').css('display', 'none')
         $('#historico-compras').css('display', 'none');
+        $('#parcelas').css('display' , 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -87,23 +89,57 @@ $(document).ready(function() {
 
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'flex');
+        $('#financiamento').css('display', 'none')
         $('#historico-compras').css('display', 'none');
+        $('#parcelas').css('display' , 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
         }
     })
+    
     $("#link_hCompras").on("click", function() {
         const elementoClicado = this;
         selecionarA(elementoClicado);
 
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
+        $('#financiamento').css('display', 'none')
         $('#historico-compras').css('display', 'flex');
+        $('#parcelas').css('display' , 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
         }
+    })
+    $("#link_financiamento").on("click", function() {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#minha-conta').css('display', 'none');
+        $('#reservas').css('display', 'none');
+        $('#historico-compras').css('display', 'none');
+        $('#financiamento').css('display', 'flex')
+        $('#parcelas').css('display' , 'none')
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
+    })
+
+    $("#link_parcelas").on("click", function() {
+        $('#financiamento').css('display', 'none')
+        $('#parcelas').css('display' , 'flex')
+    })
+
+    $("#link_parcelas2").on("click", function() {
+        $('#financiamento').css('display', 'none')
+        $('#parcelas').css('display' , 'flex')
+    })
+
+    $("voltar_parcela").on("click", function(){
+        $('#financiamento').css('display', 'flex')
+        $('#parcelas').css('display' , 'none')
     })
 });
 

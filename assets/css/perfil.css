@@ -437,6 +437,17 @@ main {
     justify-content: center;
 }
 
+.filtro-users-wrapper2 {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    height: 60px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
 .cad-user {
     background-color: var(--roxo);
     height: 60px;
@@ -461,6 +472,30 @@ main {
     }
 }
 
+.cad-user2 {
+    background-color: var(--roxo);
+    height: 60px;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    min-width: 50%;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 10px;
+    transition: 0.2s;
+    & i {
+        font-size: 0.7rem;
+    }
+    &:hover {
+        background-color: var(--hover-roxo);
+    }
+}
+
 .search-box, .status-box, .type-box {
     height: 100%;
     width: 100%;
@@ -468,6 +503,21 @@ main {
     flex-direction: column;
     position: relative;
 }
+
+.status-box2 select {
+    width: 50%;
+    height: 100%;
+    padding: 15px;
+    font-size: 0.9rem;
+    border: 2px #e0e1e4 solid;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+    z-index: 2;
+    color: #757587;
+}
+
+
 
 .search-label, .status-label, .type-label {
     font-size: 0.85rem;
@@ -924,10 +974,14 @@ tbody tr.tipo2 {
 /* DIVS PERFIL CLIENTE */
 
 #minha-conta {
+    display: none;
+}
+
+#parcelas{
     display: flex;
 }
 
-#historico-compras, #reservas {
+#historico-compras, #reservas,#financiamento {
     display: none;
     flex-direction: column;
     gap: 20px;
@@ -945,6 +999,109 @@ tbody tr.tipo2 {
     }
 }
 
+
+/* Div car-financia */
+.container-car-financia {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-card-car-financia{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    align-items: center;
+}
+.div-car-p1 p{
+    font-weight: 400;
+    font-size: 16px;
+}
+.div-car-p2 p, .div-car-p2 p span{
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.div-car-p2 p span{
+    color: #6C1DE9;
+}
+
+.div-car-p3{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.div-car-p3 p.price{
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.div-car-p3 p{
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.pai-financiamento{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.card-car-financia{
+    width: 150px;
+    height: 110px;
+    background-color: white;
+    border-radius: 15px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../img/image.png);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+/* Card Financiamento */
+.container-card-financia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  
+    .div-card-financia {
+      display: flex;
+      gap: 15px;
+    }
+  
+    .i-financia {
+      font-size: 65px;
+      color: #6C1DE9;
+    }
+  
+    .card-financia {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 261px;
+      height: 218px;
+      gap: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+      transition: 0.2s;
+  
+      &:hover {
+        scale: 1.02;
+        cursor: pointer;
+      }
+  
+      p {
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+  
 /* Card Padrão */
 
 #div-reservas {

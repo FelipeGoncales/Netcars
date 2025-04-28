@@ -46,7 +46,7 @@
                 <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
                 <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
                 <a id="link_hCompras"><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
-                <a id="link_hCompras"><i class="fa-solid fa-clock-rotate-left"></i>Financiamento</a>
+                <a id="link_financiamento"><i class="fa-solid fa-handshake"></i>Financiamento</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
             <p id="fecharBarraLateral">&times;</p>
@@ -153,6 +153,78 @@
                 <h3>Veículos reservados</h3>
                 <div class="div-carrossel">
                     <div class="conteudo" id="div-reservas"></div>
+                </div>
+            </div>
+            <!-- Div parcelas a pagar -->
+            <div id="parcelas">
+                <div>
+                    <div class="filtro-users-wrapper2">
+                        <div class="status-box" style="width: 30%;">
+                            <select id="status-select">
+                                <option value="">Status</option>
+                                <option value="1">Pago</option>
+                                <option value="0">Não pago</option>
+                            </select>
+                        </div>
+    
+                        <button class="cad-user" id="">Pagar parcela <i class="fa fa-user-plus"></i></button>
+                    </div>
+                    <div class="table-container">
+                        <table class="user-table">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa-solid fa-user"></i></th>
+                                    <th>Parcela</th>
+                                    <th>Valor parcela</th>
+                                    <th>Valor amortizado</th>
+                                    <th>Data de vencimento</th>
+                                    <th>Data de pagamento</th>
+                                    <th><i class="fa-solid fa-coins"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-users"></tbody>
+                        </table>
+                    </div>
+                    <div>
+                            
+                    </div>
+                </div>
+            </div>  
+
+            <!-- Div de Financiamento -->
+            <div id="financiamento">
+                <div class="pai-financiamento">
+                    <div class="container-car-financia">
+                            <div class="container-card-car-financia">
+                                <div class="card-car-financia"></div>
+                                <div class="div-car-p1">
+                                    <div class="div-car-p2"><p>HONDA <span>CIVIC</span></p></div>
+                                    <p>4P FLEX MP 1.6</p>
+                                    <p>2023/2024</p>
+                                </div>
+                            </div>
+                            <div>       
+                                <div class="div-car-p3">
+                                    <p>60 parcelas</p>
+                                    <p class="price">R$ 130.000,00</p>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="container-card-financia">
+                        <div class="div-card-financia">
+                            <div id="link_parcelas" class="card-financia">
+                                
+                                <i class="fa-solid fa-circle-plus i-financia"></i>
+                                <p>Parcelas a pagar</p>
+                            </div>
+                            <div id="link_parcelas2" class="card-financia">
+                                <i class="fa-regular fa-clock i-financia"></i>
+                                <p>Parcelas pagas</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
