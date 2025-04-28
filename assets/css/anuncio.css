@@ -1006,6 +1006,24 @@ main {
 }
 
 /* Modal adicionar serviço */
+.setas {
+    position: absolute;
+    top: 13%;
+    font-size: 1.4rem;
+    color: var(--roxo);
+    cursor: pointer;
+    padding: 5px;
+    &:hover {
+        color: var(--hover-roxo);
+    }
+    &#manutencao-prox {
+        right: 60px;
+    }
+    &#manutencao-voltar {
+        left: 60px;
+    }
+}
+
 #formAddServico, #formEditarServico {
     display: none;
     align-items: center;
