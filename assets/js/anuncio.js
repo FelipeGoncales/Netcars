@@ -233,8 +233,7 @@ function desformatarPreco(valorFormatado) {
 // Função para formatar os valores
 function formatarValor(valor) {
     // Ignora se estiver vazio
-    if (!valor) {
-        $(this).val('');
+    if (valor < 0) {
         return;
     }
 
@@ -415,12 +414,19 @@ function carregarCidades(estadoId, select) {
     });
 }
 
+// Adidiona formatação ao input de preço
+$(document).ready(async function() {
+    formatarPreco($('#valor-servico'));
+    formatarPreco($('#valor-editar-servico'));
+})
+
 // Modal Manutenção
 function modalManutencao() {
+    // Se o modal estiver aberto
     if ($('.modal-manu').css('display') === 'flex') {
         $('.modal-manu').css('display', 'none');
         $('#overlay-bg').css('display', 'none');
-    } else {
+    } else { // Já se estiver fechado
         $('.modal-manu').css('display', 'flex');
         $('#overlay-bg').css('display', 'flex');
     }
@@ -436,8 +442,160 @@ $('#fecharModalManu').click(function() {
 
 // Ao clicar no botão de manutenção
 $('#addManutencao').click(async function() {
+    // Carrega as manutenções
     await carregarManutencao();
+    
+    // Abrir modal de manutenção
+    modalManutencao();
 })
+
+// Função para habilitar ou desabilitar as setas do modal de manutenção
+function desabilitarSetas() {
+    // Caso naõ tenha nenhuma manutenção
+    if (!LISTA_MANUTENCOES) {
+        // Desativa ambas as setas
+        $('#manutencao-prox').addClass('disabled').prop('disabled', true);
+        $('#manutencao-voltar').addClass('disabled').prop('disabled', true);
+        return;
+    }
+
+    // Obtém a quantidade de manutenções
+    let lenLista = LISTA_MANUTENCOES.length;
+
+    // Desabilita a seta de avançar
+    if (INDEX_MANUTENCAO >= lenLista) {
+        $('#manutencao-prox').addClass('disabled').prop('disabled', true);
+    } else {
+        $('#manutencao-prox').removeClass('disabled').prop('disabled', false);
+    }
+
+    // Desabilita a seta de voltar
+    if (INDEX_MANUTENCAO <= 0) {
+        $('#manutencao-voltar').addClass('disabled').prop('disabled', true);
+    } else {
+        $('#manutencao-voltar').removeClass('disabled').prop('disabled', false);
+    }
+}
+
+// Botão de voltar
+$('#manutencao-voltar').click(function() {
+    // Caso a seta estiver desabilitada, retorna
+    if ($(this).hasClass('disabled')) {
+        return;
+    }
+
+    // Aumenta um no index de manutenção
+    if (INDEX_MANUTENCAO <= 0) {
+        return;
+    }
+
+    // Diminui um no index da manutenção
+    INDEX_MANUTENCAO--;
+
+    // Carrega a manutenção anterior
+    inserirDadosManutencao();
+})
+
+// Botão de próximo
+$('#manutencao-prox').click(function() {
+    // Caso a seta estiver desabilitada, retorna
+    if ($(this).hasClass('disabled')) {
+        return;
+    }
+
+    // Aumenta um no index de manutenção
+    if (INDEX_MANUTENCAO >= LISTA_MANUTENCOES.length) {
+        return;
+    }
+
+    // Aumenta um no index da manutenção
+    INDEX_MANUTENCAO++;
+
+    // Carrega a próxima manutenção
+    inserirDadosManutencao();
+})
+
+// Cria a lista de manutenções
+var LISTA_MANUTENCOES;
+var INDEX_MANUTENCAO;
+
+// Função para inserir os dados da manutenção dependendo do index
+async function inserirDadosManutencao(id_manu) {
+    // Caso exista id_manutenção, ele busca o index da manutenção para carregar
+    if (id_manu) {
+        for (let idx in LISTA_MANUTENCOES) {
+            /* Compara o id da manutenção com os fornecidos pela lista 
+               para ter certeza que irá abrir o mesmo que foi editado */
+            if (LISTA_MANUTENCOES[idx].id_manutencao == id_manu) {
+                // Caso for igual, atribui o index da manutenção a variável global INDEX_MANUTENCAO
+                INDEX_MANUTENCAO = idx;
+            }
+        }
+    }
+
+    // Verifica se o index é 1 maior que a última manutenção
+    if (INDEX_MANUTENCAO == LISTA_MANUTENCOES.length) {
+        // Desabilita os botões de add serviço e cancelar
+        $('#add-servico').prop('disabled', true);
+        $('#cancelar-manu').prop('disabled', true);
+
+        // Limpa os inputs
+        $('#titleManutencao').text('Adicionar manutenção');
+        $('#input-date').val('');        
+        $('#input-obs').val('');
+        $('#valor-total-manu').text(formatarValor(0));
+        $('#input-id-manutencao').val('');
+        $('#tbody-servicos').empty();
+
+        // Desabilita ou habilita as setas
+        desabilitarSetas();
+    
+        // Retorna
+        return;
+    }
+    
+    // Pega a manutenção mais recente da lista
+    const manutencao = LISTA_MANUTENCOES[INDEX_MANUTENCAO];
+
+    // Formatando a data para inserir no input
+    const dataOriginal = manutencao.data_manutencao;
+    
+    // Formata a data
+    const dataFormatada = new Date(dataOriginal).toISOString().split('T')[0];
+
+    // Separa dia, mês e ano com .split() usando o '-' como parâmetro para cortar
+    const [ano, mes, dia] = dataFormatada.split('-');
+
+    // Formatando a data para exibição no título
+    const dataFormatadaBr = `${dia}/${mes}/${ano}`;
+
+    // Altera o texto para a data da manutenção
+    $('#titleManutencao').text(`Manutenção ${dataFormatadaBr}`);
+
+    // Inserindo a data formatada no input type date
+    $('#input-date').val(dataFormatada);        
+
+    // Adicionando a observação ao input
+    $('#input-obs').val(manutencao.observacao);
+
+    // Inserindo o preço formatado no p
+    $('#valor-total-manu').text(formatarValor(manutencao.valor_total));
+
+    // Insere o ID da manutenção no input hidden
+    $('#input-id-manutencao').val(manutencao.id_manutencao);
+
+    // Reabilita o botão de manutenção
+    $('#add-servico').prop('disabled', false);
+
+    // Reabilita o botão de cancelar manutenção
+    $('#cancelar-manu').prop('disabled', false).css('transition', '0.3s');
+
+    // Adiciona os serviços
+    await obterServicosManutencao(manutencao.id_manutencao); 
+    
+    // Desabilita ou habilita as setas
+    desabilitarSetas();
+}
 
 async function carregarManutencao() {
     // Obtém o item do local storage
@@ -471,44 +629,26 @@ async function carregarManutencao() {
                 "Authorization": "Bearer " + dadosUser.token
             },
             success: await async function(response) {
-                // Pega a primeira manutenção da lista
-                const manutencao = response.manutencao[0];
+                // Salva as manutenções na lista
+                LISTA_MANUTENCOES = response.manutencao;
 
-                // Formatando a data para inserir no input
-                const dataOriginal = new Date(manutencao.data_manutencao);
-                const dataFormatada = dataOriginal.toISOString().split('T')[0];
+                // Verifica se o index da manutenção está salvo no local storage
+                if (localStorage.getItem('idManutencao')) {
+                    // Substitui o index pelo index salvo no local storage
+                    let id_manutencao = localStorage.getItem('idManutencao');
+                    
+                    // Remove o item do local storage
+                    localStorage.removeItem('idManutencao');
 
-                // Obtendo dia, mês e ano
-                const dia = String(dataOriginal.getDate() + 1).padStart(2, '0');
-                const mes = String(dataOriginal.getMonth() + 1).padStart(2, '0'); // Janeiro = 0
-                const ano = dataOriginal.getFullYear();
+                    // Insere os dados da manutenção
+                    inserirDadosManutencao(id_manutencao);
+                } else {
+                    // Caso não exista, pega a última manutenção
+                    INDEX_MANUTENCAO = LISTA_MANUTENCOES.length - 1;
 
-                // Formatando a data para exibição
-                const dataFormatadaBr = `${dia}/${mes}/${ano}`;
-
-                // Altera o texto para a data da manutenção
-                $('#titleManutencao').text(`Manutenção - ${dataFormatadaBr}`);
-
-                // Inserindo a data formatada no input type date
-                $('#input-date').val(dataFormatada);        
-
-                // Adicionando a observação ao input
-                $('#input-obs').val(manutencao.observacao);
-
-                // Inserindo o preço formatado no p
-                $('#valor-total-manu').text(formatarValor(manutencao.valor_total));
-
-                // Insere o ID da manutenção no input hidden
-                $('#input-id-manutencao').val(manutencao.id_manutencao);
-
-                // Reabilita o botão de manutenção
-                $('#add-servico').prop('disabled', false);
-
-                // Reabilita o botão de cancelar manutenção
-                $('#cancelar-manu').prop('disabled', false).css('transition', '0.3s');
-
-                // Adiciona os serviços
-                await obterServicosManutencao(manutencao.id_manutencao);
+                    // Insere os dados da manutenção
+                    inserirDadosManutencao();
+                }
             },
             error: function(response) {
                 // Altera o texto para adicionar manutenção
@@ -516,12 +656,13 @@ async function carregarManutencao() {
             }
         })
     } finally {
+        // Desabilita as setas
+        desabilitarSetas();
+
         // Inserindo um pequeno delay para carregar tudo corretamente
         setTimeout(() => $('.bg-carregamento-manu').css('display', 'none'), 200)
+        
     }
-
-    // Abrir modal de manutenção
-    modalManutencao();
 }
 
 // Obter serviços da manutenção
@@ -598,6 +739,7 @@ $('#salvar-manu').click(function() {
 
     // Caso não exista, cria uma manutneção
     if (!id_manutencao) {
+        console.log('n tem manutencao')
         let envia = {
             "id_veic": TIPO_VEIC == 'carro' ? id_carro : id_moto,
             "tipo_veic": TIPO_VEIC,
@@ -616,26 +758,12 @@ $('#salvar-manu').click(function() {
             success: function(response) {
                 // Exibe mensagem de sucesso
                 alertMessage(response.success, 'success');
-                // Colocando o id da manutenção no input hidden
-                $('#input-id-manutencao').val(response.id_manutencao);
-                // Reabilita o botão de manutenção
-                $('#add-servico').prop('disabled', false).css('transition', '0.3s');
-                // Reabilita o botão de cancelar manutenção
-                $('#cancelar-manu').prop('disabled', false).css('transition', '0.3s');
 
-                // Data do objeto
-                const dataObj = new Date($('#input-date').val());
+                // Salva o index no local storage
+                localStorage.setItem('idManutencao', response.id_manutencao);
 
-                // Extraindo dia, mês e ano
-                const dia = String(dataObj.getDate() + 1).padStart(2, '0');
-                const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
-                const ano = dataObj.getFullYear();
-            
-                // Formatando da forma correta
-                const dataFormatadaBr = `${dia}/${mes}/${ano}`;
-            
-                // Passando o título para o parágrafo
-                $('#titleManutencao').text(`Manutenção - ${dataFormatadaBr}`);
+                // Recarrega o modal de manutenção
+                carregarManutencao();
             },
             error: function(response) {
                 // Exibe mensagem de erro
@@ -667,6 +795,12 @@ $('#salvar-manu').click(function() {
         },
         success: function(response) {
             alertMessage(response.success, 'success');
+        
+            // Salva o index no local storage
+            localStorage.setItem('idManutencao', LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao);
+
+            // Recarrega o modal de manutenção
+            carregarManutencao();
         },
         error: function(response) {
             alertMessage(response.responseJSON.error, 'error');
@@ -711,8 +845,8 @@ $('#cancelar-manu').click(function() {
                     "Authorization": "Bearer " + dadosUser.token
                 },
                 success: function(response) {
-                    // Fecha o modal de manutenção
-                    modalManutencao();
+                    // Recarrega as manutenções
+                    carregarManutencao();
                     // Exibe a mensagem de sucesso
                     alertMessage(response.success, 'success');
                 },
@@ -764,21 +898,24 @@ $('#formAddServico').on('submit', function(e) {
             "Authorization": "Bearer " + dadosUser.token
         },
         success: function(response) {
-            // Salvando variável no local storage
-            localStorage.setItem("servico-add", response.success);
+            // Exibe o modal de manutenção
+            $('#formAddServico').css('display', 'none');
+            $('.modal-manu').css('display', 'flex');
+
+            // Limpa os inputs
+            $('#descricao-servico').val('');
+            $('#valor-servico').val('');
+
+            // Salva o id da manutenção no local storage
+            localStorage.setItem('idManutencao', LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao);
+
             // Recarregando a página
-            window.location.reload();
+            carregarManutencao();
         },
         error: function(response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     })
-})
-
-$(document).ready(async function() {
-    // Adidiona formatação ao input de preço
-    formatarPreco($('#valor-servico'));
-    formatarPreco($('#valor-editar-servico'));
 })
 
 // Abre o modal de editar
@@ -856,10 +993,15 @@ $('#formEditarServico').on('submit', function(e) {
             "Authorization": "Bearer " + dadosUser.token
         },
         success: function(response) {
-            // Salvando variável no local storage
-            localStorage.setItem("servico-add", response.success);
+            // Exibe o modal de manutenção
+            $('.modal-manu').css('display', 'flex');
+            $('#formEditarServico').css('display', 'none');
+
+            // Salva o id da manutenção no local storage
+            localStorage.setItem('idManutencao', LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao);
+
             // Recarregando a página
-            window.location.reload();
+            carregarManutencao();
         },
         error: function(response) {
             alertMessage(response.responseJSON.error, 'error');
@@ -867,6 +1009,7 @@ $('#formEditarServico').on('submit', function(e) {
     })
 })
 
+// "Excluir" (inativar) serviço da manutenção
 $('#excluir-servico').click(function() {
     Swal.fire({
         title: "Deseja excluir esse serviço?",
@@ -893,10 +1036,15 @@ $('#excluir-servico').click(function() {
                     "Authorization": "Bearer " + dadosUser.token
                 },
                 success: function(response) {
-                    // Salvando variável no local storage
-                    localStorage.setItem("servico-add", response.success);
+                    // Exibe o modal de manutenção
+                    $('.modal-manu').css('display', 'flex');
+                    $('#formEditarServico').css('display', 'none');
+        
+                    // Salva o id da manutenção no local storage
+                    localStorage.setItem('idManutencao', LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao);
+        
                     // Recarregando a página
-                    window.location.reload();
+                    carregarManutencao();
                 },
                 error: function(response) {
                     alertMessage(response.responseJSON.error, 'error');

@@ -33,7 +33,6 @@ closeBarraLateral.click(() => {
 
 // Abrir modal veículos
 if ($(window).width() >= 768) {
-
     const itemNavVeiculos = $('#nav-veiculos');
     const modalNavVeiculos = $('#modal-nav-veiculos');
 
