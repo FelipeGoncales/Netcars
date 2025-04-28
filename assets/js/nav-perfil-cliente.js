@@ -141,6 +141,13 @@ $(document).ready(function() {
         $('#financiamento').css('display', 'flex')
         $('#parcelas').css('display' , 'none')
     })
+
+    $("#pagarParcela").on("click", function(){
+        $('#modal-comprar').css("display", "flex")
+    })
+    $("#close-modal").on("click", function(){
+        $('#modal-comprar').css("display", "none        ")
+    })
 });
 
 // Fechar barra lateral

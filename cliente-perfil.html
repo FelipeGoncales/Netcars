@@ -168,7 +168,7 @@
                             </select>
                         </div>
     
-                        <button class="cad-user2" id="">Pagar parcela <i class="fa fa-user-plus"></i></button>
+                        <button id="pagarParcela" class="cad-user2">Pagar parcela </button>
                     </div>
                     <div class="table-container">
                         <table class="user-table">
@@ -191,6 +191,34 @@
                     </div>
                 </div>
             </div>  
+
+            <!-- Modal comprar -->
+            <div class="modal-comprar" id="modal-comprar">
+                <i class="fa-solid fa-xmark fechar-modal" id="close-modal"></i>
+                <p class="title-forma">Forma de pagamento</p>
+                <div class="div-pagar">
+                    <div class="div-fpagamento" id="btn-pix">
+                        <p>À vista</p>
+                        <i class="fa-solid fa-money-bill"></i>
+                    </div>
+
+                    <div class="div-fpagamento" id="btn-financiamento">
+                        <p>Financiamento</p>
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal pix -->
+            <div class="modal-pix" id="modal-pix">
+                <i class="fa-solid fa-xmark fechar-modal"></i>
+                <p class="title-forma">QR CODE</p>
+                <div class="div-pagar">
+                    <div class="div-fpagamento" id="btn-pix">
+                        <img class="img-qrcode" src="assets/img/qrcode.png" alt="">
+                    </div>
+                </div>
+            </div>
 
             <!-- Div de Financiamento -->
             <div id="financiamento">
