@@ -479,7 +479,7 @@ main {
     border-radius: 10px;
     font-weight: 600;
     border: none;
-    min-width: 50%;
+    min-width: 30%;
     font-size: 0.8rem;
     display: flex;
     flex-direction: row !important;
@@ -504,17 +504,23 @@ main {
     position: relative;
 }
 
-.status-box2 select {
-    width: 50%;
-    height: 100%;
-    padding: 15px;
-    font-size: 0.9rem;
-    border: 2px #e0e1e4 solid;
+.status-box{
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+}
+
+.btn-status-box{
+    padding: 0px 20px;
     border-radius: 8px;
-    outline: none;
-    background: #ffffff;
-    z-index: 2;
-    color: #757587;
+    background-color: white;
+    border: 2px #e0e1e4 solid;
+    transition: 0.2s;
+}
+
+.btn-status-box:hover{
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.449);
 }
 
 
@@ -974,11 +980,11 @@ tbody tr.tipo2 {
 /* DIVS PERFIL CLIENTE */
 
 #minha-conta {
-    display: none;
+    display: flex;
 }
 
 #parcelas{
-    display: flex;
+    display: none;
 }
 
 #historico-compras, #reservas,#financiamento {

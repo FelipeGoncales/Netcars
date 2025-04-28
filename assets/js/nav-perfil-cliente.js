@@ -137,7 +137,7 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'flex')
     })
 
-    $("voltar_parcela").on("click", function(){
+    $("#voltar_parcela").on("click", function(){
         $('#financiamento').css('display', 'flex')
         $('#parcelas').css('display' , 'none')
     })
