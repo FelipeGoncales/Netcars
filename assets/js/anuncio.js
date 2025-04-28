@@ -570,7 +570,7 @@ async function inserirDadosManutencao(id_manu) {
     const dataFormatadaBr = `${dia}/${mes}/${ano}`;
 
     // Altera o texto para a data da manutenção
-    $('#titleManutencao').text(`Manutenção - ${dataFormatadaBr}`);
+    $('#titleManutencao').text(`Manutenção ${dataFormatadaBr}`);
 
     // Inserindo a data formatada no input type date
     $('#input-date').val(dataFormatada);        
@@ -901,6 +901,10 @@ $('#formAddServico').on('submit', function(e) {
             // Exibe o modal de manutenção
             $('#formAddServico').css('display', 'none');
             $('.modal-manu').css('display', 'flex');
+
+            // Limpa os inputs
+            $('#descricao-servico').val('');
+            $('#valor-servico').val('');
 
             // Salva o id da manutenção no local storage
             localStorage.setItem('idManutencao', LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao);
