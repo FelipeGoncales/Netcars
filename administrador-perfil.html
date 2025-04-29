@@ -55,6 +55,7 @@
                     <a class="sub-relatorio" id="carros">Carros</a>
                     <a class="sub-relatorio" id="motos">Motos</a>
                     <a class="sub-relatorio" id="clientes">Clientes</a>
+                    <a class="sub-relatorio" id="manutencao">Manutenções</a>
                 </div>
                 <a href="adicionar-veiculo.html"><i class="fa-solid fa-car"></i>Adicionar Veiculo</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
@@ -145,7 +146,7 @@
                                 <th>Email</th>
                                 <th>Telefone</th>
                                 <th>Ativo</th>
-                                <th>Tipo usuário</th 
+                                <th>Tipo usuário</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-users"></tbody>
@@ -404,6 +405,40 @@
                 </div>
             </div>
 
+            <!-- Div Relatórios - Manutenções -->
+            <div class="container-relatorios" id="relatorio-manutencao">
+                <div class="container-branco">
+                    <h3 class="title-conbranco">Filtro - Manutenções</h3>
+                    <div class="div-input">
+                        <label for="tipo-veic-manutencao" class="active">Tipo de veículo*</label>
+                        <select id="tipo-veic-manutencao" name="tipo-veic-manutencao">
+                            <option value="Ambos">Ambos</option>
+                            <option value="Carros">Carros</option>
+                            <option value="Motos">Motos</option>
+                        </select>
+                    </div>
+                    <div class="inputs-DMA">
+                        <div class="div-input">
+                            <label for="dia-manutencao">Dia</label>
+                            <input id="dia-manutencao" type="text" />
+                        </div>
+                        <div class="div-input">
+                            <label for="mes-manutencao">Mês</label>
+                            <input id="mes-manutencao" type="text" />
+                        </div>
+                        <div class="div-input">
+                            <label for="ano-manutencao">Ano</label>
+                            <input id="ano-manutencao" type="text" />
+                        </div>
+                    </div>
+                    <a class="relatorios-btn" id="pdf-manutencao">
+                        <h3>Visualizar/Gerar PDF</h3>
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </a>
+                </div>
+            </div>
+
+
             <!-- Div de Reservas -->
             <div id="reservas">
                 <h3>Veículos reservados</h3>
@@ -523,9 +558,6 @@
                 <button class="btn-acao" type="submit">Criar conta</button>
             </div>
         </form>
-
-        <!-- Overlay -->
-        <div class="overlay-bg" id="overlay-bg-modal-edit"></div>
     </main>
     <footer id="footer">
         <div class="div-contato">

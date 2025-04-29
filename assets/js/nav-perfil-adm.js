@@ -210,6 +210,14 @@ $(document).ready(function () {
             fecharBarraLateral();
         }
     });
+
+    $("#manutencao").on("click", function () {
+        exibirRelatorio('manutencao');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+
 });
 
 // Função para mostrar senha quando clicar no olho
@@ -273,7 +281,7 @@ function fecharBarraLateral() {
 
 // Rota para adicionar as options do select ano veículo
 
-const anoMin = 1950;
+const anoMin = 1950;    
 const anoMax = new Date().getFullYear();
 const selectAnoFabCarro = $('#ano-fabricacao-carro');
 const selectAnoModCarro = $('#ano-modelo-carro');
@@ -385,6 +393,34 @@ $('#pdf-clientes').click(function (e) {
     window.open(url, '_blank');
 });
 
+//pdf manutenções
+$('#pdf-manutencao').click(function (e) {
+    e.preventDefault();
+
+    const tipo = $('#tipo-veic-manutencao').val();
+    const dia = $('#dia-manutencao').val();
+    const mes = $('#mes-manutencao').val();
+    const ano = $('#ano-manutencao').val();
+
+    let url = `${BASE_URL}/relatorio/manutencao?`;
+
+    if (tipo) {
+        url += 'tipo-veic=' + encodeURIComponent(tipo) + '&';
+    }
+    if (dia) {
+        url += 'dia=' + encodeURIComponent(dia) + '&';
+    }
+    if (mes) {
+        url += 'mes=' + encodeURIComponent(mes) + '&';
+    }
+    if (ano) {
+        url += 'ano=' + encodeURIComponent(ano) + '&';
+    }
+    window.open(url, '_blank');
+
+});
+
+
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
     window.open(`${BASE_URL}/relatorio/movimentacoes`, '_blank');
@@ -486,7 +522,7 @@ $(document).ready(() => {
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').css('display', 'none');
-    $('#overlay-bg-modal-edit').css('display', 'none');
+    $('#overlay-bg').css('display', 'none');
 })
 
 // Abrir modal editar ao clicar no ícone de editar
@@ -560,20 +596,19 @@ $('table').on('click', '.edit-icon', function () {
     });
 })
 
-// Fechar modal editar
+// Abrir modal editar
 $('#btn-modal-cad-user').click(function() {
     $('#formCadastroUsuario').css('display', 'flex');
-    $('#overlay-bg-modal-edit').css('display', 'flex');
+    $('#overlay-bg').css('display', 'flex');
 })
-
-$("#close-modal-cad-user").click(function () {
-    $('#formCadastroUsuario').css('display', 'none');
-    $('#overlay-bg-modal-edit').css('display', 'none');
-})
+// Fechar modal editar
+$('#close-modal-cad-user, #overlay-bg').on('click', function() {
+    $('#overlay-bg, #formCadastroUsuario').css('display', 'none');
+  });  
 
  // Abre modal de receitas
  $('#mov-recietas').on('click', function() {
-    $('.overlay-bg').css('display', 'block');
+    $('.overlay-bg').css('display', 'flex');
     $('#modal-receita').css('display', 'flex');
   })
 
@@ -584,7 +619,7 @@ $("#close-modal-cad-user").click(function () {
 
   // Abre modal de despesas
   $('#mov-despesas').on('click', function() {
-    $('.overlay-bg').css('display', 'block');
+    $('.overlay-bg').css('display', 'flex');
     $('#modal-despesa').css('display', 'flex');
   })
 
@@ -704,11 +739,20 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
     
         // Modelo
         const spanModelo = $(`<span></span>`)
-                    .text(veiculo.modelo);
+            .text(veiculo.modelo)
+            .css({
+                'color': 'var(--roxo)',
+                'font-size': '1.5rem'
+            });
 
         // Título do veículo
         const h3Title = $("<h3></h3>")
-            .append(`${veiculo.marca} `).append(spanModelo) // Inserir nome do carro
+            .append(`${veiculo.marca} `)
+            .append(spanModelo)
+            .css({
+                'text-transform': 'uppercase',
+                'font-size': '1.5rem'
+            }) // Inserir nome do carro
     
         // Descrição do veículo
         const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro

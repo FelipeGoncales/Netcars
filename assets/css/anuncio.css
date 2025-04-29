@@ -57,7 +57,6 @@
     align-items: center;
     gap: 10px;
     text-transform: uppercase;
-
     &.marca {
         color: var(--cor-texto);
     }
@@ -146,11 +145,7 @@
 }
 
 /* Tirando borda preta de todos os inputs quando */
-input,
-select {
-    outline: none;
-    width: 100%;
-}
+
 
 .input-info,
 .input-mirror,
@@ -164,6 +159,17 @@ select {
     margin-bottom: 3px;
 }
 
+.input-mirror,
+.select-mirror {
+    display: none;
+}
+
+input,
+select {
+    outline: none;
+    width: 100%;
+}
+
 input:not(:disabled) {
     margin-bottom: 2px;
     border-bottom: 1px solid var(--cor-texto-apagado);
@@ -172,11 +178,6 @@ input:not(:disabled) {
 select:not(:disabled) {
     margin-bottom: 2px;
     border-bottom: 1px solid var(--cor-texto-apagado);
-}
-
-.input-mirror,
-.select-mirror {
-    display: none;
 }
 
 .item-1 {
@@ -279,6 +280,16 @@ main {
     display: none;
 }
 
+.div-buttons.cancelar-reserva #cancelar-reserva {
+  width: 20%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-bg); 
+  color: var(--roxo);
+}
+
 .div-buttons {
     display: none;
     width: 100%;
@@ -286,16 +297,16 @@ main {
 
     &.cancelar-reserva {
         width: 100%;
+        margin-left: auto;
 
         & button {
             align-items: center;
             justify-content: center;
-            width: 100%;
             display: flex;
             gap: 10px;
 
             & i {
-                font-size: 1.2rem;
+                font-size: 1.7rem;
             }
         }
     }
@@ -366,7 +377,7 @@ main {
     }
 
     & .icon-trash {
-        font-size: 2.1rem;
+        font-size: 1.7rem;
         color: var(--roxo);
         background-color: #ECEDF2;
         width: 18%;
@@ -625,13 +636,40 @@ main {
     scale: 1;
 }
 
-.modal-comprar {
+/* Botão de voltar e fechar */
+.btn-fechar-financiamento {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 24px;
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: 0.1s;
+    &:hover {
+        color: var(--roxo);
+    }
+}
+
+.voltar-modal-compra {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 24px;
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: 0.1s;
+    &:hover {
+        color: var(--roxo);
+    }
+}
+
+/* MODAL COMPRAR */
+ .modal-comprar {
     display: none;
     background: #ffffff;
     padding: 60px;
     flex-direction: column;
-    gap: 40px;
-    width: 850px;
+    gap: 30px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -648,6 +686,11 @@ main {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: #6C1DE9;
+            transform: scale(1.1);
+        }
     }
 
     .title-forma {
@@ -660,7 +703,7 @@ main {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        gap: 50px;
+        gap: 40px;
     }
 
     .div-fpagamento {
@@ -668,11 +711,11 @@ main {
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        padding: 100px 10px;
+        padding: 80px;
+        width: 300px;
         border-radius: 15px;
         cursor: pointer;
         gap: 10px;
-        width: 50%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease;
 
@@ -685,26 +728,24 @@ main {
         }
 
         p {
-            font-size: 16px;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
         i {
             color: #6C1DE9;
-            font-size: 100px;
+            font-size: 80px;
         }
     }
 }
 
-
-
+/* MODAL FINANCIAMENTO */
 .modal-finaciamento {
     display: none;
     background: #ffffff;
-    padding: 60px;
+    padding: 50px;
     flex-direction: column;
-    gap: 40px;
-    width: 850px;
+    gap: 25px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -721,172 +762,131 @@ main {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: #6C1DE9;
+            transform: scale(1.1);
+        }
     }
 
     .title-forma {
+        font-weight: 600;
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    & .div-input-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+        & label {
+            text-align: center;
+        }
+        & input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            border-radius: 10px;
+            border: 1px solid var(--cor-texto-apagado);
+        }
+    }
+
+    & .div-valor-final {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        & .valor-parcela {
+            text-align: center;
+        }
+        & .valor-result {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--roxo);
+        }
+    }
+
+    & button {
+        width: 100%;
+        padding: 15px;
+        border-radius: 99px;
+        border: none;
+        background-color: var(--roxo);
+        color: var(--cor-bg-sec);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+}
+
+/* MODAL PIX */
+.modal-pix {
+    display: none;
+    background: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    padding: 60px 70px;
+    gap: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+
+    & .title-forma {
         font-weight: 600;
         font-size: 1.6em;
         text-align: center;
     }
 
-    .div-pagar {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 50px;
-    }
-
-    .div-f-financiamento {
+    & .div-qrcode {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        width: 60%;
-
-        .valor-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .valor-parcela {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .valor-result {
-            font-size: 16px;
-            font-weight: 600;
-            color: #6C1DE9;
-        }
-    }
-
-    .div-fpagamento-financiamento {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 80px 10px;
-        border-radius: 15px;
-        gap: 30px;
-        width: 90%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-
-        p {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        i {
-            color: #6C1DE9;
-            font-size: 100px;
-        }
-    }
-}
-
-.btn-pagar-parcelas {
-    width: 44%;
-    height: 60px;
-    border-radius: 12px;
-    border: none;
-    font-size: 17px;
-    font-weight: 700;
-    color: #ffffff;
-    background-color: #6C1DE9;
-    cursor: pointer;
-    transition: 0.2s;
-
-    &:hover {
-        scale: 1.03;
-    }
-
-    &:disabled {
-        background-color: #c6c6c6;
-        cursor: not-allowed;
-
-        &:hover {
-            scale: 1;
-        }
-    }
-}
-
-
-#select-parcelas {
-    width: 73%;
-    padding: 10px;
-    border-radius: 10px;
-
-}
-
-.modal-pix {
-    display: none;
-    background: #ffffff;
-    padding: 60px;
-    flex-direction: column;
-    gap: 40px;
-    width: 850px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-
-    .fechar-modal {
-        position: absolute;
-        top: 20px;
-        right: 25px;
-        font-size: 24px;
-        color: #333;
-        cursor: pointer;
-        transition: transform 0.2s ease, color 0.2s ease;
-    }
-
-    .title-forma {
-        font-weight: 600;
-        font-size: 1.6em;
-        text-align: center;
-    }
-
-    .div-pagar {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 50px;
-    }
-
-    .div-fpagamento {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 100px 10px;
-        border-radius: 15px;
-        cursor: pointer;
-        gap: 10px;
-        width: 75%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-
-        .img-qrcode {
+        & .img-qrcode {
             width: 250px;
+            height: auto;
         }
-
-        p {
-            font-size: 16px;
-            font-weight: 600;
+        & p {
+            text-align: center;
+            & span {
+                color: var(--roxo);
+                font-weight: 600;
+            }
         }
+    }
 
-        i {
-            color: #6C1DE9;
-            font-size: 100px;
+    & button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 15px;
+        border-radius: 99px;
+        border: none;
+        background-color: var(--roxo);
+        color: var(--cor-bg-sec);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+            background-color: var(--hover-roxo);
         }
     }
 }
 
-
+/* MANUTENÇÃO */
 .modal-manu {
     background: #ffffff;
     padding: 60px;

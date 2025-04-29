@@ -170,11 +170,20 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
     
         // Modelo
         const spanModelo = $(`<span></span>`)
-                    .text(veiculo.modelo);
+            .text(veiculo.modelo)
+            .css({
+                'color': 'var(--roxo)',
+                'font-size': '1.5rem'
+            });
 
         // Título do veículo
         const h3Title = $("<h3></h3>")
-            .append(`${veiculo.marca} `).append(spanModelo) // Inserir nome do carro
+            .append(`${veiculo.marca} `)
+            .append(spanModelo)
+            .css({
+                'text-transform': 'uppercase',
+                'font-size': '1.5rem'
+            }) // Inserir nome do carro
     
         // Descrição do veículo
         const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
