@@ -308,6 +308,7 @@ main {
     width: 100%;
     height: auto;
     padding-bottom: 15px;
+    position: relative;
     & img{
         width: 100%;
         border-top-left-radius: 10px;
@@ -317,6 +318,7 @@ main {
         flex-direction: column;
         padding: 0px 15px;
         gap: 15px;
+        padding-bottom: 70px;
         & h3 {
             font-size: 1.5rem;
             font-weight: 600;
@@ -332,6 +334,9 @@ main {
             color: var(--cor-titles);
             font-weight: 400;
         } & .ver-detalhes{
+            position: absolute;
+            bottom: 15px;
+            width: 90%;
             background: var(--roxo);
             color: #fff;
             padding: 12px;
