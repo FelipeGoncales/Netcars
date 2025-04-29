@@ -1358,10 +1358,10 @@ function calcularParcelas() {
 
         // Reabilita o select de parcelas
         $('#select-parcelas').prop('disabled', false);
-
-        // Habilita a visualização das parcelas
-        $('#visualizar-parcelas').removeClass('disabled');
     }
+
+    // Habilita a visualização das parcelas
+    $('#visualizar-parcelas').removeClass('disabled');
 
     // Obtém a entrada e parcelas
     let entrada = desformatarPreco($('#input-entrada').val()).toFixed(2);
