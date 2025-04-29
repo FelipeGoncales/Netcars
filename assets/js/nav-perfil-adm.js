@@ -210,6 +210,14 @@ $(document).ready(function () {
             fecharBarraLateral();
         }
     });
+
+    $("#manutencao").on("click", function () {
+        exibirRelatorio('manutencao');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+
 });
 
 // Função para mostrar senha quando clicar no olho
@@ -273,7 +281,7 @@ function fecharBarraLateral() {
 
 // Rota para adicionar as options do select ano veículo
 
-const anoMin = 1950;
+const anoMin = 1950;    
 const anoMax = new Date().getFullYear();
 const selectAnoFabCarro = $('#ano-fabricacao-carro');
 const selectAnoModCarro = $('#ano-modelo-carro');
@@ -384,6 +392,34 @@ $('#pdf-clientes').click(function (e) {
     }
     window.open(url, '_blank');
 });
+
+//pdf manutenções
+$('#pdf-manutencao').click(function (e) {
+    e.preventDefault();
+
+    const tipo = $('#tipo-veic-manutencao').val();
+    const dia = $('#dia-manutencao').val();
+    const mes = $('#mes-manutencao').val();
+    const ano = $('#ano-manutencao').val();
+
+    let url = `${BASE_URL}/relatorio/manutencao?`;
+
+    if (tipo) {
+        url += 'tipo-veic=' + encodeURIComponent(tipo) + '&';
+    }
+    if (dia) {
+        url += 'dia=' + encodeURIComponent(dia) + '&';
+    }
+    if (mes) {
+        url += 'mes=' + encodeURIComponent(mes) + '&';
+    }
+    if (ano) {
+        url += 'ano=' + encodeURIComponent(ano) + '&';
+    }
+    window.open(url, '_blank');
+
+});
+
 
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
