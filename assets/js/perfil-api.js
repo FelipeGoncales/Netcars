@@ -395,6 +395,26 @@ $("#formEditarUsuario").on("submit", function(e) {
             alertMessage(response.success, 'success');
         },
         error: function(response) {
+            // Caso o usuário seja menor de 18, deleta a conta e desloga
+            if (response.responseJSON.menor_de_idade) {
+                try {
+                    $.ajax({
+                        method: "delete",
+                        url: `${BASE_URL}/cadastro/${id}`, // URL da API na Web
+                        contentType: "application/json"
+                    })
+                } finally {
+                    // Limpa os dados do local storage
+                    localStorage.clear();
+                    // Define mensagem de erro para aparecer na tela de login
+                    localStorage.setItem('mensagem', JSON.stringify({
+                        'error': 'A idade mínima para clientes é de 18 anos.'
+                    }))
+                    // Redireciona para login
+                    window.location.href = 'login.html';
+                }
+            }
+
             // Exibir mensagem de erro
             alertMessage(response.responseJSON.error, 'error');
         }
