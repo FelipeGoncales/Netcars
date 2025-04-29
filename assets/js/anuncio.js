@@ -1062,7 +1062,7 @@ $('#excluir-servico').click(function () {
 $(document).ready(function () {
 
     // Ao clicar no botão de comprar já
-    $('#comprar-btn').on('click', function () {
+    $('.comprar-btn').on('click', function () {
         // Obtém os dados do usuário
         let dadosUser = localStorage.getItem('dadosUser');
 
