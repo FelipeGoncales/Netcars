@@ -791,6 +791,78 @@ $("#editarAnuncio").on("click", function () {
     }
 });
 
+function validarInputsObrigatorios() {
+    let camposVazios = [];
+    let camposInvalidos = [];
+    let inputsValidos = true;
+    
+    // Lista de todos os campos obrigatórios que devem ser verificados
+    const camposObrigatorios = [
+        { id: "select-marca", nome: "Marca" },
+        { id: "input-modelo", nome: "Modelo" },
+        { id: "select-ano-modelo", nome: "Ano do Modelo" },
+        { id: "select-ano-fabricacao", nome: "Ano de Fabricação" },
+        { id: "input-subtitle", nome: "Versão" },
+        { id: "select-cor", nome: "Cor" },
+        { id: "select-cambio", nome: "Câmbio" },
+        { id: "select-combustivel", nome: "Combustível" },
+        { id: "select-categoria", nome: "Categoria" },
+        { id: "input-quilometragem", nome: "Quilometragem" },
+        { id: "input-estado", nome: "Estado" },
+        { id: "input-cidade", nome: "Cidade" },
+        { id: "input-preco-venda", nome: "Preço de Venda" },
+        { id: "select-licenciado", nome: "Licenciado" },
+        { id: "input-placa", nome: "Placa" }
+    ];
+    
+    // Verificar cada campo obrigatório
+    camposObrigatorios.forEach(campo => {
+        const valor = $(`#${campo.id}`).val();
+        
+        // Se o valor for vazio, undefined, null ou só espaços em branco
+        if (!valor || valor.trim() === "") {
+            camposVazios.push(campo.nome);
+            $(`#${campo.id}`).addClass("input-error"); // Adiciona classe de erro visual
+            inputsValidos = false;
+        } else {
+            $(`#${campo.id}`).removeClass("input-error"); // Remove classe de erro visual
+            
+            // Verificação adicional para o preço de venda
+            if (campo.id === "input-preco-venda") {
+                const precoNumerico = desformatarPreco(valor);
+                if (precoNumerico <= 0) {
+                    camposInvalidos.push("O preço de venda deve ser maior que zero");
+                    $(`#${campo.id}`).addClass("input-error");
+                    inputsValidos = false;
+                }
+            }
+        }
+    });
+    
+    // Se existirem campos vazios ou inválidos, exibir mensagem
+    if (camposVazios.length > 0 || camposInvalidos.length > 0) {
+        let mensagem = "";
+        
+        if (camposVazios.length > 0) {
+            mensagem = `Os seguintes campos devem ser preenchidos:<br><strong>${camposVazios.join("<br>")}</strong>`;
+        }
+        
+        if (camposInvalidos.length > 0) {
+            if (mensagem) mensagem += "<br><br>";
+            mensagem += `<strong>${camposInvalidos.join("<br>")}</strong>`;
+        }
+        
+        Swal.fire({
+            title: "Validação de campos",
+            html: mensagem,
+            icon: "warning",
+            confirmButtonText: "Ok"
+        });
+    }
+    
+    return inputsValidos;
+}
+
 // Coletar dados
 function coletarDadosAtualizados() {
     return {
@@ -815,9 +887,15 @@ function coletarDadosAtualizados() {
 }
 
 // Salvar alterações
-$("#salvar-alteracoes").on("click", function (e) {
+$("#salvar-alteracoes").off("click").on("click", function (e) {
     e.preventDefault();
-
+    
+    // Primeiro verifica se os inputs obrigatórios estão preenchidos e válidos (incluindo preço > 0)
+    if (!validarInputsObrigatorios()) {
+        return; // Para a execução se houver campos vazios ou inválidos
+    }
+    
+    // Em seguida valida a placa
     let validacaoPlaca = validarPlaca();
     if (!validacaoPlaca) {
         return;
@@ -835,7 +913,7 @@ $("#salvar-alteracoes").on("click", function (e) {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
         success: function (response) {
-            // Exibe uma mensagem de sucesso (pode usar SweetAlert2)
+            // Exibe uma mensagem de sucesso
             Swal.fire({
                 title: "Sucesso!",
                 text: response.success,
@@ -843,7 +921,7 @@ $("#salvar-alteracoes").on("click", function (e) {
                 confirmButtonText: "Ok"
             });
 
-            // Se necessário, desabilite os inputs novamente e atualize os "mirrors"
+            // Desabilita os inputs novamente e atualiza os "mirrors"
             $("input").prop("disabled", true);
 
             // Evita que o input de imagem seja alterado
@@ -875,3 +953,17 @@ $("#salvar-alteracoes").on("click", function (e) {
         }
     });
 });
+
+// Adicionar evento para remover marcação de erro ao digitar nos campos
+$("input, select").on("input change", function() {
+    $(this).removeClass("input-error");
+});
+$("<style>")
+    .prop("type", "text/css")
+    .html(`
+        .input-error {
+            border: 2px solid #ff4d4d !important;
+            background-color: rgba(255, 77, 77, 0.05) !important;
+        }
+    `)
+    .appendTo("head");
