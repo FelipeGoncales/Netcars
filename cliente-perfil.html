@@ -156,10 +156,10 @@
                 </div>
             </div>
             <!-- Div parcelas a pagar -->
-            <div id="parcelas">
-                <div>
+            <div id="parcelas" style="max-width: 100%;">
+                <div style="width: 90%;position: relative;left: 5%;">
                     <div class="filtro-users-wrapper2">
-                        <div class="status-box" style="width: 30%;">
+                        <div class="status-box">
                             <button class="btn-status-box" id="voltar_parcela"><i class="fa-solid fa-arrow-left"></i></button>
                             <select id="status-select">
                                 <option value="">Status</option>
@@ -221,11 +221,11 @@
             </div>
 
             <!-- Div de Financiamento -->
-            <div id="financiamento">
+            <div class="container-financiamento" id="financiamento">
                 <div class="pai-financiamento">
                     <div class="container-car-financia">
                             <div class="container-card-car-financia">
-                                <div class="card-car-financia"></div>
+                                <div class="card-car-financia"><img src="./assets/img/logo-icon-navegador.png" alt=""></div>
                                 <div class="div-car-p1">
                                     <div class="div-car-p2"><p>HONDA <span>CIVIC</span></p></div>
                                     <p>4P FLEX MP 1.6</p>
@@ -251,7 +251,16 @@
                                 <i class="fa-regular fa-clock i-financia"></i>
                                 <p>Parcelas pagas</p>
                             </div>
+                            <div id="link_parcelas3" class="card-financia">
+                                <i class="fa-solid fa-car i-financia"></i>
+                                <p>Ver veículo</p>
+                                
+                            </div>
                         </div>
+                    </div>
+                    <div class="div-car-p4">
+                        <p>60 parcelas</p>
+                        <p class="price">R$ 130.000,00</p>
                     </div>
 
                 </div>

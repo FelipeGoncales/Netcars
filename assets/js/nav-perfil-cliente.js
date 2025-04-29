@@ -67,6 +67,8 @@ function selecionarA(clicado) {
     })
 }
 
+
+
 // Trocar a visibilidade das divs dentro do main
 $(document).ready(function() {
     $("#link_minhaConta").on("click", function() {
@@ -148,6 +150,16 @@ $(document).ready(function() {
     $("#close-modal").on("click", function(){
         $('#modal-comprar').css("display", "none        ")
     })
+});
+
+$(document).ready(function() {
+    $("#link_parcelas3").on("click", function() {
+        // Defina o ID que você deseja passar para a URL
+        var id = 46; // Aqui você pode definir dinamicamente, se necessário.
+
+        // Redireciona para a página com o ID como parâmetro na URL
+        window.location.href = "anuncio-carro.html?id=" + id;
+    });
 });
 
 // Fechar barra lateral

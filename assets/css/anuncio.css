@@ -648,11 +648,6 @@ main {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
-
-        &:hover {
-            color: #6C1DE9;
-            transform: scale(1.1);
-        }
     }
 
     .title-forma {
@@ -682,11 +677,11 @@ main {
         transition: transform 0.3s ease;
 
         &:hover {
-            transform: scale(1.03);
+            transform: scale(1.01);
         }
 
         &:active {
-            transform: scale(1.02);
+            transform: scale(1);
         }
 
         p {
@@ -726,11 +721,6 @@ main {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
-
-        &:hover {
-            color: #6C1DE9;
-            transform: scale(1.1);
-        }
     }
 
     .title-forma {

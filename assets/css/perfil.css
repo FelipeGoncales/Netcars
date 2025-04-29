@@ -508,13 +508,14 @@ main {
     display: flex;
     flex-direction: row;
     gap: 1px;
+    width: 100%;
 }
 
-.btn-status-box{
-    padding: 0px 20px;
+.btn-status-box {
     border-radius: 8px;
     background-color: white;
     border: 2px #e0e1e4 solid;
+    width: 10%;
     transition: 0.2s;
 }
 
@@ -540,7 +541,7 @@ main {
 }
 
 .search-box input, .status-box select, .type-box select {
-    width: 100%;
+    width: 34%;
     height: 100%;
     padding: 15px;
     font-size: 0.9rem;
@@ -551,6 +552,7 @@ main {
     z-index: 2;
     color: #757587;
 }
+
 
 .search-box input:focus, .status-box select:focus, .type-box select:focus {
     border: 2px var(--roxo) solid;
@@ -713,6 +715,50 @@ tbody tr.tipo2 {
             background-color: var(--hover-roxo);
         }
     }
+}
+
+/* Responsivo Filtro e Tabela financiamento */
+@media(max-width: 1024px){
+    
+.search-box input, .status-box select, .type-box select {
+    width: 73%;
+    height: 100%;
+    padding: 15px;
+    font-size: 0.9rem;
+    border: 2px #e0e1e4 solid;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+    z-index: 2;
+    color: #757587;
+}
+
+.btn-status-box {
+    border-radius: 8px;
+    background-color: white;
+    border: 2px #e0e1e4 solid;
+    width: 25%;
+    transition: 0.2s;
+}
+
+.cad-user2 {
+    background-color: var(--roxo);
+    height: 60px;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    min-width: 39%;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 10px;
+    transition: 0.2s;
+}
+
 }
 
 /* Responsivo Container Cadastro User */
@@ -1006,11 +1052,6 @@ tbody tr.tipo2 {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
-
-        &:hover {
-            color: #6C1DE9;
-            transform: scale(1.1);
-        }
     }
 
     .title-forma {
@@ -1040,11 +1081,11 @@ tbody tr.tipo2 {
         transition: transform 0.3s ease;
 
         &:hover {
-            transform: scale(1.03);
+            transform: scale(1.01);
         }
 
         &:active {
-            transform: scale(1.02);
+            transform: scale(1);
         }
 
         p {
@@ -1084,11 +1125,6 @@ tbody tr.tipo2 {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
-
-        &:hover {
-            color: #6C1DE9;
-            transform: scale(1.1);
-        }
     }
 
     .title-forma {
@@ -1254,11 +1290,11 @@ tbody tr.tipo2 {
     }
 }
 
-#parcelas{
+#parcelas, #financiamento{
     display: none;
 }
 
-#historico-compras, #reservas,#financiamento {
+#historico-compras, #reservas {
     display: none;
     flex-direction: column;
     gap: 20px;
@@ -1282,13 +1318,13 @@ tbody tr.tipo2 {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .container-card-car-financia{
     display: flex;
     flex-direction: row;
-    gap: 25px;
+    gap: 15px;
     align-items: center;
 }
 .div-car-p1 p{
@@ -1310,6 +1346,22 @@ tbody tr.tipo2 {
     align-items: end;
 }
 
+.div-car-p4{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-car-p4 p.price{
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.div-car-p4 p{
+    font-weight: 400;
+    font-size: 16px;
+}
+
 .div-car-p3 p.price{
     font-size: 23px;
     font-weight: 600;
@@ -1323,19 +1375,29 @@ tbody tr.tipo2 {
 .pai-financiamento{
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px;
+}
+
+.container-financiamento{
+    display: flex;
+
 }
 
 .card-car-financia{
-    width: 150px;
-    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
     background-color: white;
     border-radius: 15px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url(../img/image.png);
+    background-position: center;;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.card-car-financia img{
+    width: 55px;
+    height: 55px;
 }
 /* Card Financiamento */
 .container-card-financia {
@@ -1350,7 +1412,7 @@ tbody tr.tipo2 {
     }
   
     .i-financia {
-      font-size: 65px;
+      font-size: 40px;
       color: #6C1DE9;
     }
   
@@ -1358,22 +1420,22 @@ tbody tr.tipo2 {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      width: 261px;
-      height: 218px;
-      gap: 20px;
+      align-items: center;  
+      width: 251px;
+      height: 208px;
+      gap: 10px;
       background-color: white;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
       transition: 0.2s;
   
       &:hover {
-        scale: 1.02;
+        scale: 1.01;
         cursor: pointer;
       }
   
       p {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
       }
     }
@@ -1973,6 +2035,76 @@ footer {
     }
 }
 /* Fim do Footer */
+/* Responsivo Mobile FINANCIAMENTO */
+
+
+@media(max-width:1135px){
+    .div-card-financia{
+        flex-direction: column;
+    }
+
+    .card-financia{
+        width: 325px!important;
+        height: 170px!important;
+        gap: 10px!important;
+    }
+
+    .card-financia p {
+        font-size: 16px!important;
+    }
+
+    .div-car-p4{
+        display: flex;
+    }
+
+    .div-car-p3{
+        display: none;
+    }
+
+    .pai-financiamento{
+        gap: 10px;
+    }
+
+    .container-card-car-financia{
+        flex-direction: row;
+        gap: 10px;
+    }
+
+}
+
+@media(max-width: 836px){
+    .div-card-financia{
+        flex-direction: column;
+    }
+
+    .card-financia{
+        width: 295px!important;
+        height: 140px!important;
+        gap: 10px!important;
+    }
+
+    .div-car-p4{
+        display: flex;
+    }
+
+    .div-car-p3{
+        display: none;
+    }
+
+    .pai-financiamento{
+        gap: 10px;
+    }
+
+    .container-card-car-financia{
+        flex-direction: row;
+        gap: 10px;
+    }
+    
+    .i-financia{
+        font-size: 40px!important;
+    }
+    
+}
 
 /* Responsivo Tabela */
 
@@ -1986,7 +2118,7 @@ footer {
     }
 
     .search-box, .status-box, .type-box {
-        width: 33%;
+        width: 100%;
     }
 }
 
