@@ -1319,6 +1319,20 @@ $(document).ready(function () {
         $('#p-valor-total').text('~');
     })
 
+    // Abrir modal de parcelas
+    $('#visualizar-parcelas').click(function() {
+        if (!$(this).hasClass('disabled')) {
+            $('#modal-financiamento').css('display', 'none');
+            $('#modal-parcelas').css('display', 'flex');
+        }
+    })
+
+    // Voltar para financiamento
+    $('.voltar-modal-financiamento').click(function() {
+        $('#modal-financiamento').css('display', 'flex');
+        $('#modal-parcelas').css('display', 'none');
+    })
+
     // Abre o modal de gerar o qr code do pix
     $('#btn-pix').on('click', function () {
         $('#modal-comprar').css('display', 'none');
@@ -1337,10 +1351,16 @@ function calcularParcelas() {
     let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
     let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
 
-    // Remove a option de zero parcelas caso exista
+    // Caso exista a option de zero parcelas
     if ($('#option-zero-parcelas')) {
+        // Remove a option de zero parcelas caso exista
         $('#option-zero-parcelas').remove();
+
+        // Reabilita o select de parcelas
         $('#select-parcelas').prop('disabled', false);
+
+        // Habilita a visualização das parcelas
+        $('#visualizar-parcelas').removeClass('disabled');
     }
 
     // Obtém a entrada e parcelas
@@ -1364,11 +1384,41 @@ function calcularParcelas() {
                 // Da append na option e a seleciona
                 $('#select-parcelas').append(option).val(0).prop('disabled', true);
 
+                // Desabilita a visualização de parcelas
+                $('#visualizar-parcelas').addClass('disabled');
+
                 return;
             }
 
             // Formatar valor total
             $('#p-valor-total').text(formatarValor(response.valor_total));
+
+            const lista_parcelas = response.lista_parcelas;
+
+            // Limpa a tabela antes de adicionar os itens
+            $('#tbody-parcelas').empty();
+
+            for (let index in lista_parcelas) {
+                // Cria um elemento <tr> para agrupar as colunas
+                const $tr = $('<tr>');
+
+                if (index % 2 === 0) {
+                    $tr.addClass('tipo2');
+                } else {
+                    $tr.addClass('tipo1');
+                }
+
+                // Cria os tds que irão conter as informações
+                const $tdNum = $('<td>').html(index);
+                const $tdValor = $('<td>').html(formatarValor(lista_parcelas[index].valor));
+                const $tdData = $('<td>').html(lista_parcelas[index].data);
+
+                $tr.append($tdNum)
+                    .append($tdValor)
+                    .append($tdData);
+
+                $('#tbody-parcelas').append($tr);
+            }
         },
         error: function(response) {
             alertMessage(response.responseJSON.error, 'error');

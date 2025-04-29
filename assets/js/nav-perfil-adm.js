@@ -472,7 +472,7 @@ function carregarUsuarios(usuarios_lista) {
             // Limpa o tbody antes de carregar os outros elementos
             tbody.empty();
 
-            for (index in usuarios) {
+            for (let index in usuarios) {
                 // Cria um elemento <tr> para agrupar as colunas
                 const $tr = $('<tr>');
 

@@ -483,6 +483,27 @@
         </div>
 
         <button id="pay-parcelas">Gerar parcelas</button>
+        <p id="visualizar-parcelas">Visualizar parcelas</p>
+    </div>
+
+    <!-- Modal visualizar parcelas -->
+    <div class="modal-parcelas" id="modal-parcelas">
+        <i class="fa-solid fa-arrow-left voltar-modal-financiamento"></i>
+        
+        <p class="title-forma">Parcelas</p>
+
+        <div class="table-container parcelas">
+            <table class="parcela-table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Valor</th>
+                        <th>Fatura</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-parcelas"></tbody>
+            </table>
+        </div>
     </div>
     
     <!-- Modal manutenção -->

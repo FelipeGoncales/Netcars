@@ -650,7 +650,7 @@ main {
     }
 }
 
-.voltar-modal-compra {
+.voltar-modal-compra, .voltar-modal-financiamento {
     position: absolute;
     top: 25px;
     left: 25px;
@@ -792,6 +792,7 @@ main {
             outline: none;
             border-radius: 10px;
             border: 1px solid var(--cor-texto-apagado);
+            margin: 0 !important;
         }
     }
 
@@ -824,6 +825,26 @@ main {
         transition: 0.3s;
         &:hover {
             background-color: var(--hover-roxo);
+        }
+    }
+
+    & #visualizar-parcelas {
+        color: var(--cor-texto);
+        align-self: center;
+        position: relative;
+        top: -10px;
+        cursor: pointer;
+        &:hover {
+            color: var(--roxo);
+            text-decoration: underline;
+        }
+        &.disabled {
+            color: var(--cor-texto-apagado);
+            &:hover {
+                cursor: not-allowed;
+                color: var(--cor-texto-apagado);
+                text-decoration: none;
+            }
         }
     }
 }
@@ -884,6 +905,34 @@ main {
         &:hover {
             background-color: var(--hover-roxo);
         }
+    }
+}
+
+/* MODAL PARCELAS */
+
+#modal-parcelas {
+    display: none;
+    background: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 700px;
+    padding: 35px 50px 50px 50px;
+    gap: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    & table td, th {
+        text-align: center;
+    }
+    & .title-forma {
+        font-weight: 600;
+        font-size: 1.6em;
+        text-align: center;
     }
 }
 
@@ -1191,19 +1240,23 @@ main {
     margin-top: 20px;
     border-radius: 15px;
     border: 1px solid #c0c0c0;
+    &.parcelas {
+        max-height: 300px;
+        margin: 0;
+    }
 }
 
 .icon-col {
     width: 40px;
 }
 
-.user-table {
+table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.user-table th,
-.user-table td {
+table th,
+table td {
     border-bottom: 1px solid #c0c0c0;
     border-right: 1px solid #c0c0c0;
     padding: 20px 30px;
@@ -1211,7 +1264,7 @@ main {
     text-align: left;
 }
 
-.user-table th {
+table th {
     color: rgb(0, 0, 0);
     background-color: #ffffff;
     font-weight: 600;

@@ -470,7 +470,6 @@
         </div>
     </div>
 
-     
     <!-- Modal comprar -->
     <div class="modal-comprar" id="modal-comprar">
         <i class="fa-solid fa-xmark btn-fechar-financiamento"></i>
@@ -520,6 +519,25 @@
         </div>
 
         <button id="pay-parcelas">Gerar parcelas</button>
+        <p id="visualizar-parcelas">Visualizar parcelas</p>
+    </div>
+
+    <!-- Modal visualizar parcelas -->
+    <div class="modal-parcelas" id="modal-parcelas">
+        <i class="fa-solid fa-arrow-left voltar-modal-financiamento"></i>
+        
+        <div class="table-container">
+            <table class="parcela-table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Valor</th>
+                        <th>Fatura</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-parcelas"></tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Modal manutenção -->
