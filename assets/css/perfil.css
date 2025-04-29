@@ -121,8 +121,6 @@ h1 {
     background: var(--cor-bg-sec);
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Add scrolling if content exceeds height */
-    
     & nav {
         padding: 40px 0;
         display: flex;
@@ -130,7 +128,8 @@ h1 {
         gap: 25px;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
         flex: 1; /* Allow nav to grow */
-        
+        overflow-y: auto; /* Add scrolling if content exceeds height */
+        padding-bottom: 90px;
         & a {
             cursor: pointer;
             padding-left: 15px;
