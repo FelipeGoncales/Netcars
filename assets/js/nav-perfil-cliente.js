@@ -80,6 +80,7 @@ $(document).ready(function() {
         $('#financiamento').css('display', 'none')
         $('#historico-compras').css('display', 'none');
         $('#parcelas').css('display' , 'none')
+        $('#ajuda').css('display' , 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -94,6 +95,7 @@ $(document).ready(function() {
         $('#financiamento').css('display', 'none')
         $('#historico-compras').css('display', 'none');
         $('#parcelas').css('display' , 'none')
+        $('#ajuda').css('display' , 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -109,6 +111,7 @@ $(document).ready(function() {
         $('#financiamento').css('display', 'none')
         $('#historico-compras').css('display', 'flex');
         $('#parcelas').css('display' , 'none')
+        $('#ajuda').css('display' , 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -123,6 +126,23 @@ $(document).ready(function() {
         $('#historico-compras').css('display', 'none');
         $('#financiamento').css('display', 'flex')
         $('#parcelas').css('display' , 'none')
+        $('#ajuda').css('display' , 'none')
+
+        if ($(window).width() <= 660) {
+            fecharBarraLateral();
+        }
+    })
+
+    $("#link_ajuda").on("click", function() {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#minha-conta').css('display', 'none');
+        $('#reservas').css('display', 'none');
+        $('#historico-compras').css('display', 'none');
+        $('#financiamento').css('display', 'none')
+        $('#parcelas').css('display' , 'none')
+        $('#ajuda').css('display' , 'flex')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
