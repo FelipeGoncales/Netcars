@@ -486,7 +486,7 @@ $(document).ready(() => {
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').css('display', 'none');
-    $('#overlay-bg-modal-edit').css('display', 'none');
+    $('#overlay-bg').css('display', 'none');
 })
 
 // Abrir modal editar ao clicar no ícone de editar
@@ -560,20 +560,19 @@ $('table').on('click', '.edit-icon', function () {
     });
 })
 
-// Fechar modal editar
+// Abrir modal editar
 $('#btn-modal-cad-user').click(function() {
     $('#formCadastroUsuario').css('display', 'flex');
-    $('#overlay-bg-modal-edit').css('display', 'flex');
+    $('#overlay-bg').css('display', 'flex');
 })
-
-$("#close-modal-cad-user").click(function () {
-    $('#formCadastroUsuario').css('display', 'none');
-    $('#overlay-bg-modal-edit').css('display', 'none');
-})
+// Fechar modal editar
+$('#close-modal-cad-user, #overlay-bg').on('click', function() {
+    $('#overlay-bg, #formCadastroUsuario').css('display', 'none');
+  });  
 
  // Abre modal de receitas
  $('#mov-recietas').on('click', function() {
-    $('.overlay-bg').css('display', 'block');
+    $('.overlay-bg').css('display', 'flex');
     $('#modal-receita').css('display', 'flex');
   })
 
@@ -584,7 +583,7 @@ $("#close-modal-cad-user").click(function () {
 
   // Abre modal de despesas
   $('#mov-despesas').on('click', function() {
-    $('.overlay-bg').css('display', 'block');
+    $('.overlay-bg').css('display', 'flex');
     $('#modal-despesa').css('display', 'flex');
   })
 
