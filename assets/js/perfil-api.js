@@ -7,7 +7,7 @@ var BASE_URL = "http://192.168.1.115:5000";
 
 let isValidCPF_CNPJ = false;
 
-$(document).ready(function() {
+$(document).ready(function () {
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     // Enviar o usuário para a tela de login caso não esteja logado
@@ -21,8 +21,8 @@ $(document).ready(function() {
     if (dadosUser.data_nascimento) {
         var data = new Date(dadosUser.data_nascimento);
         let ano = data.getFullYear();
-        let mes = data.getMonth()+1;
-        let dia = data.getDate()+1;
+        let mes = data.getMonth() + 1;
+        let dia = data.getDate() + 1;
 
         if (mes < 10) {
             mes = `0${mes}`;
@@ -67,7 +67,7 @@ $(document).ready(function() {
 });
 
 // Função para deslogar da conta ao clicar em sair
-$('#deslogarConta').click(function(e) {
+$('#deslogarConta').click(function (e) {
     e.preventDefault();
 
     localStorage.clear();
@@ -80,12 +80,12 @@ $('#deslogarConta').click(function(e) {
 })
 
 // Função para auxiliar na animação dos inputs já preenchidos ao abrir o site
-$(document).ready(function() {
-    $('.container-input').each(function() {
+$(document).ready(function () {
+    $('.container-input').each(function () {
         const $input = $(this).find('input');
         const $label = $(this).find('label');
 
-        $input.on('input', function() {
+        $input.on('input', function () {
             $label.toggleClass('active', $(this).val().trim() !== '');
         }).trigger('input'); // Dispara inicialmente
     });
@@ -96,7 +96,7 @@ $(document).find('.container-input').each((_, container) => {
     const input = $(container).find('input');
     const label = $(container).find('label');
 
-    input.on('input', function() {
+    input.on('input', function () {
         if ($(this).val().trim() !== '') {
             label.addClass('active');
         } else {
@@ -112,11 +112,11 @@ document.getElementById("telefone_input").addEventListener("input", function (e)
 
     let formatted = '';
     if (value.length > 0) {
-        formatted = `(${value.substring(0,2)}) `;
+        formatted = `(${value.substring(0, 2)}) `;
         if (value.length > 2) {
-            formatted += `${value.substring(2,7)}`;
+            formatted += `${value.substring(2, 7)}`;
             if (value.length > 7) {
-                formatted += `-${value.substring(7,11)}`;
+                formatted += `-${value.substring(7, 11)}`;
             }
         }
     }
@@ -124,7 +124,7 @@ document.getElementById("telefone_input").addEventListener("input", function (e)
 });
 
 // Handler unificado para o input de CPF/CNPJ - só aplicamos cores durante a edição
-$("#cpf_cnpj_input").on("input", function(e) {
+$("#cpf_cnpj_input").on("input", function (e) {
     const input = e.target;
     const rawValue = input.value.replace(/\D/g, '');
 
@@ -135,11 +135,11 @@ $("#cpf_cnpj_input").on("input", function(e) {
     if (rawValue.length === 0) {
         // Input vazio, usar cor padrão
         input.style.borderColor = '#AEAEBA';
-    } 
+    }
     else if (rawValue.length >= 11) {
         // Temos dígitos suficientes para validar
         isValidCPF_CNPJ = validarDocumento(rawValue);
-        
+
         if (isValidCPF_CNPJ) {
             input.style.borderColor = '#0bd979'; // Verde para válido
         } else {
@@ -150,14 +150,14 @@ $("#cpf_cnpj_input").on("input", function(e) {
 });
 
 // Adicionar evento blur que só retorna à cor neutra quando for válido
-$("#cpf_cnpj_input").on("blur", function(e) {
+$("#cpf_cnpj_input").on("blur", function (e) {
     const input = e.target;
     const rawValue = input.value.replace(/\D/g, '');
 
     if (rawValue.length === 0) {
         // Input vazio
         input.style.borderColor = '#AEAEBA';
-    } 
+    }
     else if (isValidCPF_CNPJ) {
         // Valor válido (verde), volta para cor neutra
         input.style.borderColor = '#AEAEBA';
@@ -177,8 +177,8 @@ function mostrarSenha(olho, input) {
 }
 
 // Adicionando a função ao ícone de olho no evento clique
-$('#mostrarSenhaAtual').click(() => mostrarSenha($('#mostrarSenhaAtual'), $('#input-senha-atual') ));
-$('#mostrarSenhaNova').click( () => mostrarSenha($('#mostrarSenhaNova'), $('#input-senha-nova') ));
+$('#mostrarSenhaAtual').click(() => mostrarSenha($('#mostrarSenhaAtual'), $('#input-senha-atual')));
+$('#mostrarSenhaNova').click(() => mostrarSenha($('#mostrarSenhaNova'), $('#input-senha-nova')));
 
 // Função unificada de formatação
 function formatarDocumento(value) {
@@ -207,7 +207,7 @@ function validarDocumento(value) {
 
     if (numeros.length === 11) {
         return validarCPF(numeros); // Utiliza função validar CPF
-    } 
+    }
     if (numeros.length === 14) {
         return validarCNPJ(numeros); // Utiliza função validar CNPJ
     }
@@ -235,8 +235,8 @@ function validarCPF(cpf) {
 function validarCNPJ(cnpj) {
     if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) return false;
 
-    const pesos1 = [5,4,3,2,9,8,7,6,5,4,3,2];
-    const pesos2 = [6,5,4,3,2,9,8,7,6,5,4,3,2];
+    const pesos1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    const pesos2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
 
     const calculaDigito = (slice, pesos) => {
         const soma = slice.reduce((acc, num, i) => acc + (num * pesos[i]), 0);
@@ -299,13 +299,13 @@ function fecharBarraLateral() {
     }, 660);
 };
 
-
+// Fechar barra lateral
 closeBarraLateral.click(() => {
     fecharBarraLateral()
 });
 
 // Lógica para envio do formulário de editar perfil
-$("#formEditarUsuario").on("submit", function(e) {
+$("#formEditarUsuario").on("submit", function (e) {
     e.preventDefault();
 
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
@@ -343,11 +343,11 @@ $("#formEditarUsuario").on("submit", function(e) {
         telefone: dados.get('telefone').replace(/[\s()-]/g, ''), // Remove caracteres especiais
         tipo_usuario: tipoUser
     };
-    
+
     // Apenas incluir as senhas no objeto se foram fornecidas
     if (senhaAtual) {
         editar.senha_hash = senhaAtual;
-        
+
         if (senhaNova) {
             editar.senha_nova = senhaNova;
         }
@@ -361,7 +361,7 @@ $("#formEditarUsuario").on("submit", function(e) {
         url: `${BASE_URL}/cadastro/${id}`, // URL da API na Web
         data: editarJSON,
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
             // Retirar as senhas do objeto editar para salvar no Local Storage depois
             delete editar.senha_nova;
             delete editar.senha_hash;
@@ -373,7 +373,7 @@ $("#formEditarUsuario").on("submit", function(e) {
             // Voltar as labels para o meio do input de novo
             $("#label-senha-nova").removeClass('active');
             $("#label-senha-atual").removeClass('active');
-            
+
             // Ocultar os inputs de senha
             $("#mostrarSenhaNova").removeClass('fa-eye-slash').addClass('fa-eye')
             $("#input-senha-nova").attr('type', 'password')
@@ -386,15 +386,45 @@ $("#formEditarUsuario").on("submit", function(e) {
 
             // Preencher as informações do menu nav caso email e nome sejam alterados
             $("#nome_completo_input").val(response.user.nome_completo);
-            
+
             $("#emailNav").text(response.user.email);
 
             $("#nomeNav").text(response.user.nome_completo);
-            
-            // Exibir mensagem de sucesso
-            alertMessage(response.success, 'success');
+
+            // Declara a variável de id_veic
+            let id_veic;
+
+            // Obtém o id do veículo
+            if (localStorage.getItem('id_carro_salvo')) {
+
+                // Obtém o id do carro no local storage
+                id_veic = localStorage.getItem('id_carro_salvo');
+
+                // Remove o item do local storage
+                localStorage.removeItem('id_carro_salvo');
+
+                // Redireciona para anúncio carro
+                window.location.href = `anuncio-carro.html?id=${id_veic}`;
+
+                return;
+            } else if (localStorage.getItem('id_moto_salva')) {
+
+                // Obtém o id da moto no local storage
+                id_veic = localStorage.getItem('id_moto_salva');
+
+                // Remove o item do local storage
+                localStorage.removeItem('id_moto_salva');
+
+                // Redireciona para anuncio-moto
+                window.location.href = `anuncio-moto.html?id=${id_veic}`;
+
+                return;
+            } else {
+                // Exibir mensagem de sucesso
+                alertMessage(response.success, 'success');
+            }
         },
-        error: function(response) {
+        error: function (response) {
             // Caso o usuário seja menor de 18, deleta a conta e desloga
             if (response.responseJSON.menor_de_idade) {
                 try {
@@ -422,7 +452,7 @@ $("#formEditarUsuario").on("submit", function(e) {
 });
 
 // Rota para deletar perfil
-$('#deletar-usuario').click(function() {
+$('#deletar-usuario').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Sua conta será deletada para sempre.",
@@ -430,33 +460,33 @@ $('#deletar-usuario').click(function() {
         showCancelButton: true,
         confirmButtonColor: "#0bd979",
         cancelButtonColor: "#f71445",
-        confirmButtonText: "Confirmar" 
-      }).then((result) => {
+        confirmButtonText: "Confirmar"
+    }).then((result) => {
         if (result.isConfirmed) {
             const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
             const id = dadosUser.id_usuario;
-        
+
             $.ajax({
                 method: "delete",
                 url: `${BASE_URL}/cadastro/${id}`, // URL da API na Web
                 data: id,
                 contentType: "application/json",
-                success: function(response) {
+                success: function (response) {
                     localStorage.removeItem('dadosUser');
                     localStorage.setItem('mensagem', JSON.stringify({
                         success: 'Usuário deletado com sucesso!'
                     }))
                     window.location.href = 'login.html';
                 },
-                error: function(response) {
+                error: function (response) {
                     alertMessage(response.responseJSON.error, 'error');
                 }
             })
         }
-      });
- })
+    });
+})
 
- $('#footer-motos-usadas').click(function() {
+$('#footer-motos-usadas').click(function () {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })
@@ -474,7 +504,7 @@ if (nomeVeic) {
     // Variável para verificar se a marca foi encontrada
     let marcaEncontrada = false;
 
-    $('.itens-details li').each(function() {
+    $('.itens-details li').each(function () {
         let $li = $(this);
         $li.removeClass('active');
 
@@ -490,10 +520,10 @@ if (nomeVeic) {
     // Apenas se houver modelo e a marca foi encontrada
     if (hasModelo && marcaEncontrada) {
         let divFiltro = $('#filtros-aplic');
-        
+
         // Verifica se o filtro já existe para evitar duplicação
         if (!$('#filtro-modelo').length) {
-            let removerBtnModelo = $("<i></i>").addClass("fa-solid fa-x").on("click", function() {
+            let removerBtnModelo = $("<i></i>").addClass("fa-solid fa-x").on("click", function () {
                 $('#filtro-modelo').remove();
                 delete filtroSelect['nome-veic'];
                 $("#num-filtros-aplic").text(Object.keys(filtroSelect).length);

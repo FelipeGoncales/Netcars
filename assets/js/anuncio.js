@@ -1054,6 +1054,155 @@ $('#excluir-servico').click(function () {
     })
 })
 
+/*
+    RESERVA
+*/
+
+
+// Reservar moto
+
+$('#reservar-btn').click(function () {
+    // Busca os dados do usuário
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    // Verificar se existe dadosUser no local storage
+    if (!dadosUser) {
+        // Limpa o local storage
+        localStorage.clear();
+
+        // Caso não, define uma mensagem e redireciona para login
+        localStorage.setItem('mensagem', JSON.stringify({
+            'success': 'Faça login para concluir sua reserva!'
+        }))
+
+        // Verifica o tipo do veículo
+        if (TIPO_VEIC == 'carro') {
+            // Salva o id do carro no local storage
+            localStorage.setItem('id_carro_salvo', id_carro);
+        } else {
+            // Salva o id da moto no local storage
+            localStorage.setItem('id_moto_salva', id_moto);
+        }
+
+        // e redireciona para login
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Busca o token
+    const token = JSON.parse(dadosUser).token;
+
+    // Verificar se existe dadosUser no local storage
+    if (!token) {
+        // Limpa o local storage
+        localStorage.clear();
+
+        // Caso não, define uma mensagem
+        localStorage.setItem('mensagem', JSON.stringify({
+            'success': 'Faça login para concluir sua reserva!'
+        }))
+
+        // Verifica o tipo do veículo
+        if (TIPO_VEIC == 'carro') {
+            // Salva o id do carro no local storage
+            localStorage.setItem('id_carro_salvo', id_carro);
+        } else {
+            // Salva o id da moto no local storage
+            localStorage.setItem('id_moto_salva', id_moto);
+        }
+
+        // e redireciona para login
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Verifica se as informações do cliente estão completas
+    $.ajax({
+        url: `${BASE_URL}/verificar_cadastro`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function() {
+            // Caso de certo
+            Swal.fire({
+                title: "Deseja reservar esse veículo?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0bd979",
+                cancelButtonColor: "#f71445",
+                confirmButtonText: "Confirmar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Declara a variável
+                    let envia;
+        
+                    // Salva as informações
+                    if (TIPO_VEIC == 'carro') {
+                        envia = {
+                            "id_veiculo": id_carro,
+                            "tipo_veiculo": "carro"
+                        }
+                    } else {
+                        envia = {
+                            "id_veiculo": id_moto,
+                            "tipo_veiculo": "moto"
+                        }
+                    }
+        
+                    $.ajax({
+                        method: "POST",
+                        url: `${BASE_URL}/reservar_veiculo`,
+                        contentType: 'application/json',
+                        data: JSON.stringify(envia),
+                        headers: {
+                            "Authorization": "Bearer " + token
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                title: "Sucesso!",
+                                text: response.success,
+                                icon: "success",
+                                confirmButtonColor: "#0bd979",
+                                confirmButtonText: "Confirmar"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    localStorage.setItem('msgReserva', 'Veja as informações da sua reserva clicando em "Reservas".')
+                                    window.location.href = "cliente-perfil.html";
+                                }
+                            })
+                        },
+                        error: function (response) {
+                            Swal.fire({
+                                title: "Algo deu errado...",
+                                text: response.responseJSON.error,
+                                icon: "error"
+                            })
+                        }
+                    })
+                }
+            });
+        },
+        error: function(response) {
+            // Define uma mensagem para o cliente
+            localStorage.setItem('msgReserva', 'Finalize seu cadastro para prosseguir com a reserva!');
+
+            // Verifica o tipo do veículo
+            if (TIPO_VEIC == 'carro') {
+                // Salva o id do carro no local storage
+                localStorage.setItem('id_carro_salvo', id_carro);
+            } else {
+                // Salva o id da moto no local storage
+                localStorage.setItem('id_moto_salva', id_moto);
+            }
+
+            // Redireciona para login
+            window.location.href = 'cliente-perfil.html';
+            // Retorna
+            return;
+        }
+    });
+})
+
 /* 
     COMPRAR (GERAR VENDA)
 */
@@ -1068,19 +1217,87 @@ $(document).ready(function () {
 
         // Caso não tenha dados do usuário
         if (!dadosUser) {
+            // Limpa o local storage
+            localStorage.clear();
+
             // Define uma mensagem para o cliente
             localStorage.setItem('mensagem', JSON.stringify({
                 'success': 'Faça login para completar sua compra!'
             }))
+
+            // Verifica o tipo do veículo
+            if (TIPO_VEIC == 'carro') {
+                // Salva o id do carro no local storage
+                localStorage.setItem('id_carro_salvo', id_carro);
+            } else {
+                // Salva o id da moto no local storage
+                localStorage.setItem('id_moto_salva', id_moto);
+            }
+
             // Redireciona para login
             window.location.href = 'login.html';
             // Retorna
             return;
         }
 
-        // Caso tenha, abre os modais
-        $('#modal-comprar').css('display', 'flex');
-        $('#overlay-bg').css('display', 'flex');
+        // Busca o token no local storage
+        let token = JSON.parse(dadosUser).token;
+
+        // Caso não tenha token, retorna
+        if (!token) {
+            // Limpa o local storage
+            localStorage.clear();
+
+            // Define uma mensagem para o cliente
+            localStorage.setItem('mensagem', JSON.stringify({
+                'success': 'Faça login para completar sua compra!'
+            }))
+
+            // Verifica o tipo do veículo
+            if (TIPO_VEIC == 'carro') {
+                // Salva o id do carro no local storage
+                localStorage.setItem('id_carro_salvo', id_carro);
+            } else {
+                // Salva o id da moto no local storage
+                localStorage.setItem('id_moto_salva', id_moto);
+            }
+
+            // Redireciona para login
+            window.location.href = 'login.html';
+            // Retorna
+            return;
+        }
+
+        // Verifica se as informações do cliente estão completas
+        $.ajax({
+            url: `${BASE_URL}/verificar_cadastro`,
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function() {
+                // Caso tenha, abre os modais
+                $('#modal-comprar').css('display', 'flex');
+                $('#overlay-bg').css('display', 'flex');
+            },
+            error: function(response) {
+                // Define uma mensagem para o cliente
+                localStorage.setItem('msgReserva', 'Finalize seu cadastro para prosseguir com a compra!');
+                
+                // Verifica o tipo do veículo
+                if (TIPO_VEIC == 'carro') {
+                    // Salva o id do carro no local storage
+                    localStorage.setItem('id_carro_salvo', id_carro);
+                } else {
+                    // Salva o id da moto no local storage
+                    localStorage.setItem('id_moto_salva', id_moto);
+                }
+
+                // Redireciona para login
+                window.location.href = 'cliente-perfil.html';
+                // Retorna
+                return;
+            }
+        });
     });
 
     // Fechar modal ao clicar no X
@@ -1099,6 +1316,7 @@ $(document).ready(function () {
         // Formatando o input de entrada e o select
         $('#input-entrada').val(formatarValor(0));
         $('#select-parcelas').val(1);
+        $('#p-valor-total').text('~');
     })
 
     // Abre o modal de gerar o qr code do pix
@@ -1114,6 +1332,50 @@ $(document).ready(function () {
     })
 });
 
+function calcularParcelas() {
+    // Botém o tipo do veículo e o id_veic
+    let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+    let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+
+    // Remove a option de zero parcelas caso exista
+    if ($('#option-zero-parcelas')) {
+        $('#option-zero-parcelas').remove();
+        $('#select-parcelas').prop('disabled', false);
+    }
+
+    // Obtém a entrada e parcelas
+    let entrada = desformatarPreco($('#input-entrada').val()).toFixed(2);
+    let qnt_parcelas = parseInt($('#select-parcelas').val()); 
+
+    // Obtém o valor do financiamento e parcelas
+    $.ajax({
+        url: `${BASE_URL}/financiamento/${id_veic}/${tipo_veic_numerico}/${qnt_parcelas}/${entrada}`,
+        success: function(response) {
+            if (desformatarPreco($('#input-entrada').val()) >= response.preco_venda) {
+                // Formata o valor da entrada como o preco de venda total
+                $('#input-entrada').val(formatarValor(response.preco_venda))
+
+                // Define o texto como o preco venda
+                $('#p-valor-total').text(formatarValor(response.preco_venda));
+
+                // Cria a option com valor 0
+                const option = $('<option value="0" id="option-zero-parcelas">0x</option>');
+
+                // Da append na option e a seleciona
+                $('#select-parcelas').append(option).val(0).prop('disabled', true);
+
+                return;
+            }
+
+            // Formatar valor total
+            $('#p-valor-total').text(formatarValor(response.valor_total));
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+}
+
 // Adicionar formatações ao input e select
 $(document).ready(function() {
     // Insere o valor R$0,00 no input
@@ -1122,12 +1384,25 @@ $(document).ready(function() {
     // Adiciona a formatar ao input quando ele for alterado
     formatarPreco($('#input-entrada'));
 
+    // Define a quantidade mínima e máxima das parcelas
     let parcelaMin = 1;
     let parcelaMax = 60;
 
+    // Cria o loop for
     for (let i = parcelaMin; i < parcelaMax + 1; i++) {
+        // Cria a option
         const optionParcela = $(`<option value="${i}">${i}x</option>`);
-
+        // Adiciona a option as parcelas
         $('#select-parcelas').append(optionParcela);
     }
+
+    // Calcular o valor total ao mudar o valor da entrada
+    $('#input-entrada').on('input', function() {
+        calcularParcelas();
+    })
+
+    // Calcular o valor total ao trocar a quantidade de parcelas
+    $('#select-parcelas').on('change', function() {
+        calcularParcelas();
+    })
 })
