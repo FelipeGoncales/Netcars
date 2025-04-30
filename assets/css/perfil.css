@@ -21,10 +21,12 @@
     --cor-bg-sec: #FFFFFF;
     --cor-titles: #696977;
 }
+
 /* validação form */
 .input {
     transition: border-color 0.3s ease;
 }
+
 .input.valido {
     border-color: #00ff00 !important;
 }
@@ -54,10 +56,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+
     & i {
         font-size: 1.8rem;
         color: var(--cor-texto);
     }
+
     & p {
         font-size: 1.2rem;
         color: var(--cor-texto);
@@ -77,10 +81,12 @@ header {
     width: 270px;
     box-sizing: border-box;
     border-right: 1px solid rgba(0, 0, 0, 0.15);
+
     & img {
         width: auto;
         height: 25px;
     }
+
     & p,
     span {
         font-size: 2rem;
@@ -88,6 +94,7 @@ header {
         color: var(--cor-texto);
 
     }
+
     & span {
         color: var(--roxo);
     }
@@ -121,15 +128,19 @@ h1 {
     background: var(--cor-bg-sec);
     display: flex;
     flex-direction: column;
+
     & nav {
         padding: 40px 0;
         display: flex;
         flex-direction: column;
         gap: 25px;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
-        flex: 1; /* Allow nav to grow */
-        overflow-y: auto; /* Add scrolling if content exceeds height */
+        flex: 1;
+        /* Allow nav to grow */
+        overflow-y: auto;
+        /* Add scrolling if content exceeds height */
         padding-bottom: 90px;
+
         & a {
             cursor: pointer;
             padding-left: 15px;
@@ -139,17 +150,22 @@ h1 {
             color: var(--cor-titles);
             font-size: 1.1em;
             transition: 0.1s;
+
             &.selecionado {
                 border-left: solid 4px var(--roxo);
                 color: var(--cor-texto) !important;
-                & i, a {
+
+                & i,
+                a {
                     cursor: pointer;
                     color: var(--cor-texto);
                 }
+
                 &:hover {
                     border-left: solid 4px var(--roxo);
                 }
             }
+
             &:hover {
                 border-left: solid 4px var(--cor-titles);
             }
@@ -162,6 +178,7 @@ h1 {
         justify-content: center;
         flex-direction: column;
         height: 180px;
+
         & i {
             font-size: 50px;
             text-align: center;
@@ -172,6 +189,7 @@ h1 {
             font-weight: normal;
             text-align: center;
         }
+
         & p {
             font-size: 0.8rem;
             font-weight: 300;
@@ -197,9 +215,11 @@ h1 {
         align-items: center;
         gap: 8px;
         padding-bottom: 80px;
+
         & p {
             color: #f71445;
         }
+
         & i {
             color: #f71445;
         }
@@ -211,7 +231,10 @@ h1 {
     width: 30px;
     flex-direction: column;
     gap: 5px;
-    & .linha1, .linha2, .linha3 {
+
+    & .linha1,
+    .linha2,
+    .linha3 {
         border-radius: 10px;
         width: 100%;
         height: 4px;
@@ -234,6 +257,7 @@ h1 {
     0% {
         right: -100%;
     }
+
     100% {
         right: 0;
     }
@@ -243,6 +267,7 @@ h1 {
     0% {
         right: 0;
     }
+
     100% {
         right: -100%;
     }
@@ -252,6 +277,7 @@ h1 {
     0% {
         opacity: 0%;
     }
+
     100% {
         opacity: 100%;
     }
@@ -261,6 +287,7 @@ h1 {
     0% {
         opacity: 100%;
     }
+
     100% {
         opacity: 0%;
     }
@@ -299,6 +326,7 @@ h1 {
 main {
     display: flex;
     height: 87vh;
+
     /* Section */
     & .container {
         height: 100vh;
@@ -311,6 +339,7 @@ main {
         justify-content: center;
         align-items: center;
     }
+
     & .container-minha-conta {
         display: flex;
         flex-direction: column;
@@ -319,6 +348,7 @@ main {
         margin-top: 15px;
         gap: 10px;
         height: 100%;
+
         & .informacoes-usuario {
             display: flex;
             flex-direction: column;
@@ -327,10 +357,12 @@ main {
             background: var(--cor-bg-sec);
             padding: 30px 40PX;
             border-radius: 20px;
+
             & h3 {
                 font-size: 1.15rem;
                 font-weight: 400;
             }
+
             & form {
                 padding-top: 20px;
                 display: flex;
@@ -338,12 +370,14 @@ main {
                 position: relative;
                 gap: 20px;
                 width: 550px;
+
                 & .container-input {
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
                     width: 100%;
                     position: relative;
+
                     &:focus-within label {
                         top: 0;
                         color: var(--roxo);
@@ -352,6 +386,7 @@ main {
                         z-index: 3;
                         padding: 0 3px;
                     }
+
                     & i {
                         display: flex;
                         align-items: center;
@@ -367,6 +402,7 @@ main {
                         color: var(--cor-texto-apagado);
                     }
                 }
+
                 & label {
                     font-size: 0.9rem;
                     position: absolute;
@@ -378,7 +414,9 @@ main {
                     transition: all 0.2s ease-in-out;
                     z-index: 1;
                     color: var(--cor-titles);
-                    &.active, &.date {
+
+                    &.active,
+                    &.date {
                         color: var(--cor-texto-apagado);
                         top: 0;
                         font-size: 0.75rem;
@@ -396,9 +434,11 @@ main {
                     border-radius: 10px;
                     border: 1px solid var(--cor-texto-apagado);
                     outline: none;
+
                     &:hover {
                         border: 1px solid var(--roxo);
                     }
+
                     &:focus {
                         border: 1px solid var(--roxo);
                     }
@@ -412,6 +452,7 @@ main {
                     border-radius: 10px;
                     cursor: pointer;
                     transition: 0.2s;
+
                     &:hover {
                         background-color: var(--hover-roxo);
                     }
@@ -463,9 +504,11 @@ main {
     cursor: pointer;
     gap: 10px;
     transition: 0.2s;
+
     & i {
         font-size: 0.7rem;
     }
+
     &:hover {
         background-color: var(--hover-roxo);
     }
@@ -487,23 +530,32 @@ main {
     cursor: pointer;
     gap: 10px;
     transition: 0.2s;
+
     & i {
         font-size: 0.7rem;
     }
+
     &:hover {
         background-color: var(--hover-roxo);
     }
 }
 
-.search-box, .status-box, .type-box {
+.search-box,
+.status-box,
+.type-box {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
+
+    & select,
+    input {
+        width: 100% !important;
+    }
 }
 
-.status-box{
+.status-box {
     display: flex;
     flex-direction: row;
     gap: 1px;
@@ -518,14 +570,14 @@ main {
     transition: 0.2s;
 }
 
-.btn-status-box:hover{
+.btn-status-box:hover {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.449);
 }
 
-
-
-.search-label, .status-label, .type-label {
+.search-label,
+.status-label,
+.type-label {
     font-size: 0.85rem;
     color: #7B7B7B;
     font-weight: 600;
@@ -539,7 +591,9 @@ main {
     font-size: 0.75rem;
 }
 
-.search-box input, .status-box select, .type-box select {
+.search-box input,
+.status-box select,
+.type-box select {
     width: 34%;
     height: 100%;
     padding: 15px;
@@ -553,7 +607,9 @@ main {
 }
 
 
-.search-box input:focus, .status-box select:focus, .type-box select:focus {
+.search-box input:focus,
+.status-box select:focus,
+.type-box select:focus {
     border: 2px var(--roxo) solid;
 }
 
@@ -592,6 +648,7 @@ main {
     height: 50px;
     transition: 0.1s;
     cursor: pointer;
+
     &:hover {
         background-color: var(--hover-roxo);
     }
@@ -611,7 +668,8 @@ main {
 /* Tabela buscar usuários */
 
 .table-container {
-    max-height: 70vh; /* Ajuste a altura conforme necessário */
+    max-height: 70vh;
+    /* Ajuste a altura conforme necessário */
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
     width: 100%;
@@ -626,7 +684,8 @@ main {
     border-collapse: collapse;
 }
 
-.user-table th, .user-table td {
+.user-table th,
+.user-table td {
     border: 1px solid #c0c0c0;
     padding: 20px 30px;
     font-size: 0.8rem;
@@ -669,11 +728,13 @@ tbody tr.tipo2 {
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.15);
     width: 400px;
     z-index: 15;
+
     & h3 {
         color: var(--cor-texto);
         font-size: 1.1rem;
         text-align: center;
     }
+
     & #close-modal-editar {
         position: absolute;
         top: 15px;
@@ -682,13 +743,16 @@ tbody tr.tipo2 {
         padding: 5px;
         cursor: pointer;
     }
+
     & .div-input-modal {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         width: 100%;
-        & input, select {
+
+        & input,
+        select {
             border: 1px solid var(--cor-texto-apagado);
             border-radius: 10px;
             padding: 8px;
@@ -696,11 +760,13 @@ tbody tr.tipo2 {
             font-size: 0.92rem;
             outline: none;
         }
+
         & label {
             font-size: 0.8rem;
             color: var(--roxo);
         }
     }
+
     & button {
         background-color: var(--roxo);
         padding: 10px;
@@ -710,6 +776,7 @@ tbody tr.tipo2 {
         color: var(--cor-bg-sec);
         font-weight: 600;
         transition: 0.2s;
+
         &:hover {
             background-color: var(--hover-roxo);
         }
@@ -717,46 +784,48 @@ tbody tr.tipo2 {
 }
 
 /* Responsivo Filtro e Tabela financiamento */
-@media(max-width: 1024px){
-    
-.search-box input, .status-box select, .type-box select {
-    width: 73%;
-    height: 100%;
-    padding: 15px;
-    font-size: 0.9rem;
-    border: 2px #e0e1e4 solid;
-    border-radius: 8px;
-    outline: none;
-    background: #ffffff;
-    z-index: 2;
-    color: #757587;
-}
+@media(max-width: 1024px) {
 
-.btn-status-box {
-    border-radius: 8px;
-    background-color: white;
-    border: 2px #e0e1e4 solid;
-    width: 25%;
-    transition: 0.2s;
-}
+    .search-box input,
+    .status-box select,
+    .type-box select {
+        width: 73%;
+        height: 100%;
+        padding: 15px;
+        font-size: 0.9rem;
+        border: 2px #e0e1e4 solid;
+        border-radius: 8px;
+        outline: none;
+        background: #ffffff;
+        z-index: 2;
+        color: #757587;
+    }
 
-.cad-user2 {
-    background-color: var(--roxo);
-    height: 60px;
-    color: var(--cor-bg-sec);
-    border-radius: 10px;
-    font-weight: 600;
-    border: none;
-    min-width: 39%;
-    font-size: 0.8rem;
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    gap: 10px;
-    transition: 0.2s;
-}
+    .btn-status-box {
+        border-radius: 8px;
+        background-color: white;
+        border: 2px #e0e1e4 solid;
+        width: 25%;
+        transition: 0.2s;
+    }
+
+    .cad-user2 {
+        background-color: var(--roxo);
+        height: 60px;
+        color: var(--cor-bg-sec);
+        border-radius: 10px;
+        font-weight: 600;
+        border: none;
+        min-width: 39%;
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        gap: 10px;
+        transition: 0.2s;
+    }
 
 }
 
@@ -774,7 +843,8 @@ tbody tr.tipo2 {
 }
 
 @media (max-width: 320px) {
-    .div-input input, 
+
+    .div-input input,
     .div-input select {
         padding: 10px;
         font-size: 0.8rem;
@@ -792,12 +862,14 @@ tbody tr.tipo2 {
     align-items: center;
     margin-top: 15px;
     gap: 10px;
+
     & .div-input {
         height: fit-content;
         display: flex;
         flex-direction: column;
         position: relative;
         width: 420px;
+
         & label {
             font-size: 0.85rem;
             color: var(--cor-texto-apagado);
@@ -811,6 +883,7 @@ tbody tr.tipo2 {
             transition: 0.3s;
             z-index: 1;
             padding: 0 4px;
+
             &.active {
                 color: var(--cor-texto-apagado);
                 top: 0;
@@ -818,7 +891,9 @@ tbody tr.tipo2 {
                 z-index: 3;
             }
         }
-        & input, select {
+
+        & input,
+        select {
             width: 100%;
             padding: 12px;
             font-size: 0.9rem;
@@ -828,16 +903,19 @@ tbody tr.tipo2 {
             transition: 0.3s;
             background: transparent;
             z-index: 2;
+
             &:focus {
                 border: 2px var(--roxo) solid;
             }
         }
+
         &:focus-within label {
             color: var(--roxo);
             top: 0;
             font-size: 0.75rem;
             z-index: 3;
         }
+
         & i {
             display: flex;
             align-items: center;
@@ -872,9 +950,12 @@ tbody tr.tipo2 {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 19;
-    & .div-input, .divButtonSubmit {
+
+    & .div-input,
+    .divButtonSubmit {
         width: 100%;
     }
+
     & #close-modal-cad-user {
         position: absolute;
         cursor: pointer;
@@ -895,20 +976,25 @@ tbody tr.tipo2 {
     .container-login {
         width: 90vw;
         gap: 20px;
+
         & .div-input {
-            & input, select {
+
+            & input,
+            select {
                 padding: 10px;
             }
         }
+
         & .btn-acao {
             font-size: 0.85rem;
         }
+
         & .title {
             font-size: 1.2rem;
         }
     }
 }
-  
+
 .btn-acao {
     background-color: var(--roxo);
     color: var(--cor-bg-sec);
@@ -920,6 +1006,7 @@ tbody tr.tipo2 {
     height: 50px;
     transition: 0.1s;
     cursor: pointer;
+
     &:hover {
         background-color: var(--hover-roxo);
     }
@@ -947,16 +1034,17 @@ tbody tr.tipo2 {
         height: 64px;
         padding: 12px 25px;
     }
-    
+
     #mensagemError {
         bottom: -25px;
     }
-    
+
     .div-input {
         & input {
             width: 300px;
         }
     }
+
     .btn-acao {
         width: 100%;
     }
@@ -966,6 +1054,7 @@ tbody tr.tipo2 {
             align-items: center;
             gap: 50px;
             flex-direction: column;
+
             & div {
                 align-items: center;
             }
@@ -973,27 +1062,31 @@ tbody tr.tipo2 {
     }
 }
 
-
 @media (max-width: 400px) {
     * {
         font-size: 14px;
     }
+
     .container-login {
         padding: 30px 25px;
         padding-bottom: 47px;
+
         & h1 {
             width: 45vw;
             font-size: 17px;
         }
     }
+
     #mensagemError {
         bottom: -23px;
     }
+
     .div-input {
         & input {
             width: 250px;
         }
     }
+
     .btn-acao {
         width: 100%;
     }
@@ -1003,18 +1096,20 @@ tbody tr.tipo2 {
     .container-login {
         padding: 35px 25px;
         padding-bottom: 47px;
+
         & h1 {
             width: 55vw;
             font-size: 16px;
         }
     }
+
     .div-input {
         & input {
             width: 230px;
             padding: 9px;
         }
     }
-    
+
     #mensagemError {
         bottom: -25px;
     }
@@ -1289,19 +1384,24 @@ tbody tr.tipo2 {
     }
 }
 
-#parcelas, #financiamento,#ajuda    {
+#parcelas,
+#financiamento,
+#ajuda {
     display: none;
 }
 
 
-#historico-compras, #reservas {
+#historico-compras,
+#reservas {
     display: none;
     flex-direction: column;
     gap: 20px;
     width: 84%;
+
     & h3 {
         font-size: 1.4rem;
     }
+
     & .div-carrossel {
         width: 100%;
         overflow: auto;
@@ -1321,69 +1421,72 @@ tbody tr.tipo2 {
     justify-content: space-between;
 }
 
-.container-card-car-financia{
+.container-card-car-financia {
     display: flex;
     flex-direction: row;
     gap: 15px;
     align-items: center;
 }
-.div-car-p1 p{
+
+.div-car-p1 p {
     font-weight: 400;
     font-size: 16px;
 }
-.div-car-p2 p, .div-car-p2 p span{
+
+.div-car-p2 p,
+.div-car-p2 p span {
     font-size: 28px;
     font-weight: 700;
 }
 
-.div-car-p2 p span{
+.div-car-p2 p span {
     color: #6C1DE9;
 }
 
-.div-car-p3{
+.div-car-p3 {
     display: flex;
     flex-direction: column;
     align-items: end;
+
+    & p {
+        font-weight: 400;
+        font-size: 16px;
+
+        &.price {
+            font-size: 23px;
+            font-weight: 600;
+        }
+    }
 }
 
-.div-car-p4{
+.div-car-p4 {
     display: none;
     flex-direction: column;
     align-items: center;
+
+    & p {
+        font-weight: 400;
+        font-size: 15px;
+
+        &.price {
+            font-size: 18px;
+            font-weight: 600;
+        }
+    }
 }
 
-.div-car-p4 p.price{
-    font-size: 23px;
-    font-weight: 600;
-}
-
-.div-car-p4 p{
-    font-weight: 400;
-    font-size: 16px;
-}
-
-.div-car-p3 p.price{
-    font-size: 23px;
-    font-weight: 600;
-}
-
-.div-car-p3 p{
-    font-weight: 400;
-    font-size: 16px;
-}
-
-.pai-financiamento{
+.pai-financiamento {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.container-financiamento{
+.container-financiamento {
     display: flex;
 
 }
 
-.card-car-financia{
+.card-car-financia {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1391,51 +1494,57 @@ tbody tr.tipo2 {
     height: 100px;
     background-color: white;
     border-radius: 15px;
-    background-position: center;;
+    background-position: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    & img {
+        width: 55px;
+        height: 55px;
+    }
 }
 
 .card-ajuda {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column  ;
+    flex-direction: column;
     width: 200px;
     height: 200px;
     gap: 10px;
     background-color: white;
     border-radius: 10px;
-    background-position: center;;
+    background-position: center;
+    ;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     transition: 0.1s;
 }
 
-.card-ajuda:hover{
+.card-ajuda:hover {
     scale: 1.01;
     cursor: pointer;
 }
 
-.card-ajuda:active{
+.card-ajuda:active {
     scale: 1;
 }
 
-.div-ajuda{
+.div-ajuda {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
 }
 
-.div-ajuda p{
+.div-ajuda p {
     font-size: 18px;
     font-weight: 600;
 }
 
-.card-ajuda p{
+.card-ajuda p {
     font-size: 14px;
     font-weight: 400;
 }
-.pai-card-ajuda{
+
+.pai-card-ajuda {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1445,54 +1554,44 @@ tbody tr.tipo2 {
 .i-ajuda {
     font-size: 40px;
     color: #6C1DE9;
-  }
-
-.card-car-financia img{
-    width: 55px;
-    height: 55px;
 }
+
 /* Card Financiamento */
-.container-card-financia {
+.div-card-financia {
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 15px;
-  
-    .div-card-financia {
-      display: flex;
-      gap: 15px;
-    }
-  
-    .i-financia {
-      font-size: 40px;
-      color: #6C1DE9;
-    }
-  
-    .card-financia {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;  
-      width: 251px;
-      height: 208px;
-      gap: 10px;
-      background-color: white;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-      transition: 0.2s;
-  
-      &:hover {
+}
+
+.i-financia {
+    font-size: 40px;
+    color: #6C1DE9;
+}
+
+.card-financia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 251px;
+    height: 208px;
+    gap: 10px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transition: 0.2s;
+
+    &:hover {
         scale: 1.01;
         cursor: pointer;
-      }
-  
-      p {
+    }
+
+    p {
         font-size: 14px;
         font-weight: 400;
-      }
     }
-  }
-  
+}
+
 /* Card Padrão */
 
 #div-reservas {
@@ -1502,6 +1601,7 @@ tbody tr.tipo2 {
     gap: 20px;
     align-items: flex-start;
     justify-content: flex-start;
+
     & .div-pai {
         position: absolute;
         top: 50%;
@@ -1515,14 +1615,17 @@ tbody tr.tipo2 {
         gap: 20px;
         align-self: center;
         justify-self: center;
+
         & .icon {
             color: var(--cor-texto-apagado);
             font-size: 6rem;
         }
+
         & .nada-encontrado {
             color: var(--cor-texto-apagado);
             font-size: 1.1rem;
         }
+
         & .buscar-btn {
             display: flex;
             gap: 10px;
@@ -1537,6 +1640,7 @@ tbody tr.tipo2 {
             border: none;
             cursor: pointer;
             transition: 0.2s;
+
             &:hover {
                 background-color: var(--hover-roxo);
             }
@@ -1544,19 +1648,21 @@ tbody tr.tipo2 {
     }
 }
 
-.card{
+.card {
     background: var(--cor-bg-sec);
     border-radius: 10px;
-    overflow: hidden;    
+    overflow: hidden;
     width: 300px;
     height: 100%;
     padding-bottom: 15px;
     position: relative;
-    & img{
+
+    & img {
         width: 100%;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-    } 
+    }
+
     & .reservado-por {
         font-size: 0.8rem;
         color: var(--cor-texto-apagado);
@@ -1565,31 +1671,37 @@ tbody tr.tipo2 {
         padding-right: 25px;
         position: absolute;
         left: -1px;
-        top: -1px;/* Define a forma com um corte diagonal na parte inferior */
+        top: -1px;
+        /* Define a forma com um corte diagonal na parte inferior */
         clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
+
         & span {
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--roxo);
         }
     }
-    & .itens-card{                              
+
+    & .itens-card {
         display: flex;
         flex-direction: column;
         padding: 0px 15px;
         gap: 15px;
-        & h3{
+
+        & h3 {
             margin-top: 10px;
             font-size: 1.5rem;
             font-weight: 600;
             color: #000;
-        } 
-        & p{
+        }
+
+        & p {
             font-size: 0.8rem;
             color: var(--cor-titles);
             font-weight: 400;
-        } 
-        & .ver-detalhes{
+        }
+
+        & .ver-detalhes {
             background: var(--roxo);
             color: #fff;
             padding: 12px;
@@ -1599,17 +1711,19 @@ tbody tr.tipo2 {
             cursor: pointer;
             transition: 0.3s;
             text-align: center;
+
             &:hover {
                 background-color: var(--hover-roxo);
             }
         }
-        & .container-info-card{
+
+        & .container-info-card {
             color: var(--cor-titles);
             display: flex;
             gap: 10px;
             align-items: center;
         }
-    }    
+    }
 }
 
 /* END DIVS PERFIL CLIENTE */
@@ -1630,12 +1744,13 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* DIVS ADMINISTRADOR */
 
-.container-relatorios{
+.container-relatorios {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
     padding-top: 40px;
+
     & .relatorios-btn {
         display: flex;
         justify-content: center;
@@ -1649,7 +1764,8 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         width: fit-content;
         color: var(--cor-bg);
         transition: 0.2s ease-in;
-        &:hover{
+
+        &:hover {
             background-color: var(--hover-roxo);
             color: var(--cor-bg-sec);
         }
@@ -1661,7 +1777,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     height: auto;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    flex-shrink: 0;    
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -1669,7 +1785,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     width: 600px;
 }
 
-.title-conbranco{
+.title-conbranco {
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--cor-texto);
@@ -1689,6 +1805,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     flex-direction: column;
     position: relative;
     width: 100%;
+
     & label {
         font-size: 0.85rem;
         color: var(--cor-texto-apagado);
@@ -1702,6 +1819,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         transition: 0.3s;
         z-index: 1;
         padding: 0 4px;
+
         &.active {
             color: var(--cor-texto-apagado);
             top: 0;
@@ -1709,7 +1827,9 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             z-index: 3;
         }
     }
-    & input, select {
+
+    & input,
+    select {
         width: 100%;
         padding: 12px;
         font-size: 0.9rem;
@@ -1719,16 +1839,19 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         transition: 0.3s;
         background: transparent;
         z-index: 2;
+
         &:focus {
             border: 2px var(--roxo) solid;
         }
     }
+
     &:focus-within label {
         color: var(--roxo);
         top: 0;
         font-size: 0.75rem;
         z-index: 3;
     }
+
     & i {
         display: flex;
         align-items: center;
@@ -1745,10 +1868,11 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
-.inputs-DMA{
+.inputs-DMA {
     display: flex;
     width: 100%;
     gap: 10px;
+
     & .div-input {
         width: 100%;
     }
@@ -1756,14 +1880,15 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* Div Relatório Movimentações */
 
-.container-dashboard   {
+.container-dashboard {
     max-width: 900px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     width: 50vw;
     gap: 15px;
-    & button{
+
+    & button {
         margin-top: 5px;
         border: none;
         width: 100%;
@@ -1774,17 +1899,21 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         color: var(--cor-bg-sec);
         font-weight: 600;
         transition: 0.3s;
+
         &:hover {
             background-color: var(--hover-roxo);
         }
     }
 }
-#mov-recietas, #mov-despesas{
+
+#mov-recietas,
+#mov-despesas {
     cursor: pointer;
 }
-  
+
 /*  Modals Receita e Despesa  */
-#modal-receita,#modal-despesa {
+#modal-receita,
+#modal-despesa {
     display: none;
     align-items: center;
     justify-content: center;
@@ -1798,18 +1927,24 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     padding: 50px;
     border-radius: 20px;
     gap: 20px;
+
     & h2 {
         font-size: 1.4rem;
         color: var(--cor-texto);
         font-weight: 600;
-    } & .div-info{
+    }
+
+    & .div-info {
         display: flex;
         gap: 10px;
-    }&.div-input {
+    }
+
+    &.div-input {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
+
         & input {
             border: 3px solid #EDECF2;
             padding: 10px 15px;
@@ -1817,8 +1952,9 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             font-size: 0.9rem;
             width: 300px;
             box-sizing: border-box;
-          }
-    }    
+        }
+    }
+
     & button {
         border: none;
         width: 100%;
@@ -1829,25 +1965,29 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         color: var(--cor-bg-sec);
         font-weight: 600;
         transition: 0.3s;
+
         &:hover {
             background-color: var(--hover-roxo);
         }
     }
+
     & #close-modal-receita,
     & #close-modal-despesa {
-      position: absolute;
-      top: 25px;
-      left: 25px;
-      color: var(--roxo);
-      font-size: 1.4rem;
-      cursor: pointer;
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        color: var(--roxo);
+        font-size: 1.4rem;
+        cursor: pointer;
     }
-  }
+}
 
 @media (max-width: 678px) {
     .container-dashboard {
-        max-width: 100%; /* Ajusta para ocupar toda a largura da tela */
-        width: 80vw; /* Reduz um pouco a largura para dar margem */
+        max-width: 100%;
+        /* Ajusta para ocupar toda a largura da tela */
+        width: 80vw;
+        /* Reduz um pouco a largura para dar margem */
     }
 }
 
@@ -1862,7 +2002,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .balance-title {
@@ -1888,7 +2028,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     background-color: white;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .charts-card {
@@ -1897,12 +2037,14 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     padding: 20px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     gap: 8px;
     max-height: 238px;
     overflow-y: auto;
     overflow-x: hidden;
-    & .card-despesa, .card-receita{
+
+    & .card-despesa,
+    .card-receita {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1910,35 +2052,49 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         gap: 10px;
         border-radius: 20px;
         padding: 10px 12px;
-        & .div-desc, .div-va{
+
+        & .div-desc,
+        .div-va {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px; 
-            & .p-tipo{
+            gap: 10px;
+
+            & .p-tipo {
                 font-size: 0.9em;
                 font-weight: 600;
-            }& .p-descri{
+            }
+
+            & .p-descri {
                 font-size: 0.8em;
                 font-weight: 500;
             }
-        } & .div-valr{
+        }
+
+        & .div-valr {
             display: flex;
             align-items: end;
             justify-content: center;
             flex-direction: column;
-            & .p-data{
+
+            & .p-data {
                 font-weight: 500;
                 font-size: 0.8em;
-            } & .p-valor{
+            }
+
+            & .p-valor {
                 font-size: 0.9em;
                 font-weight: 500;
             }
         }
 
-    } & .card-receita{
+    }
+
+    & .card-receita {
         background: rgba(0, 255, 0, 0.25);
-    } & .card-despesa{
+    }
+
+    & .card-despesa {
         background: rgba(255, 0, 0, 0.25);
     }
 }
@@ -2027,6 +2183,7 @@ footer {
     justify-content: center;
     width: 100%;
     margin-top: 80px;
+
     & .div-contato {
         background-color: var(--roxo);
         padding: 40px 0;
@@ -2035,16 +2192,19 @@ footer {
         justify-content: center;
         gap: 100px;
         width: inherit;
+
         & div {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
             gap: 5px;
+
             & .footer-title {
                 color: var(--cor-bg-sec);
                 font-weight: 600;
             }
+
             & .footer-text {
                 color: var(--cor-bg-sec);
                 font-weight: 300;
@@ -2052,17 +2212,20 @@ footer {
                 cursor: pointer;
                 transition: 0.1s;
                 padding: 10px 0;
+
                 &:hover {
                     text-decoration: underline;
                 }
             }
         }
     }
+
     & .div-logo {
         padding: 15px 0;
         background-color: var(--cor-bg-sec);
         width: inherit;
     }
+
     & .div-direitos-reservados {
         padding: 10px 0;
         width: inherit;
@@ -2071,91 +2234,109 @@ footer {
         align-items: center;
         justify-content: center;
         text-align: center;
+
         & p {
             color: var(--cor-bg-sec);
             font-size: 0.85rem;
         }
+
         & .net {
             color: var(--roxo);
             font-family: "Racing Sans One", serif;
 
         }
+
         & .cars {
             color: var(--cor-bg-sec);
             font-family: "Racing Sans One", serif;
         }
     }
 }
+
 /* Fim do Footer */
 /* Responsivo Mobile FINANCIAMENTO */
 
 
-@media(max-width:1135px){
-    .div-card-financia{
+@media(max-width:1135px) {
+    .div-card-financia {
         flex-direction: column;
     }
 
-    .card-financia{
-        width: 325px!important;
-        height: 170px!important;
-        gap: 10px!important;
+    .card-financia {
+        width: 325px !important;
+        height: 140px !important;
+        gap: 10px !important;
+
+        & p {
+            font-size: 16px !important;
+        }
     }
 
-    .card-financia p {
-        font-size: 16px!important;
-    }
-
-    .div-car-p4{
-        display: flex;
-    }
-
-    .div-car-p3{
+    .div-car-p3 {
         display: none;
     }
 
-    .pai-financiamento{
-        gap: 10px;
+    .div-car-p4 {
+        display: flex;
     }
 
-    .container-card-car-financia{
+    .pai-financiamento {
+        gap: 30px;
+    }
+
+    .container-card-car-financia {
         flex-direction: row;
         gap: 10px;
     }
 
 }
 
-@media(max-width: 836px){
-    .div-card-financia{
-        flex-direction: column;
+@media(max-width: 500px) {
+    .container-financiamento {
+        margin-top: 60px;
     }
 
-    .card-financia{
-        width: 295px!important;
-        height: 140px!important;
-        gap: 10px!important;
+    .card-financia {
+        width: 85vw !important;
+        height: 110px !important;
+        gap: 7px !important;
+
+        & p {
+            font-size: 12px !important;
+        }
+
+        & i {
+            font-size: 25px;
+        }
     }
 
-    .div-car-p4{
-        display: flex;
+    .i-financia {
+        font-size: 30px !important;
     }
 
-    .div-car-p3{
-        display: none;
+    .card-car-financia {
+        width: 80px;
+        height: 80px;
+        & img {
+            width: 40px;
+            height: 40px;
+        }
     }
 
-    .pai-financiamento{
-        gap: 10px;
+    .div-car-p1 {
+        & p {
+            font-size: 13px;
+        }
     }
 
-    .container-card-car-financia{
-        flex-direction: row;
-        gap: 10px;
+    .div-car-p2 {
+        & p {
+            font-size: 21px;
+            & span {
+                font-size: inherit;
+            }
+        }
     }
-    
-    .i-financia{
-        font-size: 40px!important;
-    }
-    
 }
 
 /* Responsivo Tabela */
@@ -2164,12 +2345,14 @@ footer {
     .table-container {
         width: 100%;
     }
-    
+
     .container-edit-user {
         width: 90%;
     }
 
-    .search-box, .status-box, .type-box {
+    .search-box,
+    .status-box,
+    .type-box {
         width: 100%;
     }
 }
@@ -2185,18 +2368,22 @@ footer {
     header {
         padding: 12px 20px;
         z-index: 99;
+
         & .div-logo-title {
             gap: 20px;
             align-items: center;
             justify-content: center;
+
             & h1 {
                 font-size: 1.4rem;
             }
         }
+
         & .div-logo {
             width: fit-content;
             padding-right: 23px;
         }
+
         & .sanduiche {
             display: flex;
         }
@@ -2215,9 +2402,11 @@ footer {
         height: 100vh;
         z-index: 9999;
         justify-content: center;
+
         & #fecharBarraLateral {
             display: flex;
         }
+
         & nav {
             & a {
                 padding: 0 15px 0 0;
@@ -2234,7 +2423,7 @@ footer {
 }
 
 @media (max-width: 660px) {
-    
+
     .filtro-users-wrapper {
         flex-direction: column;
         gap: 10px;
@@ -2245,14 +2434,18 @@ footer {
     header {
         height: 64px;
         padding: 12px 25px;
+
         & .div-logo {
             margin: 0;
             border: none;
             padding: 0;
-            & p, span {
+
+            & p,
+            span {
                 font-size: 28px;
             }
         }
+
         & h1 {
             display: none;
         }
@@ -2262,6 +2455,7 @@ footer {
         flex-direction: column;
         gap: inherit;
     }
+
     .container-branco {
         width: 90vw;
     }
@@ -2270,7 +2464,9 @@ footer {
         max-width: 85vw;
     }
 
-    .search-box, .status-box, .type-box {
+    .search-box,
+    .status-box,
+    .type-box {
         width: 100%;
     }
 
@@ -2281,29 +2477,38 @@ footer {
 
     main .container-minha-conta {
         width: 92vw;
+
         & .informacoes-usuario {
             padding: 25px;
+
             & h3 {
                 font-size: 1.1rem;
                 text-align: center;
             }
+
             & form {
                 width: 100%;
+
                 & .container-input {
                     &:focus-within label {
                         font-size: 0.65rem;
                     }
                 }
+
                 & label {
                     font-size: 0.75rem;
-                    &.active, &.date {
+
+                    &.active,
+                    &.date {
                         font-size: 0.65rem;
                     }
                 }
+
                 & input {
                     padding: 7px 10px;
                     font-size: 12px;
                 }
+
                 & button {
                     font-size: 0.75rem;
                 }
@@ -2313,10 +2518,11 @@ footer {
 
     /* RESPONSIVO DIVS ADMINISTRADOR */
 
-    .container-relatorios{
+    .container-relatorios {
         flex-direction: column;
         padding: 0;
         width: 250px;
+
         & .relatorios {
             width: 100%;
         }
@@ -2327,19 +2533,29 @@ footer {
     .card {
         width: 275px !important;
         height: fit-content !important;
-        & .itens-card{
+
+        & .itens-card {
             padding-bottom: 20px;
             gap: 10px;
-            & h3{
+
+            & h3 {
                 font-size: 1.3rem !important;
-            } & p{
+            }
+
+            & p {
                 font-size: 0.75rem;
-            } & button{
+            }
+
+            & button {
                 font-size: 0.9rem;
                 padding: 12px;
-            }& .container-info-card{
-                & .info-card{
-                    & p, i {
+            }
+
+            & .container-info-card {
+                & .info-card {
+
+                    & p,
+                    i {
                         font-size: 0.7rem;
                     }
                 }
@@ -2352,6 +2568,7 @@ footer {
             align-items: center;
             gap: 50px;
             flex-direction: column;
+
             & div {
                 align-items: center;
             }
