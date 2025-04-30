@@ -255,9 +255,23 @@ async function buscarVeiculos() {
             
                 // Cria a div de itens do card
                 const divItensCard = $("<div></div>").addClass("itens-card");
-            
-                const spanModelo = $(`<span></span>`)
-                    .text(veiculo.modelo);
+
+                let comprimentoMarca = veiculo.marca.length;
+                let comprimentoModelo = veiculo.modelo.length;
+                let comprimentoNomeVeic = comprimentoMarca + 1 + comprimentoModelo;
+                
+                // Cria o span modelo
+                let spanModelo = $(`<span></span>`);
+
+                if (comprimentoNomeVeic >= 18) {
+                    let qntLetrasModelo = 18 - (comprimentoMarca + 1);
+
+                    let novoModelo = veiculo.modelo.substr(0, qntLetrasModelo) + '...';
+
+                    spanModelo.text(novoModelo);
+                } else {
+                    spanModelo.text(veiculo.modelo);
+                }
 
                 // Título do veículo
                 const h3Title = $("<h3></h3>")

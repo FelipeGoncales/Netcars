@@ -29,6 +29,7 @@ main {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 20px;
+    z-index: 3;
     & h2 {
         font-size: 1.3rem;
     }
@@ -308,17 +309,20 @@ main {
     width: 100%;
     height: auto;
     padding-bottom: 15px;
-    position: relative;
+
     & img{
         width: 100%;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-    } & .itens-card{                              
+    } 
+    
+    & .itens-card{                              
         display: flex;
         flex-direction: column;
-        padding: 0px 15px;
+        padding: 0 15px;
+        padding-top: 12px;
         gap: 15px;
-        padding-bottom: 70px;
+        
         & h3 {
             font-size: 1.5rem;
             font-weight: 600;
@@ -329,14 +333,15 @@ main {
                 color: var(--roxo);
                 text-transform: uppercase;
             }
-        } & p{
+        } 
+        
+        & p{
             font-size: 0.8rem;
             color: var(--cor-titles);
             font-weight: 400;
-        } & .ver-detalhes{
-            position: absolute;
-            bottom: 15px;
-            width: 90%;
+        } 
+        
+        & .ver-detalhes{
             background: var(--roxo);
             color: #fff;
             padding: 12px;
