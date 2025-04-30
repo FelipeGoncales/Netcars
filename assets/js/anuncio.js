@@ -117,7 +117,7 @@ function carregarOwlCarrossel() {
         margin: 10,
         responsive: {
             0: { items: 1 },
-            560: { items: 2 },
+            580: { items: 2 },
             1240: { item: 3 }
         }
     });
@@ -1408,10 +1408,14 @@ function calcularParcelas() {
                     $tr.addClass('tipo1');
                 }
 
+                // Formata a data
+                const dataSeparada = lista_parcelas[index].data.split('-');
+                const dataFormatada = dataSeparada.reverse().join('/');
+                
                 // Cria os tds que irão conter as informações
                 const $tdNum = $('<td>').html(index);
                 const $tdValor = $('<td>').html(formatarValor(lista_parcelas[index].valor));
-                const $tdData = $('<td>').html(lista_parcelas[index].data);
+                const $tdData = $('<td>').html(dataFormatada);
 
                 $tr.append($tdNum)
                     .append($tdValor)
