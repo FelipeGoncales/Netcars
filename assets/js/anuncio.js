@@ -1335,8 +1335,62 @@ $(document).ready(function () {
 
     // Abre o modal de gerar o qr code do pix
     $('#btn-pix').on('click', function () {
+        // Exibe o modal de pix
         $('#modal-comprar').css('display', 'none');
         $('#modal-pix').css('display', 'flex');
+
+        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+        // Caso não encontre os dados do usuário
+        if (!dadosUser) {
+            // Limpa o local storage
+            localStorage.clear();
+            // Recarrega a página
+            window.location.reload();
+            return;
+        }
+
+        // Insere o email do cliente
+        $('#email-cliente-compra').text(dadosUser.email);
+
+        // Botém o tipo do veículo e o id_veic
+        let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+        let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+
+        $.ajax({
+            method: 'POST',
+            url: `${BASE_URL}/gerar_pix`,
+            headers: {
+                "Authorization": "Bearer " + dadosUser.token
+            },
+            contentType: 'application/json',
+            xhrFields: {
+                responseType: 'blob' // <- diz ao XHR para devolver um Blob
+            },
+            data: JSON.stringify({
+                'tipo_veic': tipo_veic_numerico, 
+                'id_veic': id_veic
+            }),
+            success: function(response) {
+                // Cria a URL utilizando a resposta BLOB obtida da API
+                const url_qrcode = URL.createObjectURL(response);
+
+                // Substitui o background da div img-qrcode colocando a imagem do qr code
+                $('#img-qrcode').css({
+                    'background-image': `url(${url_qrcode})`,
+                    'background-color': "transparent"
+                });
+            }, 
+            error: function (response) {  
+                // Exibe a mensagem de erro
+                alertMessage(response.responseJSON.error, 'error');
+
+                // Recarrega a página 2 seg depois do erro
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            }
+        })
     })
 
     // Abre o modal para financiamento
@@ -1346,6 +1400,7 @@ $(document).ready(function () {
     })
 });
 
+// Função para calcular obter o valor das parcelas da API
 function calcularParcelas() {
     // Botém o tipo do veículo e o id_veic
     let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;

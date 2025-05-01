@@ -908,10 +908,18 @@ main {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 10px;
 
-        & .img-qrcode {
+        & #img-qrcode {
             width: 250px;
-            height: auto;
+            height: 250px;
+            border-radius: 10px;
+            background-color: var(--cor-texto-apagado);
+            transition: 0.2s;
+            animation: piscarCorDeFundo 1.8s infinite ease-in-out;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         & p {
@@ -939,6 +947,18 @@ main {
         &:hover {
             background-color: var(--hover-roxo);
         }
+    }
+}
+
+@keyframes piscarCorDeFundo {
+    0% {
+        background-color: #dbdbdb;
+    }
+    50% {
+        background-color: #c6c5c7;
+    }
+    100% {
+        background-color: #dbdbdb;
     }
 }
 
