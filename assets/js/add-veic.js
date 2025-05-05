@@ -925,7 +925,7 @@ $('#form-add-veic').on('submit', function (e) {
             estado: data.get('estado-moto'),
             cidade: data.get('cidade-moto'),
             alimentacao: data.get('alimentacao-moto'),
-            quilometragem: data.get('quilometragem-moto'),
+            quilometragem: extrairNumeros(data.get('quilometragem-moto')),
             preco_compra: desformatarPreco(preco_compra),
             preco_venda: desformatarPreco(preco_venda)
         }

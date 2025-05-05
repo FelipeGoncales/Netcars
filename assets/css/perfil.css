@@ -1717,7 +1717,7 @@ tbody tr.tipo2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 35px;
 }
 
 .div-ajuda p {
@@ -1730,9 +1730,16 @@ tbody tr.tipo2 {
     font-weight: 400;
 }
 
-.pai-card-ajuda {
+.container-card-ajuda {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+.pai-card-ajuda {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 15px;
 }
