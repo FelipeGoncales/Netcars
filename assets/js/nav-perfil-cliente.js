@@ -123,6 +123,8 @@ $(document).ready(function() {
             fecharBarraLateral();
         }
     })
+
+    // existem duas divs: #semFinanciamento, #financiamento (se houver algum financiamento aparecerá #financiamento caso contrário #semFinanciamento)
     $("#link_financiamento").on("click", function() {
         const elementoClicado = this;
         selecionarA(elementoClicado);

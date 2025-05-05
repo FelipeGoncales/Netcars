@@ -1573,14 +1573,9 @@ tbody tr.tipo2 {
 #boleto,
 #financiamento,
 #ajuda,
-#minha-conta {
+#semFinanciamento{
     display: none;
 }
-
-#semFinanciamento{
-    display: flex;
-}
-
 
 #historico-compras,
 #reservas {
