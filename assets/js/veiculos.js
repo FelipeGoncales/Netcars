@@ -263,10 +263,16 @@ async function buscarVeiculos() {
                 // Cria o span modelo
                 let spanModelo = $(`<span></span>`);
 
-                if (comprimentoNomeVeic >= 18) {
-                    let qntLetrasModelo = 18 - (comprimentoMarca + 1);
+                // Função para formatar o texto e adicionar "..."
+                function limitarQntCaracteres(texto, qntMax) {
+                    return texto.substr(0, qntMax) + '...';
+                }
 
-                    let novoModelo = veiculo.modelo.substr(0, qntLetrasModelo) + '...';
+                // Caso comprimento for maior ou igual a 15 caractéres
+                if (comprimentoNomeVeic >= 15) {
+                    let qntLetrasModelo = 15 - (comprimentoMarca + 1);
+
+                    let novoModelo = limitarQntCaracteres(veiculo.modelo, qntLetrasModelo);
 
                     spanModelo.text(novoModelo);
                 } else {
@@ -275,10 +281,22 @@ async function buscarVeiculos() {
 
                 // Título do veículo
                 const h3Title = $("<h3></h3>")
-                    .append(`${veiculo.marca} `).append(spanModelo) // Inserir nome do carro
+                    .append(`${veiculo.marca} `).append(spanModelo); // Inserir nome do carro
             
                 // Descrição do veículo
-                const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+                let pDesc;
+
+                // Caso exista a versão
+                if (veiculo.versao) { 
+                    let qntCaracteresVersao = veiculo.versao.length;
+    
+                    // Caso a versão tenha mais ou igual a 34 caractéres
+                    if (qntCaracteresVersao >= 34) {
+                        pDesc = $("<p></p>").text(limitarQntCaracteres(veiculo.versao, 34)); // Inserir versão do carro
+                    } else {
+                        pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+                    }
+                }
             
                 // Container das informações adicionais
                 const containerInfoCard = $("<div></div>").addClass("container-info-card");
@@ -291,7 +309,16 @@ async function buscarVeiculos() {
                     
                 // Localização
                 const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
-                const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
+
+                let pLocation;
+
+                if (veiculo.cidade.length >= 17) {
+                    let cidadeFormatada = limitarQntCaracteres(veiculo.cidade, 17);
+
+                    pLocation = $("<p></p>").text(`${cidadeFormatada} (${siglaEstado})`); // Cidade
+                } else {
+                    pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
+                }
 
                 // Monta a div infoCard com ícones e textos
                 containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
@@ -317,7 +344,11 @@ async function buscarVeiculos() {
                     .addClass("ver-detalhes");
             
                 // Adiciona todos os itens na div itens-card
-                divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
+                if (veiculo.versao) {    
+                    divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
+                } else {
+                    divItensCard.append(h3Title, containerInfoCard, h3Price, buttonDetalhes);
+                }
             
                 // Junta a imagem e os itens ao card
                 divCard.append(img, divItensCard);

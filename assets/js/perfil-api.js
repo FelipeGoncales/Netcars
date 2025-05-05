@@ -366,6 +366,13 @@ $("#formEditarUsuario").on("submit", function (e) {
             delete editar.senha_nova;
             delete editar.senha_hash;
 
+            // Deleta o tipo de usuário e o id do objeto
+            delete editar.tipo_usuario;
+            delete editar.id_usuario;
+
+            // Salva os dados do usuário
+            localStorage.setItem('dadosUser', JSON.stringify(editar));
+
             // Limpar os inputs
             $("#input-senha-nova").val('');
             $("#input-senha-atual").val('');
@@ -490,8 +497,6 @@ $('#footer-motos-usadas').click(function () {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })
-
-
 
 const nomeVeic = localStorage.getItem("nome-veic");
 

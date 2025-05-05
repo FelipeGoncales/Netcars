@@ -1458,9 +1458,9 @@ function calcularParcelas() {
                 const $tr = $('<tr>');
 
                 if (index % 2 === 0) {
-                    $tr.addClass('tipo2');
-                } else {
                     $tr.addClass('tipo1');
+                } else {
+                    $tr.addClass('tipo2');
                 }
 
                 // Formata a data
