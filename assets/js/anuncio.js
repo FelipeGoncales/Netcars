@@ -1321,10 +1321,8 @@ $(document).ready(function () {
 
     // Abrir modal de parcelas
     $('#visualizar-parcelas').click(function() {
-        if (!$(this).hasClass('disabled')) {
-            $('#modal-financiamento').css('display', 'none');
-            $('#modal-parcelas').css('display', 'flex');
-        }
+        $('#modal-financiamento').css('display', 'none');
+        $('#modal-parcelas').css('display', 'flex');
     })
 
     // Voltar para financiamento
@@ -1393,10 +1391,62 @@ $(document).ready(function () {
         })
     })
 
+    // Confirmar compra via pix
+    $('#confirmar-compra-pix').click(function() {
+        Swal.fire({
+            title: "Deseja confirmar a compra desse veículo?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0bd979",
+            cancelButtonColor: "#f71445",
+            confirmButtonText: "Confirmar"
+        }).then((result) => {
+            // Botém o tipo do veículo e o id_veic
+            let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+            let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+
+            $.ajax({
+                method: 'POST',
+                url: `${BASE_URL}/compra/a_vista`,
+                data: JSON.stringify({
+                    "tipo_veic": tipo_veic_numerico,
+                    "id_veic": id_veic
+                }),
+                contentType: "application/json",
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                },
+                success: function(response) {
+                    alertMessage(response.success, 'success');
+                },
+                error: function(response) {
+                    alertMessage(response.responseJSON.error, 'error');
+                }
+            })
+        })
+    })
+
+    // Confirmar financiamento
+    $('#confirmar-financiamento').click(function() {
+        Swal.fire({
+            title: "Deseja confirmar o financiamento desse veículo?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0bd979",
+            cancelButtonColor: "#f71445",
+            confirmButtonText: "Confirmar"
+        }).then((result) => {
+            // Lógica para financiar no banco
+        })
+    })
+
     // Abre o modal para financiamento
     $('#btn-financiamento').on('click', function () {
         $('#modal-comprar').css('display', 'none');
         $('#modal-financiamento').css('display', 'flex');
+        
+        // Calcular parcelas
+        calcularParcelas();
     })
 });
 
@@ -1415,11 +1465,9 @@ function calcularParcelas() {
         $('#select-parcelas').prop('disabled', false);
     }
 
-    // Habilita a visualização das parcelas
-    $('#visualizar-parcelas').removeClass('disabled');
-
     // Obtém a entrada e parcelas
     let entrada = desformatarPreco($('#input-entrada').val()).toFixed(2);
+
     let qnt_parcelas = parseInt($('#select-parcelas').val()); 
 
     // Obtém o valor do financiamento e parcelas
@@ -1438,9 +1486,6 @@ function calcularParcelas() {
 
                 // Da append na option e a seleciona
                 $('#select-parcelas').append(option).val(0).prop('disabled', true);
-
-                // Desabilita a visualização de parcelas
-                $('#visualizar-parcelas').addClass('disabled');
 
                 return;
             }
