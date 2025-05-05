@@ -1376,11 +1376,11 @@ table th {
 }
 
 tbody tr.tipo1 {
-    background-color: #ECE1FE;
+    background-color: var(--cor-bg-sec);
 }
 
 tbody tr.tipo2 {
-    background-color: var(--cor-bg-sec);
+    background-color: #ECE1FE;
 }
 
 .edit-icon {
