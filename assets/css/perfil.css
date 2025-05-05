@@ -1122,14 +1122,41 @@ tbody tr.tipo2 {
 #minha-conta {
     display: flex;
 }
+/* Botão de voltar e fechar */
+.btn-fechar-financiamento {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 24px;
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: 0.1s;
 
+    &:hover {
+        color: var(--roxo);
+    }
+}
+
+.voltar-modal-compra{
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 24px;
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: 0.1s;
+
+    &:hover {
+        color: var(--roxo);
+    }
+}
+/* MODAL COMPRAR */
 .modal-comprar {
     display: none;
     background: #ffffff;
     padding: 60px;
     flex-direction: column;
-    gap: 40px;
-    width: 850px;
+    gap: 30px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1146,6 +1173,11 @@ tbody tr.tipo2 {
         color: #333;
         cursor: pointer;
         transition: transform 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: #6C1DE9;
+            transform: scale(1.1);
+        }
     }
 
     .title-forma {
@@ -1158,7 +1190,7 @@ tbody tr.tipo2 {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        gap: 50px;
+        gap: 25px;
     }
 
     .div-fpagamento {
@@ -1166,12 +1198,12 @@ tbody tr.tipo2 {
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        padding: 100px 10px;
+        padding: 80px;
+        width: 300px;
         border-radius: 15px;
         cursor: pointer;
         gap: 10px;
-        width: 50%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease;
 
         &:hover {
@@ -1183,16 +1215,237 @@ tbody tr.tipo2 {
         }
 
         p {
-            font-size: 16px;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
         i {
             color: #6C1DE9;
-            font-size: 100px;
+            font-size: 80px;
         }
     }
 }
+
+/* RESPONSIVO MODAL COMPRAR */
+@media (max-width: 820px) {
+    .modal-comprar {
+        width: 90vw;
+    }
+
+    .div-pagar {
+        flex-direction: column;
+        width: 100%;
+        gap: 30px !important;
+    }
+
+    .div-fpagamento {
+        width: 100% !important;
+        padding: 40px !important;
+    }
+}
+
+/* MODAL FINANCIAMENTO */
+.modal-financiamento {
+    display: none;
+    background: #ffffff;
+    padding: 50px;
+    flex-direction: column;
+    gap: 25px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border-radius: 20px;
+    width: 500px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+
+    .fechar-modal {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 24px;
+        color: #333;
+        cursor: pointer;
+        transition: transform 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: #6C1DE9;
+            transform: scale(1.1);
+        }
+    }
+
+    .title-forma {
+        font-weight: 600;
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    & .div-input-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+
+        & label {
+            text-align: center;
+        }
+
+        & input,
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            border-radius: 10px;
+            border: 1px solid var(--cor-texto-apagado);
+            margin: 0 !important;
+        }
+    }
+
+    & .div-valor-final {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        & .valor-parcela {
+            text-align: center;
+        }
+
+        & .valor-result {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--roxo);
+        }
+    }
+
+    & button {
+        width: 100%;
+        padding: 15px;
+        border-radius: 99px;
+        border: none;
+        background-color: var(--roxo);
+        color: var(--cor-bg-sec);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+
+    & #visualizar-parcelas {
+        color: var(--cor-texto);
+        align-self: center;
+        text-align: center;
+        position: relative;
+        top: -10px;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--roxo);
+            text-decoration: underline;
+        }
+
+        &.disabled {
+            color: var(--cor-texto-apagado);
+            &:hover {
+                cursor: not-allowed;
+                color: var(--cor-texto-apagado);
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+/* MODAL PIX */
+.modal-pix {
+    display: none;
+    background: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    padding: 60px 70px;
+    gap: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+
+    & .title-forma {
+        font-weight: 600;
+        font-size: 1.6em;
+        text-align: center;
+    }
+
+    & .div-qrcode {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        & #img-qrcode {
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
+            background-color: var(--cor-texto-apagado);
+            transition: 0.2s;
+            animation: piscarCorDeFundo 1.8s infinite ease-in-out;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        & p {
+            text-align: center;
+
+            & span {
+                color: var(--roxo);
+                font-weight: 600;
+            }
+        }
+    }
+
+    & button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 15px;
+        border-radius: 99px;
+        border: none;
+        background-color: var(--roxo);
+        color: var(--cor-bg-sec);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+}
+
+@keyframes piscarCorDeFundo {
+    0% {
+        background-color: #dbdbdb;
+    }
+    50% {
+        background-color: #c6c5c7;
+    }
+    100% {
+        background-color: #dbdbdb;
+    }
+}
+
 
 
 
@@ -1316,75 +1569,8 @@ tbody tr.tipo2 {
     border-radius: 10px;
 
 }
-
-.modal-pix {
-    display: none;
-    background: #ffffff;
-    padding: 60px;
-    flex-direction: column;
-    gap: 40px;
-    width: 850px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-
-    .fechar-modal {
-        position: absolute;
-        top: 20px;
-        right: 25px;
-        font-size: 24px;
-        color: #333;
-        cursor: pointer;
-        transition: transform 0.2s ease, color 0.2s ease;
-    }
-
-    .title-forma {
-        font-weight: 600;
-        font-size: 1.6em;
-        text-align: center;
-    }
-
-    .div-pagar {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 50px;
-    }
-
-    .div-fpagamento {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 100px 10px;
-        border-radius: 15px;
-        cursor: pointer;
-        gap: 10px;
-        width: 75%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-
-        .img-qrcode {
-            width: 250px;
-        }
-
-        p {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        i {
-            color: #6C1DE9;
-            font-size: 100px;
-        }
-    }
-}
-
 #parcelas,
+#boleto,
 #financiamento,
 #ajuda {
     display: none;

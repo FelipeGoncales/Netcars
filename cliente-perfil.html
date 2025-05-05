@@ -56,7 +56,6 @@
                 <p>Deletar conta</p>
             </div>
         </div>
-        <div class="overlay-bg" id="overlay-bg"></div>
     </header>
     <main>
         <section class="container" id="conteudo">
@@ -217,12 +216,12 @@
                     <div>
 
                     </div>
-                </div>
+                </div>  
             </div>
 
             <!-- Modal comprar -->
             <div class="modal-comprar" id="modal-comprar">
-                <i class="fa-solid fa-xmark fechar-modal" id="close-modal"></i>
+                <i class="fa-solid fa-xmark btn-fechar-financiamento"></i>
                 <p class="title-forma">Forma de pagamento</p>
                 <div class="div-pagar">
                     <div class="div-fpagamento" id="btn-pix">
@@ -230,7 +229,7 @@
                         <i class="fa-brands fa-pix"></i>
                     </div>
 
-                    <div class="div-fpagamento" id="btn-financiamento">
+                    <div class="div-fpagamento" id="btn-boleto">
                         <p>Boleto</p>
                         <i class="fa-solid fa-file-invoice"></i>
                     </div>
@@ -239,13 +238,14 @@
 
             <!-- Modal pix -->
             <div class="modal-pix" id="modal-pix">
-                <i class="fa-solid fa-xmark fechar-modal"></i>
-                <p class="title-forma">QR CODE</p>
-                <div class="div-pagar">
-                    <div class="div-fpagamento" id="btn-pix">
-                        <img class="img-qrcode" src="assets/img/qrcode.png" alt="">
-                    </div>
+                <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
+                <p class="title-forma">QR Code</p>
+                <div class="div-qrcode">
+                    <!-- Imagem qr code pix -->
+                    <div id="img-qrcode"></div>
+                    <p>Um email com mais informações para a compra do veículo foi enviado para <span id="email-cliente-compra">email@gmail.com</span></p>
                 </div>
+                <button>Confirmar compra</button>
             </div>
 
             <!-- Div de Financiamento -->
@@ -291,6 +291,7 @@
                     </div>
                 </div>
             </div>
+        <div class="overlay-bg" id="overlay-bg"></div>
         </section>
 
         <!-- Div Alert Message -->

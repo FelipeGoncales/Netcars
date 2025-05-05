@@ -81,6 +81,7 @@ $(document).ready(function() {
         $('#historico-compras').css('display', 'none');
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
+        $('#modal-comprar').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -96,6 +97,7 @@ $(document).ready(function() {
         $('#historico-compras').css('display', 'none');
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
+        $('#modal-comprar').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -112,6 +114,7 @@ $(document).ready(function() {
         $('#historico-compras').css('display', 'flex');
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
+        $('#modal-comprar').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -127,6 +130,7 @@ $(document).ready(function() {
         $('#financiamento').css('display', 'flex')
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
+        $('#modal-comprar').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -143,6 +147,7 @@ $(document).ready(function() {
         $('#financiamento').css('display', 'none')
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'flex')
+        $('#modal-comprar').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -166,9 +171,10 @@ $(document).ready(function() {
 
     $("#pagarParcela").on("click", function(){
         $('#modal-comprar').css("display", "flex")
+        $('#overlay-bg').css('display', 'flex');
     })
     $("#close-modal").on("click", function(){
-        $('#modal-comprar').css("display", "none        ")
+        $('#modal-comprar').css("display", "none")
     })
 });
 
@@ -181,6 +187,105 @@ $(document).ready(function() {
         window.location.href = "anuncio-carro.html?id=" + id;
     });
 });
+
+ // Fechar modal ao clicar no X
+ $('.btn-fechar-financiamento').click(function() {
+    // Fechar os modais
+    $('#modal-comprar').css('display', 'none');
+    $('#overlay-bg').css('display', 'none');
+})
+
+$('.voltar-modal-compra').click(function() {
+    // Fechando os modais e abrindo o de compra
+    $('#modal-comprar').css('display', 'flex');
+    $('#modal-pix').css('display', 'none');
+    $('#modal-financiamento').css('display', 'none');
+
+    // Formatando o input de entrada e o select
+    $('#input-entrada').val(formatarValor(0));
+    $('#select-parcelas').val(1);
+    $('#p-valor-total').text('~');
+})
+
+// Abrir modal de parcelas
+$('#visualizar-parcelas').click(function() {
+    if (!$(this).hasClass('disabled')) {
+        $('#modal-financiamento').css('display', 'none');
+        $('#modal-parcelas').css('display', 'flex');
+    }
+})
+
+// Voltar para financiamento
+$('.voltar-modal-financiamento').click(function() {
+    $('#modal-financiamento').css('display', 'flex');
+    $('#modal-parcelas').css('display', 'none');
+})
+
+// Abre o modal de gerar o qr code do pix
+$('#btn-pix').on('click', function () {
+    // Exibe o modal de pix
+    $('#modal-comprar').css('display', 'none');
+    $('#modal-pix').css('display', 'flex');
+
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    // Caso não encontre os dados do usuário
+    if (!dadosUser) {
+        // Limpa o local storage
+        localStorage.clear();
+        // Recarrega a página
+        window.location.reload();
+        return;
+    }
+
+    // Insere o email do cliente
+    $('#email-cliente-compra').text(dadosUser.email);
+
+    // Botém o tipo do veículo e o id_veic
+    let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+    let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+
+    $.ajax({
+        method: 'POST',
+        url: `${BASE_URL}/gerar_pix`,
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        contentType: 'application/json',
+        xhrFields: {
+            responseType: 'blob' // <- diz ao XHR para devolver um Blob
+        },
+        data: JSON.stringify({
+            'tipo_veic': tipo_veic_numerico, 
+            'id_veic': id_veic
+        }),
+        success: function(response) {
+            // Cria a URL utilizando a resposta BLOB obtida da API
+            const url_qrcode = URL.createObjectURL(response);
+
+            // Substitui o background da div img-qrcode colocando a imagem do qr code
+            $('#img-qrcode').css({
+                'background-image': `url(${url_qrcode})`,
+                'background-color': "transparent"
+            });
+        }, 
+        error: function (response) {  
+            // Exibe a mensagem de erro
+            alertMessage(response.responseJSON.error, 'error');
+
+            // Recarrega a página 2 seg depois do erro
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    })
+})
+
+// Abre o modal para financiamento
+$('#btn-financiamento').on('click', function () {
+    $('#modal-comprar').css('display', 'none');
+    $('#modal-financiamento').css('display', 'flex');
+})
 
 // Fechar barra lateral
 function fecharBarraLateral() {
