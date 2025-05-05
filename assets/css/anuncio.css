@@ -1110,11 +1110,15 @@ main {
         }
 
         & input {
-            border: 3px solid #EDECF2;
+            border: 1px solid var(--cor-texto-apagado);
             padding: 10px 15px;
             border-radius: 10px;
             font-size: 0.9rem;
             width: 100%;
+            &:focus {
+                border: 1px solid var(--hover-roxo);
+                outline: none;
+            }
         }
     }
 

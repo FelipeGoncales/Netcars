@@ -48,6 +48,7 @@
                 <a href="veiculos.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar Anúncio</a>
                 <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
                 <a id="link_editUser"><i class="fa-solid fa-user-pen"></i>Editar usuários</a>
+                <a id="link_servicos"><i class="fa-solid fa-wrench"></i>Servicos</a>
                 <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
                 <a id="link_relatorios"><i class="fas fa-file-alt"></i>Relatórios</a>
                 <div class="submenu-relatorios" style="display: none;">
@@ -437,7 +438,47 @@
                     </a>
                 </div>
             </div>
-
+            <!-- Div serviços -->
+            <div id="servicos" style="display: none;">
+                <div class="modal-header">
+                    <p id="titleManutencao">Serviços</p>
+                </div>
+                
+                <div class="div-info">
+                    <input type="hidden" id="input-id-manutencao">
+            
+                    <div class="div-input-obs">
+                        <label for="input-obs">Descrição</label>
+                        <input class="input" name="input-obs" id="input-obs" type="text" placeholder="Nome do serviço" required />
+                    </div>
+                    <div class="div-input-valor">
+                        <label for="input-valor">Valor</label>
+                        <input class="input" name="input-valor" id="input-valor" type="text" placeholder="R$999,99" required />
+                    </div>
+                </div>
+                
+                <div class="div-buttons">
+                    <button class="button-add" id="add-servico">Adicionar serviço</button>
+                </div>
+            
+                <div class="table-container">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th class="icon-col"><i class="fa-solid fa-screwdriver-wrench"></i></th>
+                                <th>Serviço</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-servicos"></tbody>
+                    </table>
+                </div>
+                
+                <!-- Indicador de carregamento -->
+                <div class="bg-carregamento-servicos" style="display: none;">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
 
             <!-- Div de Reservas -->
             <div id="reservas">
@@ -529,6 +570,25 @@
             <button type="submit">Adicionar</button>
         </form>
 
+        <!-- Modal editar serviço -->
+        <form id="formEditarServico">
+            <i class="fa-solid fa-arrow-left" id="fecharModalEditarServico"></i>
+            <p class="p-title">Editar serviço</p>
+            <!-- Div descrição serviço -->
+            <input type="hidden" name="id-editar-servico" id="id-editar-servico">
+            <div class="div-input">
+                <label for="descricao-editar-servico">Descrição</label>
+                <input name="descricao-editar-servico" id="descricao-editar-servico" type="text"></p>
+            </div>
+            <!-- Div valor serviço -->
+            <div class="div-input">
+                <label for="valor-editar-servico">Valor</label>
+                <input name="valor-editar-servico" id="valor-editar-servico" type="text" value="R$ 0,00" />
+            </div>
+            <button type="submit">Salvar alterações</button>
+            <button type="button" id="excluir-servico">Inativar</button>
+        </form>
+        <div id="overlay-bg"></div>
         <!-- Form Div Cadastrar User -->
         <form class="container-login" id="formCadastroUsuario">
             <i class="fa-solid fa-xmark" id="close-modal-cad-user"></i>
