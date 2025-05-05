@@ -348,45 +348,47 @@ formatarPreco('#input-preco-venda');
 async function alterarBotao() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
 
+    // Caso exista dadosUser
     if (dadosUser) {
         await obterTipoUser();
 
         if (tipoUser === 2 || tipoUser === 1) {
+            // Função para mudar o botão para do adm
             $('#div-button-vendedor').css('display', 'flex');
             $('#div-button-cliente').css('display', 'none');
+            $('#div-button-vendido-cliente').css('display', 'none');
+            $('#div-button-vendido-adm').css('display', 'none');
             $('#div-button-cancelar-reserva').css('display', 'none');
 
-            // Função para mudar a frase que aparece caso seja cliente ou usuário
+            // Função para mudar a mensagem para o adm
             $('#mensagem-user').css('display', 'none');
             $('#mensagem-adm').css('display', 'flex');
+            $('#mensagem-vendido-cliente').css('display', 'none');
+            $('#mensagem-vendido-adm').css('display', 'none');
             $('#mensagem-reserva').css('display', 'none');
 
             $('#div-icons-actions').css('display', 'flex');
-        } else {
-            $('#div-button-vendedor').css('display', 'none');
-            $('#div-button-cliente').css('display', 'flex');
-            $('#div-button-cancelar-reserva').css('display', 'none');
-
-            // Função para mudar a frase que aparece caso seja cliente ou usuário
-            $('#mensagem-user').css('display', 'flex');
-            $('#mensagem-adm').css('display', 'none');
-            $('#mensagem-reserva').css('display', 'none');
-
-            $('#div-icons-actions').css('display', 'none');
+            
+            // Retorna
+            return;
         }
-
-    } else {
-        $('#div-button-vendedor').css('display', 'none');
-        $('#div-button-cliente').css('display', 'flex');
-        $('#div-button-cancelar-reserva').css('display', 'none');
-
-        // Função para mudar a frase que aparece caso seja cliente ou usuário
-        $('#mensagem-user').css('display', 'flex');
-        $('#mensagem-adm').css('display', 'none');
-        $('#mensagem-reserva').css('display', 'none');
-
-        $('#div-icons-actions').css('display', 'none');
     }
+
+    // Função para mudar o botão para cancelar reserva
+    $('#div-button-vendedor').css('display', 'none');
+    $('#div-button-cliente').css('display', 'flex');
+    $('#div-button-vendido-cliente').css('display', 'none');
+    $('#div-button-vendido-adm').css('display', 'none');
+    $('#div-button-cancelar-reserva').css('display', 'none');
+
+    // Função para mudar a frase que aparece caso seja o cliente que reservou
+    $('#mensagem-user').css('display', 'flex');
+    $('#mensagem-adm').css('display', 'none');
+    $('#mensagem-vendido-cliente').css('display', 'none');
+    $('#mensagem-vendido-adm').css('display', 'none');
+    $('#mensagem-reserva').css('display', 'none');
+
+    $('#div-icons-actions').css('display', 'none');
 }
 
 // Função para carregar os estados do IBGE
@@ -1417,7 +1419,11 @@ $(document).ready(function () {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                 },
                 success: function(response) {
-                    alertMessage(response.success, 'success');
+                    // Define uma mensagme para ser exibida na página de perfil
+                    localStorage.setItem("msgReserva", response.success);
+                    // Redireciona para a página de perfil
+                    window.location.href = "cliente-perfil.html";
+                    return;
                 },
                 error: function(response) {
                     alertMessage(response.responseJSON.error, 'error');
@@ -1436,7 +1442,40 @@ $(document).ready(function () {
             cancelButtonColor: "#f71445",
             confirmButtonText: "Confirmar"
         }).then((result) => {
-            // Lógica para financiar no banco
+             // Botém o tipo do veículo e o id_veic
+             let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+             let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+             let entrada = parseFloat(desformatarPreco($('#input-entrada').val()).toFixed(2));
+             let qnt_parcelas = extrairNumeros($('#select-parcelas').val());
+
+             let envia = {
+                "id_veiculo": parseInt(id_veic),
+                "tipo_veiculo": parseInt(tipo_veic_numerico),
+                "entrada": entrada,
+                "qnt_parcelas": parseInt(qnt_parcelas)
+            }
+
+            console.log(envia)
+ 
+             $.ajax({
+                 method: 'POST',
+                 url: `${BASE_URL}/financiamento`,
+                 data: JSON.stringify(envia),
+                 contentType: "application/json",
+                 headers: {
+                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                 },
+                 success: function (response) {
+                     // Define uma mensagme para ser exibida na página de perfil
+                     localStorage.setItem("msgReserva", response.success);
+                     // Redireciona para a página de perfil
+                     window.location.href = "cliente-perfil.html";
+                     return;
+                 },
+                 error: function (response) {
+                     alertMessage(response.responseJSON.error, 'error');
+                 }
+             })
         })
     })
 

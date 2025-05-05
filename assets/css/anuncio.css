@@ -339,6 +339,10 @@ main {
             color: var(--roxo);
             background-color: var(--cor-bg);
         }
+
+        &.ver-detalhes {
+            width: 100%;
+        }
     }
 
     & .comprar-btn {

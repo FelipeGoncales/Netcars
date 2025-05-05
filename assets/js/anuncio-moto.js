@@ -310,17 +310,51 @@ $(document).ready(async function () {
                     // Função para mudar o botão para cancelar reserva
                     $('#div-button-vendedor').css('display', 'none');
                     $('#div-button-cliente').css('display', 'none');
+                    $('#div-button-vendido-cliente').css('display', 'none');
+                    $('#div-button-vendido-adm').css('display', 'none');
                     $('#div-button-cancelar-reserva').css('display', 'flex');
     
                     // Função para mudar a frase que aparece caso seja o cliente que reservou
                     $('#mensagem-user').css('display', 'none');
                     $('#mensagem-adm').css('display', 'none');
+                    $('#mensagem-vendido-cliente').css('display', 'none');
+                    $('#mensagem-vendido-adm').css('display', 'none');
                     $('#mensagem-reserva').css('display', 'flex');
-    
+
+                    $('.overlay-img-carrossel').css('display', 'none');
+                } else if (response.vendido == true) {
+                    $('#div-button-vendedor').css('display', 'none');
+                    $('#div-button-cliente').css('display', 'none');
+                    $('#div-button-cancelar-reserva').css('display', 'none');
+                    
+                    $('#mensagem-user').css('display', 'none');
+                    $('#mensagem-adm').css('display', 'none');
+                    $('#mensagem-reserva').css('display', 'none');
+
+                    if (tipoUser === 1 || tipoUser === 2) {
+                        $('#div-button-vendido').css('display', 'flex');
+                        
+                        $('#mensagem-vendido-cliente').css('display', 'none');
+                        $('#mensagem-vendido-adm').css('display', 'flex');
+
+                        $('#ver-detalhes').text('Ver detalhes da venda');
+                    } else {
+                        $('#div-button-vendido').css('display', 'flex');
+                        
+                        $('#mensagem-vendido-cliente').css('display', 'flex');
+                        $('#mensagem-vendido-adm').css('display', 'none');
+
+                        $('#ver-detalhes').text('Ver detalhes da compra');
+                    }
+
+                    $('#ver-detalhes').click(function() {
+                        window.location.href = "cliente-perfil.html";
+                    })
+
                     $('.overlay-img-carrossel').css('display', 'none');
                 } else {
                     // Lógica para alterar os botões
-                    alterarBotao();
+                    await alterarBotao();
                 }
             } finally {
                 $('#bg-carregamento').css('display', 'none');

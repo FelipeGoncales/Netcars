@@ -1780,56 +1780,56 @@ tbody tr.tipo2 {
 
 /* Card Padrão */
 
-#div-reservas {
+#div-reservas, #div-historico-compras {
     min-height: 475px;
     display: flex;
     width: fit-content;
     gap: 20px;
     align-items: flex-start;
     justify-content: flex-start;
+}
 
-    & .div-pai {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
+.div-pai {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    align-self: center;
+    justify-self: center;
+
+    & .icon {
+        color: var(--cor-texto-apagado);
+        font-size: 6rem;
+    }
+
+    & .nada-encontrado {
+        color: var(--cor-texto-apagado);
+        font-size: 1.1rem;
+    }
+
+    & .buscar-btn {
         display: flex;
+        gap: 10px;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
-        gap: 20px;
-        align-self: center;
-        justify-self: center;
+        background-color: var(--roxo);
+        color: var(--cor-bg-sec);
+        font-weight: 600;
+        border-radius: 500px;
+        font-size: 0.9rem;
+        padding: 10px 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
 
-        & .icon {
-            color: var(--cor-texto-apagado);
-            font-size: 6rem;
-        }
-
-        & .nada-encontrado {
-            color: var(--cor-texto-apagado);
-            font-size: 1.1rem;
-        }
-
-        & .buscar-btn {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--roxo);
-            color: var(--cor-bg-sec);
-            font-weight: 600;
-            border-radius: 500px;
-            font-size: 0.9rem;
-            padding: 10px 30px;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-
-            &:hover {
-                background-color: var(--hover-roxo);
-            }
+        &:hover {
+            background-color: var(--hover-roxo);
         }
     }
 }

@@ -82,7 +82,6 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
-        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -99,7 +98,6 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
-        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -117,14 +115,12 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
-        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
         }
     })
 
-    // existem duas divs: #semFinanciamento, #financiamento (se houver algum financiamento aparecerá #financiamento caso contrário #semFinanciamento)
     $("#link_financiamento").on("click", function() {
         const elementoClicado = this;
         selecionarA(elementoClicado);
@@ -132,11 +128,10 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#historico-compras').css('display', 'none');
-        $('#financiamento').css('display', 'none')
+        $('#financiamento').css('display', 'flex')
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
-        $('#semFinanciamento').css('display', 'flex')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -154,7 +149,6 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'flex')
         $('#modal-comprar').css('display', 'none')
-        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -183,16 +177,6 @@ $(document).ready(function() {
     $("#close-modal").on("click", function(){
         $('#modal-comprar').css("display", "none")
     })
-});
-
-$(document).ready(function() {
-    $("#link_parcelas3").on("click", function() {
-        // Defina o ID que você deseja passar para a URL
-        var id = 46; // Aqui você pode definir dinamicamente, se necessário.
-
-        // Redireciona para a página com o ID como parâmetro na URL
-        window.location.href = "anuncio-carro.html?id=" + id;
-    });
 });
 
  // Fechar modal ao clicar no X
@@ -436,9 +420,9 @@ function buscarReservas() {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
         success: async function (response) {
-            listaVeicCarro = response.carros;
+            let listaVeicCarro = response.carros;
 
-            listaVeicMotos = response.motos;
+            let listaVeicMotos = response.motos;
         
             const $divReservas = $('#div-reservas');
 
@@ -452,6 +436,9 @@ function buscarReservas() {
                 $divReservas.append(divPai);
                 return;
             }
+
+            // Adiciona o título da seção
+            $('#reservas').prepend($('<h3></h3>').text('Reservas'));
 
             if (listaVeicCarro.length) {
                 await gerarCard(listaVeicCarro, $divReservas, "carro");
@@ -467,6 +454,149 @@ function buscarReservas() {
     })
 }
 
+// Buscar reservas
+function buscarFinanciamento() {
+    $.ajax({
+        url: `${BASE_URL}/buscar_financiamento`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: async function (response) {
+            console.log(response)
+
+            let listaVeicCarro = response.carros;
+
+            let listaVeicMotos = response.motos;
+        
+            const $divFinanciamentos = $('#div-financiamento');
+
+            if (!listaVeicCarro.length && !listaVeicMotos.length) {
+                const divPai = $('<div></div>').addClass('div-pai');
+                const icon = $('<i></i>').addClass('fa-solid fa-thumbs-down icon');
+                const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Buscar veículos <i class="fa-solid fa-magnifying-glass"></i>`)
+                const msg = ($('<p></p>').addClass('nada-encontrado').text('Você não possui nenhum veículo parcelado.'));
+
+                divPai.append(icon, msg, btnBuscar);
+                $divFinanciamentos.empty().append(divPai);
+                return;
+            }
+
+            if (listaVeicCarro.length) {
+                // Obtém o veículo
+                const veiculo = listaVeicCarro[0];                
+
+                inserirInformacoes(veiculo);
+                return;
+            }
+
+            if (listaVeicMotos.length) {
+                // Obtém o veículo
+                const veiculo = listaVeicCarro[0];                
+
+                inserirInformacoes(veiculo);
+                return;
+            }
+        },
+        error: function (response) {
+            alert(response.responseJSON.error);
+        }
+    })
+}
+
+// Função para formatar o texto e adicionar "..."
+function limitarQntCaracteres(texto, qntMax) {
+    return texto.substr(0, qntMax) + '...';
+}
+
+// Função para inserir as informações
+function inserirInformacoes(veiculo) {
+    let comprimentoMarca = veiculo.marca.length;
+    let comprimentoModelo = veiculo.modelo.length;
+    let comprimentoNomeVeic = comprimentoMarca + 1 + comprimentoModelo;
+    
+    // Cria o span modelo
+    let spanModelo = $(`<span></span>`);
+
+    // Caso comprimento for maior ou igual a 15 caractéres
+    if (comprimentoNomeVeic >= 15) {
+        let qntLetrasModelo = 15 - (comprimentoMarca + 1);
+
+        let novoModelo = limitarQntCaracteres(veiculo.modelo, qntLetrasModelo);
+
+        spanModelo.text(novoModelo);
+    } else {
+        spanModelo.text(veiculo.modelo);
+    }
+
+    // Título do veículo
+    $("#marca-financ").append(`${veiculo.marca} `).append(spanModelo).css('text-transform', 'uppercase'); // Inserir nome do veículo
+
+    // Caso exista a versão
+    if (veiculo.versao) { 
+        let qntCaracteresVersao = veiculo.versao.length;
+
+        // Caso a versão tenha mais ou igual a 34 caractéres
+        if (qntCaracteresVersao >= 34) {
+            $("#versao-financ").text(limitarQntCaracteres(veiculo.versao, 34)); // Inserir versão do veículo
+        } else {
+            $("#versao-financ").text(veiculo.versao); // Inserir versão do veículo
+        }
+    }
+
+    // Inserir ano modelo e de fabricação no input
+    $('#ano-financ').text(`${veiculo.ano_modelo}/${veiculo.ano_fabricacao}`);
+
+    // Redireciona para a página com o ID como parâmetro na URL
+    $("#link_parcelas3").on("click", function() {
+        window.location.href = "anuncio-carro.html?id=" + veiculo.id;
+    });
+}
+
+function buscarVenda() {
+    $.ajax({
+        url: `${BASE_URL}/buscar_venda`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: async function (response) {
+            let listaVeicCarro = response.carros;
+
+            let listaVeicMotos = response.motos;
+        
+            const $divHistoricoCompras = $('#div-historico-compras');
+
+            if (!listaVeicCarro.length && !listaVeicMotos.length) {
+                console.log('o krai')
+                const divPai = $('<div></div>').addClass('div-pai');
+                const icon = $('<i></i>').addClass('fa-solid fa-thumbs-down icon');
+                const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Buscar veículos <i class="fa-solid fa-magnifying-glass"></i>`)
+                const msg = ($('<p></p>').addClass('nada-encontrado').text('Você ainda não possui nenhuma compra concluída.'));
+
+                divPai.append(icon, msg, btnBuscar);
+                $divHistoricoCompras.append(divPai);
+                return;
+            }
+
+            // Adiciona o título da seção
+            $('#historico-compras').prepend($('<h3></h3>').text('Histórico de compras'));
+
+            if (listaVeicCarro.length) {
+                await gerarCard(listaVeicCarro, $divHistoricoCompras, "carro");
+            }
+
+            if (listaVeicMotos.length) {
+                await gerarCard(listaVeicMotos, $divHistoricoCompras, "moto");
+            }
+        },
+        error: function (response) {
+            alert(response.responseJSON.error);
+        }
+    })
+}
+
+// Busca reservas e financiamentos
 $(document).ready(() =>{
-    buscarReservas()
+    buscarReservas();
+    buscarFinanciamento();
+    buscarVenda();
 });
