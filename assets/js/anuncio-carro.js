@@ -335,6 +335,10 @@ $(document).ready(async function () {
                     $('#mensagem-vendido-adm').css('display', 'none');
                     $('#mensagem-reserva').css('display', 'flex');
 
+                    // Deixa invisível a div dos botões de editar e abrir manutenções
+                    $('#div-icons-actions').css('display', 'none');
+
+                    // Retira a possibilidade de editar as imagens do veículo
                     $('.overlay-img-carrossel').css('display', 'none');
                 } else if (response.vendido == true) {
                     $('#div-button-vendedor').css('display', 'none');
@@ -362,9 +366,14 @@ $(document).ready(async function () {
                     }
 
                     $('#ver-detalhes').click(function() {
+                        // Redireciona para a página de perfil
                         window.location.href = "cliente-perfil.html";
                     })
 
+                    // Deixa invisível a div dos botões de editar e abrir manutenções
+                    $('#div-icons-actions').css('display', 'none');
+
+                    // Retira a possibilidade de editar as imagens do veículo
                     $('.overlay-img-carrossel').css('display', 'none');
                 } else {
                     // Lógica para alterar os botões
