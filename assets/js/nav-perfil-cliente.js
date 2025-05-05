@@ -82,6 +82,7 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
+        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -98,6 +99,7 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
+        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -115,6 +117,7 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
+        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -127,10 +130,11 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#historico-compras').css('display', 'none');
-        $('#financiamento').css('display', 'flex')
+        $('#financiamento').css('display', 'none')
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'none')
         $('#modal-comprar').css('display', 'none')
+        $('#semFinanciamento').css('display', 'flex')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();
@@ -148,6 +152,7 @@ $(document).ready(function() {
         $('#parcelas').css('display' , 'none')
         $('#ajuda').css('display' , 'flex')
         $('#modal-comprar').css('display', 'none')
+        $('#semFinanciamento').css('display', 'none')
 
         if ($(window).width() <= 660) {
             fecharBarraLateral();

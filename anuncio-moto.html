@@ -470,8 +470,8 @@
         </div>
     </div>
 
-    <!-- Modal comprar -->
-    <div class="modal-comprar" id="modal-comprar">
+     <!-- Modal comprar -->
+     <div class="modal-comprar" id="modal-comprar">
         <i class="fa-solid fa-xmark btn-fechar-financiamento"></i>
         <p class="title-forma">Forma de pagamento</p>
         <div class="div-pagar">
@@ -492,14 +492,15 @@
         <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
         <p class="title-forma">QR Code</p>
         <div class="div-qrcode">
-            <img class="img-qrcode" src="assets/img/qrcode.png" alt="">
+            <!-- Imagem qr code pix -->
+            <div id="img-qrcode"></div>
             <p>Um email com mais informações para a compra do veículo foi enviado para <span id="email-cliente-compra">email@gmail.com</span></p>
         </div>
         <button>Confirmar compra</button>
     </div>
 
     <!-- Modal finaciamento -->
-    <div class="modal-finaciamento" id="modal-financiamento">
+    <div class="modal-financiamento" id="modal-financiamento">
         <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
         <p class="title-forma">Financiamento</p>
         
@@ -519,26 +520,29 @@
         </div>
 
         <button id="pay-parcelas">Gerar parcelas</button>
-        <p id="visualizar-parcelas">Visualizar parcelas</p>
+        <p id="visualizar-parcelas" class="disabled">Visualizar parcelas</p>
     </div>
 
     <!-- Modal visualizar parcelas -->
     <div class="modal-parcelas" id="modal-parcelas">
         <i class="fa-solid fa-arrow-left voltar-modal-financiamento"></i>
         
-        <div class="table-container">
+        <p class="title-forma">Parcelas</p>
+
+        <div class="table-container parcelas">
             <table class="parcela-table">
                 <thead>
                     <tr>
                         <th>N°</th>
-                        <th>Valor</th>
-                        <th>Fatura</th>
+                        <th>Valor da parcela</th>
+                        <th>Vencimento</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-parcelas"></tbody>
             </table>
         </div>
     </div>
+    
 
     <!-- Modal manutenção -->
     <div class="modal-manu">

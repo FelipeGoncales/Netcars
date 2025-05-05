@@ -1572,8 +1572,13 @@ tbody tr.tipo2 {
 #parcelas,
 #boleto,
 #financiamento,
-#ajuda {
+#ajuda,
+#minha-conta {
     display: none;
+}
+
+#semFinanciamento{
+    display: flex;
 }
 
 
