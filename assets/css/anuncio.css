@@ -870,15 +870,6 @@ main {
             color: var(--roxo);
             text-decoration: underline;
         }
-
-        &.disabled {
-            color: var(--cor-texto-apagado);
-            &:hover {
-                cursor: not-allowed;
-                color: var(--cor-texto-apagado);
-                text-decoration: none;
-            }
-        }
     }
 }
 
