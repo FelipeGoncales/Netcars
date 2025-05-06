@@ -451,34 +451,45 @@ function inserirServicosTabela() {
         $('#tbody-servicos').append($tr);
     }
 }
-
-// Função para adicionar serviço
 function adicionarServico() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+    console.log("Dados do usuário:", dadosUser);
 
-    if (!dadosUser) {
-        window.location.href = 'login.html';
+    if (!dadosUser || !dadosUser.token) {
+        alertMessage('Usuário não autenticado ou sessão expirada', 'error');
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 2000);
         return;
     }
 
-    const descricao = $('#input-obs').val();
-    const valor = desformatarPreco($('#input-valor').val());
-    const idManutencao = $('#input-id-manutencao').val() || ID_MANUTENCAO_ATUAL;
+    const descricao = $('#input-obs').val().trim();
+    const valorFormatado = $('#input-valor').val();
+    const valor = desformatarPreco(valorFormatado);
+    
+    console.log("Descrição:", descricao);
+    console.log("Valor formatado:", valorFormatado);
+    console.log("Valor após desformatar:", valor);
 
-    if (!descricao || !valor) {
-        alertMessage('Preencha todos os campos', 'error');
+    if (!descricao) {
+        alertMessage('Preencha a descrição do serviço', 'error');
         return;
     }
 
+    if (!valorFormatado || valor <= 0) {
+        alertMessage('Informe um valor válido maior que zero', 'error');
+        return;
+    }
+
+    // Objeto com apenas os dados necessários para a API
     let envia = {
         "descricao": descricao,
         "valor": valor
     };
 
-    // Se houver ID de manutenção, adiciona ao objeto
-    if (idManutencao) {
-        envia.id_manutencao = idManutencao;
-    }
+    console.log("URL completa:", `${BASE_URL}/servicos`);
+    console.log("Enviando requisição com token:", dadosUser.token);
+    console.log("Dados enviados:", JSON.stringify(envia));
 
     $.ajax({
         method: "POST",
@@ -489,22 +500,24 @@ function adicionarServico() {
             "Authorization": "Bearer " + dadosUser.token
         },
         success: function(response) {
+            console.log("Resposta de sucesso:", response);
             // Limpa os inputs
             $('#input-obs').val('');
             $('#input-valor').val('');
 
-            // Verifica se estamos em contexto de manutenção específica
-            if (idManutencao) {
-                carregarServicosManutencao(idManutencao);
-            } else {
-                carregarServicos(); // Recarrega todos os serviços
-            }
+            // Recarrega a lista de serviços
+            carregarServicos();
             
             // Exibe mensagem de sucesso
             alertMessage(response.success, 'success');
         },
-        error: function(response) {
-            alertMessage(response.responseJSON.error, 'error');
+        error: function(response, status, error) {
+            console.error("Erro na requisição:", response);
+            console.error("Status:", status);
+            console.error("Erro:", error);
+            console.error("Resposta completa:", response.responseText);
+            const errorMsg = response.responseJSON ? response.responseJSON.error : "Erro ao processar requisição";
+            alertMessage(errorMsg, 'error');
         }
     });
 }
@@ -732,10 +745,13 @@ function executarExclusao(idServico, token) {
 
 // Função para desformatar preço de R$ para número decimal
 function desformatarPreco(preco) {
-    if (!preco) return 0;
+    if (!preco || preco.trim() === '') return 0;
     
-    // Remove o símbolo R$, pontos e substitui vírgula por ponto
-    return parseFloat(preco.replace('R$', '').replace(/\./g, '').replace(',', '.'));
+    // Remove o símbolo R$, espaços, pontos e substitui vírgula por ponto
+    const valor = parseFloat(preco.replace(/[^\d,.-]/g, '').replace(',', '.'));
+    
+    // Verifica se é um número válido
+    return isNaN(valor) ? 0 : valor;
 }
 
 // Função de alerta para mensagens

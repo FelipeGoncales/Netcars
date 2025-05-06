@@ -170,6 +170,9 @@ $(document).ready(function () {
             }
         });
 
+        // Altera a ordem da alternância de cores das tr
+        alterarCoresTr();
+
         // Exibir a tabela de parcelas
         $('#financiamento').css('display', 'none')
         $('#parcelas').css('display', 'flex')
@@ -190,6 +193,9 @@ $(document).ready(function () {
             }
         });
 
+        // Altera a ordem da alternância de cores das tr
+        alterarCoresTr();
+
         // Exibir a tabela de parcelas
         $('#financiamento').css('display', 'none')
         $('#parcelas').css('display', 'flex')
@@ -201,104 +207,33 @@ $(document).ready(function () {
     })
 
     $("#pagarParcela").on("click", function () {
-        $('#modal-comprar').css("display", "flex")
+        $('#modal-pagar-parcela').css("display", "flex")
         $('#overlay-bg').css('display', 'flex');
     })
+
     $("#close-modal").on("click", function () {
-        $('#modal-comprar').css("display", "none")
+        $('#modal-pagar-parcela').css("display", "none")
     })
 });
 
 // Fechar modal ao clicar no X
-$('.btn-fechar-financiamento').click(function () {
+$('.btn-fechar-pagar-parcela').click(function () {
     // Fechar os modais
-    $('#modal-comprar').css('display', 'none');
-    $('#overlay-bg').css('display', 'none');
+    $('#modal-pagar-parcela').hide();
+    $('#overlay-bg').hide();
+    $('#parcelas').css('display', 'flex');
 })
 
-$('.voltar-modal-compra').click(function () {
+$('.voltar-modal-pagar-parcela').click(function () {
     // Fechando os modais e abrindo o de compra
-    $('#modal-comprar').css('display', 'flex');
-    $('#modal-pix').css('display', 'none');
-    $('#modal-financiamento').css('display', 'none');
+    $('#modal-pagar-parcela').css('display', 'flex');
+    $('#modal-pix').hide();
 
-    // Formatando o input de entrada e o select
-    $('#input-entrada').val(formatarValor(0));
-    $('#p-valor-total').text('~');
-})
-
-// Abrir modal de parcelas
-$('#visualizar-parcelas').click(function () {
-    if (!$(this).hasClass('disabled')) {
-        $('#modal-financiamento').css('display', 'none');
-        $('#modal-parcelas').css('display', 'flex');
-    }
-})
-
-// Voltar para financiamento
-$('.voltar-modal-financiamento').click(function () {
-    $('#modal-financiamento').css('display', 'flex');
-    $('#modal-parcelas').css('display', 'none');
-})
-
-// Abre o modal de gerar o qr code do pix
-$('#btn-pix').on('click', function () {
-    // Exibe o modal de pix
-    $('#modal-comprar').css('display', 'none');
-    $('#modal-pix').css('display', 'flex');
-
-    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-
-    // Caso não encontre os dados do usuário
-    if (!dadosUser) {
-        // Limpa o local storage
-        localStorage.clear();
-        // Recarrega a página
-        window.location.reload();
-        return;
-    }
-
-    // Insere o email do cliente
-    $('#email-cliente-compra').text(dadosUser.email);
-
-    // Botém o tipo do veículo e o id_veic
-    let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
-    let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
-
-    $.ajax({
-        method: 'POST',
-        url: `${BASE_URL}/gerar_pix`,
-        headers: {
-            "Authorization": "Bearer " + dadosUser.token
-        },
-        contentType: 'application/json',
-        xhrFields: {
-            responseType: 'blob' // <- diz ao XHR para devolver um Blob
-        },
-        data: JSON.stringify({
-            'tipo_veic': tipo_veic_numerico,
-            'id_veic': id_veic
-        }),
-        success: function (response) {
-            // Cria a URL utilizando a resposta BLOB obtida da API
-            const url_qrcode = URL.createObjectURL(response);
-
-            // Substitui o background da div img-qrcode colocando a imagem do qr code
-            $('#img-qrcode').css({
-                'background-image': `url(${url_qrcode})`,
-                'background-color': "transparent"
-            });
-        },
-        error: function (response) {
-            // Exibe a mensagem de erro
-            alertMessage(response.responseJSON.error, 'error');
-
-            // Recarrega a página 2 seg depois do erro
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
-        }
-    })
+    // Exibe a imagem do qrcode
+    $('#img-qrcode').hide();
+    $('#loading-img-qrcode').show();
+    // Desabilita o botão de confirmar pagamento
+    $('#confirmar-pagamento-parcela').prop('disabled', true);
 })
 
 // Abre o modal para financiamento
@@ -317,7 +252,6 @@ function fecharBarraLateral() {
         overlayBg.css('display', 'none');
     }, 699);
 }
-
 
 // Função para obter sigla dos estados
 function obterSiglaEstado(estadoVeiculo) {
@@ -478,7 +412,15 @@ function buscarReservas() {
             }
         },
         error: function (response) {
-            alert(response.responseJSON.error);
+            const $divReservas = $('#div-reservas');
+
+            const divPai = $('<div></div>').addClass('div-pai');
+            const icon = $('<i></i>').addClass('fa-solid fa-thumbs-down icon');
+            const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Buscar veículos <i class="fa-solid fa-magnifying-glass"></i>`)
+            const msg = ($('<p></p>').addClass('nada-encontrado').text('Você ainda não possui nenhuma reserva.'));
+
+            divPai.append(icon, msg, btnBuscar);
+            $divReservas.append(divPai);
         }
     })
 }
@@ -534,9 +476,6 @@ function buscarFinanciamento() {
             // Insere o ano do modelo e ano de fabricação
             $('#ano-financ').text(`${veiculo.ano_modelo}/${veiculo.ano_fabricacao}`);
 
-            // Insere a quantidade de parcelas
-            $('.qnt-parcelas-financ').text(`${response.qnt_parcelas} parcelas`);
-
             // Insere o valor total do parcelamento
             $('.valor-total-financ').text(formatarValor(response.valor_total));
 
@@ -556,6 +495,7 @@ function buscarFinanciamento() {
             // Limpa a tabela
             $("#tbody-parcelas").empty();
 
+            let parcelasPagas = 0;
             // Inserir parcelas na tabela
             for (let index = 0; index < lista_parcelas.length; index++) {
                 const parcela = lista_parcelas[index];
@@ -591,7 +531,12 @@ function buscarFinanciamento() {
 
                 const $tdDataPagamento = $('<td>').text(parcela.data_pagamento ? formatarData(parcela.data_pagamento) : '~');
 
-                const $tdStatus = $('<td>').text(parcela.status == 1 ? "Pendente" : parcela.status == 2 ? "Vencida" : "Paga").addClass('status-text');
+                const $tdStatus = $('<td>').text(parcela.status == 1 ? "Pendente" : parcela.status == 2 ? "Vencida" : parcela.status == 3 ? "Paga" : "Amortizada").addClass('status-text');
+
+                // Adiciona um a contagem de parcelas pagas
+                if ($tdStatus.text() === 'Paga' || $tdStatus.text() === 'Amortizada') {
+                    parcelasPagas++;
+                }
 
                 $tr.append($tdNumParcela)
                     .append($tdValor)
@@ -602,6 +547,9 @@ function buscarFinanciamento() {
 
                 $('#tbody-parcelas').append($tr);
             }
+
+            // Insere a quantidade de parcelas
+            $('.qnt-parcelas-financ').text(`${parcelasPagas}/${response.qnt_parcelas} parcelas`);
         },
         error: function () {
             const $divFinanciamentos = $('#div-financiamento');
@@ -622,15 +570,41 @@ $('#status-select').on('change', function () {
     // Obtém o valor da option selecionada
     let textoStatus = $(this).val();
 
-    // Loop for para esconder as linhas que não forem do mesmo status
-    $('tr .status-text').each(function () {
-        if ($(this).text() != textoStatus) {
-            $(this).closest('tr').hide();
-        } else {
-            $(this).closest('tr').show();
-        }
-    });
+    if (!textoStatus) {
+        $('tr').show();
+    } else {
+        // Loop for para esconder as linhas que não forem do mesmo status
+        $('tr .status-text').each(function () {
+            if ($(this).text() != textoStatus) {
+                $(this).closest('tr').hide();
+            } else {
+                $(this).closest('tr').show();
+            }
+        });
+    }
+
+    // Altera as cores
+    alterarCoresTr();
 })
+
+function alterarCoresTr() {
+    // Define o index como 0
+    let index = 1;
+
+    $('tr .status-text').each(function () {
+        if ($(this).closest('tr').css('display') === 'none') {
+            return;
+        }
+
+        if (index % 2 === 0) {
+            $(this).closest('tr').addClass('tipo1').removeClass('tipo2');
+        } else {
+            $(this).closest('tr').addClass('tipo2').removeClass('tipo1');
+        }
+        // Soma mais um ao index
+        index++;
+    });
+}
 
 // Função para formatar o texto e adicionar "..."
 function limitarQntCaracteres(texto, qntMax) {
@@ -672,8 +646,16 @@ function buscarVenda() {
                 await gerarCard(listaVeicMotos, $divHistoricoCompras, "moto");
             }
         },
-        error: function (response) {
-            alert(response.responseJSON.error);
+        error: function (response) { 
+            const $divHistoricoCompras = $('#div-historico-compras');
+
+            const divPai = $('<div></div>').addClass('div-pai');
+            const icon = $('<i></i>').addClass('fa-solid fa-thumbs-down icon');
+            const btnBuscar = $('<a></a>').attr('href', 'veiculos.html').addClass('buscar-btn').html(`Buscar veículos <i class="fa-solid fa-magnifying-glass"></i>`)
+            const msg = ($('<p></p>').addClass('nada-encontrado').text('Você ainda não possui nenhuma compra concluída.'));
+
+            divPai.append(icon, msg, btnBuscar);
+            $divHistoricoCompras.append(divPai);
         }
     })
 }
@@ -684,3 +666,204 @@ $(document).ready(() => {
     buscarFinanciamento();
     buscarVenda();
 });
+
+// Abre o modal de gerar o qr code do pix para pagar a parcela mais recente
+$('#parcela-mais-recente').on('click', function () {
+    // Exibe o modal de pix
+    $('#modal-pagar-parcela').css('display', 'none');
+    $('#modal-pix').css('display', 'flex');
+
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    // Caso não encontre os dados do usuário
+    if (!dadosUser) {
+        // Limpa o local storage
+        localStorage.clear();
+        // Recarrega a página
+        window.location.reload();
+        return;
+    }
+
+    // Insere o email do cliente
+    $('#email-cliente-compra').text(dadosUser.email);
+
+    $.ajax({
+        url: `${BASE_URL}/gerar_qrcode_parcela/recente`,
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        contentType: 'application/json',
+        xhrFields: {
+            responseType: 'blob' // <- diz ao XHR para devolver um Blob
+        },
+        success: function (response, textStatus, jqXHR) {
+            // Obtém o id da parcela e o salva em um input
+            const idParcela = jqXHR.getResponseHeader('ID-PARCELA');
+            $('#input-id-parcela').val(idParcela);
+            
+            // Define amortizada como "0", ou seja, não amortizada
+            $('#input-amortizada').val(0)
+
+            // Habilita o botão de confirmar pagamento
+            $('#confirmar-pagamento-parcela').prop('disabled', false);
+            
+            // Cria a URL utilizando a resposta BLOB obtida da API
+            const url_qrcode = URL.createObjectURL(response);
+
+            // Exibe a imagem do qrcode
+            $('#img-qrcode').css({
+                'background-image': `url(${url_qrcode})`,
+                'display': 'flex'
+            });
+            $('#loading-img-qrcode').hide();
+        },
+        error: function (response) {
+            // Exibe a mensagem de erro
+            alertMessage(response.responseJSON.error, 'error');
+
+            // Fecha as modais e o overlay
+            $('#modal-pagar-parcela').css('display', 'none');
+            $('#modal-pix').css('display', 'none');
+            $('#overlay-bg').css('display', 'none');
+        }
+    })
+})
+
+// Abre o modal de gerar o qr code do pix para pagar a parcela mais recente
+$('#parcela-amortizar').on('click', function () {
+    // Exibe o modal de pix
+    $('#modal-pagar-parcela').css('display', 'none');
+    $('#modal-pix').css('display', 'flex');
+
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    // Caso não encontre os dados do usuário
+    if (!dadosUser) {
+        // Limpa o local storage
+        localStorage.clear();
+        // Recarrega a página
+        window.location.reload();
+        return;
+    }
+
+    // Insere o email do cliente
+    $('#email-cliente-compra').text(dadosUser.email);
+
+    $.ajax({
+        url: `${BASE_URL}/gerar_qrcode_parcela/amortizar`,
+        headers: {
+            "Authorization": "Bearer " + dadosUser.token
+        },
+        contentType: 'application/json',
+        xhrFields: {
+            responseType: 'blob' // <- diz ao XHR para devolver um Blob
+        },
+        success: function (response, textStatus, jqXHR) {
+            // Obtém o id da parcela e o salva em um input
+            const idParcela = jqXHR.getResponseHeader('ID-PARCELA');
+            $('#input-id-parcela').val(idParcela);
+
+            // Define amortizada como "1", ou seja, amortizada
+            $('#input-amortizada').val(1);
+
+            // Habilita o botão de confirmar pagamento
+            $('#confirmar-pagamento-parcela').prop('disabled', false);
+
+            // Cria a URL utilizando a resposta BLOB obtida da API
+            const url_qrcode = URL.createObjectURL(response);
+
+            // Exibe a imagem do qrcode
+            $('#img-qrcode').css({
+                'background-image': `url(${url_qrcode})`,
+                'display': 'flex'
+            });
+            $('#loading-img-qrcode').hide();
+        },
+        error: function (response) {
+            // Exibe a mensagem de erro
+            alertMessage(response.responseJSON.error, 'error');
+
+            // Fecha as modais e o overlay
+            $('#modal-pagar-parcela').css('display', 'none');
+            $('#modal-pix').css('display', 'none');
+            $('#overlay-bg').css('display', 'none');
+        }
+    })
+})
+
+// Ao clicar no botão de cancelar manutenção
+$('#confirmar-pagamento-parcela').click(function () {
+    Swal.fire({
+        title: "Você confirma o pagamento dessa parcela?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0bd979",
+        cancelButtonColor: "#f71445",
+        confirmButtonText: "Confirmar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Obtém o id parcela no input hidden
+            let idParcela = $('#input-id-parcela').val();
+
+            // Obtém se é amortizada
+            let amortizada = $('#input-amortizada').val();
+
+            // Acessa a rota ajax para pagar a parcela
+            $.ajax({
+                url: `${BASE_URL}/pagar_parcela/${idParcela}/${amortizada}`,
+                success: function (response) {
+                    // Salva a mensagem no local storage
+                    localStorage.setItem('msgParcelaPaga', response.success);
+                    // Recarrega a página
+                    window.location.reload();
+                },
+                error: function (response) {
+                    // Exibe a mensagem de erro
+                    alertMessage(response.responseJSON?.error, 'error');
+
+                    // Fecha as modais e o overlay
+                    $('#modal-pagar-parcela').css('display', 'none');
+                    $('#modal-pix').css('display', 'none');
+                    $('#overlay-bg').css('display', 'none');
+                }
+            })
+        }
+    })
+})
+
+$(document).ready(function () {
+    let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
+
+    // Caso a mensagem esteja salva no local storage
+    if (msgParcelaPaga) {
+        // Exibe a mensagem na tela
+        alertMessage(msgParcelaPaga, 'success');
+
+        // Seleciona o link de financiamento
+        selecionarA($('#link_financiamento'));
+
+        let textoStatus = "Pendente";
+
+        // Da display flex na tabela de parcelas
+        $('#minha-conta').css('display', 'none');
+        $('#parcelas').css('display', 'flex');
+
+        // Seleciona a option do select
+        $('#status-select').val(textoStatus);
+
+        // Loop for para esconder as linhas que não forem do mesmo status
+        $('tr .status-text').each(function () {
+            if ($(this).text() != textoStatus) {
+                $(this).closest('tr').hide();
+            } else {
+                $(this).closest('tr').show();
+            }
+        });
+
+        // Altera a ordem da alternância de cores das tr
+        alterarCoresTr();
+
+        // Remove o item do local storage
+        localStorage.removeItem('msgParcelaPaga');
+    }
+})
