@@ -456,45 +456,34 @@ function inserirServicosTabela() {
         $('#tbody-servicos').append($tr);
     }
 }
+
+// Função para adicionar serviço
 function adicionarServico() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    console.log("Dados do usuário:", dadosUser);
 
-    if (!dadosUser || !dadosUser.token) {
-        alertMessage('Usuário não autenticado ou sessão expirada', 'error');
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 2000);
+    if (!dadosUser) {
+        window.location.href = 'login.html';
         return;
     }
 
-    const descricao = $('#input-obs').val().trim();
-    const valorFormatado = $('#input-valor').val();
-    const valor = desformatarPreco(valorFormatado);
-    
-    console.log("Descrição:", descricao);
-    console.log("Valor formatado:", valorFormatado);
-    console.log("Valor após desformatar:", valor);
+    const descricao = $('#input-obs').val();
+    const valor = desformatarPreco($('#input-valor').val());
+    const idManutencao = $('#input-id-manutencao').val() || ID_MANUTENCAO_ATUAL;
 
-    if (!descricao) {
-        alertMessage('Preencha a descrição do serviço', 'error');
+    if (!descricao || !valor) {
+        alertMessage('Preencha todos os campos', 'error');
         return;
     }
 
-    if (!valorFormatado || valor <= 0) {
-        alertMessage('Informe um valor válido maior que zero', 'error');
-        return;
-    }
-
-    // Objeto com apenas os dados necessários para a API
     let envia = {
         "descricao": descricao,
         "valor": valor
     };
 
-    console.log("URL completa:", `${BASE_URL}/servicos`);
-    console.log("Enviando requisição com token:", dadosUser.token);
-    console.log("Dados enviados:", JSON.stringify(envia));
+    // Se houver ID de manutenção, adiciona ao objeto
+    if (idManutencao) {
+        envia.id_manutencao = idManutencao;
+    }
 
     $.ajax({
         method: "POST",
@@ -504,6 +493,25 @@ function adicionarServico() {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
+        success: function (response) {
+            // Limpa os inputs
+            $('#input-obs').val('');
+            $('#input-valor').val('');
+
+            // Verifica se estamos em contexto de manutenção específica
+            if (idManutencao) {
+                carregarServicosManutencao(idManutencao);
+            } else {
+                carregarServicos(); // Recarrega todos os serviços
+            }
+
+            // Exibe mensagem de sucesso
+            alertMessage(response.success, 'success');
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    });
 }
 
 function abrirModalEditarServico(idServico) {
@@ -699,6 +707,16 @@ function executarExclusao(idServico, token) {
         }
     });
 }
+
+
+// Função para desformatar preço de R$ para número decimal
+function desformatarPreco(preco) {
+    if (!preco) return 0;
+
+    // Remove o símbolo R$, pontos e substitui vírgula por ponto
+    return parseFloat(preco.replace('R$', '').replace(/\./g, '').replace(',', '.'));
+}
+
 // Função para mostrar senha quando clicar no olho
 
 $('#mostrarSenha').click(function () {
