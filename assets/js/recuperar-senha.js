@@ -46,7 +46,7 @@ $("#div-codigo").find('input').on('keydown', function (e) {
     // Se a tecla Backspace for pressionada e o campo estiver vazio
     if (e.key === "Backspace" && $input.val() === '' && index > 0) {
         let $antInput = $("#div-codigo").find('input').eq(index - 1);
-        $antInput.focus();  
+        $antInput.focus();
     }
 });
 
@@ -220,3 +220,30 @@ $('#formAltSenha').on('submit', function(e) {
         }
     })
 })
+
+// Handler de paste para colar o código inteiro
+$('#div-codigo').on('paste', 'input', function(e) {
+    e.preventDefault();
+    
+    // Pega o texto da área de transferência
+    const pasteData = (e.originalEvent.clipboardData || window.clipboardData)
+                        .getData('text')
+                        .trim();
+  
+    // Só prossegue se for exatamente 6 dígitos
+    if (/^\d{6}$/.test(pasteData)) {
+      const inputs = $('#div-codigo').find('input');
+      
+      // Distribui cada dígito
+      pasteData.split('').forEach((char, idx) => {
+        if (inputs[idx]) {
+          $(inputs[idx]).val(char);
+        }
+      });
+  
+      // Foca no último campo preenchido (ou no último input)
+      const lastIndex = Math.min(pasteData.length - 1, inputs.length - 1);
+      $(inputs[lastIndex]).focus();
+    }
+  });
+  
