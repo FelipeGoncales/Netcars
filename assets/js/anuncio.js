@@ -1010,10 +1010,6 @@ function carregarTodosServicos() {
 
                 // Preenche o select com as opções
                 preencherSelectServicos();
-            },
-            error: function(response) {
-                // Exibe mensagem de erro
-                alertMessage(response.responseJSON?.error || "Erro ao carregar serviços", 'error');
             }
         });
     } catch (error) {
