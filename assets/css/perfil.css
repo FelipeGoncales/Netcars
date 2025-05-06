@@ -1205,9 +1205,9 @@ tbody tr.tipo2 {
         width: 300px;
         border-radius: 15px;
         cursor: pointer;
-        gap: 10px;
         box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease;
+        gap: 15px;
 
         &:hover {
             transform: scale(1.01);
@@ -1224,7 +1224,7 @@ tbody tr.tipo2 {
 
         i {
             color: #6C1DE9;
-            font-size: 80px;
+            font-size: 50px;
         }
     }
 }
