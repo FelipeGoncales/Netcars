@@ -1,12 +1,12 @@
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
         url: `${BASE_URL}/obter_tipo_usuario`,
         headers: {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
-        success: function(response) {
+        success: function (response) {
             const tipoUser = response.tipo_usuario;
 
             if (tipoUser === 2) {
@@ -16,7 +16,7 @@ $(document).ready(function() {
                 window.location.href = 'cliente-perfil.html';
             }
         },
-        error: function(response) {
+        error: function (response) {
             localStorage.deleteItem('dadosUser');
             localStorage.setItem('mensagem', JSON.stringify({
                 "error": response.responseJSON.error
@@ -41,7 +41,7 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Exibir mensagem de reserva
     const mensagemLocalStorage = localStorage.getItem('msgReserva');
 
@@ -144,6 +144,11 @@ $(document).ready(function () {
             const minhaConta = document.getElementById('link_minhaConta');
             selecionarA(minhaConta);
         } else {
+            $('#minha-conta').css('display', 'none');
+            $('#editUser').css('display', 'none');
+            $('#reservas').css('display', 'none');
+            $('#servicos').css('display', 'none');
+
             // Alternar a exibição do submenu
             $(".submenu-relatorios").slideDown();
 
@@ -184,7 +189,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#link_reservas").on("click", function() {
+    $("#link_reservas").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
 
@@ -244,15 +249,15 @@ var LISTA_SERVICOS = [];
 var ID_MANUTENCAO_ATUAL = null;
 
 // Função para carregar serviços quando a página carregar ou quando o link de serviços for clicado
-$(document).ready(function() {
+$(document).ready(function () {
     // Inicializa os serviços quando o link for clicado
-    $("#link_servicos").on("click", function() {
+    $("#link_servicos").on("click", function () {
         carregarServicos();
     });
-    
+
     // Adiciona formatação automática de valor monetário aos inputs
     // Para o input de adicionar serviço
-    $('#input-valor').on('blur', function() {
+    $('#input-valor').on('blur', function () {
         let valor = $(this).val();
         if (valor) {
             // Converte para número e formata
@@ -260,9 +265,9 @@ $(document).ready(function() {
             $(this).val(formatarValor(valor));
         }
     });
-    
+
     // Para o input de editar serviço (quando for criado dinamicamente)
-    $(document).on('blur', '#valor-editar-servico', function() {
+    $(document).on('blur', '#valor-editar-servico', function () {
         let valor = $(this).val();
         if (valor) {
             // Converte para número e formata
@@ -270,37 +275,37 @@ $(document).ready(function() {
             $(this).val(formatarValor(valor));
         }
     });
-    
+
     // Ação do botão de adicionar serviço
-    $('#add-servico').click(function() {
+    $('#add-servico').click(function () {
         adicionarServico();
     });
-    
+
     // Ação para editar serviço (delegação de evento para elementos criados dinamicamente)
-    $(document).on('click', '.editarServico', function() {
+    $(document).on('click', '.editarServico', function () {
         const idServico = $(this).attr('id_servico');
         abrirModalEditarServico(idServico);
     });
-    
+
     // Ação para fechar o modal de edição
-    $('#fecharModalEditarServico').click(function() {
+    $('#fecharModalEditarServico').click(function () {
         $('#formEditarServico').hide();
     });
-    
+
     // Ação do formulário de edição de serviço
-    $('#formEditarServico').submit(function(e) {
+    $('#formEditarServico').submit(function (e) {
         e.preventDefault();
         salvarEdicaoServico();
     });
-    
+
     // Ação do botão de excluir serviço
-    $('#excluir-servico').click(function() {
+    $('#excluir-servico').click(function () {
         excluirServico();
     });
-    
+
     // Esconde o modal de edição inicialmente
     $('#formEditarServico').hide();
-    
+
     // Se houver um ID de manutenção na URL, captura-o
     const urlParams = new URLSearchParams(window.location.search);
     const idManutencao = urlParams.get('id_manutencao');
@@ -340,18 +345,18 @@ async function carregarServicos() {
             headers: {
                 "Authorization": "Bearer " + dadosUser.token
             },
-            success: function(response) {
+            success: function (response) {
                 // Salva os serviços na lista
                 LISTA_SERVICOS = response.servicos;
 
                 // Insere os serviços na tabela
                 inserirServicosTabela();
             },
-            error: function(response) {
+            error: function (response) {
                 // Exibe mensagem de erro
                 alertMessage(response.responseJSON.error, 'error');
             },
-            complete: function() {
+            complete: function () {
                 // Inserindo um pequeno delay para carregar tudo corretamente
                 setTimeout(() => $('.bg-carregamento-servicos').css('display', 'none'), 200);
             }
@@ -393,17 +398,17 @@ function carregarServicosManutencao(idManutencao) {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function(response) {
+        success: function (response) {
             // Salva os serviços na lista
             LISTA_SERVICOS = response.servicos;
 
             // Insere os serviços na tabela
             inserirServicosTabela();
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         },
-        complete: function() {
+        complete: function () {
             setTimeout(() => $('.bg-carregamento-servicos').css('display', 'none'), 200);
         }
     });
@@ -488,7 +493,7 @@ function adicionarServico() {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function(response) {
+        success: function (response) {
             // Limpa os inputs
             $('#input-obs').val('');
             $('#input-valor').val('');
@@ -499,11 +504,11 @@ function adicionarServico() {
             } else {
                 carregarServicos(); // Recarrega todos os serviços
             }
-            
+
             // Exibe mensagem de sucesso
             alertMessage(response.success, 'success');
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     });
@@ -512,29 +517,29 @@ function adicionarServico() {
 function abrirModalEditarServico(idServico) {
     const servico = LISTA_SERVICOS.find(s => s.id_servicos == idServico);
     if (!servico) {
-      alertMessage("Serviço não encontrado", "error");
-      return;
+        alertMessage("Serviço não encontrado", "error");
+        return;
     }
-  
+
     // Preenche os campos e ativa os labels
     $('#id-editar-servico').val(servico.id_servicos);
     $('#descricao-editar-servico')
-      .val(servico.descricao)
-      .prev('label').addClass('active');
+        .val(servico.descricao)
+        .prev('label').addClass('active');
     $('#valor-editar-servico')
-      .val(formatarValor(servico.valor))
-      .prev('label').addClass('active');
-  
+        .val(formatarValor(servico.valor))
+        .prev('label').addClass('active');
+
     // Exibe overlay + modal
     $('#overlay-bg').css('display', 'flex');
     $('#formEditarServico').css('display', 'flex');
-  }
+}
 
 // Fecha modal de editar serviço
 function fecharModalEditarServico() {
     $('#overlay-bg, #formEditarServico').css('display', 'none');
-  }
-  
+}
+
 // Salvar edição de serviço
 function salvarEdicaoServico() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
@@ -583,69 +588,69 @@ function salvarEdicaoServico() {
 }
 
 function excluirServico() {
-const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-const idServico = $('#id-editar-servico').val();
-if (!dadosUser || !idServico) {
-    alertMessage('Operação inválida', 'error');
-    return;
-}
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+    const idServico = $('#id-editar-servico').val();
+    if (!dadosUser || !idServico) {
+        alertMessage('Operação inválida', 'error');
+        return;
+    }
 
-const doDelete = () => {
-    $.ajax({
-    method: "DELETE",
-    url: `${BASE_URL}/servicos/${idServico}`,
-    headers: { "Authorization": "Bearer " + dadosUser.token },
-    success: function(response) {
-        fecharModalEditarServico();
-        if (ID_MANUTENCAO_ATUAL) {
-        carregarServicosManutencao(ID_MANUTENCAO_ATUAL);
-        } else {
-        carregarServicos();
+    const doDelete = () => {
+        $.ajax({
+            method: "DELETE",
+            url: `${BASE_URL}/servicos/${idServico}`,
+            headers: { "Authorization": "Bearer " + dadosUser.token },
+            success: function (response) {
+                fecharModalEditarServico();
+                if (ID_MANUTENCAO_ATUAL) {
+                    carregarServicosManutencao(ID_MANUTENCAO_ATUAL);
+                } else {
+                    carregarServicos();
+                }
+                alertMessage(response.success, 'success');
+            },
+            error: function (response) {
+                alertMessage(response.responseJSON.error, 'error');
+            }
+        });
+    };
+
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Esta ação não poderá ser revertida!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, inativar!',
+            cancelButtonText: 'Cancelar'
+        }).then(result => {
+            if (result.isConfirmed) doDelete();
+        });
+    } else {
+        if (confirm("Tem certeza que deseja inativar este serviço?")) {
+            doDelete();
         }
-        alertMessage(response.success, 'success');
-    },
-    error: function(response) {
-        alertMessage(response.responseJSON.error, 'error');
     }
-    });
-};
-
-if (typeof Swal !== 'undefined') {
-    Swal.fire({
-    title: 'Tem certeza?',
-    text: "Esta ação não poderá ser revertida!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Sim, inativar!',
-    cancelButtonText: 'Cancelar'
-    }).then(result => {
-    if (result.isConfirmed) doDelete();
-    });
-} else {
-    if (confirm("Tem certeza que deseja inativar este serviço?")) {
-    doDelete();
-    }
-}
 }
 // Binds de evento
-$(function() {
+$(function () {
     // Abrir modal
-    $(document).on('click', '.editarServico', function() {
-      abrirModalEditarServico($(this).attr('id_servico'));
+    $(document).on('click', '.editarServico', function () {
+        abrirModalEditarServico($(this).attr('id_servico'));
     });
-  
+
     // Fechar modal ao clicar no “<” ou no overlay
     $('#fecharModalEditarServico, #overlay-bg').on('click', fecharModalEditarServico);
-  
+
     // Submeter edição
-    $('#formEditarServico').on('submit', function(e) {
-      e.preventDefault();
-      salvarEdicaoServico();
+    $('#formEditarServico').on('submit', function (e) {
+        e.preventDefault();
+        salvarEdicaoServico();
     });
-  
+
     // Botão excluir
     $('#excluir-servico').on('click', excluirServico);
-  });
+});
 
 // Função auxiliar para executar a exclusão
 function executarExclusao(idServico, token) {
@@ -655,51 +660,25 @@ function executarExclusao(idServico, token) {
         headers: {
             "Authorization": "Bearer " + token
         },
-        success: function(response) {
+        success: function (response) {
             // Fechar modal
             $('#formEditarServico').hide();
-            
+
             // Recarregar serviços da manutenção atual
             if (ID_MANUTENCAO_ATUAL) {
                 carregarServicosManutencao(ID_MANUTENCAO_ATUAL);
             } else {
                 carregarServicos();
             }
-            
+
             // Exibir mensagem
             alertMessage(response.success, 'success');
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     });
 }
-// Função de alerta para mensagens
-function alertMessage(message, icon) {
-    if (typeof Swal !== 'undefined') {
-        // Usar SweetAlert2 se disponível
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-            }
-        });
-
-        Toast.fire({
-            icon: icon,
-            title: message
-        });
-    } else {
-        // Fallback para alert padrão
-        const alertType = icon === 'error' ? 'Erro: ' : 'Sucesso: ';
-        alert(alertType + message);
-    }
-}
 
 // Função auxiliar para executar a exclusão
 function executarExclusao(idServico, token) {
@@ -709,21 +688,21 @@ function executarExclusao(idServico, token) {
         headers: {
             "Authorization": "Bearer " + token
         },
-        success: function(response) {
+        success: function (response) {
             // Fechar modal
             $('#formEditarServico').hide();
-            
+
             // Recarregar serviços da manutenção atual
             if (ID_MANUTENCAO_ATUAL) {
                 carregarServicosManutencao(ID_MANUTENCAO_ATUAL);
             } else {
                 carregarServicos();
             }
-            
+
             // Exibir mensagem
             alertMessage(response.success, 'success');
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     });
@@ -733,36 +712,9 @@ function executarExclusao(idServico, token) {
 // Função para desformatar preço de R$ para número decimal
 function desformatarPreco(preco) {
     if (!preco) return 0;
-    
+
     // Remove o símbolo R$, pontos e substitui vírgula por ponto
     return parseFloat(preco.replace('R$', '').replace(/\./g, '').replace(',', '.'));
-}
-
-// Função de alerta para mensagens
-function alertMessage(message, icon) {
-    if (typeof Swal !== 'undefined') {
-        // Usar SweetAlert2 se disponível
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-            }
-        });
-
-        Toast.fire({
-            icon: icon,
-            title: message
-        });
-    } else {
-        // Fallback para alert padrão
-        const alertType = icon === 'error' ? 'Erro: ' : 'Sucesso: ';
-        alert(alertType + message);
-    }
 }
 
 // Função para mostrar senha quando clicar no olho
@@ -826,7 +778,7 @@ function fecharBarraLateral() {
 
 // Rota para adicionar as options do select ano veículo
 
-const anoMin = 1950;    
+const anoMin = 1950;
 const anoMax = new Date().getFullYear();
 const selectAnoFabCarro = $('#ano-fabricacao-carro');
 const selectAnoModCarro = $('#ano-modelo-carro');
@@ -965,14 +917,10 @@ $('#pdf-manutencao').click(function (e) {
 
 });
 
-
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
-    window.open(`${BASE_URL}/relatorio/movimentacoes`, '_blank');
+    window.open(`${BASE_URL}/relatorio/receita_despesa`, '_blank');
 });
-
-
-
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
 
@@ -1117,8 +1065,6 @@ $('table').on('click', '.edit-icon', function () {
             ativo: dados.get('ativo-editar')
         };
 
-        console.log(editar)
-
         const editarJSON = JSON.stringify(editar);
 
         $.ajax({
@@ -1142,36 +1088,37 @@ $('table').on('click', '.edit-icon', function () {
 })
 
 // Abrir modal editar
-$('#btn-modal-cad-user').click(function() {
+$('#btn-modal-cad-user').click(function () {
     $('#formCadastroUsuario').css('display', 'flex');
     $('#overlay-bg').css('display', 'flex');
 })
 // Fechar modal editar
-$('#close-modal-cad-user, #overlay-bg').on('click', function() {
+$('#close-modal-cad-user, #overlay-bg').on('click', function () {
     $('#overlay-bg, #formCadastroUsuario').css('display', 'none');
-  });  
+});
 
- // Abre modal de receitas
- $('#mov-recietas').on('click', function() {
+// Abre modal de receitas
+$('#mov-receitas').on('click', function () {
     $('.overlay-bg').css('display', 'flex');
-    $('#modal-receita').css('display', 'flex');
-  })
+    $('#modal-mov').css('display', 'flex');
 
-  // Fecha modal de receitas (X e overlay)
-  $('#close-modal-receita, .overlay-bg').on('click', function() {
-    $('.overlay-bg, #modal-receita').css('display', 'none');
-  })
+    $('#tilte-modal-add-mov').text('Adicionar receita');
+    $('#tipo-mov').val('receita');
+})
 
-  // Abre modal de despesas
-  $('#mov-despesas').on('click', function() {
+// Abre modal de despesas
+$('#mov-despesas').on('click', function () {
     $('.overlay-bg').css('display', 'flex');
-    $('#modal-despesa').css('display', 'flex');
-  })
+    $('#modal-mov').css('display', 'flex');
+    
+    $('#tilte-modal-add-mov').text('Adicionar despesa');
+    $('#tipo-mov').val('despesa');
+})
 
-  // Fecha modal de despesas (X e overlay)
-  $('#close-modal-despesa, .overlay-bg').on('click', function() {
-    $('.overlay-bg, #modal-despesa').css('display', 'none');
-  })
+// Fecha modal de movimentações (X e overlay)
+$('#close-modal-mov, .overlay-bg').on('click', function () {
+    $('.overlay-bg, #modal-mov').css('display', 'none');
+})
 
 // Verificar se usuário foi editado
 $(document).ready(() => {
@@ -1211,7 +1158,7 @@ function fetchFiltroUsuarios() {
         url: `${BASE_URL}/get_user_filtro`,
         data: dataJSON,
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
             carregarUsuarios(response.usuarios);
         },
         error: function (response) {
@@ -1228,7 +1175,7 @@ $('#type-select').on('change', () => fetchFiltroUsuarios());
 // Função para obter sigla dos estados
 function obterSiglaEstado(estadoVeiculo) {
     return new Promise((resolve, reject) => {
-        $.getJSON('https://servicodados.ibge.gov.br/api/v1/localidades/estados', function(estados) {
+        $.getJSON('https://servicodados.ibge.gov.br/api/v1/localidades/estados', function (estados) {
             for (let estado of estados) {
                 if (estado.nome === estadoVeiculo) {
                     resolve(estado.sigla);
@@ -1242,25 +1189,29 @@ function obterSiglaEstado(estadoVeiculo) {
 
 // Função para formatar os valores
 function formatarValor(valor) {
-    // Ignora se estiver vazio
-    if (!valor) {
-        $(this).val('');
-        return;
+    if (valor === null || valor === undefined || valor === '') {
+        return '';
     }
-    
-    // Converte o valor para float
-    const valorFloat = parseFloat(valor);
-    
-    // Separa parte inteira e decimal
-    const parteInteira = Math.floor(valorFloat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    const parteDecimal = (Math.round((valorFloat - Math.floor(valorFloat)) * 100))
-                          .toString()
-                          .padStart(2, '0');
-    
-    const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
-    
-    return precoFormatado;
+
+    // Converte para número
+    const v = Number(valor);
+    if (isNaN(v)) return '';
+
+    // Guarda o sinal e trabalha com absoluto
+    const sinal = v < 0 ? '-' : '';
+    const abs = Math.abs(v);
+
+    // Parte inteira e decimal
+    const inteiros = Math.floor(abs)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const decimais = Math.round((abs - Math.floor(abs)) * 100)
+        .toString()
+        .padStart(2, '0');
+
+    return `R$ ${sinal}${inteiros},${decimais}`;
 }
+
 
 // Função para gerar o card
 async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
@@ -1269,19 +1220,19 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
         const divCard = $("<div></div>").addClass("card");
 
         const img = $("<div></div>")
-                    .css({
-                        "background-image": `url(${veiculo.imagens[0]})`,
-                        "background-position": "center",
-                        "background-repeat": "no-repeat",
-                        "background-size": "cover",
-                        "height": "225px"
-                    })
+            .css({
+                "background-image": `url(${veiculo.imagens[0]})`,
+                "background-position": "center",
+                "background-repeat": "no-repeat",
+                "background-size": "cover",
+                "height": "225px"
+            })
 
         const pReservadoPor = $('<p></p>').addClass('reservado-por').html(`Reservado por <span>${veiculo.nome_cliente}</span>`)
-    
+
         // Cria a div de itens do card
         const divItensCard = $("<div></div>").addClass("itens-card");
-    
+
         // Modelo
         const spanModelo = $(`<span></span>`)
             .text(veiculo.modelo)
@@ -1298,31 +1249,31 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
                 'text-transform': 'uppercase',
                 'font-size': '1.5rem'
             }) // Inserir nome do carro
-    
+
         // Descrição do veículo
         const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
-    
+
         // Container das informações adicionais
         const containerInfoCard = $("<div></div>").addClass("container-info-card");
-    
+
         // Ano do veículo
         const iconCalendar = $("<i></i>").addClass("fa-solid fa-calendar-days");
         const pYear = $("<p></p>").text(veiculo.ano_modelo); // Ano veículo
 
         let siglaEstado = await obterSiglaEstado(veiculo.estado);
-            
+
         // Localização
         const iconLocation = $("<i></i>").addClass("fa-solid fa-location-dot");
         const pLocation = $("<p></p>").text(`${veiculo.cidade} (${siglaEstado})`); // Cidade
 
         // Monta a div infoCard com ícones e textos
         containerInfoCard.append(iconCalendar, pYear, iconLocation, pLocation);
-    
+
         // Preço do veículo
 
         let valor = formatarValor(veiculo.preco_venda);
         const h3Price = $("<h3></h3>").text(valor); // Valor
-        
+
         // Url para abrir a página de anúncio
         let urlAnuncio;
 
@@ -1337,13 +1288,13 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
             .attr("href", `${urlAnuncio}?id=${veiculo.id}`) // Url para anúncio veículos passando id pela url
             .text("Ver detalhes")
             .addClass("ver-detalhes");
-    
+
         // Adiciona todos os itens na div itens-card
         divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
-    
+
         // Junta a imagem e os itens ao card
         divCard.append(img, pReservadoPor, divItensCard);
-    
+
         // Insere o card no container desejado na página
         divAppend.append(divCard);
     }
@@ -1360,7 +1311,7 @@ function buscarReservas() {
             listaVeicCarro = response.carros;
 
             listaVeicMotos = response.motos;
-        
+
             const $divReservas = $('#div-reservas');
 
             if (!listaVeicCarro.length && !listaVeicMotos.length) {
@@ -1381,14 +1332,158 @@ function buscarReservas() {
             if (listaVeicMotos.length) {
                 await gerarCard(listaVeicMotos, $divReservas, "moto");
             }
-        },
-        error: function (response) {
-            alert(response.responseJSON.error);
         }
     })
 }
 
 // Ao abrir o site, carregar reservas
-$(document).ready(() =>{
+$(document).ready(() => {
     buscarReservas();
 });
+
+/*
+    MOVIMENTAÇÕES
+*/
+
+// Função para formatar o texto e adicionar "..."
+function limitarQntCaracteres(texto, qntMax) {
+    return texto.substr(0, qntMax) + '...';
+}
+
+// Adicionar as divs de histórico de movimentação
+function addHistoricoMovimentacao(movimentacao) {
+    // Cria a div pai
+    const divPai = $('<div></div>');
+
+    // Cria a div de descrição
+    const divDesc = $('<div></div>').addClass('div-desc');
+
+    // Cria o ícone de dinheiro
+    const iconeDolar = $('<i></i>').addClass('fa-solid fa-dollar-sign');
+
+    // Cria a div que ira conter o texto de tipo e descrição
+    const divTipoDesc = $('<div></div>');
+
+    // Cria o p tipo e p descricao
+    const pTipo = $('<p></p>').addClass('p-tipo').text(movimentacao.tipo);
+
+    const pDesc = $('<p></p>').addClass('p-descri');
+    // Caso que tenha mais de 22 caractéres, adiciona reticências
+    if (movimentacao.descricao.length > 20) {
+        pDesc.text(limitarQntCaracteres(movimentacao.descricao, 20));
+    } else {
+        pDesc.text(movimentacao.descricao);
+    }
+
+    // Da append no p tipo e p desc a div tipo descricao
+    divTipoDesc.append(pTipo, pDesc);
+    // Da append no icone de dolar e na div tipo desc
+    divDesc.append(iconeDolar, divTipoDesc);
+
+    // Cria a div valor
+    const divValor = $('<div></div>').addClass('div-valr');
+
+    // Cria o p valor
+    const pValor = $('<p></p>').addClass('p-valor').text(formatarValor(movimentacao.valor));
+
+    // Formata a data
+    const dataFormatada = new Date(movimentacao.data_receita_despesa).toISOString().split('T')[0];
+    const [ano, mes, dia] = dataFormatada.split('-');
+    const dataFormatadaBr = `${dia}/${mes}/${ano}`;
+
+    // Cria o p data
+    const pData = $('<p></p>').addClass('p-data').text(dataFormatadaBr);
+
+    // Adiciona o p valor e p data a div valor
+    divValor.append(pValor, pData);
+
+    // Adiciona a div desc e a div valor a div pai
+    divPai.append(divDesc, divValor);
+
+    // Adiciona a classe despesa ou receita a depender do tipo da movimentação
+    if (movimentacao.tipo === 'receita') {
+        divPai.addClass('card-receita');
+    } else {
+        divPai.addClass('card-despesa');
+    }
+
+    // Adiciona a div a div de movimenmtações
+    $('#div-movimentacoes').append(divPai);
+}
+
+// Função para carregar os dados da movimentação
+function carregarDadosMovimentacoes(movimentacoes, saldo, despesa, receita) {
+    // Insere o saldo 
+    $('#saldo-valor').text(formatarValor(saldo));
+    // Insere o valor das despesas
+    $('#despesa-valor').text(formatarValor(despesa));
+    // Insere o valor das receitas
+    $('#receita-valor').text(formatarValor(receita));
+
+    if (movimentacoes.length) {
+        // Adiciona as movimentações
+        for (let movimentacao of movimentacoes) {
+            addHistoricoMovimentacao(movimentacao);
+        }
+    } else {
+        $('#div-movimentacoes').append($('<p></p>').text('Nenhuma movimentações encontrada.').addClass('p-no-historico'));
+    }
+
+}
+
+// Busca os dados das movimentações ao abrir o site
+$(document).ready(function () {
+    // Acessa a rota via ajax
+    $.ajax({
+        url: `${BASE_URL}/movimentacoes`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        success: function (response) {
+            // Obtém os dados
+            let movimentacoes = response.movimentacoes;
+            let saldo = response.totais.saldo;
+            let receitas = response.totais.receitas;
+            let despesas = response.totais.despesas;
+            // Chama a função para carregar os dados
+            carregarDadosMovimentacoes(movimentacoes, saldo, despesas, receitas);
+        }
+    })
+})
+
+$(document).ready(function() {
+    let mensagemAddMov = localStorage.getItem('msgAddMov');
+
+    if (mensagemAddMov) {
+        alertMessage(mensagemAddMov, 'success');
+        localStorage.removeItem('msgAddMov');
+    }
+})
+
+// Adicionar manutenção
+$('#modal-mov').on('submit', function() {
+    const data = new FormData(this);
+
+    let envia = {
+        tipo: data.get('tipo-mov'),
+        valor: data.get('valor-mov'),
+        data: data.get('data-mov'),
+        descricao: data.get('descricao-mov')
+    }
+
+    $.ajax({
+        method: 'POST',
+        url: `${BASE_URL}/movimentacoes`,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        data: JSON.stringify(envia),
+        success: function(response) {
+            localStorage.setItem('msgAddMov', response.success);
+            window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON?.error, 'error');
+        }
+    })
+})

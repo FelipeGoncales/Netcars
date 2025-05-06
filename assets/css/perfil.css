@@ -2121,9 +2121,9 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
-#mov-recietas,
-#mov-despesas {
+#mov-receitas, #mov-despesas {
     cursor: pointer;
+    font-size: 20px;
 }
 
 /* serviços (modal e div) */
@@ -2321,8 +2321,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 }
 
 /*  Modals Receita e Despesa  */
-#modal-receita,
-#modal-despesa {
+#modal-mov {
     display: none;
     align-items: center;
     justify-content: center;
@@ -2380,8 +2379,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         }
     }
 
-    & #close-modal-receita,
-    & #close-modal-despesa {
+    & #close-modal-mov {
         position: absolute;
         top: 25px;
         left: 25px;
@@ -2391,12 +2389,14 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
-@media (max-width: 678px) {
+@media (max-width: 980px) {
     .container-dashboard {
-        max-width: 100%;
-        /* Ajusta para ocupar toda a largura da tela */
-        width: 80vw;
-        /* Reduz um pouco a largura para dar margem */
+        margin-top: 30px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
     }
 }
 
@@ -2410,7 +2410,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     background-color: #e6d5f5;
     border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -2449,8 +2449,10 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     gap: 8px;
     max-height: 238px;
+    min-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
 
     & .card-despesa,
     .card-receita {
@@ -2459,7 +2461,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         align-items: center;
         width: 100%;
         gap: 10px;
-        border-radius: 20px;
+        border-radius: 10px;
         padding: 10px 12px;
 
         & .div-desc,
@@ -2472,11 +2474,12 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             & .p-tipo {
                 font-size: 0.9em;
                 font-weight: 600;
+                text-transform: capitalize;
             }
 
             & .p-descri {
                 font-size: 0.8em;
-                font-weight: 500;
+                font-weight: 400;
             }
         }
 
@@ -2487,16 +2490,25 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             flex-direction: column;
 
             & .p-data {
-                font-weight: 500;
-                font-size: 0.8em;
+                font-weight: 400;
+                font-size: 0.73em;
             }
 
             & .p-valor {
                 font-size: 0.9em;
-                font-weight: 500;
+                font-weight: 600;
             }
         }
 
+    }
+
+    & .p-no-historico {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.85rem;
+        text-align: center;
     }
 
     & .card-receita {
