@@ -368,7 +368,7 @@ async function alterarBotao() {
             $('#mensagem-reserva').css('display', 'none');
 
             $('#div-icons-actions').css('display', 'flex');
-            
+
             // Retorna
             return;
         }
@@ -974,11 +974,11 @@ $('#fecharModalEditarServico').click(function () {
 })
 
 // Função para inicializar o carregamento de serviços quando a página carrega
-$(document).ready(function() {
+$(document).ready(function () {
     // Carrega todos os serviços disponíveis para o select
     carregarTodosServicos();
 
-    $(document).on('change', '#select-servico', function() {
+    $(document).on('change', '#select-servico', function () {
         atualizarValorServico();
     });
 });
@@ -1004,7 +1004,7 @@ function carregarTodosServicos() {
             headers: {
                 "Authorization": "Bearer " + dadosUser.token
             },
-            success: function(response) {
+            success: function (response) {
                 // Salva todos os serviços na lista global
                 TODOS_SERVICOS = response.servicos;
 
@@ -1025,17 +1025,17 @@ function preencherSelectServicos() {
         console.warn("Elemento select-servico não encontrado");
         return;
     }
-    
+
     // Limpa o select exceto a primeira opção
     $('#select-servico').find('option:not(:first)').remove();
-    
+
     // Adiciona cada serviço como uma opção no select
     TODOS_SERVICOS.forEach(servico => {
         const $option = $('<option>')
             .val(servico.id_servicos)
             .text(servico.descricao)
             .attr('data-valor', servico.valor);
-            
+
         $('#select-servico').append($option);
     });
 }
@@ -1043,15 +1043,15 @@ function preencherSelectServicos() {
 // Função para atualizar o valor do serviço quando um serviço é selecionado
 function atualizarValorServico() {
     const servicoId = $('#select-servico').val();
-    
+
     if (!servicoId) {
         $('#valor-servico').val('R$ 0,00');
         return;
     }
-    
+
     // Encontra o serviço selecionado
     const servicoSelecionado = TODOS_SERVICOS.find(s => s.id_servicos == servicoId);
-    
+
     if (servicoSelecionado) {
         // Atualiza o campo de valor
         $('#valor-servico').val(formatarValor(servicoSelecionado.valor));
@@ -1060,7 +1060,7 @@ function atualizarValorServico() {
 
 // Modificação da função de envio do formulário de adicionar serviço
 // Substitui o handler existente
-$('#formAddServico').off('submit').on('submit', function(e) {
+$('#formAddServico').off('submit').on('submit', function (e) {
     e.preventDefault();
 
     // Obtém dados user
@@ -1072,15 +1072,15 @@ $('#formAddServico').off('submit').on('submit', function(e) {
     }
 
     const servicoId = $('#select-servico').val();
-    
+
     if (!servicoId) {
         alertMessage('Selecione um serviço', 'error');
         return;
     }
-    
+
     // Encontra o serviço selecionado
     const servicoSelecionado = TODOS_SERVICOS.find(s => s.id_servicos == servicoId);
-    
+
     if (!servicoSelecionado) {
         alertMessage('Serviço não encontrado', 'error');
         return;
@@ -1101,7 +1101,7 @@ $('#formAddServico').off('submit').on('submit', function(e) {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function(response) {
+        success: function (response) {
             // Exibe o modal de manutenção
             $('#formAddServico').css('display', 'none');
             $('.modal-manu').css('display', 'flex');
@@ -1115,11 +1115,11 @@ $('#formAddServico').off('submit').on('submit', function(e) {
 
             // Recarregando a página
             carregarManutencao();
-            
+
             // Exibe mensagem de sucesso
             alertMessage(response.success || "Serviço adicionado com sucesso", 'success');
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     });
@@ -1238,7 +1238,7 @@ $('#reservar-btn').click(function () {
         headers: {
             "Authorization": "Bearer " + token
         },
-        success: function() {
+        success: function () {
             // Caso de certo
             Swal.fire({
                 title: "Deseja reservar esse veículo?",
@@ -1251,7 +1251,7 @@ $('#reservar-btn').click(function () {
                 if (result.isConfirmed) {
                     // Declara a variável
                     let envia;
-        
+
                     // Salva as informações
                     if (TIPO_VEIC == 'carro') {
                         envia = {
@@ -1264,7 +1264,7 @@ $('#reservar-btn').click(function () {
                             "tipo_veiculo": "moto"
                         }
                     }
-        
+
                     $.ajax({
                         method: "POST",
                         url: `${BASE_URL}/reservar_veiculo`,
@@ -1298,7 +1298,7 @@ $('#reservar-btn').click(function () {
                 }
             });
         },
-        error: function(response) {
+        error: function (response) {
             // Define uma mensagem para o cliente
             localStorage.setItem('msgReserva', 'Finalize seu cadastro para prosseguir com a reserva!');
 
@@ -1390,15 +1390,15 @@ $(document).ready(function () {
             headers: {
                 "Authorization": "Bearer " + token
             },
-            success: function() {
+            success: function () {
                 // Caso tenha, abre os modais
                 $('#modal-comprar').css('display', 'flex');
                 $('#overlay-bg').css('display', 'flex');
             },
-            error: function(response) {
+            error: function (response) {
                 // Define uma mensagem para o cliente
                 localStorage.setItem('msgReserva', 'Finalize seu cadastro para prosseguir com a compra!');
-                
+
                 // Verifica o tipo do veículo
                 if (TIPO_VEIC == 'carro') {
                     // Salva o id do carro no local storage
@@ -1417,13 +1417,13 @@ $(document).ready(function () {
     });
 
     // Fechar modal ao clicar no X
-    $('.btn-fechar-financiamento').click(function() {
+    $('.btn-fechar-financiamento').click(function () {
         // Fechar os modais
         $('#modal-comprar').css('display', 'none');
         $('#overlay-bg').css('display', 'none');
     })
 
-    $('.voltar-modal-compra').click(function() {
+    $('.voltar-modal-compra').click(function () {
         // Fechando os modais e abrindo o de compra
         $('#modal-comprar').css('display', 'flex');
         $('#modal-pix').css('display', 'none');
@@ -1436,13 +1436,13 @@ $(document).ready(function () {
     })
 
     // Abrir modal de parcelas
-    $('#visualizar-parcelas').click(function() {
+    $('#visualizar-parcelas').click(function () {
         $('#modal-financiamento').css('display', 'none');
         $('#modal-parcelas').css('display', 'flex');
     })
 
     // Voltar para financiamento
-    $('.voltar-modal-financiamento').click(function() {
+    $('.voltar-modal-financiamento').click(function () {
         $('#modal-financiamento').css('display', 'flex');
         $('#modal-parcelas').css('display', 'none');
     })
@@ -1482,10 +1482,10 @@ $(document).ready(function () {
                 responseType: 'blob' // <- diz ao XHR para devolver um Blob
             },
             data: JSON.stringify({
-                'tipo_veic': tipo_veic_numerico, 
+                'tipo_veic': tipo_veic_numerico,
                 'id_veic': id_veic
             }),
-            success: function(response) {
+            success: function (response) {
                 // Cria a URL utilizando a resposta BLOB obtida da API
                 const url_qrcode = URL.createObjectURL(response);
 
@@ -1494,8 +1494,8 @@ $(document).ready(function () {
                     'background-image': `url(${url_qrcode})`,
                     'background-color': "transparent"
                 });
-            }, 
-            error: function (response) {  
+            },
+            error: function (response) {
                 // Exibe a mensagem de erro
                 alertMessage(response.responseJSON.error, 'error');
 
@@ -1508,7 +1508,7 @@ $(document).ready(function () {
     })
 
     // Confirmar compra via pix
-    $('#confirmar-compra-pix').click(function() {
+    $('#confirmar-compra-pix').click(function () {
         Swal.fire({
             title: "Deseja confirmar a compra desse veículo?",
             icon: "warning",
@@ -1517,37 +1517,39 @@ $(document).ready(function () {
             cancelButtonColor: "#f71445",
             confirmButtonText: "Confirmar"
         }).then((result) => {
-            // Botém o tipo do veículo e o id_veic
-            let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
-            let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+            if (result.isConfirmed) {
+                // Botém o tipo do veículo e o id_veic
+                let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+                let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
 
-            $.ajax({
-                method: 'POST',
-                url: `${BASE_URL}/compra/a_vista`,
-                data: JSON.stringify({
-                    "tipo_veic": tipo_veic_numerico,
-                    "id_veic": id_veic
-                }),
-                contentType: "application/json",
-                headers: {
-                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
-                },
-                success: function(response) {
-                    // Define uma mensagme para ser exibida na página de perfil
-                    localStorage.setItem("msgReserva", response.success);
-                    // Redireciona para a página de perfil
-                    window.location.href = "cliente-perfil.html";
-                    return;
-                },
-                error: function(response) {
-                    alertMessage(response.responseJSON.error, 'error');
-                }
-            })
+                $.ajax({
+                    method: 'POST',
+                    url: `${BASE_URL}/compra/a_vista`,
+                    data: JSON.stringify({
+                        "tipo_veic": tipo_veic_numerico,
+                        "id_veic": id_veic
+                    }),
+                    contentType: "application/json",
+                    headers: {
+                        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    },
+                    success: function (response) {
+                        // Define uma mensagme para ser exibida na página de perfil
+                        localStorage.setItem("msgReserva", response.success);
+                        // Redireciona para a página de perfil
+                        window.location.href = "cliente-perfil.html";
+                        return;
+                    },
+                    error: function (response) {
+                        alertMessage(response.responseJSON.error, 'error');
+                    }
+                })
+            }
         })
     })
 
     // Confirmar financiamento
-    $('#confirmar-financiamento').click(function() {
+    $('#confirmar-financiamento').click(function () {
         Swal.fire({
             title: "Deseja confirmar o financiamento desse veículo?",
             icon: "warning",
@@ -1556,40 +1558,42 @@ $(document).ready(function () {
             cancelButtonColor: "#f71445",
             confirmButtonText: "Confirmar"
         }).then((result) => {
-             // Botém o tipo do veículo e o id_veic
-             let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
-             let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
-             let entrada = parseFloat(desformatarPreco($('#input-entrada').val()).toFixed(2));
-             let qnt_parcelas = extrairNumeros($('#select-parcelas').val());
+            if (result.isConfirmed) {
+                // Botém o tipo do veículo e o id_veic
+                let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+                let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+                let entrada = parseFloat(desformatarPreco($('#input-entrada').val()).toFixed(2));
+                let qnt_parcelas = extrairNumeros($('#select-parcelas').val());
 
-             let envia = {
-                "id_veiculo": parseInt(id_veic),
-                "tipo_veiculo": parseInt(tipo_veic_numerico),
-                "entrada": entrada,
-                "qnt_parcelas": parseInt(qnt_parcelas)
+                let envia = {
+                    "id_veiculo": parseInt(id_veic),
+                    "tipo_veiculo": parseInt(tipo_veic_numerico),
+                    "entrada": entrada,
+                    "qnt_parcelas": parseInt(qnt_parcelas)
+                }
+
+                console.log(envia)
+
+                $.ajax({
+                    method: 'POST',
+                    url: `${BASE_URL}/financiamento`,
+                    data: JSON.stringify(envia),
+                    contentType: "application/json",
+                    headers: {
+                        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                    },
+                    success: function (response) {
+                        // Define uma mensagme para ser exibida na página de perfil
+                        localStorage.setItem("msgReserva", response.success);
+                        // Redireciona para a página de perfil
+                        window.location.href = "cliente-perfil.html";
+                        return;
+                    },
+                    error: function (response) {
+                        alertMessage(response.responseJSON.error, 'error');
+                    }
+                })
             }
-
-            console.log(envia)
- 
-             $.ajax({
-                 method: 'POST',
-                 url: `${BASE_URL}/financiamento`,
-                 data: JSON.stringify(envia),
-                 contentType: "application/json",
-                 headers: {
-                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
-                 },
-                 success: function (response) {
-                     // Define uma mensagme para ser exibida na página de perfil
-                     localStorage.setItem("msgReserva", response.success);
-                     // Redireciona para a página de perfil
-                     window.location.href = "cliente-perfil.html";
-                     return;
-                 },
-                 error: function (response) {
-                     alertMessage(response.responseJSON.error, 'error');
-                 }
-             })
         })
     })
 
@@ -1597,7 +1601,7 @@ $(document).ready(function () {
     $('#btn-financiamento').on('click', function () {
         $('#modal-comprar').css('display', 'none');
         $('#modal-financiamento').css('display', 'flex');
-        
+
         // Calcular parcelas
         calcularParcelas();
     })
@@ -1621,12 +1625,12 @@ function calcularParcelas() {
     // Obtém a entrada e parcelas
     let entrada = desformatarPreco($('#input-entrada').val()).toFixed(2);
 
-    let qnt_parcelas = parseInt($('#select-parcelas').val()); 
+    let qnt_parcelas = parseInt($('#select-parcelas').val());
 
     // Obtém o valor do financiamento e parcelas
     $.ajax({
         url: `${BASE_URL}/financiamento/${id_veic}/${tipo_veic_numerico}/${qnt_parcelas}/${entrada}`,
-        success: function(response) {
+        success: function (response) {
             if (desformatarPreco($('#input-entrada').val()) >= response.preco_venda) {
                 // Formata o valor da entrada como o preco de venda total
                 $('#input-entrada').val(formatarValor(response.preco_venda))
@@ -1664,7 +1668,7 @@ function calcularParcelas() {
                 // Formata a data
                 const dataSeparada = lista_parcelas[index].data.split('-');
                 const dataFormatada = dataSeparada.reverse().join('/');
-                
+
                 // Cria os tds que irão conter as informações
                 const $tdNum = $('<td>').html(index);
                 const $tdValor = $('<td>').html(formatarValor(lista_parcelas[index].valor));
@@ -1677,17 +1681,17 @@ function calcularParcelas() {
                 $('#tbody-parcelas').append($tr);
             }
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     })
 }
 
 // Adicionar formatações ao input e select
-$(document).ready(function() {
+$(document).ready(function () {
     // Insere o valor R$0,00 no input
     $('#input-entrada').val(formatarValor(0));
-    
+
     // Adiciona a formatar ao input quando ele for alterado
     formatarPreco($('#input-entrada'));
 
@@ -1704,12 +1708,12 @@ $(document).ready(function() {
     }
 
     // Calcular o valor total ao mudar o valor da entrada
-    $('#input-entrada').on('input', function() {
+    $('#input-entrada').on('input', function () {
         calcularParcelas();
     })
 
     // Calcular o valor total ao trocar a quantidade de parcelas
-    $('#select-parcelas').on('change', function() {
+    $('#select-parcelas').on('change', function () {
         calcularParcelas();
     })
 })
