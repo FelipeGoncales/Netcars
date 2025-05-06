@@ -1,0 +1,146 @@
+/* Container principal */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 65px;
+    gap: 70px;
+    background-color: white;
+  }
+  
+  .sec-pesquisar { width: 100%; margin-bottom: 0px!important; }
+  
+  /* CARD AJUDA */
+  .pai-card-ajuda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  .container-card-ajuda {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card-ajuda {
+    position: relative;
+    width: 218px;
+    height: 200px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    background-color: white;
+    cursor: pointer;
+  }
+  .card-ajuda-front,
+  .card-ajuda-back {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  .card-ajuda-front {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+
+  .card-ajuda-front p{
+    font-size: 10px;
+  }
+  .card-ajuda-back {
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+  }
+  .card-ajuda:hover .card-ajuda-front {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .card-ajuda:hover .card-ajuda-back {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .card-ajuda p { font-size: 14px!important; font-weight: 500; color: #696977; }
+  .i-ajuda { font-size: 50px; color: #6C1DE9; }
+  
+  /* Back content */
+  .div-as1 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 200px;
+    text-align: center;
+  }
+  .div-as1 a {
+    font-size: 12px;
+    color: #333;
+    transition: color 0.3s;
+  }
+  .div-as1 a:hover {
+    color: #6C1DE9;
+    text-decoration: underline #6C1DE9;
+  }
+  .div-as2 a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s;
+  }
+  .div-as2 a:hover { color: #6C1DE9; }
+  
+  /* Título da seção */
+  .div-ajuda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+  }
+  .div-ajuda p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #696977;
+  }
+  
+  /* FAQ (se usar) */
+  .faq-section { display: flex; flex-direction: column; gap: 35px; }
+  .faq-section .div-faq { display: flex; justify-content: space-between; gap: 30px;}
+  .faq-ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    counter-reset: li-counter;
+  }
+  .faq-li {
+    position: relative;
+    counter-increment: li-counter;
+    display: flex;
+    align-items: center;
+  }
+  .faq-li::before {
+    font-size: 14px;
+    content: counter(li-counter) ". ";
+    font-weight: bold;
+    margin-right: 10px;
+    color: #696977;
+  }
+  .faq-a {
+    font-size: 14px;
+    color: #696977;
+    transition: color 0.1s;
+  }
+  .faq-a:hover {
+    color: #6C1DE9;
+    text-decoration: underline #6C1DE9;
+  }
