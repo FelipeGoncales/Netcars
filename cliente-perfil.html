@@ -45,8 +45,8 @@
                 <a href="veiculos.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar Veiculo</a>
                 <a id="link_minhaConta" class="selecionado"><i class="fa-solid fa-user"></i>Minha Conta</a>
                 <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
+                <a id="link_financiamento"><i class="fa-solid fa-handshake"></i>Parcelamento</a>
                 <a id="link_hCompras"><i class="fa-solid fa-clock-rotate-left"></i>Historico de Compras</a>
-                <a id="link_financiamento"><i class="fa-solid fa-handshake"></i>Financiamento</a>
                 <a id="link_ajuda"><i class="fa-solid fa-circle-question"></i>FAQ</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
@@ -103,48 +103,8 @@
 
             <!-- Div Histórico de Compras -->
             <div id="historico-compras">
-                <h3>Histórico de compras</h3>
                 <div class="div-carrossel">
-                    <div class="conteudo">
-                        <!-- começo dos cards -->
-                        <div class="card">
-                            <div class="itens-card">
-                                <h3>Ford Fiesta</h3>
-                                <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
-                                <div class="container-info-card">
-                                    <div class="info-card">
-                                        <i class="fa-solid fa-calendar-days"></i>
-                                        <p>2012</p>
-                                        <i class="fa-solid fa-gauge-high"></i>
-                                        <p>128.763 Km</p>
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Birigui (SP)</p>
-                                    </div>
-                                </div>
-                                <h3>R$21.900 </h3>
-                                <button id="link_carro">Ver detalhes</button>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="itens-card">
-                                <h3>Ford Fiesta</h3>
-                                <p>1.6 MPI CLASS SEDAN 8V FLEX 4P MANUAL</p>
-                                <div class="container-info-card">
-                                    <div class="info-card">
-                                        <i class="fa-solid fa-calendar-days"></i>
-                                        <p>2012</p>
-                                        <i class="fa-solid fa-gauge-high"></i>
-                                        <p>128.763 Km</p>
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Birigui (SP)</p>
-                                    </div>
-                                </div>
-                                <h3>R$21.900 </h3>
-                                <button id="link_carro">Ver detalhes</button>
-                            </div>
-                        </div>
-                        <!-- Fim dos cards -->
-                    </div>
+                    <div class="conteudo" id="div-historico-compras"></div>
                 </div>
             </div>
 
@@ -160,37 +120,17 @@
                             </div>
                             <div class="card-ajuda">
                                 <i class="fa-solid fa-cart-shopping i-ajuda"></i>
-                                <p> Comprar</p>
+                                <p></p>Comprar</p>
                             </div>
                             <div class="card-ajuda">
                                 <i class="fa-solid fa-handshake i-ajuda"></i>
-                                <p>Financiamento</p>
+                                <p>Parcelamento</p>
                             </div>
                             <div class="card-ajuda">
                                 <i class="fa-solid fa-screwdriver-wrench i-ajuda"></i>
                                 <p>Manutenção</p>
                             </div>
                         </div>
-                        <div class="container-card-ajuda">
-                            <div class="card-ajuda">
-                                <i class="fa-solid fa-shield-halved i-ajuda"></i>
-                                <p>Segurança</p>
-                            </div>
-                            <div class="card-ajuda">
-                                <i class="fa-solid fa-users i-ajuda"></i>
-                                <p>Sobre nós</p>
-                            </div>
-                            <div class="card-ajuda">
-                                <i class="fa-solid fa-file-alt i-ajuda"></i>
-                                <p>Documentação</p>
-                            </div>
-                            <div class="card-ajuda">
-                                <i class="fa-solid fa-headset
-                                i-ajuda"></i>
-                                <p>Suporte</p>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -201,6 +141,7 @@
                     <div class="conteudo" id="div-reservas"></div>
                 </div>
             </div>
+
             <!-- Div parcelas a pagar -->
             <div id="parcelas" style="max-width: 100%;">
                 <div style="width: 90%;position: relative;left: 5%;">
@@ -210,33 +151,33 @@
                                     class="fa-solid fa-arrow-left"></i></button>
                             <select id="status-select">
                                 <option value="">Status</option>
-                                <option value="1">Pago</option>
-                                <option value="0">Não pago</option>
+                                <option value="Paga">Paga</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Vencida">Vencida</option>
                             </select>
                         </div>
 
-                        <button id="pagarParcela" class="cad-user2">Pagar parcela </button>
+                        <button id="pagarParcela" class="cad-user2">Pagar parcela</button>
                     </div>
                     <div class="table-container">
-                        <table class="user-table">
+                        <table class="parcelas-table">
                             <thead>
                                 <tr>
-                                    <th><i class="fa-solid fa-user"></i></th>
-                                    <th>Parcela</th>
+                                    <th>N°</th>
                                     <th>Valor parcela</th>
                                     <th>Valor amortizado</th>
                                     <th>Data de vencimento</th>
                                     <th>Data de pagamento</th>
-                                    <th><i class="fa-solid fa-coins"></i></th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody-users"></tbody>
+                            <tbody id="tbody-parcelas"></tbody>
                         </table>
                     </div>
                     <div>
 
                     </div>
-                </div>  
+                </div>
             </div>
 
             <!-- Modal comprar -->
@@ -248,11 +189,6 @@
                         <p>Pix</p>
                         <i class="fa-brands fa-pix"></i>
                     </div>
-
-                    <div class="div-fpagamento" id="btn-boleto">
-                        <p>Boleto</p>
-                        <i class="fa-solid fa-file-invoice"></i>
-                    </div>
                 </div>
             </div>
 
@@ -263,69 +199,62 @@
                 <div class="div-qrcode">
                     <!-- Imagem qr code pix -->
                     <div id="img-qrcode"></div>
-                    <p>Um email com mais informações para a compra do veículo foi enviado para <span id="email-cliente-compra">email@gmail.com</span></p>
+                    <p>Um email com mais informações para a compra do veículo foi enviado para <span
+                            id="email-cliente-compra">email@gmail.com</span></p>
                 </div>
                 <button>Confirmar compra</button>
             </div>
-            <!-- existem duas divs: #semFinanciamento, #financiamento (se houver algum financiamento aparecerá #financiamento caso contrário #semFinanciamento) -->
-            <!-- Div de Financiamento (versão sem financiamento) -->
-            <div id="semFinanciamento">
-                <div class="div-carrossel">
-                    <div class="conteudo" id="div-reservas">
-                        <div class="div-pai">
-                            <i class="fa-solid fa-thumbs-down icon" aria-hidden="true"></i>
-                            <p class="nada-encontrado">Você ainda não possui nenhum financiamento.</p>
-                            <a href="veiculos.html" class="buscar-btn">
-                                Buscar veículos <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- Div de Financiamento -->
             <div class="container-financiamento" id="financiamento">
-                <div class="pai-financiamento">
-                    <div class="container-car-financia">
-                        <div class="container-card-car-financia">
-                            <div class="card-car-financia"><img src="./assets/img/logo-icon-navegador.png" alt=""></div>
-                            <div class="div-car-p1">
-                                <div class="div-car-p2">
-                                    <p>HONDA <span>CIVIC</span></p>
+                <div class="div-carrossel">
+                    <div class="conteudo" id="div-financiamento">
+                        <div class="pai-financiamento">
+                            <div class="container-car-financia">
+                                <div class="container-card-car-financia">
+                                    <div class="card-car-financia"><img src="./assets/img/logo-icon-navegador.png"
+                                            alt="logo NetCars"></div>
+                                    <div class="div-car-p1">
+                                        <div class="div-car-p2">
+                                            <p id="marca-financ"></p>
+                                        </div>
+                                        <p id="versao-financ"></p>
+                                        <p id="ano-financ"></p>
+                                    </div>
                                 </div>
-                                <p>4P FLEX MP 1.6</p>
-                                <p>2023/2024</p>
+                                <div>
+                                    <div class="div-car-p3">
+                                        <p class="qnt-parcelas-financ"></p>
+                                        <p class="price valor-total-financ"></p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div class="div-car-p3">
-                                <p>60 parcelas</p>
-                                <p class="price">R$ 130.000,00</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="div-card-financia">
-                        <div id="link_parcelas" class="card-financia">
-                            <i class="fa-solid fa-circle-plus i-financia"></i>
-                            <p>Parcelas a pagar</p>
+                            <div class="div-card-financia">
+                                <div id="parcelas_a_pagar" class="card-financia">
+                                    <i class="fa-solid fa-circle-plus i-financia"></i>
+                                    <p>Parcelas a pagar</p>
+                                </div>
+                                <div id="parcelas_pagas" class="card-financia">
+                                    <i class="fa-regular fa-clock i-financia"></i>
+                                    <p>Parcelas pagas</p>
+                                </div>
+                                <div id="ver_veiculo_financiamento" class="card-financia">
+                                    <i class="fa-solid fa-car i-financia"></i>
+                                    <p>Ver veículo</p>
+                                </div>
+                            </div>
+
+                            <div class="div-car-p4">
+                                <p class="qnt-parcelas-financ"></p>
+                                <p class="price valor-total-financ"></p>
+                            </div>
                         </div>
-                        <div id="link_parcelas2" class="card-financia">
-                            <i class="fa-regular fa-clock i-financia"></i>
-                            <p>Parcelas pagas</p>
-                        </div>
-                        <div id="link_parcelas3" class="card-financia">
-                            <i class="fa-solid fa-car i-financia"></i>
-                            <p>Ver veículo</p>
-                        </div>
-                    </div>
-                    
-                    <div class="div-car-p4">
-                        <p>60 parcelas</p>
-                        <p class="price">R$ 130.000,00</p>
                     </div>
                 </div>
             </div>
-        <div class="overlay-bg" id="overlay-bg"></div>
+
+            <div class="overlay-bg" id="overlay-bg"></div>
         </section>
 
         <!-- Div Alert Message -->

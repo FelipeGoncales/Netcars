@@ -312,18 +312,26 @@
 
                         <p class="mensagem" id="mensagem-user">Gostou do veículo? Reserve já!</p>
                         <p class="mensagem" id="mensagem-adm">Editou seu anúncio? Salve suas alterações!</p>
-                        <p class="mensagem" id="mensagem-reserva">Não deseja mais o veículo? Cancele sua reserva :(</p>
+                        <p class="mensagem" id="mensagem-reserva">Gostou do veículo? Finalize sua compra!</p>
+                        <p class="mensagem" id="mensagem-vendido-cliente">Obrigado por adquirir seu veículo conosco!</p>
+                        <p class="mensagem" id="mensagem-vendido-adm">Esse veículo já foi vendido!</p>
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
                             <button class="salvar-btn" id="salvar-alteracoes" disabled>Salvar alterações</button>
                             <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
                         </div>
+
+                        <div class="div-buttons vendido" id="div-button-vendido-adm">
+                            <button class="salvar-btn ver-detalhes" id="ver-detalhes"></button>
+                        </div>
+
                         <div class="div-buttons cancelar-reserva" id="div-button-cancelar-reserva">
                             <button class="comprar-btn" >Compre Já!</button>
                             <button class="salvar-btn" id="cancelar-reserva">
                                 <i class="fa-solid fa-ban"></i>
                             </button>
                         </div>
+
                         <div class="div-buttons cliente" id="div-button-cliente">
                             <button class="comprar-btn" >Compre Já!</button>
                             <button class="salvar-btn reservar-cliente" id="reservar-btn"><i class="fa-solid fa-calendar-check"></i></button>
@@ -481,7 +489,7 @@
             </div>
 
             <div class="div-fpagamento" id="btn-financiamento">
-                <p>Financiamento</p>
+                <p>Parcelamento/p>
                 <i class="fa-solid fa-handshake"></i>
             </div>
         </div>
@@ -502,7 +510,7 @@
     <!-- Modal finaciamento -->
     <div class="modal-financiamento" id="modal-financiamento">
         <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
-        <p class="title-forma">Financiamento</p>
+        <p class="title-forma">Parcelamento</p>
         
         <div class="div-input-info">
             <label class="valor-title">Valor de entrada:</label>
@@ -520,7 +528,7 @@
         </div>
 
         <button id="pay-parcelas">Gerar parcelas</button>
-        <p id="visualizar-parcelas" class="disabled">Visualizar parcelas</p>
+        <p id="visualizar-parcelas">Visualizar parcelas</p>
     </div>
 
     <!-- Modal visualizar parcelas -->

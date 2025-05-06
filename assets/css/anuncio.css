@@ -339,6 +339,10 @@ main {
             color: var(--roxo);
             background-color: var(--cor-bg);
         }
+
+        &.ver-detalhes {
+            width: 100%;
+        }
     }
 
     & .comprar-btn {
@@ -866,15 +870,6 @@ main {
             color: var(--roxo);
             text-decoration: underline;
         }
-
-        &.disabled {
-            color: var(--cor-texto-apagado);
-            &:hover {
-                cursor: not-allowed;
-                color: var(--cor-texto-apagado);
-                text-decoration: none;
-            }
-        }
     }
 }
 
@@ -1106,11 +1101,15 @@ main {
         }
 
         & input {
-            border: 3px solid #EDECF2;
+            border: 1px solid var(--cor-texto-apagado);
             padding: 10px 15px;
             border-radius: 10px;
             font-size: 0.9rem;
             width: 100%;
+            &:focus {
+                border: 1px solid var(--hover-roxo);
+                outline: none;
+            }
         }
     }
 

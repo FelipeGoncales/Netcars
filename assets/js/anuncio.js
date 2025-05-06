@@ -348,45 +348,47 @@ formatarPreco('#input-preco-venda');
 async function alterarBotao() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'))
 
+    // Caso exista dadosUser
     if (dadosUser) {
         await obterTipoUser();
 
         if (tipoUser === 2 || tipoUser === 1) {
+            // Função para mudar o botão para do adm
             $('#div-button-vendedor').css('display', 'flex');
             $('#div-button-cliente').css('display', 'none');
+            $('#div-button-vendido-cliente').css('display', 'none');
+            $('#div-button-vendido-adm').css('display', 'none');
             $('#div-button-cancelar-reserva').css('display', 'none');
 
-            // Função para mudar a frase que aparece caso seja cliente ou usuário
+            // Função para mudar a mensagem para o adm
             $('#mensagem-user').css('display', 'none');
             $('#mensagem-adm').css('display', 'flex');
+            $('#mensagem-vendido-cliente').css('display', 'none');
+            $('#mensagem-vendido-adm').css('display', 'none');
             $('#mensagem-reserva').css('display', 'none');
 
             $('#div-icons-actions').css('display', 'flex');
-        } else {
-            $('#div-button-vendedor').css('display', 'none');
-            $('#div-button-cliente').css('display', 'flex');
-            $('#div-button-cancelar-reserva').css('display', 'none');
-
-            // Função para mudar a frase que aparece caso seja cliente ou usuário
-            $('#mensagem-user').css('display', 'flex');
-            $('#mensagem-adm').css('display', 'none');
-            $('#mensagem-reserva').css('display', 'none');
-
-            $('#div-icons-actions').css('display', 'none');
+            
+            // Retorna
+            return;
         }
-
-    } else {
-        $('#div-button-vendedor').css('display', 'none');
-        $('#div-button-cliente').css('display', 'flex');
-        $('#div-button-cancelar-reserva').css('display', 'none');
-
-        // Função para mudar a frase que aparece caso seja cliente ou usuário
-        $('#mensagem-user').css('display', 'flex');
-        $('#mensagem-adm').css('display', 'none');
-        $('#mensagem-reserva').css('display', 'none');
-
-        $('#div-icons-actions').css('display', 'none');
     }
+
+    // Função para mudar o botão para cancelar reserva
+    $('#div-button-vendedor').css('display', 'none');
+    $('#div-button-cliente').css('display', 'flex');
+    $('#div-button-vendido-cliente').css('display', 'none');
+    $('#div-button-vendido-adm').css('display', 'none');
+    $('#div-button-cancelar-reserva').css('display', 'none');
+
+    // Função para mudar a frase que aparece caso seja o cliente que reservou
+    $('#mensagem-user').css('display', 'flex');
+    $('#mensagem-adm').css('display', 'none');
+    $('#mensagem-vendido-cliente').css('display', 'none');
+    $('#mensagem-vendido-adm').css('display', 'none');
+    $('#mensagem-reserva').css('display', 'none');
+
+    $('#div-icons-actions').css('display', 'none');
 }
 
 // Função para carregar os estados do IBGE
@@ -518,6 +520,7 @@ $('#manutencao-prox').click(function () {
 // Cria a lista de manutenções
 var LISTA_MANUTENCOES;
 var INDEX_MANUTENCAO;
+var TODOS_SERVICOS = [];
 
 // Função para inserir os dados da manutenção dependendo do index
 async function inserirDadosManutencao(id_manu) {
@@ -965,8 +968,103 @@ $('#fecharModalEditarServico').click(function () {
     $('#formEditarServico').css('display', 'none');
 })
 
-// Enviar form de editar serviço
-$('#formEditarServico').on('submit', function (e) {
+$('#fecharModalEditarServico').click(function () {
+    $('.modal-manu').css('display', 'flex');
+    $('#formEditarServico').css('display', 'none');
+})
+
+// Função para inicializar o carregamento de serviços quando a página carrega
+$(document).ready(function() {
+    // Carrega todos os serviços disponíveis para o select
+    carregarTodosServicos();
+
+    $(document).on('change', '#select-servico', function() {
+        atualizarValorServico();
+    });
+});
+
+// Função para carregar todos os serviços do banco para o select
+function carregarTodosServicos() {
+    // Obtém o item do local storage
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+
+    // Verifica se existe os dados do usuário
+    if (!dadosUser) {
+        alertMessage("Usuário não autenticado. Redirecionando para o login...", "error");
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 2000);
+        return;
+    }
+
+    // Acessa a função de obter todos os serviços cadastrados
+    try {
+        $.ajax({
+            url: `${BASE_URL}/servicos`, // Endpoint para obter todos os serviços cadastrados
+            headers: {
+                "Authorization": "Bearer " + dadosUser.token
+            },
+            success: function(response) {
+                // Salva todos os serviços na lista global
+                TODOS_SERVICOS = response.servicos;
+
+                // Preenche o select com as opções
+                preencherSelectServicos();
+            },
+            error: function(response) {
+                // Exibe mensagem de erro
+                alertMessage(response.responseJSON?.error || "Erro ao carregar serviços", 'error');
+            }
+        });
+    } catch (error) {
+        console.error("Erro ao carregar serviços:", error);
+        alertMessage("Erro ao carregar serviços.", 'error');
+    }
+}
+
+// Função para preencher o select com os serviços disponíveis
+function preencherSelectServicos() {
+    // Verifica se o elemento existe
+    if ($('#select-servico').length === 0) {
+        console.warn("Elemento select-servico não encontrado");
+        return;
+    }
+    
+    // Limpa o select exceto a primeira opção
+    $('#select-servico').find('option:not(:first)').remove();
+    
+    // Adiciona cada serviço como uma opção no select
+    TODOS_SERVICOS.forEach(servico => {
+        const $option = $('<option>')
+            .val(servico.id_servicos)
+            .text(servico.descricao)
+            .attr('data-valor', servico.valor);
+            
+        $('#select-servico').append($option);
+    });
+}
+
+// Função para atualizar o valor do serviço quando um serviço é selecionado
+function atualizarValorServico() {
+    const servicoId = $('#select-servico').val();
+    
+    if (!servicoId) {
+        $('#valor-servico').val('R$ 0,00');
+        return;
+    }
+    
+    // Encontra o serviço selecionado
+    const servicoSelecionado = TODOS_SERVICOS.find(s => s.id_servicos == servicoId);
+    
+    if (servicoSelecionado) {
+        // Atualiza o campo de valor
+        $('#valor-servico').val(formatarValor(servicoSelecionado.valor));
+    }
+}
+
+// Modificação da função de envio do formulário de adicionar serviço
+// Substitui o handler existente
+$('#formAddServico').off('submit').on('submit', function(e) {
     e.preventDefault();
 
     // Obtém dados user
@@ -974,40 +1072,62 @@ $('#formEditarServico').on('submit', function (e) {
 
     if (!dadosUser) {
         window.location.href = "login.html";
+        return;
     }
 
-    const data = new FormData(this);
+    const servicoId = $('#select-servico').val();
+    
+    if (!servicoId) {
+        alertMessage('Selecione um serviço', 'error');
+        return;
+    }
+    
+    // Encontra o serviço selecionado
+    const servicoSelecionado = TODOS_SERVICOS.find(s => s.id_servicos == servicoId);
+    
+    if (!servicoSelecionado) {
+        alertMessage('Serviço não encontrado', 'error');
+        return;
+    }
 
     let envia = {
-        "descricao": data.get('descricao-editar-servico'),
-        "valor": desformatarPreco(data.get('valor-editar-servico')),
-        "id_servicos": data.get('id-editar-servico')
-    }
+        "descricao": servicoSelecionado.descricao,
+        "valor": servicoSelecionado.valor,
+        "id_manutencao": $('#input-id-manutencao').val(),
+        "id_servico": servicoId  // Adicionando o ID do serviço selecionado
+    };
 
     $.ajax({
-        method: "PUT",
+        method: "POST",
         url: `${BASE_URL}/servicos`,
         data: JSON.stringify(envia),
         contentType: "application/json",
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function (response) {
+        success: function(response) {
             // Exibe o modal de manutenção
+            $('#formAddServico').css('display', 'none');
             $('.modal-manu').css('display', 'flex');
-            $('#formEditarServico').css('display', 'none');
+
+            // Limpa o select e o valor
+            $('#select-servico').val('');
+            $('#valor-servico').val('R$ 0,00');
 
             // Salva o id da manutenção no local storage
             localStorage.setItem('idManutencao', LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao);
 
             // Recarregando a página
             carregarManutencao();
+            
+            // Exibe mensagem de sucesso
+            alertMessage(response.success || "Serviço adicionado com sucesso", 'success');
         },
-        error: function (response) {
+        error: function(response) {
             alertMessage(response.responseJSON.error, 'error');
         }
-    })
-})
+    });
+});
 
 // "Excluir" (inativar) serviço da manutenção
 $('#excluir-servico').click(function () {
@@ -1417,7 +1537,11 @@ $(document).ready(function () {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                 },
                 success: function(response) {
-                    alertMessage(response.success, 'success');
+                    // Define uma mensagme para ser exibida na página de perfil
+                    localStorage.setItem("msgReserva", response.success);
+                    // Redireciona para a página de perfil
+                    window.location.href = "cliente-perfil.html";
+                    return;
                 },
                 error: function(response) {
                     alertMessage(response.responseJSON.error, 'error');
@@ -1436,7 +1560,40 @@ $(document).ready(function () {
             cancelButtonColor: "#f71445",
             confirmButtonText: "Confirmar"
         }).then((result) => {
-            // Lógica para financiar no banco
+             // Botém o tipo do veículo e o id_veic
+             let tipo_veic_numerico = TIPO_VEIC == 'carro' ? 1 : 2;
+             let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
+             let entrada = parseFloat(desformatarPreco($('#input-entrada').val()).toFixed(2));
+             let qnt_parcelas = extrairNumeros($('#select-parcelas').val());
+
+             let envia = {
+                "id_veiculo": parseInt(id_veic),
+                "tipo_veiculo": parseInt(tipo_veic_numerico),
+                "entrada": entrada,
+                "qnt_parcelas": parseInt(qnt_parcelas)
+            }
+
+            console.log(envia)
+ 
+             $.ajax({
+                 method: 'POST',
+                 url: `${BASE_URL}/financiamento`,
+                 data: JSON.stringify(envia),
+                 contentType: "application/json",
+                 headers: {
+                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+                 },
+                 success: function (response) {
+                     // Define uma mensagme para ser exibida na página de perfil
+                     localStorage.setItem("msgReserva", response.success);
+                     // Redireciona para a página de perfil
+                     window.location.href = "cliente-perfil.html";
+                     return;
+                 },
+                 error: function (response) {
+                     alertMessage(response.responseJSON.error, 'error');
+                 }
+             })
         })
     })
 
