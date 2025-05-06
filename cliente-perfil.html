@@ -151,6 +151,7 @@
                                     class="fa-solid fa-arrow-left"></i></button>
                             <select id="status-select">
                                 <option value="">Todas</option>
+                                <option value="Amortizada">Amortizada</option>
                                 <option value="Paga">Paga</option>
                                 <option value="Pendente">Pendente</option>
                                 <option value="Vencida">Vencida</option>
@@ -180,9 +181,9 @@
                 </div>
             </div>
 
-            <!-- Modal comprar -->
-            <div class="modal-comprar" id="modal-pagar-parcela">
-                <i class="fa-solid fa-xmark btn-fechar-financiamento"></i>
+            <!-- Modal pagar parcela -->
+            <div class="modal-pagar-parcela" id="modal-pagar-parcela">
+                <i class="fa-solid fa-xmark btn-fechar-pagar-parcela"></i>
                 <p class="title-forma">Forma de pagamento</p>
                 <div class="div-pagar">
                     <div class="div-fpagamento" id="parcela-mais-recente">
@@ -198,15 +199,17 @@
 
             <!-- Modal pix -->
             <div class="modal-pix" id="modal-pix">
-                <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
+                <i class="fa-solid fa-arrow-left voltar-modal-pagar-parcela"></i>
                 <p class="title-forma">QR Code</p>
                 <input type="hidden" id="input-id-parcela">
+                <input type="hidden" id="input-amortizada">
                 <div class="div-qrcode">
                     <!-- Imagem qr code pix -->
+                    <div id="loading-img-qrcode"></div>
                     <div id="img-qrcode"></div>
                     <p>Um email com mais informações para o pagamento da parcela foi enviado para <span id="email-cliente-compra"></span></p>
                 </div>
-                <button id="confirmar-pagamento-parcela">Confirmar pagamento</button>
+                <button id="confirmar-pagamento-parcela" disabled>Confirmar pagamento</button>
             </div>
 
             <!-- Div de Financiamento -->

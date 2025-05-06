@@ -1126,7 +1126,7 @@ tbody tr.tipo2 {
     display: flex;
 }
 /* Botão de voltar e fechar */
-.btn-fechar-financiamento {
+.btn-fechar-pagar-parcela {
     position: absolute;
     top: 25px;
     right: 25px;
@@ -1140,7 +1140,7 @@ tbody tr.tipo2 {
     }
 }
 
-.voltar-modal-compra{
+.voltar-modal-pagar-parcela {
     position: absolute;
     top: 25px;
     left: 25px;
@@ -1154,7 +1154,7 @@ tbody tr.tipo2 {
     }
 }
 /* MODAL COMPRAR */
-.modal-comprar {
+.modal-pagar-parcela {
     display: none;
     background: #ffffff;
     padding: 60px;
@@ -1231,7 +1231,7 @@ tbody tr.tipo2 {
 
 /* RESPONSIVO MODAL COMPRAR */
 @media (max-width: 820px) {
-    .modal-comprar {
+    .modal-pagar-parcela {
         width: 90vw;
     }
 
@@ -1397,13 +1397,20 @@ tbody tr.tipo2 {
         justify-content: center;
         gap: 10px;
 
-        & #img-qrcode {
+        & #loading-img-qrcode {
             width: 250px;
             height: 250px;
             border-radius: 10px;
             background-color: var(--cor-texto-apagado);
             transition: 0.2s;
             animation: piscarCorDeFundo 1.8s infinite ease-in-out;
+        }
+
+        & #img-qrcode {
+            display: none;
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -1434,6 +1441,12 @@ tbody tr.tipo2 {
         &:hover {
             background-color: var(--hover-roxo);
         }
+
+        &:disabled {
+            background-color: #e3e3e3;
+            color: #b6b6b6;
+            cursor: not-allowed;
+        }
     }
 }
 
@@ -1449,8 +1462,13 @@ tbody tr.tipo2 {
     }
 }
 
-
-
+/* RESPONSIVO MODAL PIX */
+@media (max-width: 620px) {
+    .modal-pix {
+        width: 90vw;
+        padding: 30px;
+    }
+}
 
 .modal-finaciamento {
     display: none;
