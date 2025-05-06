@@ -742,7 +742,6 @@ $('#salvar-manu').click(function () {
 
     // Caso não exista, cria uma manutneção
     if (!id_manutencao) {
-        console.log('n tem manutencao')
         let envia = {
             "id_veic": TIPO_VEIC == 'carro' ? id_carro : id_moto,
             "tipo_veic": TIPO_VEIC,
@@ -1571,8 +1570,6 @@ $(document).ready(function () {
                     "entrada": entrada,
                     "qnt_parcelas": parseInt(qnt_parcelas)
                 }
-
-                console.log(envia)
 
                 $.ajax({
                     method: 'POST',
