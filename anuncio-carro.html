@@ -573,15 +573,18 @@
     <form id="formAddServico">
         <i class="fa-solid fa-arrow-left" id="fecharModalAddServico"></i>
         <p class="p-title">Adicionar serviço</p>
-        <!-- Div descrição serviço -->
+        <!-- Div seleção de serviço -->
         <div class="div-input">
-            <label for="descricao-servico">Descrição</label>
-            <input name="descricao-servico" id="descricao-servico" type="text"></p>
+            <label for="select-servico">Selecione o serviço</label>
+            <select name="select-servico" id="select-servico">
+                <option value="">Selecione um serviço</option>
+                <!-- Opções serão carregadas dinamicamente -->
+            </select>
         </div>
-        <!-- Div valor serviço -->
+        <!-- Div valor serviço (somente leitura) -->
         <div class="div-input">
             <label for="valor-servico">Valor</label>
-            <input name="valor-servico" id="valor-servico" type="text" value="R$ 0,00" />
+            <input name="valor-servico" id="valor-servico" type="text" value="R$ 0,00" readonly />
         </div>
         <button type="submit">Adicionar serviço</button>
     </form>
