@@ -255,58 +255,104 @@ $(document).ready(function () {
         carregarServicos();
     });
 
-    // Adiciona formatação automática de valor monetário aos inputs
-    // Para o input de adicionar serviço
-    $('#input-valor').on('blur', function () {
-        let valor = $(this).val();
-        if (valor) {
-            // Converte para número e formata
-            valor = desformatarPreco(valor);
-            $(this).val(formatarValor(valor));
-        }
-    });
+    
+    // Configuração revisada do input de valor principal
+    $('#input-valor')
+        .on('focus', function() {
+            if ($(this).val() === '') {
+                $(this).val('R$ ');
+            } else {
+                const valorNumerico = desformatarPreco($(this).val());
+                $(this).val('R$ ' + valorNumerico.toFixed(2).replace('.', ','));
+            }
+        })
+        .on('input', function(e) {
+            let raw = $(this).val().replace('R$ ', '');
+            
+            // Permite vírgula e converte ponto para vírgula
+            raw = raw.replace(/[^\d,]/g, '')
+                    .replace(/\./g, ','); // Novo: converte pontos em vírgulas
 
-    // Para o input de editar serviço (quando for criado dinamicamente)
-    $(document).on('blur', '#valor-editar-servico', function () {
-        let valor = $(this).val();
-        if (valor) {
-            // Converte para número e formata
-            valor = desformatarPreco(valor);
-            $(this).val(formatarValor(valor));
-        }
-    });
+            // Gerencia múltiplas vírgulas
+            const partes = raw.split(',');
+            if (partes.length > 2) {
+                raw = partes[0] + ',' + partes.slice(1).join('');
+            }
 
-    // Ação do botão de adicionar serviço
+            // Formatação dinâmica
+            let inteira = partes[0].replace(/\D/g, '');
+            inteira = inteira === '' ? '0' : inteira;
+            inteira = parseInt(inteira).toLocaleString('pt-BR');
+            
+            let decimal = partes[1] ? partes[1].substring(0, 2) : '';
+            
+            // Montagem do novo valor
+            let novoValor = 'R$ ' + inteira;
+            if (raw.includes(',')) novoValor += ',' + decimal;
+
+            $(this).val(novoValor);
+        })
+        .on('keypress', function(e) {
+            // Permite vírgula apenas uma vez
+            if (e.key === ',' || e.key === '.') {
+                if ($(this).val().includes(',')) {
+                    e.preventDefault();
+                } else {
+                    e.key === '.' ? $(this).val($(this).val() + ',') : null;
+                }
+            }
+        });
+
+    // Configuração dinâmica para inputs de edição
+    $(document)
+        .on('focus', '#valor-editar-servico', function() {
+            $(this).val('R$ ' + desformatarPreco($(this).val()).toFixed(2).replace('.', ','));
+        })
+        .on('input', '#valor-editar-servico', function() {
+            $(this).val(formatarValorDinamico($(this).val()));
+        })
+        .on('blur', '#valor-editar-servico', function() {
+            const valor = $(this).val();
+            $(this).val(valor.endsWith(',') ? valor + '00' : valor);
+        });
+
+    // Função auxiliar para formatação dinâmica
+    function formatarValorDinamico(valor) {
+        return valor.replace('R$ ', '')
+                   .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+                   .replace(/(,.*?)\d*/g, '$1');
+    }
+
+    // Função auxiliar para posicionar cursor
+    function setCaretPosition(elem, pos) {
+        elem.setSelectionRange(pos, pos);
+    }
+
+    // Restante do código mantido
     $('#add-servico').click(function () {
         adicionarServico();
     });
 
-    // Ação para editar serviço (delegação de evento para elementos criados dinamicamente)
     $(document).on('click', '.editarServico', function () {
         const idServico = $(this).attr('id_servico');
         abrirModalEditarServico(idServico);
     });
 
-    // Ação para fechar o modal de edição
     $('#fecharModalEditarServico').click(function () {
         $('#formEditarServico').hide();
     });
 
-    // Ação do formulário de edição de serviço
     $('#formEditarServico').submit(function (e) {
         e.preventDefault();
         salvarEdicaoServico();
     });
 
-    // Ação do botão de excluir serviço
     $('#excluir-servico').click(function () {
         excluirServico();
     });
 
-    // Esconde o modal de edição inicialmente
     $('#formEditarServico').hide();
 
-    // Se houver um ID de manutenção na URL, captura-o
     const urlParams = new URLSearchParams(window.location.search);
     const idManutencao = urlParams.get('id_manutencao');
     if (idManutencao) {
@@ -316,9 +362,15 @@ $(document).ready(function () {
     }
 });
 
+// Função para envio ao banco (exemplo)
+function enviarParaBanco() {
+    const valorParaBanco = desformatarPreco($('#input-valor').val());
+    console.log('Valor enviado:', valorParaBanco); // Exemplo: 1234.56
+}
+
 // Função para carregar todos os serviços cadastrados
 async function carregarServicos() {
-    // Obtém o item do local storage
+    // Obtém o item do local storage    
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     // Verifica se existe os dados do usuário
@@ -447,7 +499,11 @@ function inserirServicosTabela() {
         $tdIcon.append($icone);
 
         const $tdDescricao = $('<td>').text(LISTA_SERVICOS[index].descricao).addClass('descricao-td');
-        const $tdValor = $('<td>').text(formatarValor(LISTA_SERVICOS[index].valor)).addClass('valor-td');
+        const valorNumerico = LISTA_SERVICOS[index].valor;
+        const valorFormatado = formatarValor(typeof valorNumerico === 'string'
+            ? valorNumerico.replace('.', ',')
+            : valorNumerico.toFixed(2).replace('.', ','));
+        const $tdValor = $('<td>').text(valorFormatado).addClass('valor-td');
 
         $tr.append($tdIcon)
             .append($tdDescricao)
@@ -558,12 +614,8 @@ function salvarEdicaoServico() {
 
     $.ajax({
         method: "PUT",
-        url: `${BASE_URL}/servicos`,
-        data: JSON.stringify({
-            id_servicos: idServico,
-            descricao,
-            valor
-        }),
+        url: `${BASE_URL}/servicos/${idServico}`, // ID na URL
+        data: JSON.stringify({ descricao, valor }), // Remova id_servicos do body
         contentType: "application/json",
         headers: {
             "Authorization": "Bearer " + dadosUser.token
@@ -590,6 +642,7 @@ function salvarEdicaoServico() {
 function excluirServico() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     const idServico = $('#id-editar-servico').val();
+    
     if (!dadosUser || !idServico) {
         alertMessage('Operação inválida', 'error');
         return;
@@ -602,34 +655,32 @@ function excluirServico() {
             headers: { "Authorization": "Bearer " + dadosUser.token },
             success: function (response) {
                 fecharModalEditarServico();
-                if (ID_MANUTENCAO_ATUAL) {
-                    carregarServicosManutencao(ID_MANUTENCAO_ATUAL);
-                } else {
-                    carregarServicos();
-                }
+                // Recarrega os dados conforme contexto
+                ID_MANUTENCAO_ATUAL 
+                    ? carregarServicosManutencao(ID_MANUTENCAO_ATUAL)
+                    : carregarServicos();
                 alertMessage(response.success, 'success');
             },
-            error: function (response) {
-                alertMessage(response.responseJSON.error, 'error');
+            error: function (xhr) {
+                // Mensagem mais clara
+                const erro = xhr.responseJSON?.error || 'Erro desconhecido';
+                alertMessage(`Falha ao inativar: ${erro}`, 'error');
             }
         });
     };
 
+    // Confirmação com SweetAlert ou prompt nativo
     if (typeof Swal !== 'undefined') {
         Swal.fire({
-            title: 'Tem certeza?',
-            text: "Esta ação não poderá ser revertida!",
+            title: 'Inativar serviço?',
+            text: "O serviço será marcado como inativo.",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Sim, inativar!',
+            confirmButtonText: 'Confirmar',
             cancelButtonText: 'Cancelar'
-        }).then(result => {
-            if (result.isConfirmed) doDelete();
-        });
+        }).then(result => result.isConfirmed && doDelete());
     } else {
-        if (confirm("Tem certeza que deseja inativar este serviço?")) {
-            doDelete();
-        }
+        confirm("Confirmar inativação?") && doDelete();
     }
 }
 // Binds de evento
@@ -680,42 +731,43 @@ function executarExclusao(idServico, token) {
     });
 }
 
-// Função auxiliar para executar a exclusão
-function executarExclusao(idServico, token) {
-    $.ajax({
-        method: "DELETE",
-        url: `${BASE_URL}/servicos/${idServico}`,
-        headers: {
-            "Authorization": "Bearer " + token
-        },
-        success: function (response) {
-            // Fechar modal
-            $('#formEditarServico').hide();
 
-            // Recarregar serviços da manutenção atual
-            if (ID_MANUTENCAO_ATUAL) {
-                carregarServicosManutencao(ID_MANUTENCAO_ATUAL);
-            } else {
-                carregarServicos();
-            }
-
-            // Exibir mensagem
-            alertMessage(response.success, 'success');
-        },
-        error: function (response) {
-            alertMessage(response.responseJSON.error, 'error');
-        }
-    });
+// Função de formatação (input ativo)
+function formatarValor(valor) {
+    // Converte para string e padroniza vírgula decimal
+    let valorStr = typeof valor === 'number' 
+        ? valor.toFixed(2).replace('.', ',') 
+        : valor.toString().replace('.', ',');
+    
+    // Remove caracteres inválidos
+    let valorLimpo = valorStr.replace(/[^\d,]/g, '');
+    
+    // Divide partes inteira e decimal
+    let [inteira, decimal = ''] = valorLimpo.split(',');
+    
+    // Formatação da parte inteira
+    inteira = inteira.replace(/^0+/, '') || '0';
+    inteira = parseInt(inteira).toLocaleString('pt-BR');
+    
+    // Formatação da parte decimal
+    decimal = decimal.substring(0, 2).padEnd(2, '0');
+    
+    return `R$ ${inteira},${decimal}`;
 }
 
-
-// Função para desformatar preço de R$ para número decimal
-function desformatarPreco(preco) {
-    if (!preco) return 0;
-
-    // Remove o símbolo R$, pontos e substitui vírgula por ponto
-    return parseFloat(preco.replace('R$', '').replace(/\./g, '').replace(',', '.'));
+// Função de desformatação (para envio)
+function desformatarPreco(valorFormatado) {
+    // Remove todos os caracteres não numéricos exceto pontos e vírgulas
+    let valor = valorFormatado.toString()
+        .replace('R$', '')
+        .replace(/\./g, '')
+        .replace(/,/, '.');
+    
+    // Converte para número e valida
+    const numero = parseFloat(valor);
+    return isNaN(numero) ? 0 : Math.max(numero, 0);
 }
+
 
 // Função para mostrar senha quando clicar no olho
 
@@ -1185,31 +1237,6 @@ function obterSiglaEstado(estadoVeiculo) {
             resolve(false);
         }).fail(reject);
     });
-}
-
-// Função para formatar os valores
-function formatarValor(valor) {
-    if (valor === null || valor === undefined || valor === '') {
-        return '';
-    }
-
-    // Converte para número
-    const v = Number(valor);
-    if (isNaN(v)) return '';
-
-    // Guarda o sinal e trabalha com absoluto
-    const sinal = v < 0 ? '-' : '';
-    const abs = Math.abs(v);
-
-    // Parte inteira e decimal
-    const inteiros = Math.floor(abs)
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    const decimais = Math.round((abs - Math.floor(abs)) * 100)
-        .toString()
-        .padStart(2, '0');
-
-    return `R$ ${sinal}${inteiros},${decimais}`;
 }
 
 
