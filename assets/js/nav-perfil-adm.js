@@ -420,52 +420,6 @@ async function carregarServicos() {
     }
 }
 
-// Função para carregar serviços específicos de uma manutenção
-function carregarServicosManutencao(idManutencao) {
-    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-
-    if (!dadosUser) {
-        alertMessage("Usuário não autenticado. Redirecionando para o login...", "error");
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 2000);
-        return;
-    }
-
-    // Define o ID da manutenção atual
-    ID_MANUTENCAO_ATUAL = idManutencao;
-    $('#input-id-manutencao').val(idManutencao);
-
-    // Limpa os inputs e tabela
-    $('#input-obs').val('');
-    $('#input-valor').val('');
-    $('#tbody-servicos').empty();
-
-    // Exibe o loader
-    $('.bg-carregamento-servicos').css('display', 'flex');
-
-    // Obtém os serviços da manutenção específica
-    $.ajax({
-        url: `${BASE_URL}/manutencao_servicos/${idManutencao}`,
-        headers: {
-            "Authorization": "Bearer " + dadosUser.token
-        },
-        success: function (response) {
-            // Salva os serviços na lista
-            LISTA_SERVICOS = response.servicos;
-
-            // Insere os serviços na tabela
-            inserirServicosTabela();
-        },
-        error: function (response) {
-            alertMessage(response.responseJSON.error, 'error');
-        },
-        complete: function () {
-            setTimeout(() => $('.bg-carregamento-servicos').css('display', 'none'), 200);
-        }
-    });
-}
-
 // Função para inserir serviços na tabela
 function inserirServicosTabela() {
     // Limpa os elementos da tabela antes de adicionar novos

@@ -2225,8 +2225,14 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         max-height: 280px;
         overflow-y: auto;
         overflow-x: hidden;
+        & table th, table td {
+            border: 1px solid #c0c0c0;
+            padding: 20px;
+            font-size: 0.8rem;
+            text-align: center;
+        }
     }
-   
+    
     & p {
         font-weight: 600;
         font-size: 1.6em;

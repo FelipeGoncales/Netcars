@@ -1192,78 +1192,110 @@ main {
         color: var(--cor-texto-apagado);
     }
 }
-
 #formAddServico,
 #formEditarServico {
     display: none;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--cor-bg-sec);
+    background-color: white;
     z-index: 112;
     padding: 50px;
-    border-radius: 20px;
-    gap: 20px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-    & .p-title {
-        font-size: 1.4rem;
-        color: var(--cor-texto);
-        font-weight: 600;
-    }
+#formAddServico .p-title,
+#formEditarServico .p-title {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+}
 
-    & .div-input {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
+#formAddServico .div-input,
+#formEditarServico .div-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 12px;
+}
 
-        & input {
-            border: 3px solid #EDECF2;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            width: 300px;
-        }
-    }
+#formAddServico label,
+#formEditarServico label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
 
-    & button {
-        border: none;
-        width: 100%;
-        padding: 15px;
-        border-radius: 99px;
-        cursor: pointer;
-        background-color: var(--roxo);
-        color: var(--cor-bg-sec);
-        font-weight: 600;
-        transition: 0.3s;
+#formAddServico select,
+#formAddServico input,
+#formEditarServico select,
+#formEditarServico input {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    width: 100%;
+    background-color: white;
+}
 
-        &:hover {
-            background-color: var(--hover-roxo);
-        }
+.container-valores {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    margin-bottom: 12px;
+}
 
-        &#excluir-servico {
-            background-color: var(--cor-bg);
-            color: var(--roxo);
+.container-valores .div-input {
+    width: 50%;
+    margin-bottom: 0 !important;
+}
 
-            &:hover {
-                background-color: #dedfe7;
-            }
-        }
-    }
+#formAddServico button,
+#formEditarServico button {
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 8px;
+    background-color: #6A2CF8;
+    color: white;
+    transition: 0.3s;
+}
 
-    & #fecharModalAddServico,
-    #fecharModalEditarServico {
-        position: absolute;
-        top: 25px;
-        left: 25px;
-        color: var(--roxo);
-        font-size: 1.4rem;
-        cursor: pointer;
-    }
+#formAddServico button:hover,
+#formEditarServico button:hover {
+    background-color: #5B20E5;
+}
+
+#excluir-servico {
+    background-color: #F0F0F0 !important;
+    color: #6A2CF8 !important;
+}
+
+#excluir-servico:hover {
+    background-color: #E5E5E5 !important;
+}
+
+#fecharModalAddServico,
+#fecharModalEditarServico {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #6A2CF8;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 

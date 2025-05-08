@@ -290,15 +290,16 @@
                         </div>
 
                         <div class="div-buttons cancelar-reserva" id="div-button-cancelar-reserva">
-                            <button class="comprar-btn" >Compre Já!</button>
+                            <button class="comprar-btn">Compre Já!</button>
                             <button class="salvar-btn" id="cancelar-reserva">
                                 <i class="fa-solid fa-ban"></i>
                             </button>
                         </div>
 
                         <div class="div-buttons cliente" id="div-button-cliente">
-                            <button class="comprar-btn" >Compre Já!</button>
-                            <button class="salvar-btn reservar-cliente" id="reservar-btn"><i class="fa-solid fa-calendar-check"></i></button>
+                            <button class="comprar-btn">Compre Já!</button>
+                            <button class="salvar-btn reservar-cliente" id="reservar-btn"><i
+                                    class="fa-solid fa-calendar-check"></i></button>
                         </div>
                     </div>
                     <div class="div-content-venda-filho2">
@@ -441,7 +442,7 @@
             <p>Comprar motos</p>
         </div>
     </div>
-     
+
     <!-- Modal comprar -->
     <div class="modal-comprar" id="modal-comprar">
         <i class="fa-solid fa-xmark btn-fechar-financiamento"></i>
@@ -458,7 +459,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal pix -->
     <div class="modal-pix" id="modal-pix">
         <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
@@ -466,7 +467,8 @@
         <div class="div-qrcode">
             <!-- Imagem qr code pix -->
             <div id="img-qrcode"></div>
-            <p>Um email com mais informações para a compra do veículo foi enviado para <span id="email-cliente-compra">email@gmail.com</span></p>
+            <p>Um email com mais informações para a compra do veículo foi enviado para <span
+                    id="email-cliente-compra">email@gmail.com</span></p>
         </div>
         <button id="confirmar-compra-pix">Confirmar compra</button>
     </div>
@@ -475,7 +477,7 @@
     <div class="modal-financiamento" id="modal-financiamento">
         <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
         <p class="title-forma">Parcelamento</p>
-        
+
         <div class="div-input-info">
             <label class="valor-title">Valor de entrada:</label>
             <input type="text" name="input-entrada" id="input-entrada">
@@ -498,7 +500,7 @@
     <!-- Modal visualizar parcelas -->
     <div class="modal-parcelas" id="modal-parcelas">
         <i class="fa-solid fa-arrow-left voltar-modal-financiamento"></i>
-        
+
         <p class="title-forma">Parcelas</p>
 
         <div class="table-container parcelas">
@@ -514,7 +516,6 @@
             </table>
         </div>
     </div>
-    
     <!-- Modal manutenção -->
     <div class="modal-manu">
         <div class="bg-carregamento-manu">
@@ -543,7 +544,8 @@
             </div>
             <div class="div-input obs">
                 <label for="input-obs">Observação</label>
-                <input class="input" name="input-obs" id="input-obs" type="text" placeholder="Descreva o que está ocorrendo" required />
+                <input class="input" name="input-obs" id="input-obs" type="text"
+                    placeholder="Descreva o que está ocorrendo" required />
             </div>
             <div class="div-input valor">
                 <label>Valor total</label>
@@ -559,9 +561,11 @@
             <table class="user-table">
                 <thead>
                     <tr>
-                        <th  class="icon-col"><i class="fa-solid fa-screwdriver-wrench"></i></th>
+                        <th class="icon-col"><i class="fa-solid fa-screwdriver-wrench"></i></th>
                         <th>Serviço</th>
-                        <th>Valor</th>
+                        <th>Valor unitário</th>
+                        <th>Quantidade</th>
+                        <th>Valor total</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-servicos"></tbody>
@@ -573,18 +577,26 @@
     <form id="formAddServico">
         <i class="fa-solid fa-arrow-left" id="fecharModalAddServico"></i>
         <p class="p-title">Adicionar serviço</p>
+
         <!-- Div seleção de serviço -->
         <div class="div-input">
             <label for="select-servico">Selecione o serviço</label>
             <select name="select-servico" id="select-servico">
                 <option value="">Selecione um serviço</option>
-                <!-- Opções serão carregadas dinamicamente -->
             </select>
         </div>
-        <!-- Div valor serviço (somente leitura) -->
-        <div class="div-input">
-            <label for="valor-servico">Valor</label>
-            <input name="valor-servico" id="valor-servico" type="text" value="R$ 0,00" readonly />
+        <div class="container-valores">
+            <!-- Div valor serviço (somente leitura) -->
+            <div class="div-input">
+                <label for="valor-servico">Valor</label>
+                <input name="valor-servico" id="valor-servico" type="text" value="R$ 0,00" readonly />
+            </div>
+
+            <!-- Div quantidade de serviços -->
+            <div class="div-input">
+                <label for="quantidade-servico">Quantidade</label>
+                <input name="quantidade-servico" id="quantidade-servico" type="number" min="1" value="1" />
+            </div>
         </div>
         <button type="submit">Adicionar serviço</button>
     </form>
@@ -593,17 +605,29 @@
     <form id="formEditarServico">
         <i class="fa-solid fa-arrow-left" id="fecharModalEditarServico"></i>
         <p class="p-title">Editar serviço</p>
-        <!-- Div descrição serviço -->
+        <!-- Campo oculto para ID -->
         <input type="hidden" name="id-editar-servico" id="id-editar-servico">
+        <!-- Div seleção de serviço -->
         <div class="div-input">
-            <label for="descricao-editar-servico">Descrição</label>
-            <input name="descricao-editar-servico" id="descricao-editar-servico" type="text"></p>
+            <label for="select-editar-servico">Selecione o serviço</label>
+            <select name="select-editar-servico" id="select-editar-servico">
+                <option value="">Selecione um serviço</option>
+            </select>
         </div>
-        <!-- Div valor serviço -->
+        <div class="container-valores">
+                    <!-- Div valor serviço (somente leitura) -->
         <div class="div-input">
             <label for="valor-editar-servico">Valor</label>
-            <input name="valor-editar-servico" id="valor-editar-servico" type="text" value="R$ 0,00" />
+            <input name="valor-editar-servico" id="valor-editar-servico" type="text" value="R$ 0,00" readonly />
         </div>
+
+        <!-- Div quantidade de serviços -->
+        <div class="div-input">
+            <label for="quantidade-editar-servico">Quantidade</label>
+            <input name="quantidade-editar-servico" id="quantidade-editar-servico" type="number" min="1" value="1" />
+        </div>
+        </div>
+
         <button type="submit">Salvar alterações</button>
         <button type="button" id="excluir-servico">Excluir</button>
     </form>
