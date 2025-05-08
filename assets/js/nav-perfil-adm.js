@@ -593,7 +593,12 @@ function abrirModalEditarServico(idServico) {
 
 // Fecha modal de editar serviço
 function fecharModalEditarServico() {
-    $('#overlay-bg, #formEditarServico').css('display', 'none');
+    $('#formEditarServico').hide();
+    
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+    setTimeout(() => {
+        overlayBg.css('display', 'none');
+    }, 660);
 }
 
 // Salvar edição de serviço
@@ -691,7 +696,7 @@ $(function () {
     });
 
     // Fechar modal ao clicar no “<” ou no overlay
-    $('#fecharModalEditarServico, #overlay-bg').on('click', fecharModalEditarServico);
+    $('#fecharModalEditarServico').on('click', fecharModalEditarServico);
 
     // Submeter edição
     $('#formEditarServico').on('submit', function (e) {
@@ -1066,8 +1071,12 @@ $(document).ready(() => {
 
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
-    $('#modal-editar-usuario').css('display', 'none');
-    $('#overlay-bg').css('display', 'none');
+    $('#modal-editar-usuario').hide();
+    
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+    setTimeout(() => {
+        overlayBg.css('display', 'none');
+    }, 660);
 })
 
 // Abrir modal editar ao clicar no ícone de editar
@@ -1145,31 +1154,53 @@ $('#btn-modal-cad-user').click(function () {
     $('#overlay-bg').css('display', 'flex');
 })
 // Fechar modal editar
-$('#close-modal-cad-user, #overlay-bg').on('click', function () {
-    $('#overlay-bg, #formCadastroUsuario').css('display', 'none');
+$('#close-modal-cad-user').on('click', function () {
+    $('#formCadastroUsuario').hide();
+
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+    setTimeout(() => {
+        overlayBg.css('display', 'none');
+    }, 660);
 });
 
 // Abre modal de receitas
 $('#mov-receitas').on('click', function () {
-    $('.overlay-bg').css('display', 'flex');
+    $('.overlay-bg').css({
+        'animation': 'aparecerOverlay 0.5s',
+        'display': 'flex'
+    });
     $('#modal-mov').css('display', 'flex');
 
     $('#tilte-modal-add-mov').text('Adicionar receita');
     $('#tipo-mov').val('receita');
+    
+    console.log($('#tipo-mov').val())
 })
 
 // Abre modal de despesas
 $('#mov-despesas').on('click', function () {
-    $('.overlay-bg').css('display', 'flex');
+    $('.overlay-bg').css({
+        'animation': 'aparecerOverlay 0.5s',
+        'display': 'flex'
+    });
+
     $('#modal-mov').css('display', 'flex');
     
     $('#tilte-modal-add-mov').text('Adicionar despesa');
     $('#tipo-mov').val('despesa');
+
+    console.log($('#tipo-mov').val())
 })
 
 // Fecha modal de movimentações (X e overlay)
-$('#close-modal-mov, .overlay-bg').on('click', function () {
-    $('.overlay-bg, #modal-mov').css('display', 'none');
+$('#close-modal-mov').on('click', function () {
+    $('#modal-mov').hide();
+    
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+
+    setTimeout(() => {
+        overlayBg.css('display', 'none');
+    }, 660);
 })
 
 // Verificar se usuário foi editado
@@ -1478,25 +1509,88 @@ $(document).ready(function () {
     })
 })
 
+
+function formatarPreco(input) {
+    $(input).on('input', function() {
+        // 1. Limpeza do Input: Remove caracteres não numéricos
+        let valor = $(this).val().replace(/[^\d]/g, '');
+        
+        // Ignora se estiver vazio
+        if (!valor) {
+            $(this).val('');
+            return;
+        }
+        
+        // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
+        const centavos = parseInt(valor, 10);
+        const reais = Math.floor(centavos / 100);
+        const centavosFinal = centavos % 100;
+        
+        // Converte para strings para formatação
+        let parteInteira = reais.toString();
+        const parteDecimal = centavosFinal.toString().padStart(2, '0');
+        
+        // 3. Formatação da Parte Inteira
+        // Adiciona pontos a cada 3 dígitos
+        if (parteInteira.length > 3) {
+            parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
+        const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
+        
+        // 5. Validação e atualização
+        if (isNaN(centavos)) {
+        } else {
+            $(this).val(precoFormatado);
+        }
+    });
+
+    $(input).on('blur', function() {
+        let valor = $(this).val();
+        
+        // Força formatação se estiver incompleto
+        if (!valor.startsWith('R$') || valor === 'R$ ') {
+            $(this).trigger('input');
+        }
+    });
+}
+
 $(document).ready(function() {
+    // Busca pela mensagem de movimentação adicionada
     let mensagemAddMov = localStorage.getItem('msgAddMov');
 
     if (mensagemAddMov) {
+        // Exibe mensagem de sucesso
         alertMessage(mensagemAddMov, 'success');
+
+        // Exibe direto na tela a página de movimentações
+        $('#minha-conta').css('display', 'none');
+        exibirRelatorio('movimentacao');
+
+        // Remove a mensagem do local storage
         localStorage.removeItem('msgAddMov');
     }
+
+    // Adicionando formatação ao input de valor
+    formatarPreco($('#valor-mov'));
 })
 
 // Adicionar manutenção
-$('#modal-mov').on('submit', function() {
+$('#modal-mov').on('submit', function(e) {
+    // Evita o comportamento padrão do form
+    e.preventDefault();
+
     const data = new FormData(this);
 
     let envia = {
-        tipo: data.get('tipo-mov'),
-        valor: data.get('valor-mov'),
+        tipo: $('#tipo-mov').val(),
+        valor: desformatarPreco(data.get('valor-mov')),
         data: data.get('data-mov'),
         descricao: data.get('descricao-mov')
     }
+
+    console.log(envia)
 
     $.ajax({
         method: 'POST',
@@ -1504,12 +1598,14 @@ $('#modal-mov').on('submit', function() {
         headers: {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
+        contentType: 'application/json',
         data: JSON.stringify(envia),
         success: function(response) {
             localStorage.setItem('msgAddMov', response.success);
             window.location.reload();
         },
         error: function(response) {
+            console.log(response)
             alertMessage(response.responseJSON?.error, 'error');
         }
     })

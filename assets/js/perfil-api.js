@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.117:5000";
+var BASE_URL = "http://192.168.0.5:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
 
@@ -285,17 +285,41 @@ sanduiche.click(() => {
     });
     overlayBg.css({
         'animation': 'aparecerOverlay 0.5s',
-        'display': 'flex'
+        'display': 'flex',
+        'z-index': 16
     });
 });
 
 function fecharBarraLateral() {
     barraLateral.css('animation', 'fecharBarraLateral 0.7s');
-    overlayBg.css('animation', 'sumirOverlay 0.7s');
+    
+    if (window.location.href === "cliente-perfil.html") {
+        if ($('#modal-pix').css('display') == 'none' && $('#modal-pagar-parcela').css('display') == 'none') {
+            // Define a animação
+            $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+            // Da display none no overlay css
+            setTimeout(() => {
+                overlayBg.css('display', 'none');
+            }, 660);
+        } else {
+            $('#overlay-bg').css({
+                'animation': 'none',
+                'display': 'flex !important'
+            });
+        }
+    } else {
+        // Define a animação
+        $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+        // Da display none no overlay css
+        setTimeout(() => {
+            overlayBg.css('display', 'none');
+        }, 660);
+    }
+
+    $('#overlay-bg').css('z-index', '14');
 
     setTimeout(() => {
         barraLateral.css('display', 'none');
-        overlayBg.css('display', 'none');
     }, 660);
 };
 

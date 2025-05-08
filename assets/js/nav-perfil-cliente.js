@@ -67,13 +67,35 @@ function selecionarA(clicado) {
     })
 }
 
+// Função para fechar os modais de pagar parcelas quando trocar de menu
+function fecharModaisPagarParcela() {
+    // Fecha as modais e o overlay
+    $('#modal-pix').hide();
+    $('#modal-pagar-parcela').hide();
 
+    if ($(window).width() > 660) {
+        $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+        setTimeout(() => {
+            overlayBg.css('display', 'none');
+        }, 660);
+    }
+    
+    // Esconde a imagem do qr code a mostra a div de carregando
+    $('#img-qrcode').hide();
+    $('#loading-img-qrcode').show();
+
+    // Desabilita o botão de confirmar pagamento
+    $('#confirmar-pagamento-parcela').prop('disabled', true);
+}
 
 // Trocar a visibilidade das divs dentro do main
 $(document).ready(function () {
     $("#link_minhaConta").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
+
+        // Fecha os modais de pagar parcela
+        fecharModaisPagarParcela();
 
         $('#minha-conta').css('display', 'flex');
         $('#reservas').css('display', 'none');
@@ -90,6 +112,9 @@ $(document).ready(function () {
     $("#link_reservas").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
+
+        // Fecha os modais de pagar parcela
+        fecharModaisPagarParcela();
 
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'flex');
@@ -108,6 +133,9 @@ $(document).ready(function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
 
+        // Fecha os modais de pagar parcela
+        fecharModaisPagarParcela();
+
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#financiamento').css('display', 'none')
@@ -125,6 +153,9 @@ $(document).ready(function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
 
+        // Fecha os modais de pagar parcela
+        fecharModaisPagarParcela();
+
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#historico-compras').css('display', 'none');
@@ -141,6 +172,9 @@ $(document).ready(function () {
     $("#link_ajuda").on("click", function () {
         const elementoClicado = this;
         selecionarA(elementoClicado);
+
+        // Fecha os modais de pagar parcela
+        fecharModaisPagarParcela();
 
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'none');
@@ -208,7 +242,10 @@ $(document).ready(function () {
 
     $("#pagarParcela").on("click", function () {
         $('#modal-pagar-parcela').css("display", "flex")
-        $('#overlay-bg').css('display', 'flex');
+        overlayBg.css({
+            'animation': 'aparecerOverlay 0.5s',
+            'display': 'flex'
+        });
     })
 
     $("#close-modal").on("click", function () {
@@ -220,7 +257,10 @@ $(document).ready(function () {
 $('.btn-fechar-pagar-parcela').click(function () {
     // Fechar os modais
     $('#modal-pagar-parcela').hide();
-    $('#overlay-bg').hide();
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+    setTimeout(() => {
+        overlayBg.css('display', 'none');
+    }, 660);
     $('#parcelas').css('display', 'flex');
 })
 
@@ -234,12 +274,6 @@ $('.voltar-modal-pagar-parcela').click(function () {
     $('#loading-img-qrcode').show();
     // Desabilita o botão de confirmar pagamento
     $('#confirmar-pagamento-parcela').prop('disabled', true);
-})
-
-// Abre o modal para financiamento
-$('#btn-financiamento').on('click', function () {
-    $('#modal-comprar').css('display', 'none');
-    $('#modal-financiamento').css('display', 'flex');
 })
 
 // Fechar barra lateral
@@ -684,9 +718,6 @@ $('#parcela-mais-recente').on('click', function () {
         return;
     }
 
-    // Insere o email do cliente
-    $('#email-cliente-compra').text(dadosUser.email);
-
     $.ajax({
         url: `${BASE_URL}/gerar_qrcode_parcela/recente`,
         headers: {
@@ -724,7 +755,10 @@ $('#parcela-mais-recente').on('click', function () {
             // Fecha as modais e o overlay
             $('#modal-pagar-parcela').css('display', 'none');
             $('#modal-pix').css('display', 'none');
-            $('#overlay-bg').css('display', 'none');
+            $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+            setTimeout(() => {
+                overlayBg.css('display', 'none');
+            }, 660);
         }
     })
 })
@@ -745,9 +779,6 @@ $('#parcela-amortizar').on('click', function () {
         window.location.reload();
         return;
     }
-
-    // Insere o email do cliente
-    $('#email-cliente-compra').text(dadosUser.email);
 
     $.ajax({
         url: `${BASE_URL}/gerar_qrcode_parcela/amortizar`,
@@ -786,7 +817,10 @@ $('#parcela-amortizar').on('click', function () {
             // Fecha as modais e o overlay
             $('#modal-pagar-parcela').css('display', 'none');
             $('#modal-pix').css('display', 'none');
-            $('#overlay-bg').css('display', 'none');
+            $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+            setTimeout(() => {
+                overlayBg.css('display', 'none');
+            }, 660);
         }
     })
 })
@@ -824,7 +858,10 @@ $('#confirmar-pagamento-parcela').click(function () {
                     // Fecha as modais e o overlay
                     $('#modal-pagar-parcela').css('display', 'none');
                     $('#modal-pix').css('display', 'none');
-                    $('#overlay-bg').css('display', 'none');
+                    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+                    setTimeout(() => {
+                        overlayBg.css('display', 'none');
+                    }, 660);
                 }
             })
         }
