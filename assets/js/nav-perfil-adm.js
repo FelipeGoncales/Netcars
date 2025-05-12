@@ -988,8 +988,7 @@ $('#pdf-movimentacao').click(() => {
 // Exibir PDF de movimentações
 $('#pdf-clientes-compras').click(() => {
     // Abre o relatório em outra guia
-    // URL
-    // window.open(`${BASE_URL}/relatorio/receita_despesa`, '_blank');
+    window.open(`${BASE_URL}/relatorio/cliente_compras`, '_blank');
 
     // Fechar as options depois de clicar
     fecharDivOptionRelatorios();
