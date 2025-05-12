@@ -18,17 +18,21 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 15px;
 }
 
 .container-card-ajuda {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-items: center;
 }
 
 .card-ajuda {
+  list-style: none;
   position: relative;
   width: 218px;
   height: 200px;
@@ -83,7 +87,7 @@ main {
 }
 
 .card-ajuda p {
-  font-size: 14px !important;
+  font-size: 14px;
   font-weight: 500;
   color: #696977;
 }
@@ -227,3 +231,71 @@ main {
   color: #6C1DE9;
   text-decoration: underline #6C1DE9;
 }
+
+@media (max-width: 1024px) {
+  .container-card-ajuda {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 980px) {
+  .container-card-ajuda {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .faq-section .div-faq {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-a{
+    font-size: 12px;
+  }
+
+  .faq-li::before{
+    font-size: 12px;
+  }
+  .card-ajuda{
+    width: 188px;
+    height: 170px;
+  }
+
+  .div-ajuda p{
+    font-size: 14px;
+  }
+  .div-duvida{
+    font-size: 12px;
+  }
+
+  .i-duvida{
+    font-size: 14px;
+  }
+
+  .i-ajuda{
+    font-size: 40px;
+  }
+
+  .div-as2 a{
+    font-size: 12px;
+  }
+
+  .div-as1 a{
+    font-size: 10px;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .container-card-ajuda {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .faq-section .div-faq {
+    flex-direction: column;
+  }
+} 
+
+@media (max-width: 425px){
+  .container-card-ajuda{
+    grid-template-columns: repeat(1, 1fr)
+  }
+}
+

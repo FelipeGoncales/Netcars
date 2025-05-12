@@ -1978,11 +1978,89 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         border-radius: 10px;
         width: fit-content;
         color: var(--cor-bg);
+        width: 100%;
         transition: 0.2s ease-in;
 
         &:hover {
             background-color: var(--hover-roxo);
             color: var(--cor-bg-sec);
+        }
+    }
+}
+
+.container-relatorios.parcelamento {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+        width: 800px;
+
+    & .div-blocos {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+
+        & .bloco-info {
+            background-color: var(--cor-bg-sec);
+            width: 33%;
+            height: 120px;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 5px;
+            &.total {
+                background-color: var(--roxo);
+            }
+
+            & .legenda {
+                font-weight: 400;
+                font-size: 0.9rem;
+                &.total {
+                    color: var(--cor-bg-sec);
+                }
+            }
+
+            & .numero {
+                font-size: 2.2rem;
+                color: var(--roxo);
+                font-weight: 700;
+                line-height: 100%;
+                &.total {
+                    color: var(--cor-bg-sec);
+                }
+            }
+        }
+    }
+
+    & .div-input-gerar-relatorio {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        & .div-input-filtro {
+            width: 100%;
+            position: relative;
+            
+            & input {
+                width: 100%;
+                padding: 15px;
+                padding-left: 40px;
+                border-radius: 10px;
+                border: 2px #e0e1e4 solid;
+                outline: none;
+            }
+
+            & i {
+                position: absolute;
+                top: 50%;
+                left: 15px;
+                color: var(--cor-texto-apagado);
+                transform: translateY(-50%);
+            }
         }
     }
 }

@@ -911,17 +911,3 @@ $("#salvar-alteracoes").off("click").on("click", function (e) {
         }
     });
 });
-
-// Adicionar evento para remover marcação de erro ao digitar nos campos
-$("input, select").on("input change", function() {
-    $(this).removeClass("input-error");
-});
-$("<style>")
-    .prop("type", "text/css")
-    .html(`
-        .input-error {
-            border: 2px solid #ff4d4d !important;
-            background-color: rgba(255, 77, 77, 0.05) !important;
-        }
-    `)
-    .appendTo("head");
