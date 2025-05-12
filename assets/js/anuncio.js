@@ -420,7 +420,6 @@ var LISTA_MANUTENCOES = [];    // Lista de manutenções carregadas
 var INDEX_MANUTENCAO = 0;      // Índice da manutenção atual
 var TODOS_SERVICOS = [];       // Lista de todos os serviços disponíveis
 
-
 // ========== INICIALIZAÇÃO E CARREGAMENTO ==========
 
 // Inicializar quando o documento estiver pronto
@@ -463,10 +462,6 @@ async function carregarTodosServicos() {
                 
                 // Preencher os selects com os serviços
                 preencherSelectServicos();
-            },
-            error: function(response) {
-                console.error("Erro ao carregar serviços:", response);
-                alertMessage("Erro ao carregar serviços", "error");
             }
         });
     } catch (error) {
@@ -1051,10 +1046,6 @@ function carregarDetalhesServicoParaEdicao(id_manutencao, id_servico) {
             
             $('.modal-manu').hide();
             $('#formEditarServico').show();
-        },
-        error: function(xhr) {
-            console.error("Erro detalhado:", xhr.responseJSON);
-            alertMessage(xhr.responseJSON?.error || "Erro ao carregar serviço", "error");
         }
     });
 }
@@ -1172,24 +1163,9 @@ $('#excluir-servico').click(function() {
     });
 });
 
-// Funções de formatação auxiliares (manter essas funções existentes)
-function formatarValor(valor) {
-    if (isNaN(valor)) {
-        console.error("Valor inválido para formatação:", valor);
-        return "R$ 0,00";
-    }
-    return "R$ " + parseFloat(valor).toFixed(2).replace('.', ',');
-}
-
-function desformatarPreco(preco) {
-    // Supondo que essa função já existe no código original
-    return parseFloat(preco.replace('R$ ', '').replace(',', '.'));
-}
-
 /*
     RESERVA
 */
-
 
 // Reservar moto
 

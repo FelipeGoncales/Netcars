@@ -89,6 +89,7 @@ function fecharModaisPagarParcela() {
     
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
+    $('#p-juros').hide();
 }
 
 // Trocar a visibilidade das divs dentro do main
@@ -239,8 +240,8 @@ $(document).ready(function () {
     })
 
     $("#voltar_parcela").on("click", function () {
-        $('#financiamento').css('display', 'flex')
-        $('#parcelas').css('display', 'none')
+        $('#financiamento').css('display', 'flex');
+        $('#parcelas').css('display', 'none');
     })
 
     $("#pagarParcela").on("click", function () {
@@ -281,6 +282,7 @@ $('.voltar-modal-pagar-parcela').click(function () {
 
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
+    $('#p-juros').remove();
 })
 
 // Fechar barra lateral
@@ -749,7 +751,7 @@ $('#parcela-mais-recente').on('click', function () {
             if (juros && parseFloat(juros) > 0) {
                 let textoAntigo = $('#p-mensagem-qr-code').html();
 
-                textoAntigo += ` (Juros: <span>${formatarValor(juros)}</span>)`;
+                textoAntigo += `<p id="p-juros"> (Juros: <span>${formatarValor(juros)}</span>)</p>`;
 
                 $('#p-mensagem-qr-code').html(textoAntigo);
             }
@@ -886,6 +888,7 @@ $('#confirmar-pagamento-parcela').click(function () {
                     $('#modal-pagar-parcela').css('display', 'none');
                     $('#modal-pix').css('display', 'none');
                     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+
                     setTimeout(() => {
                         overlayBg.css('display', 'none');
                     }, 660);
