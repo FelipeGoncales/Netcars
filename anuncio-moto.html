@@ -500,14 +500,18 @@
     <!-- Modal pix -->
     <div class="modal-pix" id="modal-pix">
         <i class="fa-solid fa-arrow-left voltar-modal-compra"></i>
+
         <p class="title-forma">QR Code</p>
         <div class="div-qrcode">
             <!-- Imagem qr code pix -->
+            <div id="loading-img-qrcode"></div>
             <div id="img-qrcode"></div>
+
             <p>Um email com mais informações para a compra do veículo foi enviado para <span
                     id="email-cliente-compra">email@gmail.com</span></p>
         </div>
-        <button>Confirmar compra</button>
+
+        <button id="confirmar-compra-pix" class="disabled">Confirmar compra</button>
     </div>
 
     <!-- Modal finaciamento -->

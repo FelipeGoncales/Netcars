@@ -1424,6 +1424,11 @@ $(document).ready(function () {
         $('#input-entrada').val(formatarValor(0));
         $('#select-parcelas').val(1);
         $('#p-valor-total').text('~');
+
+        // Escondendo a imagem do qr code e desabilitando botão
+        $("#loading-img-qrcode").show();
+        $("#img-qrcode").hide();
+        $("#confirmar-compra-pix").addClass('disabled');
     })
 
     // Abrir modal de parcelas
@@ -1481,10 +1486,12 @@ $(document).ready(function () {
                 const url_qrcode = URL.createObjectURL(response);
 
                 // Substitui o background da div img-qrcode colocando a imagem do qr code
-                $('#img-qrcode').css({
-                    'background-image': `url(${url_qrcode})`,
-                    'background-color': "transparent"
-                });
+                $('#img-qrcode').css('background-image', `url(${url_qrcode})`).show();
+
+                // Esconde o qr code carregando
+                $('#loading-img-qrcode').hide();
+
+                $('#confirmar-compra-pix').removeClass('disabled');
             },
             error: function (response) {
                 // Exibe a mensagem de erro
@@ -1500,6 +1507,11 @@ $(document).ready(function () {
 
     // Confirmar compra via pix
     $('#confirmar-compra-pix').click(function () {
+        // Caso o botão esteja desabilitado, retorna
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+
         Swal.fire({
             title: "Deseja confirmar a compra desse veículo?",
             icon: "warning",
