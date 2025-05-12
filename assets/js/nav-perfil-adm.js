@@ -1589,10 +1589,6 @@ $(document).ready(function() {
             $('#financ-concluidos').text(response.concluidos);
             
             $('#financ-em-andamento').text(response.em_andamento);
-        },
-        error: function(response) {
-            console.log(response)
-            alertMessage(response.responseJSON?.error, 'error');
         }
     })
 })
