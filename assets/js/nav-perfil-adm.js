@@ -234,6 +234,13 @@ $(document).ready(function () {
         }
     });
 
+    $("#parcelamentos").on("click", function () {
+        exibirRelatorio('parcelamentos');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+
     $("#manutencao").on("click", function () {
         exibirRelatorio('manutencao');
         if ($(window).width() <= 980) {
@@ -365,7 +372,6 @@ $(document).ready(function () {
 // Função para envio ao banco (exemplo)
 function enviarParaBanco() {
     const valorParaBanco = desformatarPreco($('#input-valor').val());
-    console.log('Valor enviado:', valorParaBanco); // Exemplo: 1234.56
 }
 
 // Função para carregar todos os serviços cadastrados
@@ -414,7 +420,6 @@ async function carregarServicos() {
             }
         });
     } catch (error) {
-        console.error("Erro ao carregar serviços:", error);
         alertMessage("Erro ao carregar serviços.", 'error');
         $('.bg-carregamento-servicos').css('display', 'none');
     }
@@ -837,7 +842,6 @@ $('#pdf-carros').click(function (e) {
     window.open(url, '_blank');
 });
 
-
 //pdf motos
 $('#pdf-motos').click(function (e) {
     e.preventDefault();
@@ -928,9 +932,66 @@ $('#pdf-manutencao').click(function (e) {
 
 });
 
+//pdf parcelamentos
+$('#pdf-parcelamento').click(function (e) {
+    e.preventDefault();
+
+    // 1) Pegar valores do filtro
+    const filtro = $('#input-filtro-parc').val();
+
+    // 2) Montar URL
+    let url = `${BASE_URL}/relatorio/parcelamentos?q=${encodeURIComponent(filtro)}`;
+
+    $.ajax({
+        url: url,
+        success: function() {
+            window.open(url, '_blank');
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+
+});
+
+// Função para fechar a div option de relatorios
+function fecharDivOptionRelatorios() {
+    const divOption = $('#div-option-relatorios');
+
+    if (divOption.is(':visible')) {
+        // Fecha a bandeja
+        divOption.stop(true, true).slideUp(300).fadeOut(200);
+        // Gira o ícone da bandeja cima
+        $('#chevron-bandeja-relatorio').css('transform', 'translateY(-50%) rotate(0deg)')
+    } else {
+        // Abre a bandeja
+        divOption.stop(true, true).hide().slideDown(300).fadeIn(200);
+        // Gira o ícone da bandeja para baixo
+        $('#chevron-bandeja-relatorio').css('transform', 'translateY(-50%) rotate(180deg)')
+    }
+}
+
+// Ao clicar no botão, abrir as options
+$('#abrir-options-pdf').click(function() {
+    fecharDivOptionRelatorios();
+})
+
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
+    // Abre o relatório em outra guia
     window.open(`${BASE_URL}/relatorio/receita_despesa`, '_blank');
+
+    // Fechar as options depois de clicar
+    fecharDivOptionRelatorios();
+});
+
+// Exibir PDF de movimentações
+$('#pdf-clientes-compras').click(() => {
+    // Abre o relatório em outra guia
+    window.open(`${BASE_URL}/relatorio/cliente_compras`, '_blank');
+
+    // Fechar as options depois de clicar
+    fecharDivOptionRelatorios();
 });
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT
@@ -1127,8 +1188,6 @@ $('#mov-receitas').on('click', function () {
 
     $('#tilte-modal-add-mov').text('Adicionar receita');
     $('#tipo-mov').val('receita');
-    
-    console.log($('#tipo-mov').val())
 })
 
 // Abre modal de despesas
@@ -1142,8 +1201,6 @@ $('#mov-despesas').on('click', function () {
     
     $('#tilte-modal-add-mov').text('Adicionar despesa');
     $('#tipo-mov').val('despesa');
-
-    console.log($('#tipo-mov').val())
 })
 
 // Fecha modal de movimentações (X e overlay)
@@ -1544,8 +1601,6 @@ $('#modal-mov').on('submit', function(e) {
         descricao: data.get('descricao-mov')
     }
 
-    console.log(envia)
-
     $.ajax({
         method: 'POST',
         url: `${BASE_URL}/movimentacoes`,
@@ -1559,8 +1614,37 @@ $('#modal-mov').on('submit', function(e) {
             window.location.reload();
         },
         error: function(response) {
-            console.log(response)
             alertMessage(response.responseJSON?.error, 'error');
+        }
+    })
+})
+
+// Carregar os financiamentos em andamento
+$(document).ready(function() {
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    // Caso não exista, redireciona para login
+    if (!dadosUser) {
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    
+    // Obtém o token
+    const token = JSON.parse(dadosUser).token;
+
+    $.ajax({
+        method: 'GET',
+        url: `${BASE_URL}/buscar_financiamento`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        contentType: 'application/json',
+        success: function(response) {
+            $('#financ-total').text(response.total);
+
+            $('#financ-concluidos').text(response.concluidos);
+            
+            $('#financ-em-andamento').text(response.em_andamento);
         }
     })
 })

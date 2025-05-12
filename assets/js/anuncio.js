@@ -415,6 +415,7 @@ function carregarCidades(estadoId, select) {
         });
     });
 }
+
 // Variáveis globais
 var LISTA_MANUTENCOES = [];    // Lista de manutenções carregadas
 var INDEX_MANUTENCAO = 0;      // Índice da manutenção atual
@@ -423,18 +424,18 @@ var TODOS_SERVICOS = [];       // Lista de todos os serviços disponíveis
 // ========== INICIALIZAÇÃO E CARREGAMENTO ==========
 
 // Inicializar quando o documento estiver pronto
-$(document).ready(async function() {
+$(document).ready(async function () {
     // Formatação para os inputs de preço
     formatarPreco($('#valor-servico'));
     formatarPreco($('#valor-editar-servico'));
-    
+
     // Carregar todos os serviços disponíveis para os selects
     await carregarTodosServicos();
-    
+
     // Configurar listeners para os selects de serviços
     $('#select-servico').on('change', atualizarValorServico);
     $('#select-editar-servico').on('change', atualizarValorServicoEditar);
-    
+
     // Inicializar quantidades com valor 1
     $('#quantidade-servico').val(1);
     $('#quantidade-editar-servico').val(1);
@@ -443,23 +444,23 @@ $(document).ready(async function() {
 // Carregar todos os serviços disponíveis no banco de dados
 async function carregarTodosServicos() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     if (!dadosUser) {
         alertMessage("Usuário não autenticado. Redirecionando para o login...", "error");
         setTimeout(() => window.location.href = 'login.html', 2000);
         return;
     }
-    
+
     try {
         return $.ajax({
             url: `${BASE_URL}/servicos`,
             headers: {
                 "Authorization": "Bearer " + dadosUser.token
             },
-            success: function(response) {
+            success: function (response) {
                 // Salvar serviços na variável global
                 TODOS_SERVICOS = response.servicos;
-                
+
                 // Preencher os selects com os serviços
                 preencherSelectServicos();
             }
@@ -475,7 +476,7 @@ function preencherSelectServicos() {
     // Limpar opções existentes, mantendo a primeira
     $('#select-servico').find('option:not(:first)').remove();
     $('#select-editar-servico').find('option:not(:first)').remove();
-    
+
     // Adicionar cada serviço como opção nos selects
     TODOS_SERVICOS.forEach(servico => {
         // Para o select de adicionar serviço
@@ -483,13 +484,13 @@ function preencherSelectServicos() {
             .val(servico.id_servicos)
             .text(servico.descricao)
             .attr('data-valor', servico.valor);
-        
+
         // Para o select de editar serviço
         const $option2 = $('<option>')
             .val(servico.id_servicos)
             .text(servico.descricao)
             .attr('data-valor', servico.valor);
-        
+
         $('#select-servico').append($option1);
         $('#select-editar-servico').append($option2);
     });
@@ -511,14 +512,14 @@ function modalManutencao() {
 }
 
 // Fechar modal com o botão X
-$('#fecharModalManu').click(function() {
+$('#fecharModalManu').click(function () {
     modalManutencao();
     // Reexibir tela de carregamento para próxima abertura
     $('.bg-carregamento-manu').css('display', 'flex');
 });
 
 // Botão de adicionar manutenção
-$('#addManutencao').click(async function() {
+$('#addManutencao').click(async function () {
     // Carregar manutenções existentes
     await carregarManutencao();
     // Abrir o modal
@@ -528,12 +529,12 @@ $('#addManutencao').click(async function() {
 // Carregar dados das manutenções do veículo selecionado
 async function carregarManutencao() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     if (!dadosUser) {
         window.location.href = 'login.html';
         return;
     }
-    
+
     // Desabilitar botões e limpar campos
     $('#add-servico').prop('disabled', true);
     $('#cancelar-manu').prop('disabled', true);
@@ -541,35 +542,37 @@ async function carregarManutencao() {
     $('#input-date').val('');
     $('#input-obs').val('');
     $('#valor-total-manu').text(formatarValor(0));
-    $('#input-id-manutencao').val('');
     $('#tbody-servicos').empty();
-    
+
     try {
         // Determinar o ID do veículo com base no tipo
         let id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
-        
+
         $.ajax({
             url: `${BASE_URL}/manutencao_veic/${id_veic}/${TIPO_VEIC}`,
             headers: {
                 "Authorization": "Bearer " + dadosUser.token
             },
-            success: async function(response) {
-                // Salvar manutenções na variável global
+            success: async function (response) {
                 LISTA_MANUTENCOES = response.manutencao;
-                
-                // Verificar se há um ID de manutenção armazenado
-                if (localStorage.getItem('idManutencao')) {
-                    // Carregar manutenção específica
-                    let id_manutencao = localStorage.getItem('idManutencao');
-                    localStorage.removeItem('idManutencao');
-                    inserirDadosManutencao(id_manutencao);
+
+                const idAtual = $('#input-id-manutencao').val();
+
+                if (idAtual) {
+                    INDEX_MANUTENCAO = LISTA_MANUTENCOES.findIndex(m => m.id_manutencao == idAtual);
+                    inserirDadosManutencao();
                 } else {
-                    // Carregar a última manutenção ou modo de adicionar
-                    INDEX_MANUTENCAO = LISTA_MANUTENCOES.length;
+                    // Define o índice para a última manutenção ou modo de adição
+                    if (LISTA_MANUTENCOES.length > 0) {
+                        INDEX_MANUTENCAO = LISTA_MANUTENCOES.length - 1;
+                    } else {
+                        INDEX_MANUTENCAO = 0; // Modo de adição quando não há manutenções
+                    }
+
                     inserirDadosManutencao();
                 }
             },
-            error: function() {
+            error: function () {
                 // Caso não existam manutenções, mostrar opção de adicionar
                 $('#titleManutencao').text('Adicionar manutenção');
                 INDEX_MANUTENCAO = 0;
@@ -580,7 +583,7 @@ async function carregarManutencao() {
     } finally {
         // Desabilitar setas conforme necessário
         desabilitarSetas();
-        
+
         // Ocultar tela de carregamento após um breve delay
         setTimeout(() => $('.bg-carregamento-manu').css('display', 'none'), 200);
     }
@@ -597,10 +600,10 @@ async function inserirDadosManutencao(id_manu) {
             }
         }
     }
-    
+
     // Verificar se estamos no modo de adição (índice além do tamanho da lista)
     if (INDEX_MANUTENCAO >= LISTA_MANUTENCOES.length) {
-        // Modo de adicionar nova manutenção
+        // Modo de adição
         $('#add-servico').prop('disabled', true);
         $('#cancelar-manu').prop('disabled', true);
         $('#titleManutencao').text('Adicionar manutenção');
@@ -612,51 +615,50 @@ async function inserirDadosManutencao(id_manu) {
         desabilitarSetas();
         return;
     }
-    
+
     // Carregar dados da manutenção atual
     const manutencao = LISTA_MANUTENCOES[INDEX_MANUTENCAO];
-    
+
     // Formatar data para exibição
     const dataOriginal = manutencao.data_manutencao;
     const dataFormatada = new Date(dataOriginal).toISOString().split('T')[0];
     const [ano, mes, dia] = dataFormatada.split('-');
     const dataFormatadaBr = `${dia}/${mes}/${ano}`;
-    
+
     // Preencher campos do formulário
     $('#titleManutencao').text(`Manutenção ${dataFormatadaBr}`);
     $('#input-date').val(dataFormatada);
     $('#input-obs').val(manutencao.observacao);
     $('#valor-total-manu').text(formatarValor(manutencao.valor_total));
     $('#input-id-manutencao').val(manutencao.id_manutencao);
-    
+
     // Habilitar botões
     $('#add-servico').prop('disabled', false);
     $('#cancelar-manu').prop('disabled', false).css('transition', '0.3s');
-    
+
     // Carregar serviços associados
     await carregarServicosManutencao(manutencao.id_manutencao);
-    
+
     // Atualizar estado das setas de navegação
     desabilitarSetas();
 }
 
 // Habilitar/desabilitar setas de navegação conforme necessário
 function desabilitarSetas() {
-    // Desabilitar ambas as setas se não houver manutenções
     if (!LISTA_MANUTENCOES || LISTA_MANUTENCOES.length === 0) {
         $('#manutencao-prox').addClass('disabled').prop('disabled', true);
         $('#manutencao-voltar').addClass('disabled').prop('disabled', true);
         return;
     }
-    
-    // Gerenciar seta próxima
-    if (INDEX_MANUTENCAO >= LISTA_MANUTENCOES.length - 1) {
+
+    // Seta próxima (permite navegar até o modo de adição)
+    if (INDEX_MANUTENCAO >= LISTA_MANUTENCOES.length) {
         $('#manutencao-prox').addClass('disabled').prop('disabled', true);
     } else {
         $('#manutencao-prox').removeClass('disabled').prop('disabled', false);
     }
-    
-    // Gerenciar seta anterior
+
+    // Seta anterior
     if (INDEX_MANUTENCAO <= 0) {
         $('#manutencao-voltar').addClass('disabled').prop('disabled', true);
     } else {
@@ -665,9 +667,9 @@ function desabilitarSetas() {
 }
 
 // Navegar para a manutenção anterior
-$('#manutencao-voltar').click(function() {
+$('#manutencao-voltar').click(function () {
     if ($(this).hasClass('disabled')) return;
-    
+
     if (INDEX_MANUTENCAO > 0) {
         INDEX_MANUTENCAO--;
         inserirDadosManutencao();
@@ -675,13 +677,11 @@ $('#manutencao-voltar').click(function() {
 });
 
 // Navegar para a próxima manutenção
-$('#manutencao-prox').click(function() {
+$('#manutencao-prox').click(function () {
     if ($(this).hasClass('disabled')) return;
-    
-    if (INDEX_MANUTENCAO < LISTA_MANUTENCOES.length) {
-        INDEX_MANUTENCAO++;
-        inserirDadosManutencao();
-    }
+
+    INDEX_MANUTENCAO++;
+    inserirDadosManutencao();
 });
 
 // ========== GERENCIAMENTO DE SERVIÇOS DA MANUTENÇÃO ==========
@@ -689,12 +689,12 @@ $('#manutencao-prox').click(function() {
 // Carregar serviços associados a uma manutenção
 async function carregarServicosManutencao(id_manutencao) {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     if (!dadosUser) {
         window.location.href = 'login.html';
         return;
     }
-    
+
     try {
         const response = await $.ajax({
             url: `${BASE_URL}/manutencao_servicos/${id_manutencao}`,
@@ -716,12 +716,12 @@ async function carregarServicosManutencao(id_manutencao) {
 // Obter detalhes do serviço-manutenção (incluindo quantidade)
 function obterDetalhesServicoManutencao(id_manutencao, id_servico, index) {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     if (!dadosUser) {
         window.location.href = 'login.html';
         return;
     }
-    
+
     // Esta função simula a obtenção de informações detalhadas do serviço
     // Na implementação real, seria necessário um endpoint específico no backend
     $.ajax({
@@ -730,25 +730,25 @@ function obterDetalhesServicoManutencao(id_manutencao, id_servico, index) {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function(response) {
+        success: function (response) {
             // Aqui normalmente seriam recebidos dados como:
             // - Quantidade do serviço
             // - Valor total do item
-            
+
             // Como não temos esse endpoint específico, vamos simular com base nos dados disponíveis
             const servico = TODOS_SERVICOS.find(s => s.id_servicos == id_servico);
-            
+
             if (!servico) return;
-            
+
             // Simular informações do serviço na manutenção
             // Na realidade, estes dados viriam do backend
             const quantidade = 1; // Valor padrão
             const valorTotalItem = servico.valor * quantidade;
-            
+
             // Adicionar linha na tabela
             adicionarLinhaServicoTabela(servico, quantidade, valorTotalItem, index);
         },
-        error: function() {
+        error: function () {
             console.error("Erro ao obter detalhes do serviço na manutenção");
         }
     });
@@ -757,7 +757,7 @@ function obterDetalhesServicoManutencao(id_manutencao, id_servico, index) {
 // Adicionar linha de serviço na tabela
 function adicionarLinhaServicoTabela(servico, index) {
     const $tr = $('<tr>').addClass(index % 2 === 0 ? 'tipo2' : 'tipo1');
-    
+
     // Ícone de edição
     const $tdIcon = $('<td>').append(
         $('<i>')
@@ -765,7 +765,7 @@ function adicionarLinhaServicoTabela(servico, index) {
             .attr('id_servico', servico.id_servicos)
             .css('cursor', 'pointer')
     );
-    
+
     // Dados do serviço
     const $tdDescricao = $('<td>').text(servico.descricao);
     const $tdValorUnit = $('<td>').text(formatarValor(servico.valor_unitario));
@@ -778,18 +778,18 @@ function adicionarLinhaServicoTabela(servico, index) {
 // ========== BOTÕES E AÇÕES DO MODAL DE MANUTENÇÃO ==========
 
 // Botão Salvar Manutenção
-$('#salvar-manu').click(function() {
+$('#salvar-manu').click(function () {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     if (!dadosUser) {
         window.location.href = 'login.html';
         return;
     }
-    
+
     // Verificar se é uma nova manutenção ou atualização
     const id_manutencao = $('#input-id-manutencao').val();
     const id_veic = TIPO_VEIC == 'carro' ? id_carro : id_moto;
-    
+
     if (!id_manutencao) {
         // Criar nova manutenção
         const dados = {
@@ -798,7 +798,7 @@ $('#salvar-manu').click(function() {
             "data": $('#input-date').val(),
             "observacao": $('#input-obs').val()
         };
-        
+
         $.ajax({
             method: "POST",
             url: `${BASE_URL}/manutencao`,
@@ -807,18 +807,20 @@ $('#salvar-manu').click(function() {
             headers: {
                 "Authorization": "Bearer " + dadosUser.token
             },
-            success: function(response) {
-                alertMessage(response.success, 'success');
-                localStorage.setItem('idManutencao', response.id_manutencao);
+            success: function (response) {
+                alertMessage(response.success, 'success');      
+                
+                $('#input-id-manutencao').val(response.id_manutencao);
+
                 carregarManutencao();
             },
-            error: function(response) {
+            error: function (response) {
                 alertMessage(response.responseJSON.error, 'error');
             }
         });
         return;
     }
-    
+
     // Atualizar manutenção existente
     const dados = {
         "tipo_veic": TIPO_VEIC,
@@ -826,7 +828,7 @@ $('#salvar-manu').click(function() {
         "observacao": $('#input-obs').val(),
         "id_manutencao": id_manutencao
     };
-    
+
     $.ajax({
         method: "PUT",
         url: `${BASE_URL}/manutencao/${id_veic}`,
@@ -835,19 +837,19 @@ $('#salvar-manu').click(function() {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function(response) {
+        success: function (response) {
             alertMessage(response.success, 'success');
-            localStorage.setItem('idManutencao', id_manutencao);
+
             carregarManutencao();
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     });
 });
 
 // Botão Cancelar Manutenção (inativar)
-$('#cancelar-manu').click(function() {
+$('#cancelar-manu').click(function () {
     Swal.fire({
         title: "Deseja cancelar essa manutenção?",
         icon: "warning",
@@ -859,30 +861,31 @@ $('#cancelar-manu').click(function() {
     }).then((result) => {
         if (result.isConfirmed) {
             const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-            
+
             if (!dadosUser) {
                 window.location.href = 'login.html';
                 return;
             }
-            
+
             const id_manutencao = $('#input-id-manutencao').val();
-            
+
             if (!id_manutencao) {
                 window.location.href = 'login.html';
                 return;
             }
-            
+
             $.ajax({
                 method: "DELETE",
                 url: `${BASE_URL}/manutencao/${id_manutencao}`,
                 headers: {
                     "Authorization": "Bearer " + dadosUser.token
                 },
-                success: function(response) {
+                success: function (response) {
+                   $('#input-id-manutencao').val('');
                     carregarManutencao();
                     alertMessage(response.success, 'success');
                 },
-                error: function(response) {
+                error: function (response) {
                     alertMessage(response.responseJSON.error, 'error');
                 }
             });
@@ -893,13 +896,13 @@ $('#cancelar-manu').click(function() {
 // ========== MODAL ADICIONAR SERVIÇO ==========
 
 // Abrir modal de adicionar serviço
-$('#add-servico').click(function() {
+$('#add-servico').click(function () {
     $('.modal-manu').css('display', 'none');
     $('#formAddServico').css('display', 'flex');
 });
 
 // Fechar modal de adicionar serviço
-$('#fecharModalAddServico').click(function() {
+$('#fecharModalAddServico').click(function () {
     $('.modal-manu').css('display', 'flex');
     $('#formAddServico').css('display', 'none');
 });
@@ -907,14 +910,14 @@ $('#fecharModalAddServico').click(function() {
 // Atualizar valor do serviço quando selecionado
 function atualizarValorServico() {
     const servicoId = $('#select-servico').val();
-    
+
     if (!servicoId) {
         $('#valor-servico').val('R$ 0,00');
         return;
     }
-    
+
     const servicoSelecionado = TODOS_SERVICOS.find(s => s.id_servicos == servicoId);
-    
+
     if (servicoSelecionado) {
         $('#valor-servico').val(formatarValor(servicoSelecionado.valor));
     }
@@ -923,33 +926,33 @@ function atualizarValorServico() {
 // Atualizar valor do serviço no modal de edição
 function atualizarValorServicoEditar() {
     const servicoId = $('#select-editar-servico').val();
-    
+
     if (!servicoId) {
         $('#valor-editar-servico').val('R$ 0,00');
         return;
     }
-    
+
     const servicoSelecionado = TODOS_SERVICOS.find(s => s.id_servicos == servicoId);
-    
+
     if (servicoSelecionado) {
         $('#valor-editar-servico').val(formatarValor(servicoSelecionado.valor));
     }
 }
 
 // Adicionar serviço à manutenção
-$('#formAddServico').on('submit', function(e) {
+$('#formAddServico').on('submit', function (e) {
     e.preventDefault();
-    
+
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     if (!dadosUser) {
         window.location.href = "login.html";
         return;
     }
-    
+
     const id_manutencao = parseInt($('#input-id-manutencao').val());
     const id_servico = parseInt($('#select-servico').val());
     const quantidade = parseInt($('#quantidade-servico').val() || 1); // Default 1 se vazio
-    
+
     // Validação básica
     if (!id_servico || isNaN(id_servico)) {
         alertMessage('Selecione um serviço válido', 'error');
@@ -959,15 +962,13 @@ $('#formAddServico').on('submit', function(e) {
         alertMessage('Quantidade inválida', 'error');
         return;
     }
-    
+
     const dados = {
         id_manutencao: id_manutencao,
         id_servico: id_servico,
         quantidade: quantidade
     };
-    
-    console.log("Enviando dados:", dados); // Debug
-    
+
     $.ajax({
         method: "POST",
         url: `${BASE_URL}/manutencao_servicos`,
@@ -976,24 +977,21 @@ $('#formAddServico').on('submit', function(e) {
         headers: {
             "Authorization": "Bearer " + dadosUser.token
         },
-        success: function(response) {
-            // Fechar modal de adicionar serviço
-            $('#formAddServico').hide(); // ou .css('display', 'none')
-            $('.modal-manu').show(); // ou .css('display', 'flex')
-            
-            // Limpar campos do formulário
+        success: async function (response) {
+            $('#formAddServico').hide();
+            $('.modal-manu').show();
+
+            // Limpar campos
             $('#select-servico').val('');
             $('#valor-servico').val('R$ 0,00');
             $('#quantidade-servico').val(1);
-            
-            // Atualizar interface
-            localStorage.setItem('idManutencao', id_manutencao);
-            carregarManutencao(); // Certifique-se que esta função atualiza a lista de serviços
-            
-            // Exibir mensagem de sucesso
-            alertMessage('Serviço adicionado com sucesso!', 'success'); // Mensagem fixa
+
+            // Recarrega manutenções e mantém posição atual
+            carregarManutencao();
+
+            alertMessage('Serviço adicionado com sucesso!', 'success');
         },
-        error: function(xhr) {
+        error: function (xhr) {
             const errorMsg = xhr.responseJSON?.error || "Erro ao adicionar serviço";
             console.error("Erro:", errorMsg);
             alertMessage(errorMsg, 'error');
@@ -1003,22 +1001,22 @@ $('#formAddServico').on('submit', function(e) {
 // ========== MODAL EDITAR SERVIÇO ==========
 
 // Abrir modal de editar serviço
-$(document).on('click', '.editarServico', function() {
+$(document).on('click', '.editarServico', function () {
     const id_servico = $(this).attr('id_servico');
     const id_manutencao = $('#input-id-manutencao').val();
-    
+
     if (!id_servico || !id_manutencao) {
         alertMessage("Dados incompletos", "error");
         return;
     }
-    
+
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     if (!dadosUser) {
         window.location.href = "login.html";
         return;
     }
-    
+
     // Carregar detalhes do serviço na manutenção
     carregarDetalhesServicoParaEdicao(id_manutencao, id_servico);
 });
@@ -1026,24 +1024,24 @@ $(document).on('click', '.editarServico', function() {
 // Carregar detalhes do serviço para edição
 function carregarDetalhesServicoParaEdicao(id_manutencao, id_servico) {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-    
+
     $.ajax({
         url: `${BASE_URL}/manutencao_servicos/${id_manutencao}/${id_servico}`,
         method: 'GET',
-        headers: { 
+        headers: {
             "Authorization": "Bearer " + dadosUser.token,
             "Content-Type": "application/json" // Adicione este header
         },
-        success: function(response) {
+        success: function (response) {
             // Preenche os campos corretamente
             $('#id-editar-servico').val(response.id_servicos);
             $('#select-editar-servico').val(response.id_servicos);
             $('#valor-editar-servico').val(formatarValor(response.valor_unitario));
             $('#quantidade-editar-servico').val(response.quantidade);
-            
+
             // Atualiza o select
             atualizarSelectServico(response.id_servicos);
-            
+
             $('.modal-manu').hide();
             $('#formEditarServico').show();
         }
@@ -1051,15 +1049,15 @@ function carregarDetalhesServicoParaEdicao(id_manutencao, id_servico) {
 }
 
 // Fechar modal de editar serviço
-$('#fecharModalEditarServico').click(function() {
+$('#fecharModalEditarServico').click(function () {
     $('.modal-manu').css('display', 'flex');
     $('#formEditarServico').css('display', 'none');
 });
 
 // Salvar alterações do serviço
-$('#formEditarServico').on('submit', function(e) {
+$('#formEditarServico').on('submit', function (e) {
     e.preventDefault();
-    
+
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     const id_manutencao = $('#input-id-manutencao').val();
     const id_servico_original = $('#id-editar-servico').val();
@@ -1084,15 +1082,15 @@ $('#formEditarServico').on('submit', function(e) {
             "Authorization": "Bearer " + dadosUser.token,
             "Content-Type": "application/json"
         },
-        success: function(response) {
-            // Fechar modal de edição
-            $('#formEditarServico').hide(); 
-            $('.modal-manu').show(); 
+        success: async function (response) {
+            $('#formEditarServico').hide();
+            $('.modal-manu').show();
+
             carregarManutencao();
-            
+
             alertMessage("Serviço atualizado com sucesso!", "success");
         },
-        error: function(xhr) {
+        error: function (xhr) {
             const errorMsg = xhr.responseJSON?.error || "Erro na atualização";
             alertMessage(errorMsg, "error");
         }
@@ -1101,23 +1099,23 @@ $('#formEditarServico').on('submit', function(e) {
 
 function atualizarSelectServico(id_selecionado) {
     $('#select-editar-servico').empty().append('<option value="">Selecione...</option>');
-    
+
     TODOS_SERVICOS.forEach(servico => {
         const option = $('<option>')
             .val(servico.id_servicos)
             .text(servico.descricao)
             .attr('data-valor', servico.valor)
             .prop('selected', servico.id_servicos == id_selecionado);
-            
+
         $('#select-editar-servico').append(option);
     });
-    
+
     // Disparar evento de change para atualizar o valor
     $('#select-editar-servico').trigger('change');
 }
 
 // Botão excluir serviço
-$('#excluir-servico').click(function() {
+$('#excluir-servico').click(function () {
     Swal.fire({
         title: "Deseja excluir esse serviço?",
         icon: "warning",
@@ -1128,34 +1126,35 @@ $('#excluir-servico').click(function() {
     }).then((result) => {
         if (result.isConfirmed) {
             const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-            
+
             if (!dadosUser) {
                 window.location.href = "login.html";
                 return;
             }
-            
+
             const id_manutencao = $('#input-id-manutencao').val();
             const id_servico = $('#id-editar-servico').val();
-            
+
             if (!id_manutencao || !id_servico) {
                 alertMessage("Dados incompletos", "error");
                 return;
             }
-            
+
             $.ajax({
                 method: "DELETE",
                 url: `${BASE_URL}/manutencao_servicos/${id_manutencao}/${id_servico}`,
                 headers: {
                     "Authorization": "Bearer " + dadosUser.token
                 },
-                success: function(response) {
+                success: async function (response) {
                     $('#formEditarServico').css('display', 'none');
                     $('.modal-manu').css('display', 'flex');
-                    localStorage.setItem('idManutencao', id_manutencao);
+                    
                     carregarManutencao();
+                    
                     alertMessage(response.success || "Serviço removido com sucesso", 'success');
                 },
-                error: function(response) {
+                error: function (response) {
                     alertMessage(response.responseJSON.error, 'error');
                 }
             });
@@ -1425,6 +1424,11 @@ $(document).ready(function () {
         $('#input-entrada').val(formatarValor(0));
         $('#select-parcelas').val(1);
         $('#p-valor-total').text('~');
+
+        // Escondendo a imagem do qr code e desabilitando botão
+        $("#loading-img-qrcode").show();
+        $("#img-qrcode").hide();
+        $("#confirmar-compra-pix").addClass('disabled');
     })
 
     // Abrir modal de parcelas
@@ -1482,10 +1486,12 @@ $(document).ready(function () {
                 const url_qrcode = URL.createObjectURL(response);
 
                 // Substitui o background da div img-qrcode colocando a imagem do qr code
-                $('#img-qrcode').css({
-                    'background-image': `url(${url_qrcode})`,
-                    'background-color': "transparent"
-                });
+                $('#img-qrcode').css('background-image', `url(${url_qrcode})`).show();
+
+                // Esconde o qr code carregando
+                $('#loading-img-qrcode').hide();
+
+                $('#confirmar-compra-pix').removeClass('disabled');
             },
             error: function (response) {
                 // Exibe a mensagem de erro
@@ -1501,6 +1507,11 @@ $(document).ready(function () {
 
     // Confirmar compra via pix
     $('#confirmar-compra-pix').click(function () {
+        // Caso o botão esteja desabilitado, retorna
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+
         Swal.fire({
             title: "Deseja confirmar a compra desse veículo?",
             icon: "warning",

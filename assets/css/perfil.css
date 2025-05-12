@@ -1978,11 +1978,89 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         border-radius: 10px;
         width: fit-content;
         color: var(--cor-bg);
+        width: 100%;
         transition: 0.2s ease-in;
 
         &:hover {
             background-color: var(--hover-roxo);
             color: var(--cor-bg-sec);
+        }
+    }
+}
+
+.container-relatorios.parcelamento {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+        width: 800px;
+
+    & .div-blocos {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+
+        & .bloco-info {
+            background-color: var(--cor-bg-sec);
+            width: 33%;
+            height: 120px;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 5px;
+            &.total {
+                background-color: var(--roxo);
+            }
+
+            & .legenda {
+                font-weight: 400;
+                font-size: 0.9rem;
+                &.total {
+                    color: var(--cor-bg-sec);
+                }
+            }
+
+            & .numero {
+                font-size: 2.2rem;
+                color: var(--roxo);
+                font-weight: 700;
+                line-height: 100%;
+                &.total {
+                    color: var(--cor-bg-sec);
+                }
+            }
+        }
+    }
+
+    & .div-input-gerar-relatorio {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        & .div-input-filtro {
+            width: 100%;
+            position: relative;
+            
+            & input {
+                width: 100%;
+                padding: 15px;
+                padding-left: 40px;
+                border-radius: 10px;
+                border: 2px #e0e1e4 solid;
+                outline: none;
+            }
+
+            & i {
+                position: absolute;
+                top: 50%;
+                left: 15px;
+                color: var(--cor-texto-apagado);
+                transform: translateY(-50%);
+            }
         }
     }
 }
@@ -2099,25 +2177,67 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     max-width: 900px;
     display: flex;
     flex-direction: column;
+    position: relative;
+    top: -25px;
     width: 50vw;
     gap: 15px;
 
-    & button {
-        margin-top: 5px;
-        border: none;
+    & .div-button-mov {
         width: 100%;
-        padding: 15px;
-        border-radius: 10px;
-        cursor: pointer;
-        background-color: var(--roxo);
-        color: var(--cor-bg-sec);
-        font-weight: 600;
-        transition: 0.3s;
+        position: relative;
+        & button {
+            margin-top: 5px;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: var(--roxo);
+            color: var(--cor-bg-sec);
+            font-weight: 600;
+            transition: 0.3s;
+            position: relative;
 
-        &:hover {
-            background-color: var(--hover-roxo);
+            & #chevron-bandeja-relatorio {
+                position: absolute;
+                top: 50%;
+                font-size: 20px;
+                left: 20px;
+                transform: translateY(-50%);
+                transition: 0.3s;
+            }
+    
+            &:hover {
+                background-color: var(--hover-roxo);
+            }
+        }
+        & .div-option-relatorio {
+            display: none;
+            width: 100%;
+            position: absolute;
+            z-index: 10;
+            top: 115%;
+            border-radius: 10px;
+            overflow: hidden;
+            & .option-relatorio {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                justify-content: flex-start;
+                background-color: var(--cor-bg-sec);
+                padding: 13px 20px;
+                color: var(--cor-texto-apagado);
+                cursor: pointer;
+                transition: 0.2s;
+                font-size: 0.9rem;
+                &:hover {
+                    background-color: #f9f9f9;
+                    color: var(--cor-texto);
+                }
+            }
         }
     }
+
 }
 
 #mov-receitas, #mov-despesas {
@@ -2131,7 +2251,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* serviços (modal e div) */
 
-#formAddServico,
 #formEditarServico {
     display: none;
     align-items: center;
@@ -2321,12 +2440,222 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         & .button-add {
             background: #6C1DE9;
             color: #ffffff;
-
+            width: 100%;
             &:hover {
                 background-color: var(--hover-roxo);
             }
         }
     }
+}
+
+@media (max-width: 1024px) {
+#servicos {
+    width: 90%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 65%;
+        }
+
+        & .div-input-valor {
+            width: 35%;
+        }
+
+        & p {
+            font-size: 1.2em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+    }
+}
+}
+
+@media (max-width: 768px) {
+#servicos {
+    width: 80%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 65%;
+        }
+
+        & .div-input-valor {
+            width: 35%;
+        }
+
+        & p {
+            font-size: 1.2em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+    }
+
+}
+}
+
+@media (max-width: 426px) {
+#servicos {
+    width: 90%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 65%;
+        }
+
+        & .div-input-valor {
+            width: 35%;
+        }
+
+        & p {
+            font-size: 1.2em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+    }
+}
+
+#formEditarServico {
+    width: 80%;
+    gap: 10px;
+
+    & .p-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+    & .div-input {
+        width: 100%;
+
+        & input {
+            border: 3px solid #EDECF2;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+    }
+
+    & button {
+        width: 100%;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    & #fecharModalEditarServico {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        color: var(--roxo);
+        font-size: 1.4rem;
+        cursor: pointer;
+    }
+}
+
+}
+
+@media (max-width: 321px) {
+#servicos {
+    width: 90%;
+    height: 80%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 12px;
+            font-size: 0.7rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 55%;
+            font-size: 0.6rem;
+        }
+        
+        & .div-input-valor {
+            width: 45%;
+            font-size: 0.6rem;
+        }
+
+        & p {
+            font-size: 0.8em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 0.8rem;
+        }
+        & label {
+            font-size: 0.8rem;
+        }
+    }
+}
 }
 
 /*  Modals Receita e Despesa  */

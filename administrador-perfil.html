@@ -52,7 +52,8 @@
                 <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
                 <a id="link_relatorios"><i class="fas fa-file-alt"></i>Relatórios</a>
                 <div class="submenu-relatorios" style="display: none;">
-                    <a class="sub-relatorio" id="movimentacao">Movimentação</a>
+                    <a class="sub-relatorio" id="movimentacao">Movimentações</a>
+                    <a class="sub-relatorio" id="parcelamentos">Parcelamentos</a>
                     <a class="sub-relatorio" id="carros">Carros</a>
                     <a class="sub-relatorio" id="motos">Motos</a>
                     <a class="sub-relatorio" id="clientes">Clientes</a>
@@ -187,10 +188,18 @@
                         </div>
                         <div class="charts-card" id="div-movimentacoes"></div>
                     </div>
-                    <button id="pdf-movimentacao">Visualizar/Gerar PDF <i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+                    <div class="div-button-mov">
+                        <button id="abrir-options-pdf">
+                            Visualizar/Gerar PDF 
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                            <i class="fa-solid fa-chevron-up" id="chevron-bandeja-relatorio"></i>
+                        </button>
+                        <div class="div-option-relatorio" id="div-option-relatorios">
+                            <div class="option-relatorio" id="pdf-movimentacao"><i class="fa-solid fa-dollar-sign"></i> Movimentações</div>
+                            <div class="option-relatorio" id="pdf-clientes-compras"><i class="fa-solid fa-users"></i>Clientes e compras</div>
+                        </div>
+                    </div>
                 </div>
-
-
             </div>
 
             <!-- Div Relatórios - Carros -->
@@ -398,6 +407,39 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Div Relatórios - Parcelamentos -->
+            <div class="container-relatorios parcelamento" id="relatorio-parcelamentos">
+                <h3 class="title-conbranco">Parcelamentos</h3>
+                <div class="div-blocos">
+                    <div class="bloco-info total">
+                        <p class="legenda total">Total</p>
+                        <p class="numero total" id="financ-total">~</p>
+                    </div>
+                    
+                    <div class="bloco-info">
+                        <p class="legenda">Em andamento</p>
+                        <p class="numero" id="financ-em-andamento">~</p>
+                    </div>
+                    
+                    <div class="bloco-info">
+                        <p class="legenda">Concluídos</p>
+                        <p class="numero" id="financ-concluidos">~</p>
+                    </div>
+                </div>
+
+                <div class="div-input-gerar-relatorio">
+                    <div class="div-input-filtro">
+                        <input type="text" placeholder="Busque pelo nome, marca, modelo ou placa do veículo" id="input-filtro-parc" maxlength="7">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <a class="relatorios-btn" id="pdf-parcelamento">
+                        <h3>Visualizar/Gerar PDF</h3>
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </a>
+                </div>
+            </div>
+            
             <!-- Div serviços -->
             <div id="servicos" style="display: none;">
                 <div class="modal-header">
@@ -502,7 +544,7 @@
                 </div>
                 <div class="div-input">
                     <label for="valor-mov">Valor</label>
-                    <input type="text" name="valor-mov" id="valor-mov" required />
+                    <input type="text" name="valor-mov" id="valor-mov" value="R$ 0,00" required />
                 </div>
             </div>
             <input type="hidden" id="tipo-mov">
@@ -527,7 +569,9 @@
             <button type="submit">Salvar alterações</button>
             <button type="button" id="excluir-servico">Inativar</button>
         </form>
+
         <div id="overlay-bg"></div>
+
         <!-- Form Div Cadastrar User -->
         <form class="container-login" id="formCadastroUsuario">
             <i class="fa-solid fa-xmark" id="close-modal-cad-user"></i>
@@ -557,7 +601,9 @@
                 <button class="btn-acao" type="submit">Criar conta</button>
             </div>
         </form>
+
     </main>
+
     <footer id="footer">
         <div class="div-contato">
             <div>

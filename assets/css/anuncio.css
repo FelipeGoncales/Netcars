@@ -853,6 +853,7 @@ main {
         font-weight: 600;
         cursor: pointer;
         transition: 0.3s;
+
         &:hover {
             background-color: var(--hover-roxo);
         }
@@ -904,13 +905,20 @@ main {
         justify-content: center;
         gap: 10px;
 
-        & #img-qrcode {
+        & #loading-img-qrcode {
             width: 250px;
             height: 250px;
             border-radius: 10px;
             background-color: var(--cor-texto-apagado);
             transition: 0.2s;
             animation: piscarCorDeFundo 1.8s infinite ease-in-out;
+        }
+
+        & #img-qrcode {
+            display: none;
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -941,6 +949,12 @@ main {
         &:hover {
             background-color: var(--hover-roxo);
         }
+
+        &.disabled {
+            background-color: #e3e3e3;
+            color: var(--cor-texto-apagado);
+            cursor: not-allowed;
+        }
     }
 }
 
@@ -948,9 +962,11 @@ main {
     0% {
         background-color: #dbdbdb;
     }
+
     50% {
         background-color: #c6c5c7;
     }
+
     100% {
         background-color: #dbdbdb;
     }
@@ -993,7 +1009,8 @@ main {
         padding: 40px;
     }
 
-    .modal-pix, .modal-financiamento {
+    .modal-pix,
+    .modal-financiamento {
         width: 90vw;
         padding: 30px;
     }
@@ -1011,8 +1028,10 @@ main {
 
     .div-pagar {
         gap: 20px !important;
+
         & .div-fpagamento {
             gap: 0px !important;
+
             & i {
                 font-size: 50px;
             }
@@ -1023,6 +1042,7 @@ main {
         & .img-qrcode {
             width: 200px !important;
         }
+
         & p {
             font-size: 0.9rem;
         }
@@ -1106,6 +1126,7 @@ main {
             border-radius: 10px;
             font-size: 0.9rem;
             width: 100%;
+
             &:focus {
                 border: 1px solid var(--hover-roxo);
                 outline: none;
@@ -1192,6 +1213,7 @@ main {
         color: var(--cor-texto-apagado);
     }
 }
+
 #formAddServico,
 #formEditarServico {
     display: none;
