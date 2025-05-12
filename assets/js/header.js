@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.127:5000";
+var BASE_URL = "http://127.0.0.1:5000";
 
 // Abrir e fechar barra lateral
 const sanduiche = $("#sanduicheHeader");
