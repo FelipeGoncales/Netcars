@@ -2177,25 +2177,67 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     max-width: 900px;
     display: flex;
     flex-direction: column;
+    position: relative;
+    top: -25px;
     width: 50vw;
     gap: 15px;
 
-    & button {
-        margin-top: 5px;
-        border: none;
+    & .div-button-mov {
         width: 100%;
-        padding: 15px;
-        border-radius: 10px;
-        cursor: pointer;
-        background-color: var(--roxo);
-        color: var(--cor-bg-sec);
-        font-weight: 600;
-        transition: 0.3s;
+        position: relative;
+        & button {
+            margin-top: 5px;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: var(--roxo);
+            color: var(--cor-bg-sec);
+            font-weight: 600;
+            transition: 0.3s;
+            position: relative;
 
-        &:hover {
-            background-color: var(--hover-roxo);
+            & #chevron-bandeja-relatorio {
+                position: absolute;
+                top: 50%;
+                font-size: 20px;
+                left: 20px;
+                transform: translateY(-50%);
+                transition: 0.3s;
+            }
+    
+            &:hover {
+                background-color: var(--hover-roxo);
+            }
+        }
+        & .div-option-relatorio {
+            display: none;
+            width: 100%;
+            position: absolute;
+            z-index: 10;
+            top: 115%;
+            border-radius: 10px;
+            overflow: hidden;
+            & .option-relatorio {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                justify-content: flex-start;
+                background-color: var(--cor-bg-sec);
+                padding: 13px 20px;
+                color: var(--cor-texto-apagado);
+                cursor: pointer;
+                transition: 0.2s;
+                font-size: 0.9rem;
+                &:hover {
+                    background-color: #f9f9f9;
+                    color: var(--cor-texto);
+                }
+            }
         }
     }
+
 }
 
 #mov-receitas, #mov-despesas {

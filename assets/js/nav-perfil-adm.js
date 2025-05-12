@@ -954,9 +954,45 @@ $('#pdf-parcelamento').click(function (e) {
 
 });
 
+// Função para fechar a div option de relatorios
+function fecharDivOptionRelatorios() {
+    const divOption = $('#div-option-relatorios');
+
+    if (divOption.is(':visible')) {
+        // Fecha a bandeja
+        divOption.stop(true, true).slideUp(300).fadeOut(200);
+        // Gira o ícone da bandeja cima
+        $('#chevron-bandeja-relatorio').css('transform', 'translateY(-50%) rotate(0deg)')
+    } else {
+        // Abre a bandeja
+        divOption.stop(true, true).hide().slideDown(300).fadeIn(200);
+        // Gira o ícone da bandeja para baixo
+        $('#chevron-bandeja-relatorio').css('transform', 'translateY(-50%) rotate(180deg)')
+    }
+}
+
+// Ao clicar no botão, abrir as options
+$('#abrir-options-pdf').click(function() {
+    fecharDivOptionRelatorios();
+})
+
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
+    // Abre o relatório em outra guia
     window.open(`${BASE_URL}/relatorio/receita_despesa`, '_blank');
+
+    // Fechar as options depois de clicar
+    fecharDivOptionRelatorios();
+});
+
+// Exibir PDF de movimentações
+$('#pdf-clientes-compras').click(() => {
+    // Abre o relatório em outra guia
+    // URL
+    // window.open(`${BASE_URL}/relatorio/receita_despesa`, '_blank');
+
+    // Fechar as options depois de clicar
+    fecharDivOptionRelatorios();
 });
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT

@@ -52,11 +52,11 @@
                 <a id="link_reservas"><i class="fa-solid fa-calendar-days"></i>Reservas</a>
                 <a id="link_relatorios"><i class="fas fa-file-alt"></i>Relatórios</a>
                 <div class="submenu-relatorios" style="display: none;">
-                    <a class="sub-relatorio" id="movimentacao">Movimentação</a>
+                    <a class="sub-relatorio" id="movimentacao">Movimentações</a>
+                    <a class="sub-relatorio" id="parcelamentos">Parcelamentos</a>
                     <a class="sub-relatorio" id="carros">Carros</a>
                     <a class="sub-relatorio" id="motos">Motos</a>
                     <a class="sub-relatorio" id="clientes">Clientes</a>
-                    <a class="sub-relatorio" id="parcelamentos">Parcelamentos</a>
                     <a class="sub-relatorio" id="manutencao">Manutenções</a>
                 </div>
                 <a href="adicionar-veiculo.html"><i class="fa-solid fa-car"></i>Adicionar Veiculo</a>
@@ -188,7 +188,17 @@
                         </div>
                         <div class="charts-card" id="div-movimentacoes"></div>
                     </div>
-                    <button id="pdf-movimentacao">Visualizar/Gerar PDF <i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+                    <div class="div-button-mov">
+                        <button id="abrir-options-pdf">
+                            Visualizar/Gerar PDF 
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                            <i class="fa-solid fa-chevron-up" id="chevron-bandeja-relatorio"></i>
+                        </button>
+                        <div class="div-option-relatorio" id="div-option-relatorios">
+                            <div class="option-relatorio" id="pdf-movimentacao"><i class="fa-solid fa-dollar-sign"></i> Movimentações</div>
+                            <div class="option-relatorio" id="pdf-clientes-compras"><i class="fa-solid fa-users"></i>Clientes e compras</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
