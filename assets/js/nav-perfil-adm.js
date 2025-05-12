@@ -234,6 +234,13 @@ $(document).ready(function () {
         }
     });
 
+    $("#parcelamentos").on("click", function () {
+        exibirRelatorio('parcelamentos');
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    });
+
     $("#manutencao").on("click", function () {
         exibirRelatorio('manutencao');
         if ($(window).width() <= 980) {
@@ -365,7 +372,6 @@ $(document).ready(function () {
 // Função para envio ao banco (exemplo)
 function enviarParaBanco() {
     const valorParaBanco = desformatarPreco($('#input-valor').val());
-    console.log('Valor enviado:', valorParaBanco); // Exemplo: 1234.56
 }
 
 // Função para carregar todos os serviços cadastrados
@@ -414,7 +420,6 @@ async function carregarServicos() {
             }
         });
     } catch (error) {
-        console.error("Erro ao carregar serviços:", error);
         alertMessage("Erro ao carregar serviços.", 'error');
         $('.bg-carregamento-servicos').css('display', 'none');
     }
@@ -1127,8 +1132,6 @@ $('#mov-receitas').on('click', function () {
 
     $('#tilte-modal-add-mov').text('Adicionar receita');
     $('#tipo-mov').val('receita');
-    
-    console.log($('#tipo-mov').val())
 })
 
 // Abre modal de despesas
@@ -1142,8 +1145,6 @@ $('#mov-despesas').on('click', function () {
     
     $('#tilte-modal-add-mov').text('Adicionar despesa');
     $('#tipo-mov').val('despesa');
-
-    console.log($('#tipo-mov').val())
 })
 
 // Fecha modal de movimentações (X e overlay)
@@ -1544,8 +1545,6 @@ $('#modal-mov').on('submit', function(e) {
         descricao: data.get('descricao-mov')
     }
 
-    console.log(envia)
-
     $.ajax({
         method: 'POST',
         url: `${BASE_URL}/movimentacoes`,
@@ -1557,6 +1556,39 @@ $('#modal-mov').on('submit', function(e) {
         success: function(response) {
             localStorage.setItem('msgAddMov', response.success);
             window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON?.error, 'error');
+        }
+    })
+})
+
+// Carregar os financiamentos em andamento
+$(document).ready(function() {
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    // Caso não exista, redireciona para login
+    if (!dadosUser) {
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    
+    // Obtém o token
+    const token = JSON.parse(dadosUser).token;
+
+    $.ajax({
+        method: 'GET',
+        url: `${BASE_URL}/buscar_financiamento`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        contentType: 'application/json',
+        success: function(response) {
+            $('#financ-total').text(response.total);
+
+            $('#financ-concluidos').text(response.concluidos);
+            
+            $('#financ-em-andamento').text(response.em_andamento);
         },
         error: function(response) {
             console.log(response)
