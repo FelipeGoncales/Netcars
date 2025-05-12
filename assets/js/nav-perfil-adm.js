@@ -842,7 +842,6 @@ $('#pdf-carros').click(function (e) {
     window.open(url, '_blank');
 });
 
-
 //pdf motos
 $('#pdf-motos').click(function (e) {
     e.preventDefault();
@@ -930,6 +929,28 @@ $('#pdf-manutencao').click(function (e) {
         url += 'ano=' + encodeURIComponent(ano) + '&';
     }
     window.open(url, '_blank');
+
+});
+
+//pdf parcelamentos
+$('#pdf-parcelamento').click(function (e) {
+    e.preventDefault();
+
+    // 1) Pegar valores do filtro
+    const filtro = $('#input-filtro-parc').val();
+
+    // 2) Montar URL
+    let url = `${BASE_URL}/relatorio/parcelamentos?q=${encodeURIComponent(filtro)}`;
+
+    $.ajax({
+        url: url,
+        success: function() {
+            window.open(url, '_blank');
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
 
 });
 
