@@ -93,7 +93,7 @@ main {
 }
 
 .i-ajuda {
-  font-size: 50px;
+  font-size: 40px;
   color: #6C1DE9;
 }
 
@@ -146,26 +146,24 @@ main {
   box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
   background-color: var(--cor-bg-sec);
   padding: 0 20px;
-  margin-bottom: 35px;
   box-sizing: border-box;
   transition: border 0.3s, box-shadow 0.3s;
   gap: 15px;
-  /* Espaço entre lupa e input */
+  position: relative;
+  bottom: 66px;
 }
 
-/* Cor ao focar no input */
 .input-container:focus-within {
   border: 1.5px solid #6C1DE9;
+  color: #6C1DE9;
 }
 
-/* Lupa (sem position) */
 .i-duvida {
   font-size: 20px;
   color: #aaa;
   transition: color 0.3s;
 }
 
-/* Mudar cor da lupa quando focado */
 .input-container:focus-within .i-duvida {
   color: #6C1DE9;
 }
@@ -181,7 +179,7 @@ main {
 }
 
 .div-ajuda p {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
   color: #696977;
 }
@@ -236,9 +234,21 @@ main {
   .container-card-ajuda {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .card-ajuda{
+    width: 178px;
+    height: 160px;
+  } 
+  .faq-a{
+    font-size: 12px;
+  }
+
+  .faq-li::before{
+    font-size: 12px;
+  }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 830px) {
   .container-card-ajuda {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -247,17 +257,6 @@ main {
     gap: 15px;
   }
 
-  .faq-a{
-    font-size: 12px;
-  }
-
-  .faq-li::before{
-    font-size: 12px;
-  }
-  .card-ajuda{
-    width: 188px;
-    height: 170px;
-  }
 
   .div-ajuda p{
     font-size: 14px;
@@ -268,10 +267,6 @@ main {
 
   .i-duvida{
     font-size: 14px;
-  }
-
-  .i-ajuda{
-    font-size: 40px;
   }
 
   .div-as2 a{
@@ -295,7 +290,35 @@ main {
 
 @media (max-width: 425px){
   .container-card-ajuda{
-    grid-template-columns: repeat(1, 1fr)
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .card-ajuda{
+    width: 148px;
+    height: 130px;
+  } 
+
+  .card-ajuda-back{
+    gap: 5px;
+  }
+
+  .card-ajuda-front{
+    gap: 10px;
+  }
+
+  .div-as1{
+    gap: 5px;
+  }
+
+  .div-ajuda p{
+    font-size: 12px;
+  }
+  .i-ajuda{
+    font-size: 35px;
+  }
+
+  .div-as2 a{
+    font-size: 12px;
   }
 }
 

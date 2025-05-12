@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Seus CSS -->
+    <link rel="stylesheet" href="assets/css/faq.css">
+    <link rel="stylesheet" href="assets/css/faq-follow.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/header-footer.css">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
+
+    <title>NetCars</title>
+    <link rel="icon" href="assets/img/logo-icon-navegador.png">
+
+    <!-- Seus scripts que não dependem de jQuery (defer) -->
+    <script src="assets/js/home.js" ></script>
+    <script src="assets/js/header.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <a href="index.html">
+            <div class="div-logo hidden">
+                <img src="assets/img/logo.png" alt="Logo Netcars">
+                <p><span>NET</span>CARS</p>
+            </div>
+        </a>
+        <div class="sanduiche" id="sanduicheHeader">
+            <div class="linha1"></div>
+            <div class="linha2"></div>
+            <div class="linha3"></div>
+        </div>
+
+        <div id="barra-lateral">
+            <a href="index.html">
+                <div class="div-logo">
+                    <img src="assets/img/logo.png" alt="Logo Netcars">
+                    <p><span>NET</span>CARS</p>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li id="nav-veiculos"><a href="veiculos.html">Veículos</a></li>
+                    <li><a href="#footer">Contato</a></li>
+                    <li><a href="faq.html">Ajuda</a></li>
+                </ul>
+            </nav>
+            <a href="" id="aDivEntrar">
+                <div class="div-usuario" id="divEntrar">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p id="nomeUsuario">Entrar</p>
+                </div>
+            </a>
+            <p id="fecharBarraLateral">&times;</p>
+        </div>
+        <div class="overlay-bg" id="overlay-bg"></div>
+    </header>
+
+    <main>
+        <!-- RETIRAR A PARTIR DESSE TRECHO -->
+        <section class="sec-pesquisar">
+            <div class="banner2"></div>
+        </section>
+        <section class="sec-faq">
+            <div class="input-container" aria-label="Campo de dúvida com lupa">
+                <i class="fa-solid fa-magnifying-glass i-duvida"></i>
+                <input class="div-duvida" type="text" placeholder="Digite sua dúvida" />
+            </div>
+            
+            <div class="div-ajuda">
+                <div class="pai-card-ajuda">
+                    <div class="container-card-ajuda2 owl-carousel owl-theme">
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-circle-user i-ajuda2"></i>
+                                <p>Cadastro</p>
+                            </div>
+                        </div>
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-shopping-cart i-ajuda2"></i>
+                                <p>Comprar</p>
+                            </div>
+                        </div>
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-handshake i-ajuda2"></i>
+                                <p>Financiamento</p>
+                            </div>
+                        </div>
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-screwdriver-wrench i-ajuda2"></i>
+                                <p>Manutenção</p>
+                            </div>
+                        </div> <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-circle-user i-ajuda2"></i>
+                                <p>Cadastro</p>
+                            </div>
+                        </div>
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-shopping-cart i-ajuda2"></i>
+                                <p>Comprar</p>
+                            </div>
+                        </div>
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-handshake i-ajuda2"></i>
+                                <p>Financiamento</p>
+                            </div>
+                        </div>
+                        <div class="card-ajuda2">
+                            <div class="card-ajuda-front2">
+                                <i class="fa-solid fa-screwdriver-wrench i-ajuda2"></i>
+                                <p>Manutenção</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div class="div-contato">
+            <div>
+                <p class="footer-title">Cidades</p>
+                <a href="https://www.google.com.br/maps/place/Birigui,+SP/" target="_blank" class="footer-text">Birigui - SP</a>
+                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/" target="_blank" class="footer-text">Araçatuba - SP</a>
+            </div>
+            <div>
+                <p class="footer-title">Comprar</p>
+                <a href="veiculos.html" class="footer-text">Carros usados</a>
+                <a class="footer-text" id="footer-motos-usadas">Motos usadas</a>
+                <a href="veiculos.html" class="footer-text">Todos</a>
+            </div>
+            <div>
+                <p class="footer-title">Contato</p>
+                <a class="footer-text">(18) 99999-9999</a>
+                <a class="footer-text">netcars.contato@gmail.com</a>
+            </div>
+        </div>
+        <div class="div-logo">
+            <img src="assets/img/logo.png" alt="Logo Netcars">
+            <p><span>NET</span>CARS</p>
+        </div>
+        <div class="div-direitos-reservados">
+            <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modais -->
+    <div id="modal-nav-veiculos">
+        <div id="pagina-veiculo-carro"><i class="fa-solid fa-car"></i><p>Comprar carros</p></div>
+        <div id="pagina-veiculo-moto"><i class="fa-solid fa-motorcycle"></i><p>Comprar motos</p></div>
+    </div>
+    <div id="modal-login">
+        <p class="title">Faça login para uma experiência ainda melhor! ;D</p>
+        <a href="login.html" class="btn-login">Fazer login</a>
+        <p class="subtitle">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+        <p id="closeModalLogin">&times;</p>
+    </div>
+
+    <!-- jQuery (versão única, necessária para Owl Carousel) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- Owl Carousel JS -->
+    <script src="owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Inicialização do Owl Carousel -->
+    <script>
+          $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                responsiveClass: true,
+                responsive: {
+                    0: { items: 1, nav: true },
+                    600: { items: 3, nav: false },
+                    1000: { items: 5, nav: true, loop: false }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
