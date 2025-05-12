@@ -2251,7 +2251,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* serviços (modal e div) */
 
-#formAddServico,
 #formEditarServico {
     display: none;
     align-items: center;
@@ -2441,12 +2440,222 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         & .button-add {
             background: #6C1DE9;
             color: #ffffff;
-
+            width: 100%;
             &:hover {
                 background-color: var(--hover-roxo);
             }
         }
     }
+}
+
+@media (max-width: 1024px) {
+#servicos {
+    width: 90%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 65%;
+        }
+
+        & .div-input-valor {
+            width: 35%;
+        }
+
+        & p {
+            font-size: 1.2em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+    }
+}
+}
+
+@media (max-width: 768px) {
+#servicos {
+    width: 80%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 65%;
+        }
+
+        & .div-input-valor {
+            width: 35%;
+        }
+
+        & p {
+            font-size: 1.2em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+    }
+
+}
+}
+
+@media (max-width: 426px) {
+#servicos {
+    width: 90%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 65%;
+        }
+
+        & .div-input-valor {
+            width: 35%;
+        }
+
+        & p {
+            font-size: 1.2em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+    }
+}
+
+#formEditarServico {
+    width: 80%;
+    gap: 10px;
+
+    & .p-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+    & .div-input {
+        width: 100%;
+
+        & input {
+            border: 3px solid #EDECF2;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+    }
+
+    & button {
+        width: 100%;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    & #fecharModalEditarServico {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        color: var(--roxo);
+        font-size: 1.4rem;
+        cursor: pointer;
+    }
+}
+
+}
+
+@media (max-width: 321px) {
+#servicos {
+    width: 90%;
+    height: 80%;
+    & .table-container{
+        max-height: 300px;
+        & table th, table td {
+            padding: 12px;
+            font-size: 0.7rem;
+        }
+    }
+    
+    & p {
+        font-weight: 600;
+        font-size: 1.6em;
+    }
+
+    & .div-info {
+        gap: 15px;
+        width: 100%;
+
+        & .div-input-obs {
+            width: 55%;
+            font-size: 0.6rem;
+        }
+        
+        & .div-input-valor {
+            width: 45%;
+            font-size: 0.6rem;
+        }
+
+        & p {
+            font-size: 0.8em;
+        }
+
+        & .input {
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 0.8rem;
+        }
+        & label {
+            font-size: 0.8rem;
+        }
+    }
+}
 }
 
 /*  Modals Receita e Despesa  */
