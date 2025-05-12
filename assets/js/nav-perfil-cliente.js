@@ -86,6 +86,9 @@ function fecharModaisPagarParcela() {
 
     // Desabilita o botão de confirmar pagamento
     $('#confirmar-pagamento-parcela').prop('disabled', true);
+    
+    // Altera novamente o texto do valor da parcela para indefinido
+    $('#valor-parcela').text('R$ ~');
 }
 
 // Trocar a visibilidade das divs dentro do main
@@ -272,18 +275,22 @@ $('.voltar-modal-pagar-parcela').click(function () {
     // Exibe a imagem do qrcode
     $('#img-qrcode').hide();
     $('#loading-img-qrcode').show();
+
     // Desabilita o botão de confirmar pagamento
     $('#confirmar-pagamento-parcela').prop('disabled', true);
+
+    // Altera novamente o texto do valor da parcela para indefinido
+    $('#valor-parcela').text('R$ ~');
 })
 
 // Fechar barra lateral
 function fecharBarraLateral() {
-    barraLateral.css('animation', 'fecharBarraLateral 0.7s');
-    overlayBg.css('animation', 'sumirOverlay 0.7s');
+    $('#barra-lateral').css('animation', 'fecharBarraLateral 0.7s');
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
 
     setTimeout(() => {
-        barraLateral.css('display', 'none');
-        overlayBg.css('display', 'none');
+        $('#barra-lateral').css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 699);
 }
 
@@ -731,6 +738,21 @@ $('#parcela-mais-recente').on('click', function () {
             // Obtém o id da parcela e o salva em um input
             const idParcela = jqXHR.getResponseHeader('ID-PARCELA');
             $('#input-id-parcela').val(idParcela);
+
+            // Obtém o valor da parcela
+            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');     
+            // Informa o valor da parcela para o usuário
+            $('#valor-parcela').text(formatarValor(valorParcela));
+
+            // Obtém o valor da parcela
+            const juros = jqXHR.getResponseHeader('JUROS');
+            if (juros && parseFloat(juros) > 0) {
+                let textoAntigo = $('#p-mensagem-qr-code').html();
+
+                textoAntigo += ` (Juros: <span>${formatarValor(juros)}</span>)`;
+
+                $('#p-mensagem-qr-code').html(textoAntigo);
+            }
             
             // Define amortizada como "0", ou seja, não amortizada
             $('#input-amortizada').val(0)
@@ -794,6 +816,11 @@ $('#parcela-amortizar').on('click', function () {
             const idParcela = jqXHR.getResponseHeader('ID-PARCELA');
             $('#input-id-parcela').val(idParcela);
 
+            // Obtém o valor da parcela
+            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');     
+            // Informa o valor da parcela para o usuário
+            $('#valor-parcela').text(formatarValor(valorParcela));
+
             // Define amortizada como "1", ou seja, amortizada
             $('#input-amortizada').val(1);
 
@@ -825,7 +852,7 @@ $('#parcela-amortizar').on('click', function () {
     })
 })
 
-// Ao clicar no botão de cancelar manutenção
+// Ao clicar no botão de confirmar pagamento de parcela
 $('#confirmar-pagamento-parcela').click(function () {
     Swal.fire({
         title: "Você confirma o pagamento dessa parcela?",
@@ -868,6 +895,7 @@ $('#confirmar-pagamento-parcela').click(function () {
     })
 })
 
+// Verifica se possui uma mensagem de reserva salva no local storage ao abrir a página
 $(document).ready(function () {
     let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
 
