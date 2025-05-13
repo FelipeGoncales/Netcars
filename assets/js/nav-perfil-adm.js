@@ -137,7 +137,9 @@ $(document).ready(function () {
 
     $("#link_relatorios").on("click", function () {
         const elementoClicado = this;
-        if ($(elementoClicado).hasClass('selecionado')) {
+
+        // Caso relatórios já esteja aberto
+        if ($(elementoClicado).hasClass('selecionado') && $(window).width() > 980) {
             $('#minha-conta').css('display', 'flex');
             $('#editUser').css('display', 'none');
             $('#reservas').css('display', 'none');
@@ -150,6 +152,8 @@ $(document).ready(function () {
 
             const minhaConta = document.getElementById('link_minhaConta');
             selecionarA(minhaConta);
+
+        // Senão, abre o submenu de relatórios
         } else {
             $('#minha-conta').css('display', 'none');
             $('#editUser').css('display', 'none');
@@ -165,9 +169,6 @@ $(document).ready(function () {
             // Exibir a página de movimentação automaticamente
             exibirRelatorio('movimentacao');
             selecionarA(elementoClicado);
-        }
-        if ($(window).width() <= 980) {
-            fecharBarraLateral();
         }
     });
 
@@ -1422,6 +1423,9 @@ function buscarReservas() {
             if (listaVeicMotos.length) {
                 await gerarCard(listaVeicMotos, $divReservas, "moto");
             }
+
+            // Adiciona o título da seção
+            $('#reservas').prepend($('<h3></h3>').text('Veículos reservados'));
         }
     })
 }

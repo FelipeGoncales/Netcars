@@ -482,7 +482,7 @@ function buscarReservas() {
             }
 
             // Adiciona o título da seção
-            $('#reservas').prepend($('<h3></h3>').text('Reservas'));
+            $('#reservas').prepend($('<h3></h3>').text('Veículos reservados'));
 
             if (listaVeicCarro.length) {
                 await gerarCard(listaVeicCarro, $divReservas, "carro");

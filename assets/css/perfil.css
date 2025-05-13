@@ -2063,6 +2063,29 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
+/* Responsivo Relatório Parcelamento */
+@media (max-width: 867px) {
+
+    .container-relatorios.parcelamento {
+        width: 90vw;
+        & .div-blocos {
+            width: 100%;
+            flex-direction: column;
+            & .bloco-info {
+                width: 100%;
+                height: 105px;
+                & .legenda {
+                    font-size: 0.8rem;
+                }
+                & .numero {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+}
+
 .container-branco {
     background-color: white;
     height: auto;
