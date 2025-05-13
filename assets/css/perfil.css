@@ -1689,11 +1689,15 @@ tbody tr.tipo2 {
 
     & p {
         font-weight: 400;
-        font-size: 16px;
+        font-size: 15px;
 
         &.price {
             font-size: 23px;
             font-weight: 600;
+        }
+
+        &.entrada {
+            font-weight: 300;
         }
     }
 }

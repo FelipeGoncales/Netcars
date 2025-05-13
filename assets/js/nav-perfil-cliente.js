@@ -583,6 +583,9 @@ function buscarFinanciamento() {
             // Insere o valor total do parcelamento
             $('.valor-total-financ').text(formatarValor(response.valor_total));
 
+            // Insere o valor da entrada do financiamento
+            $('.entrada-financ').text(`Entrada - ${formatarValor(response.entrada)}`);
+
             // Adicionar evento click para redirecionar para o anúncio do veículo para ver mais detalhes
             if (veiculo.tipo_veiculo === 1) {
                 $('#ver_veiculo_financiamento').click(function () {
