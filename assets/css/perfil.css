@@ -129,6 +129,31 @@ h1 {
     display: flex;
     flex-direction: column;
 
+    & .perfil-usuario {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 180px;
+
+        & i {
+            font-size: 50px;
+            text-align: center;
+        }
+
+        & h2 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        & p {
+            font-size: 0.8rem;
+            font-weight: 300;
+            text-align: center;
+        }
+    }
+
     & nav {
         padding: 40px 0;
         display: flex;
@@ -136,10 +161,8 @@ h1 {
         gap: 25px;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
         flex: 1;
-        /* Allow nav to grow */
-        overflow-y: auto;
-        /* Add scrolling if content exceeds height */
         padding-bottom: 90px;
+        height: 100vh;
 
         & a {
             cursor: pointer;
@@ -169,31 +192,6 @@ h1 {
             &:hover {
                 border-left: solid 4px var(--cor-titles);
             }
-        }
-    }
-
-    & .perfil-usuario {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        height: 180px;
-
-        & i {
-            font-size: 50px;
-            text-align: center;
-        }
-
-        & h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            text-align: center;
-        }
-
-        & p {
-            font-size: 0.8rem;
-            font-weight: 300;
-            text-align: center;
         }
     }
 
@@ -2177,14 +2175,15 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     max-width: 900px;
     display: flex;
     flex-direction: column;
+    top: -35px;
     position: relative;
-    top: -25px;
     width: 50vw;
     gap: 15px;
 
     & .div-button-mov {
         width: 100%;
         position: relative;
+
         & button {
             margin-top: 5px;
             border: none;
@@ -2196,7 +2195,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             color: var(--cor-bg-sec);
             font-weight: 600;
             transition: 0.3s;
-            position: relative;
 
             & #chevron-bandeja-relatorio {
                 position: absolute;
@@ -2921,6 +2919,9 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     font-size: 24px;
     font-weight: 600;
     color: #333;
+}
+
+#receita-valor {
     margin-bottom: 15px;
 }
 

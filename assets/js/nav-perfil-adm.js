@@ -125,7 +125,11 @@ $(document).ready(function () {
         $('.container-relatorios').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#servicos').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -139,7 +143,10 @@ $(document).ready(function () {
             $('#reservas').css('display', 'none');
             $('#servicos').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
-            $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+
+            // Fecha o submenu se estiver aberto
+            $('nav').css('overflow-y', 'visible');
+            $('.submenu-relatorios').slideUp();
 
             const minhaConta = document.getElementById('link_minhaConta');
             selecionarA(minhaConta);
@@ -150,7 +157,10 @@ $(document).ready(function () {
             $('#servicos').css('display', 'none');
 
             // Alternar a exibição do submenu
-            $(".submenu-relatorios").slideDown();
+            $(".submenu-relatorios")
+                .slideDown(300, function() {
+                    $('nav').css('overflow-y', 'auto');
+                });
 
             // Exibir a página de movimentação automaticamente
             exibirRelatorio('movimentacao');
@@ -169,7 +179,11 @@ $(document).ready(function () {
         $('#servicos').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -183,7 +197,11 @@ $(document).ready(function () {
         $('#servicos').css('display', 'flex');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+        
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -198,7 +216,10 @@ $(document).ready(function () {
         $('#reservas').css('display', 'flex');
         $('#servicos').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
 
         if ($(window).width() <= 980) {
             fecharBarraLateral();
