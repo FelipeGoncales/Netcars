@@ -976,7 +976,7 @@ $('#formAddServico').on('submit', function (e) {
         },
         success: async function (response) {
             $('#formAddServico').hide();
-            $('.modal-manu').show();
+            $('.modal-manu').css('display','flex');
 
             // Limpar campos
             $('#select-servico').val('');
