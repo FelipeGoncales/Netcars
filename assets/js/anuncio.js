@@ -1166,6 +1166,26 @@ $('#excluir-servico').click(function () {
     RESERVA
 */
 
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('btnRelatorio');
+  btn.addEventListener('mouseenter', () => {
+    btn.classList.add('expanded');
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.classList.remove('expanded');
+  });
+});
+
+// ao entrar com o mouse, adiciona a classe que expande
+btn.addEventListener('mouseenter', () => {
+    btn.classList.add('expanded');
+});
+
+// ao sair com o mouse, remove a classe
+btn.addEventListener('mouseleave', () => {
+    btn.classList.remove('expanded');
+});
+
 // Reservar moto
 
 $('#reservar-btn').click(function () {
