@@ -122,12 +122,15 @@ function fecharModaisPagarParcela() {
     $('#img-qrcode').hide();
     $('#loading-img-qrcode').show();
 
+    // Esconde o codigo pix
+    $('.div-codigo-pix').hide();
+
     // Desabilita o botão de confirmar pagamento
-    $('#confirmar-pagamento-parcela').prop('disabled', true);
+    $('#confirmar-pagamento-parcela').addClass('disabled');
 
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
-    $('#p-juros').hide();
+    $('#p-juros').remove();
 }
 
 // Trocar a visibilidade das divs dentro do main
@@ -315,8 +318,11 @@ $('.voltar-modal-pagar-parcela').click(function () {
     $('#img-qrcode').hide();
     $('#loading-img-qrcode').show();
 
+    // Esconde o codigo pix 
+    $('.div-codigo-pix').hide();
+
     // Desabilita o botão de confirmar pagamento
-    $('#confirmar-pagamento-parcela').prop('disabled', true);
+    $('#confirmar-pagamento-parcela').addClass('disabled');
 
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
@@ -406,8 +412,25 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
                 'font-size': '1.5rem'
             }) // Inserir nome do carro
 
-        // Descrição do veículo
-        const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+        // Função para formatar o texto e adicionar "..."
+        function limitarQntCaracteres(texto, qntMax) {
+            return texto.substr(0, qntMax) + '...';
+        }
+
+        /// Descrição do veículo
+        let pDesc;
+
+        // Caso exista a versão
+        if (veiculo.versao) { 
+            let qntCaracteresVersao = veiculo.versao.length;
+
+            // Caso a versão tenha mais ou igual a 34 caractéres
+            if (qntCaracteresVersao >= 34) {
+                pDesc = $("<p></p>").text(limitarQntCaracteres(veiculo.versao, 34)); // Inserir versão do carro
+            } else {
+                pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+            }
+        }
 
         // Container das informações adicionais
         const containerInfoCard = $("<div></div>").addClass("container-info-card");
@@ -847,6 +870,12 @@ $('#parcela-mais-recente').on('click', function () {
             $('#valor-parcela').text(formatarValor(valorParcela));
 
             // Obtém o valor da parcela
+            const codigoPix = jqXHR.getResponseHeader('CODIGO-PIX');
+            // Informa o valor da parcela para o usuário
+            $('#p-codigo-pix').text(codigoPix);
+            $('.div-codigo-pix').show();
+
+            // Obtém o valor da parcela
             const juros = jqXHR.getResponseHeader('JUROS');
             if (juros && parseFloat(juros) > 0) {
                 let textoAntigo = $('#p-mensagem-qr-code').html();
@@ -860,7 +889,7 @@ $('#parcela-mais-recente').on('click', function () {
             $('#input-amortizada').val(0)
 
             // Habilita o botão de confirmar pagamento
-            $('#confirmar-pagamento-parcela').prop('disabled', false);
+            $('#confirmar-pagamento-parcela').removeClass('disabled');
 
             // Cria a URL utilizando a resposta BLOB obtida da API
             const url_qrcode = URL.createObjectURL(response);
@@ -885,6 +914,23 @@ $('#parcela-mais-recente').on('click', function () {
             }, 660);
         }
     })
+})
+
+$(document).ready(function () {
+    $('#copiar-codigo-pix').click(async function () {
+            // Tenta pela API moderna
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText($('#p-codigo-pix').text());
+                    
+                    alertMessage('Código copiado!', 'success');
+                    
+                    return;
+                } catch (err) {
+                    return;
+                }
+            }
+        })
 })
 
 // Abre o modal de gerar o qr code do pix para pagar a parcela mais recente
@@ -923,11 +969,17 @@ $('#parcela-amortizar').on('click', function () {
             // Informa o valor da parcela para o usuário
             $('#valor-parcela').text(formatarValor(valorParcela));
 
+            // Obtém o valor da parcela
+            const codigoPix = jqXHR.getResponseHeader('CODIGO-PIX');
+            // Informa o valor da parcela para o usuário
+            $('#p-codigo-pix').text(codigoPix);
+            $('.div-codigo-pix').show();
+
             // Define amortizada como "1", ou seja, amortizada
             $('#input-amortizada').val(1);
 
             // Habilita o botão de confirmar pagamento
-            $('#confirmar-pagamento-parcela').prop('disabled', false);
+            $('#confirmar-pagamento-parcela').removeClass('disabled');
 
             // Cria a URL utilizando a resposta BLOB obtida da API
             const url_qrcode = URL.createObjectURL(response);
@@ -956,6 +1008,11 @@ $('#parcela-amortizar').on('click', function () {
 
 // Ao clicar no botão de confirmar pagamento de parcela
 $('#confirmar-pagamento-parcela').click(function () {
+    // Caso o botão esteja desabilitado, retorna
+    if ($(this).hasClass('disabled')) {
+        return;
+    }
+
     Swal.fire({
         title: "Você confirma o pagamento dessa parcela?",
         icon: "warning",
