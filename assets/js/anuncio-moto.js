@@ -535,7 +535,6 @@ $('#input-placa').on('blur', function () {
 })
 
 // Cancelar reserva
-
 $('#cancelar-reserva').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
@@ -556,8 +555,19 @@ $('#cancelar-reserva').click(function () {
                 },
                 contentType: "application/json",
                 success: function (response) {
-                    localStorage.setItem('msgReserva', response.success);
-                    window.location.href = "cliente-perfil.html";
+                    // Salva a mensagem no local storage
+                    localStorage.setItem('msgPerfil', 'Reserva cancelada com sucesso!');
+                    
+                    // Obter tipo usuário
+                    obterTipoUser();
+
+                    if (tipoUser === 1) {
+                        window.location.href = "administrador-perfil.html";
+                    } else if (tipoUser === 2) {
+                        window.location.href = "vendedor-perfil.html";
+                    } else {
+                        window.location.href = "cliente-perfil.html";
+                    }
                 },
                 error: function (response) {
                     Swal.fire({

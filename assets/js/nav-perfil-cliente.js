@@ -44,14 +44,52 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-// Exibir mensagem de reserva
-$(document).ready(function () {
-    const mensagemLocalStorage = localStorage.getItem('msgReserva');
 
-    if (mensagemLocalStorage) {
-        alertMessage(mensagemLocalStorage, 'success');
-        localStorage.removeItem('msgReserva')
-    };
+// Exibir mensagens ao abrir o perfil
+$(document).ready(function () {
+    // Exibir mensagem padrão
+    const msg = localStorage.getItem('msgPerfil');
+
+    // Caso exista a mensagem
+    if (msg) {
+        // Exibe a mensagem
+        alertMessage(msg, 'success');
+
+        // Remove o item do local storage
+        localStorage.removeItem('msgPerfil');
+    }
+
+    // Função para verificar se possui item salvo no local storage
+    function verificarReservaCompraParcelamento(localStorageItem, idDiv, linkA) {
+        // Obtém a mensagem
+        const msg = localStorage.getItem(localStorageItem);
+
+        // Caso exista a mensagem
+        if (msg) {
+            // Exibe a mensagem
+            alertMessage(msg, 'success');
+
+            // Remove o item do local storage
+            localStorage.removeItem(localStorageItem)
+
+            // Abre a seção designada
+            $('#minha-conta').css('display', 'none');
+            $(`#${idDiv}`).css('display', 'flex');
+
+            // Seleciona o A do nav correto
+            let elemento = document.getElementById(linkA);
+            selecionarA(elemento);
+        };
+    }
+
+    // Chama a função para reservas
+    verificarReservaCompraParcelamento('msgReserva', 'reservas', 'link_reservas');
+
+    // Chama a função para compras a vista
+    verificarReservaCompraParcelamento('msgCompraAVista', 'historico-compras', 'link_hCompras');
+
+    // Chama a função para parcelamentos
+    verificarReservaCompraParcelamento('msgParcelamento', 'financiamento', 'link_financiamento');
 })
 
 // Fazer o nav funcionar
@@ -79,14 +117,14 @@ function fecharModaisPagarParcela() {
             overlayBg.css('display', 'none');
         }, 660);
     }
-    
+
     // Esconde a imagem do qr code a mostra a div de carregando
     $('#img-qrcode').hide();
     $('#loading-img-qrcode').show();
 
     // Desabilita o botão de confirmar pagamento
     $('#confirmar-pagamento-parcela').prop('disabled', true);
-    
+
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
     $('#p-juros').hide();
@@ -689,7 +727,7 @@ function buscarVenda() {
                 await gerarCard(listaVeicMotos, $divHistoricoCompras, "moto");
             }
         },
-        error: function (response) { 
+        error: function (response) {
             const $divHistoricoCompras = $('#div-historico-compras');
 
             const divPai = $('<div></div>').addClass('div-pai');
@@ -742,7 +780,7 @@ $('#parcela-mais-recente').on('click', function () {
             $('#input-id-parcela').val(idParcela);
 
             // Obtém o valor da parcela
-            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');     
+            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');
             // Informa o valor da parcela para o usuário
             $('#valor-parcela').text(formatarValor(valorParcela));
 
@@ -755,13 +793,13 @@ $('#parcela-mais-recente').on('click', function () {
 
                 $('#p-mensagem-qr-code').html(textoAntigo);
             }
-            
+
             // Define amortizada como "0", ou seja, não amortizada
             $('#input-amortizada').val(0)
 
             // Habilita o botão de confirmar pagamento
             $('#confirmar-pagamento-parcela').prop('disabled', false);
-            
+
             // Cria a URL utilizando a resposta BLOB obtida da API
             const url_qrcode = URL.createObjectURL(response);
 
@@ -819,7 +857,7 @@ $('#parcela-amortizar').on('click', function () {
             $('#input-id-parcela').val(idParcela);
 
             // Obtém o valor da parcela
-            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');     
+            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');
             // Informa o valor da parcela para o usuário
             $('#valor-parcela').text(formatarValor(valorParcela));
 

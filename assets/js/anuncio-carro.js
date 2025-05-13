@@ -570,7 +570,9 @@ $('#cancelar-reserva').click(function () {
                 },
                 contentType: "application/json",
                 success: function (response) {
-                    localStorage.setItem('msgReserva', response.success);
+                    // Salva a mensagem no local storage
+                    localStorage.setItem('msgPerfil', 'Reserva cancelada com sucesso!');
+                    
                     // Obter tipo usuário
                     obterTipoUser();
 

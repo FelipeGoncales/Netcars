@@ -43,11 +43,11 @@ function alertMessage(text, type) {
 
 $(document).ready(function () {
     // Exibir mensagem de reserva
-    const mensagemLocalStorage = localStorage.getItem('msgReserva');
+    const mensagemLocalStorage = localStorage.getItem('msgPerfil');
 
     if (mensagemLocalStorage) {
         alertMessage(mensagemLocalStorage, 'success');
-        localStorage.removeItem('msgReserva')
+        localStorage.removeItem('msgPerfil');
     };
 
     // Exibir mensagem de cadastro de veículo

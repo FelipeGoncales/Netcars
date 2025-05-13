@@ -46,11 +46,11 @@ function alertMessage(text, type) {
 
 // Exibir mensagem de reserva
 $(document).ready(function() {
-    const mensagemLocalStorage = localStorage.getItem('msgReserva');
+    const mensagemLocalStorage = localStorage.getItem('msgPerfil');
 
     if (mensagemLocalStorage) {
         alertMessage(mensagemLocalStorage, 'success');
-        localStorage.removeItem('msgReserva')
+        localStorage.removeItem('msgPerfil');
     };
 
     const mensagemCadVeic = localStorage.getItem('msgCadVeic');
