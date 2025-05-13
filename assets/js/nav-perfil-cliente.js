@@ -631,6 +631,43 @@ function buscarFinanciamento() {
 
             // Insere a quantidade de parcelas
             $('.qnt-parcelas-financ').text(`${parcelasPagas}/${response.qnt_parcelas} parcelas`);
+
+            // Caso exista um financiamento
+            let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
+
+            // Caso a mensagem esteja salva no local storage
+            if (msgParcelaPaga) {
+                // Exibe a mensagem na tela
+                alertMessage(msgParcelaPaga, 'success');
+
+                // Seleciona o link de financiamento
+                let linkFinanciamento = document.getElementById('link_financiamento');
+                selecionarA(linkFinanciamento);
+
+                let textoStatus = "Pendente";
+
+                // Da display flex na tabela de parcelas
+                $('#minha-conta').css('display', 'none');
+                $('#parcelas').css('display', 'flex');
+
+                // Seleciona a option do select
+                $('#status-select').val(textoStatus);
+
+                // Loop for para esconder as linhas que não forem do mesmo status
+                $('tr .status-text').each(function () {
+                    if ($(this).text() != textoStatus) {
+                        $(this).closest('tr').hide();
+                    } else {
+                        $(this).closest('tr').show();
+                    }
+                });
+
+                // Altera a ordem da alternância de cores das tr
+                alterarCoresTr();
+
+                // Remove o item do local storage
+                localStorage.removeItem('msgParcelaPaga');
+            }
         },
         error: function () {
             const $divFinanciamentos = $('#div-financiamento');
@@ -642,6 +679,27 @@ function buscarFinanciamento() {
 
             divPai.append(icon, msg, btnBuscar);
             $divFinanciamentos.empty().append(divPai);
+
+            // Caso exista uma mensagem de financiamento
+            let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
+
+            // Caso a mensagem esteja salva no local storage
+            if (msgParcelaPaga) {
+                // Exibe a mensagem na tela
+                alertMessage(msgParcelaPaga, 'success');
+
+                // Seleciona o link de financiamento
+                let linkHistoricoCompras = document.getElementById('link_hCompras');
+                selecionarA(linkHistoricoCompras);
+
+                // Da display flex na tabela de parcelas
+                $('#minha-conta').css('display', 'none');
+                $('#historico-compras').css('display', 'flex');
+
+                // Remove o item do local storage
+                localStorage.removeItem('msgParcelaPaga');
+            }
+
             return;
         }
     })
@@ -692,6 +750,7 @@ function limitarQntCaracteres(texto, qntMax) {
     return texto.substr(0, qntMax) + '...';
 }
 
+// Buscar venda
 function buscarVenda() {
     $.ajax({
         url: `${BASE_URL}/buscar_venda`,
@@ -743,8 +802,11 @@ function buscarVenda() {
 
 // Busca reservas e financiamentos
 $(document).ready(() => {
+    // Buscar as reservas
     buscarReservas();
+    // Busca os financiamentos
     buscarFinanciamento();
+    // Busca as vendas
     buscarVenda();
 });
 
@@ -934,42 +996,4 @@ $('#confirmar-pagamento-parcela').click(function () {
             })
         }
     })
-})
-
-// Verifica se possui uma mensagem de reserva salva no local storage ao abrir a página
-$(document).ready(function () {
-    let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
-
-    // Caso a mensagem esteja salva no local storage
-    if (msgParcelaPaga) {
-        // Exibe a mensagem na tela
-        alertMessage(msgParcelaPaga, 'success');
-
-        // Seleciona o link de financiamento
-        selecionarA($('#link_financiamento'));
-
-        let textoStatus = "Pendente";
-
-        // Da display flex na tabela de parcelas
-        $('#minha-conta').css('display', 'none');
-        $('#parcelas').css('display', 'flex');
-
-        // Seleciona a option do select
-        $('#status-select').val(textoStatus);
-
-        // Loop for para esconder as linhas que não forem do mesmo status
-        $('tr .status-text').each(function () {
-            if ($(this).text() != textoStatus) {
-                $(this).closest('tr').hide();
-            } else {
-                $(this).closest('tr').show();
-            }
-        });
-
-        // Altera a ordem da alternância de cores das tr
-        alterarCoresTr();
-
-        // Remove o item do local storage
-        localStorage.removeItem('msgParcelaPaga');
-    }
 })
