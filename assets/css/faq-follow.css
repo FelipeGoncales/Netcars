@@ -1,13 +1,75 @@
 .card-ajuda2{
-    list-style: none;
     position: relative;
-    width: 218px;
-    height: 200px;
+    width: 188px;
+    height: 170px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    background-color: white;
     cursor: pointer;
+    background-color: transparent;
+    transition: 0.3s;
+}
+button.owl-prev{
+  position: relative;
+  top: -132px;
+  right: 470px;
+  width: 30px;
+  height: 30px;
+  transition: 0.3s;
+}
+
+.i-next{
+  position: relative;
+  top: -160px;
+  right: 38px;
+  font-size: 20px;
+  color: #696977;
+  transition: 0.3s;
+}
+
+.i-prev{
+  position: relative;
+  top: -160px;
+  left: 38px;
+  font-size: 20px;
+  color: #696977;
+}
+
+.i-prev:hover{
+  color:#6C1DE9;
+}
+
+button.owl-next{
+  position: relative;
+  top: -132px;
+  left: 470px;
+  width: 30px;
+  height: 30px;
+  background: 0 0;
+}
+
+button.owl-prev:hover{
+  background-color: transparent!important;
+  color: transparent!important;
+}
+
+button.owl-next:hover{
+  background-color: transparent!important;
+  color: transparent!important;  
+}
+
+
+button.owl-next span{
+  font-size: 0px;
+}
+
+button.owl-prev span{
+  font-size: 0px;
+}
+
+.card-ajuda2 p{
+  color: #696977;
+  font-size: 14px;
+  transition: 0.2s;
 }
 
 .card-ajuda-front2{
@@ -26,20 +88,94 @@
   transition: 0.3s
 }
 .container-card-ajuda2 {
-    display: flex;
-    gap: 15px;
-    max-width: 917px;
-    padding: 0;
-    margin: 0;
-    justify-items: center;
-  }
+  max-width: 917px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
 
 .i-ajuda2 {
-    font-size: 40px;
-    color: #696977;
-    transition: 0.3s
+  font-size: 40px;
+  color: #696977;
+  transition: 0.3s
+}
+
+.card-ajuda2:hover .i-ajuda2{
+  color: #6C1DE9;
+}
+
+.card-ajuda2:hover p {
+  color: #000000;
+}
+
+.div-fluxo-filtro {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.div-fluxo-filtro a {
+  font-size: 12px;
+  color: #aeaeba  
+}
+
+.div-fluxo-filtro i {
+  font-size: 8px;
+  color: #6C1DE9  
+}
+
+.sections{
+  margin-top: -50px;
+  max-width: 917px;
+}
+
+.i-svgs{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.i-centralizar{
+  display: flex; flex-direction: row; align-items: center; justify-content: center;
+}
+
+.i-imgs{
+  width: 600px;
+  height: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  border: 10px solid #000000;
+  border-radius: 25px;
+}
+.div-sections1{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: #6C1DE9;
+  border-radius: 15px;
+}
+
+
+
+@media (max-width: 425px){
+  .card-ajuda2{
+    width: 128px;
+    height: 110px;
+  } 
+
+  .i-ajuda{
+    font-size: 35px;
   }
 
-  .card-ajuda2:hover .i-ajuda2 {
-    color: #6C1DE9;
+  .container-card-ajuda2 {
+    max-width: 280px;
+  }
+
+  .input-container
+  
+  
+
 }
+

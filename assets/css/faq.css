@@ -151,6 +151,7 @@ main {
   gap: 15px;
   position: relative;
   bottom: 66px;
+  margin-bottom: -45px;
 }
 
 .input-container:focus-within {
@@ -159,7 +160,7 @@ main {
 }
 
 .i-duvida {
-  font-size: 20px;
+  font-size: 16px;
   color: #aaa;
   transition: color 0.3s;
 }
@@ -173,7 +174,7 @@ main {
   border: none;
   outline: none;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   background: transparent;
   color: #000;
 }
