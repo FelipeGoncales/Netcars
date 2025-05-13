@@ -121,6 +121,7 @@ header {
     width: 30px;
     flex-direction: column;
     gap: 5px;
+    cursor: pointer;
     & .linha1, .linha2, .linha3 {
         border-radius: 10px;
         width: 100%;
