@@ -44,14 +44,52 @@ function alertMessage(text, type) {
         .fadeOut(400);
 }
 
-// Exibir mensagem de reserva
-$(document).ready(function () {
-    const mensagemLocalStorage = localStorage.getItem('msgReserva');
 
-    if (mensagemLocalStorage) {
-        alertMessage(mensagemLocalStorage, 'success');
-        localStorage.removeItem('msgReserva')
-    };
+// Exibir mensagens ao abrir o perfil
+$(document).ready(function () {
+    // Exibir mensagem padrão
+    const msg = localStorage.getItem('msgPerfil');
+
+    // Caso exista a mensagem
+    if (msg) {
+        // Exibe a mensagem
+        alertMessage(msg, 'success');
+
+        // Remove o item do local storage
+        localStorage.removeItem('msgPerfil');
+    }
+
+    // Função para verificar se possui item salvo no local storage
+    function verificarReservaCompraParcelamento(localStorageItem, idDiv, linkA) {
+        // Obtém a mensagem
+        const msg = localStorage.getItem(localStorageItem);
+
+        // Caso exista a mensagem
+        if (msg) {
+            // Exibe a mensagem
+            alertMessage(msg, 'success');
+
+            // Remove o item do local storage
+            localStorage.removeItem(localStorageItem)
+
+            // Abre a seção designada
+            $('#minha-conta').css('display', 'none');
+            $(`#${idDiv}`).css('display', 'flex');
+
+            // Seleciona o A do nav correto
+            let elemento = document.getElementById(linkA);
+            selecionarA(elemento);
+        };
+    }
+
+    // Chama a função para reservas
+    verificarReservaCompraParcelamento('msgReserva', 'reservas', 'link_reservas');
+
+    // Chama a função para compras a vista
+    verificarReservaCompraParcelamento('msgCompraAVista', 'historico-compras', 'link_hCompras');
+
+    // Chama a função para parcelamentos
+    verificarReservaCompraParcelamento('msgParcelamento', 'financiamento', 'link_financiamento');
 })
 
 // Fazer o nav funcionar
@@ -79,17 +117,20 @@ function fecharModaisPagarParcela() {
             overlayBg.css('display', 'none');
         }, 660);
     }
-    
+
     // Esconde a imagem do qr code a mostra a div de carregando
     $('#img-qrcode').hide();
     $('#loading-img-qrcode').show();
 
+    // Esconde o codigo pix
+    $('.div-codigo-pix').hide();
+
     // Desabilita o botão de confirmar pagamento
-    $('#confirmar-pagamento-parcela').prop('disabled', true);
-    
+    $('#confirmar-pagamento-parcela').addClass('disabled');
+
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
-    $('#p-juros').hide();
+    $('#p-juros').remove();
 }
 
 // Trocar a visibilidade das divs dentro do main
@@ -277,8 +318,11 @@ $('.voltar-modal-pagar-parcela').click(function () {
     $('#img-qrcode').hide();
     $('#loading-img-qrcode').show();
 
+    // Esconde o codigo pix 
+    $('.div-codigo-pix').hide();
+
     // Desabilita o botão de confirmar pagamento
-    $('#confirmar-pagamento-parcela').prop('disabled', true);
+    $('#confirmar-pagamento-parcela').addClass('disabled');
 
     // Altera novamente o texto do valor da parcela para indefinido
     $('#valor-parcela').text('R$ ~');
@@ -368,8 +412,25 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
                 'font-size': '1.5rem'
             }) // Inserir nome do carro
 
-        // Descrição do veículo
-        const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+        // Função para formatar o texto e adicionar "..."
+        function limitarQntCaracteres(texto, qntMax) {
+            return texto.substr(0, qntMax) + '...';
+        }
+
+        /// Descrição do veículo
+        let pDesc;
+
+        // Caso exista a versão
+        if (veiculo.versao) { 
+            let qntCaracteresVersao = veiculo.versao.length;
+
+            // Caso a versão tenha mais ou igual a 34 caractéres
+            if (qntCaracteresVersao >= 34) {
+                pDesc = $("<p></p>").text(limitarQntCaracteres(veiculo.versao, 34)); // Inserir versão do carro
+            } else {
+                pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
+            }
+        }
 
         // Container das informações adicionais
         const containerInfoCard = $("<div></div>").addClass("container-info-card");
@@ -444,7 +505,7 @@ function buscarReservas() {
             }
 
             // Adiciona o título da seção
-            $('#reservas').prepend($('<h3></h3>').text('Reservas'));
+            $('#reservas').prepend($('<h3></h3>').text('Veículos reservados'));
 
             if (listaVeicCarro.length) {
                 await gerarCard(listaVeicCarro, $divReservas, "carro");
@@ -593,6 +654,43 @@ function buscarFinanciamento() {
 
             // Insere a quantidade de parcelas
             $('.qnt-parcelas-financ').text(`${parcelasPagas}/${response.qnt_parcelas} parcelas`);
+
+            // Caso exista um financiamento
+            let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
+
+            // Caso a mensagem esteja salva no local storage
+            if (msgParcelaPaga) {
+                // Exibe a mensagem na tela
+                alertMessage(msgParcelaPaga, 'success');
+
+                // Seleciona o link de financiamento
+                let linkFinanciamento = document.getElementById('link_financiamento');
+                selecionarA(linkFinanciamento);
+
+                let textoStatus = "Pendente";
+
+                // Da display flex na tabela de parcelas
+                $('#minha-conta').css('display', 'none');
+                $('#parcelas').css('display', 'flex');
+
+                // Seleciona a option do select
+                $('#status-select').val(textoStatus);
+
+                // Loop for para esconder as linhas que não forem do mesmo status
+                $('tr .status-text').each(function () {
+                    if ($(this).text() != textoStatus) {
+                        $(this).closest('tr').hide();
+                    } else {
+                        $(this).closest('tr').show();
+                    }
+                });
+
+                // Altera a ordem da alternância de cores das tr
+                alterarCoresTr();
+
+                // Remove o item do local storage
+                localStorage.removeItem('msgParcelaPaga');
+            }
         },
         error: function () {
             const $divFinanciamentos = $('#div-financiamento');
@@ -604,6 +702,27 @@ function buscarFinanciamento() {
 
             divPai.append(icon, msg, btnBuscar);
             $divFinanciamentos.empty().append(divPai);
+
+            // Caso exista uma mensagem de financiamento
+            let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
+
+            // Caso a mensagem esteja salva no local storage
+            if (msgParcelaPaga) {
+                // Exibe a mensagem na tela
+                alertMessage(msgParcelaPaga, 'success');
+
+                // Seleciona o link de financiamento
+                let linkHistoricoCompras = document.getElementById('link_hCompras');
+                selecionarA(linkHistoricoCompras);
+
+                // Da display flex na tabela de parcelas
+                $('#minha-conta').css('display', 'none');
+                $('#historico-compras').css('display', 'flex');
+
+                // Remove o item do local storage
+                localStorage.removeItem('msgParcelaPaga');
+            }
+
             return;
         }
     })
@@ -654,6 +773,7 @@ function limitarQntCaracteres(texto, qntMax) {
     return texto.substr(0, qntMax) + '...';
 }
 
+// Buscar venda
 function buscarVenda() {
     $.ajax({
         url: `${BASE_URL}/buscar_venda`,
@@ -689,7 +809,7 @@ function buscarVenda() {
                 await gerarCard(listaVeicMotos, $divHistoricoCompras, "moto");
             }
         },
-        error: function (response) { 
+        error: function (response) {
             const $divHistoricoCompras = $('#div-historico-compras');
 
             const divPai = $('<div></div>').addClass('div-pai');
@@ -705,8 +825,11 @@ function buscarVenda() {
 
 // Busca reservas e financiamentos
 $(document).ready(() => {
+    // Buscar as reservas
     buscarReservas();
+    // Busca os financiamentos
     buscarFinanciamento();
+    // Busca as vendas
     buscarVenda();
 });
 
@@ -742,9 +865,15 @@ $('#parcela-mais-recente').on('click', function () {
             $('#input-id-parcela').val(idParcela);
 
             // Obtém o valor da parcela
-            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');     
+            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');
             // Informa o valor da parcela para o usuário
             $('#valor-parcela').text(formatarValor(valorParcela));
+
+            // Obtém o valor da parcela
+            const codigoPix = jqXHR.getResponseHeader('CODIGO-PIX');
+            // Informa o valor da parcela para o usuário
+            $('#p-codigo-pix').text(codigoPix);
+            $('.div-codigo-pix').show();
 
             // Obtém o valor da parcela
             const juros = jqXHR.getResponseHeader('JUROS');
@@ -755,13 +884,13 @@ $('#parcela-mais-recente').on('click', function () {
 
                 $('#p-mensagem-qr-code').html(textoAntigo);
             }
-            
+
             // Define amortizada como "0", ou seja, não amortizada
             $('#input-amortizada').val(0)
 
             // Habilita o botão de confirmar pagamento
-            $('#confirmar-pagamento-parcela').prop('disabled', false);
-            
+            $('#confirmar-pagamento-parcela').removeClass('disabled');
+
             // Cria a URL utilizando a resposta BLOB obtida da API
             const url_qrcode = URL.createObjectURL(response);
 
@@ -785,6 +914,23 @@ $('#parcela-mais-recente').on('click', function () {
             }, 660);
         }
     })
+})
+
+$(document).ready(function () {
+    $('#copiar-codigo-pix').click(async function () {
+            // Tenta pela API moderna
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText($('#p-codigo-pix').text());
+                    
+                    alertMessage('Código copiado!', 'success');
+                    
+                    return;
+                } catch (err) {
+                    return;
+                }
+            }
+        })
 })
 
 // Abre o modal de gerar o qr code do pix para pagar a parcela mais recente
@@ -819,15 +965,21 @@ $('#parcela-amortizar').on('click', function () {
             $('#input-id-parcela').val(idParcela);
 
             // Obtém o valor da parcela
-            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');     
+            const valorParcela = jqXHR.getResponseHeader('VALOR-PARCELA');
             // Informa o valor da parcela para o usuário
             $('#valor-parcela').text(formatarValor(valorParcela));
+
+            // Obtém o valor da parcela
+            const codigoPix = jqXHR.getResponseHeader('CODIGO-PIX');
+            // Informa o valor da parcela para o usuário
+            $('#p-codigo-pix').text(codigoPix);
+            $('.div-codigo-pix').show();
 
             // Define amortizada como "1", ou seja, amortizada
             $('#input-amortizada').val(1);
 
             // Habilita o botão de confirmar pagamento
-            $('#confirmar-pagamento-parcela').prop('disabled', false);
+            $('#confirmar-pagamento-parcela').removeClass('disabled');
 
             // Cria a URL utilizando a resposta BLOB obtida da API
             const url_qrcode = URL.createObjectURL(response);
@@ -856,6 +1008,11 @@ $('#parcela-amortizar').on('click', function () {
 
 // Ao clicar no botão de confirmar pagamento de parcela
 $('#confirmar-pagamento-parcela').click(function () {
+    // Caso o botão esteja desabilitado, retorna
+    if ($(this).hasClass('disabled')) {
+        return;
+    }
+
     Swal.fire({
         title: "Você confirma o pagamento dessa parcela?",
         icon: "warning",
@@ -896,42 +1053,4 @@ $('#confirmar-pagamento-parcela').click(function () {
             })
         }
     })
-})
-
-// Verifica se possui uma mensagem de reserva salva no local storage ao abrir a página
-$(document).ready(function () {
-    let msgParcelaPaga = localStorage.getItem('msgParcelaPaga');
-
-    // Caso a mensagem esteja salva no local storage
-    if (msgParcelaPaga) {
-        // Exibe a mensagem na tela
-        alertMessage(msgParcelaPaga, 'success');
-
-        // Seleciona o link de financiamento
-        selecionarA($('#link_financiamento'));
-
-        let textoStatus = "Pendente";
-
-        // Da display flex na tabela de parcelas
-        $('#minha-conta').css('display', 'none');
-        $('#parcelas').css('display', 'flex');
-
-        // Seleciona a option do select
-        $('#status-select').val(textoStatus);
-
-        // Loop for para esconder as linhas que não forem do mesmo status
-        $('tr .status-text').each(function () {
-            if ($(this).text() != textoStatus) {
-                $(this).closest('tr').hide();
-            } else {
-                $(this).closest('tr').show();
-            }
-        });
-
-        // Altera a ordem da alternância de cores das tr
-        alterarCoresTr();
-
-        // Remove o item do local storage
-        localStorage.removeItem('msgParcelaPaga');
-    }
 })

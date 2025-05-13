@@ -446,8 +446,6 @@ async function carregarTodosServicos() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     if (!dadosUser) {
-        alertMessage("Usuário não autenticado. Redirecionando para o login...", "error");
-        setTimeout(() => window.location.href = 'login.html', 2000);
         return;
     }
 
@@ -467,7 +465,6 @@ async function carregarTodosServicos() {
         });
     } catch (error) {
         console.error("Erro ao carregar serviços:", error);
-        alertMessage("Erro ao carregar serviços", "error");
     }
 }
 
@@ -979,7 +976,7 @@ $('#formAddServico').on('submit', function (e) {
         },
         success: async function (response) {
             $('#formAddServico').hide();
-            $('.modal-manu').show();
+            $('.modal-manu').css('display','flex');
 
             // Limpar campos
             $('#select-servico').val('');
@@ -1044,6 +1041,9 @@ function carregarDetalhesServicoParaEdicao(id_manutencao, id_servico) {
 
             $('.modal-manu').hide();
             $('#formEditarServico').show();
+        },
+        error: function() {
+            return;
         }
     });
 }
@@ -1273,7 +1273,9 @@ $('#reservar-btn').click(function () {
                                 confirmButtonText: "Confirmar"
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    localStorage.setItem('msgReserva', 'Veja as informações da sua reserva clicando em "Reservas".')
+                                    // Salva a reserva
+                                    localStorage.setItem('msgReserva', 'Veja mais informações clicando em "Ver detalhes".')
+                                    // Redireciona para perfil
                                     window.location.href = "cliente-perfil.html";
                                 }
                             })
@@ -1291,7 +1293,7 @@ $('#reservar-btn').click(function () {
         },
         error: function (response) {
             // Define uma mensagem para o cliente
-            localStorage.setItem('msgReserva', 'Finalize seu cadastro para prosseguir com a reserva!');
+            localStorage.setItem('msgPerfil', 'Finalize seu cadastro para prosseguir com a reserva!');
 
             // Verifica o tipo do veículo
             if (TIPO_VEIC == 'carro') {
@@ -1388,7 +1390,7 @@ $(document).ready(function () {
             },
             error: function (response) {
                 // Define uma mensagem para o cliente
-                localStorage.setItem('msgReserva', 'Finalize seu cadastro para prosseguir com a compra!');
+                localStorage.setItem('msgPerfil', 'Finalize seu cadastro para prosseguir com a compra!');
 
                 // Verifica o tipo do veículo
                 if (TIPO_VEIC == 'carro') {
@@ -1538,7 +1540,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         // Define uma mensagme para ser exibida na página de perfil
-                        localStorage.setItem("msgReserva", response.success);
+                        localStorage.setItem("msgCompraAVista", response.success);
                         // Redireciona para a página de perfil
                         window.location.href = "cliente-perfil.html";
                         return;
@@ -1585,7 +1587,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         // Define uma mensagme para ser exibida na página de perfil
-                        localStorage.setItem("msgReserva", response.success);
+                        localStorage.setItem("msgParcelamento", response.success);
                         // Redireciona para a página de perfil
                         window.location.href = "cliente-perfil.html";
                         return;

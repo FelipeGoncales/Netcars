@@ -43,11 +43,11 @@ function alertMessage(text, type) {
 
 $(document).ready(function () {
     // Exibir mensagem de reserva
-    const mensagemLocalStorage = localStorage.getItem('msgReserva');
+    const mensagemLocalStorage = localStorage.getItem('msgPerfil');
 
     if (mensagemLocalStorage) {
         alertMessage(mensagemLocalStorage, 'success');
-        localStorage.removeItem('msgReserva')
+        localStorage.removeItem('msgPerfil');
     };
 
     // Exibir mensagem de cadastro de veículo
@@ -125,7 +125,11 @@ $(document).ready(function () {
         $('.container-relatorios').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#servicos').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -133,16 +137,23 @@ $(document).ready(function () {
 
     $("#link_relatorios").on("click", function () {
         const elementoClicado = this;
-        if ($(elementoClicado).hasClass('selecionado')) {
+        
+        // Caso relatórios já esteja aberto
+        if ($(elementoClicado).hasClass('selecionado') && $(window).width() > 980) {
             $('#minha-conta').css('display', 'flex');
             $('#editUser').css('display', 'none');
             $('#reservas').css('display', 'none');
             $('#servicos').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
-            $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+            
+            // Fecha o submenu se estiver aberto
+            $('nav').css('overflow-y', 'visible');
+            $('.submenu-relatorios').slideUp();
 
             const minhaConta = document.getElementById('link_minhaConta');
             selecionarA(minhaConta);
+
+        // Senão, abre o submenu de relatórios
         } else {
             $('#minha-conta').css('display', 'none');
             $('#editUser').css('display', 'none');
@@ -150,7 +161,10 @@ $(document).ready(function () {
             $('#servicos').css('display', 'none');
 
             // Alternar a exibição do submenu
-            $(".submenu-relatorios").slideDown();
+            $(".submenu-relatorios")
+                .slideDown(300, function() {
+                    $('nav').css('overflow-y', 'auto');
+                });
 
             // Exibir a página de movimentação automaticamente
             exibirRelatorio('movimentacao');
@@ -169,7 +183,11 @@ $(document).ready(function () {
         $('#servicos').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -183,7 +201,11 @@ $(document).ready(function () {
         $('#servicos').css('display', 'flex');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+
         if ($(window).width() <= 980) {
             fecharBarraLateral();
         }
@@ -198,7 +220,10 @@ $(document).ready(function () {
         $('#reservas').css('display', 'flex');
         $('#servicos').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        $('.submenu-relatorios').slideUp(); // Fecha o submenu se estiver aberto
+        
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
 
         if ($(window).width() <= 980) {
             fecharBarraLateral();
@@ -323,19 +348,11 @@ $(document).ready(function () {
             $(this).val(valor.endsWith(',') ? valor + '00' : valor);
         });
 
-    // Função auxiliar para formatação dinâmica
-    function formatarValorDinamico(valor) {
-        return valor.replace('R$ ', '')
-                   .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-                   .replace(/(,.*?)\d*/g, '$1');
-    }
-
     // Função auxiliar para posicionar cursor
     function setCaretPosition(elem, pos) {
         elem.setSelectionRange(pos, pos);
     }
 
-    // Restante do código mantido
     $('#add-servico').click(function () {
         adicionarServico();
     });
@@ -347,11 +364,6 @@ $(document).ready(function () {
 
     $('#fecharModalEditarServico').click(function () {
         $('#formEditarServico').hide();
-    });
-
-    $('#formEditarServico').submit(function (e) {
-        e.preventDefault();
-        salvarEdicaoServico();
     });
 
     $('#excluir-servico').click(function () {
@@ -545,19 +557,15 @@ function abrirModalEditarServico(idServico) {
         .val(formatarValor(servico.valor))
         .prev('label').addClass('active');
 
-    // Exibe overlay + modal
-    $('#overlay-bg').css('display', 'flex');
-    $('#formEditarServico').css('display', 'flex');
+    $('#overlay-bg').css({ display: 'flex' });
+    $('#formEditarServico').css({ display: 'flex'});
 }
 
 // Fecha modal de editar serviço
 function fecharModalEditarServico() {
-    $('#formEditarServico').hide();
-    
-    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
-    setTimeout(() => {
-        overlayBg.css('display', 'none');
-    }, 660);
+    // Aplica animação de saída em ambos
+    $('#overlay-bg').css({ display: 'none' });
+    $('#formEditarServico').css({ display: 'none' });
 }
 
 // Salvar edição de serviço
@@ -660,7 +668,16 @@ $(function () {
     // Submeter edição
     $('#formEditarServico').on('submit', function (e) {
         e.preventDefault();
-        salvarEdicaoServico();
+        
+    // Validação básica antes de enviar
+    const valor = $('#valor-editar-servico').val();
+    if (!/^R\$\s\d+([.,]\d{1,2})?$/.test(valor)) {
+        alertMessage('Formato de valor inválido', 'error');
+        return;
+    }
+    
+    salvarEdicaoServico();
+
     });
 
     // Botão excluir
@@ -1401,6 +1418,9 @@ function buscarReservas() {
             if (listaVeicMotos.length) {
                 await gerarCard(listaVeicMotos, $divReservas, "moto");
             }
+
+            // Adiciona o título da seção
+            $('#reservas').prepend($('<h3></h3>').text('Veículos reservados'));
         }
     })
 }
