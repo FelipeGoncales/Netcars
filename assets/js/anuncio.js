@@ -540,6 +540,8 @@ async function carregarManutencao() {
     $('#input-obs').val('');
     $('#valor-total-manu').text(formatarValor(0));
     $('#tbody-servicos').empty();
+    // Esconde o botão de gerar relatório
+    $('#btn-gerar-relatorio').hide();
 
     try {
         // Determinar o ID do veículo com base no tipo
@@ -609,7 +611,11 @@ async function inserirDadosManutencao(id_manu) {
         $('#valor-total-manu').text(formatarValor(0));
         $('#input-id-manutencao').val('');
         $('#tbody-servicos').empty();
+
+        // Esconde o botão de gerar relatório
+        $('#btn-gerar-relatorio').hide();
         desabilitarSetas();
+
         return;
     }
 
@@ -638,6 +644,9 @@ async function inserirDadosManutencao(id_manu) {
 
     // Atualizar estado das setas de navegação
     desabilitarSetas();
+
+    // Mostra o botão de gerar relatório
+    $('#btn-gerar-relatorio').show();
 }
 
 // Habilitar/desabilitar setas de navegação conforme necessário
@@ -805,8 +814,8 @@ $('#salvar-manu').click(function () {
                 "Authorization": "Bearer " + dadosUser.token
             },
             success: function (response) {
-                alertMessage(response.success, 'success');      
-                
+                alertMessage(response.success, 'success');
+
                 $('#input-id-manutencao').val(response.id_manutencao);
 
                 carregarManutencao();
@@ -878,7 +887,7 @@ $('#cancelar-manu').click(function () {
                     "Authorization": "Bearer " + dadosUser.token
                 },
                 success: function (response) {
-                   $('#input-id-manutencao').val('');
+                    $('#input-id-manutencao').val('');
                     carregarManutencao();
                     alertMessage(response.success, 'success');
                 },
@@ -976,7 +985,7 @@ $('#formAddServico').on('submit', function (e) {
         },
         success: async function (response) {
             $('#formAddServico').hide();
-            $('.modal-manu').css('display','flex');
+            $('.modal-manu').css('display', 'flex');
 
             // Limpar campos
             $('#select-servico').val('');
@@ -1042,7 +1051,7 @@ function carregarDetalhesServicoParaEdicao(id_manutencao, id_servico) {
             $('.modal-manu').hide();
             $('#formEditarServico').show();
         },
-        error: function() {
+        error: function () {
             return;
         }
     });
@@ -1149,9 +1158,9 @@ $('#excluir-servico').click(function () {
                 success: async function (response) {
                     $('#formEditarServico').css('display', 'none');
                     $('.modal-manu').css('display', 'flex');
-                    
+
                     carregarManutencao();
-                    
+
                     alertMessage(response.success || "Serviço removido com sucesso", 'success');
                 },
                 error: function (response) {
@@ -1719,4 +1728,41 @@ $(document).ready(function () {
     $('#select-parcelas').on('change', function () {
         calcularParcelas();
     })
+})
+
+// Função para fazer animação botão
+$('#btn-gerar-relatorio').hover(
+    function () {
+        $('#texto-gerar-relatorio')
+            .css({ display: 'block', opacity: 0, right: '0' })
+            .stop(true, true)
+            .animate(
+                { right: '67%', opacity: 1 },
+                260 // duração em ms
+            );
+    },
+    function () {
+        $('#texto-gerar-relatorio')
+            .stop(true, true)
+            .animate(
+                { right: '0', opacity: 0 },
+                260,
+                function () {
+                    // ao fim da animação, esconde de vez
+                    $(this).css('display', 'none');
+                }
+            );
+    }
+);
+
+// Gerar pdf manutenção
+$('#btn-gerar-relatorio').click(function() {
+    // Obtém o id da manutenção
+    const id_manutencao = LISTA_MANUTENCOES[INDEX_MANUTENCAO].id_manutencao;
+
+    // Gera a url com parâmetro id
+    let url = `${BASE_URL}/relatorio/manutencao?id=${id_manutencao}`;
+
+    // Abre o relatório em outra guia
+    window.open(url, '_blank');
 })
