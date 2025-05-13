@@ -30,6 +30,15 @@ $(document).ready(function() {
 });
 });
 
+// Função para quando o usuario clicar em esqueci senha ele dar foco no input de email
+document.getElementById("forgot-password").addEventListener("click", function () {
+    const emailInput = document.getElementById("input-email");
+    
+    if (!emailInput.value.trim()) {
+        emailInput.focus();
+    }
+});
+
 // Função de exibir a mensagem para evitar repetir código
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
