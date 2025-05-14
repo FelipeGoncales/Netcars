@@ -125,7 +125,7 @@ $(document).ready(function () {
         $('.container-relatorios').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#servicos').css('display', 'none');
-        
+
         // Fecha o submenu se estiver aberto
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
@@ -137,7 +137,7 @@ $(document).ready(function () {
 
     $("#link_relatorios").on("click", function () {
         const elementoClicado = this;
-        
+
         // Caso relatórios já esteja aberto
         if ($(elementoClicado).hasClass('selecionado') && $(window).width() > 980) {
             $('#minha-conta').css('display', 'flex');
@@ -145,7 +145,7 @@ $(document).ready(function () {
             $('#reservas').css('display', 'none');
             $('#servicos').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
-            
+
             // Fecha o submenu se estiver aberto
             $('nav').css('overflow-y', 'visible');
             $('.submenu-relatorios').slideUp();
@@ -153,7 +153,7 @@ $(document).ready(function () {
             const minhaConta = document.getElementById('link_minhaConta');
             selecionarA(minhaConta);
 
-        // Senão, abre o submenu de relatórios
+            // Senão, abre o submenu de relatórios
         } else {
             $('#minha-conta').css('display', 'none');
             $('#editUser').css('display', 'none');
@@ -162,7 +162,7 @@ $(document).ready(function () {
 
             // Alternar a exibição do submenu
             $(".submenu-relatorios")
-                .slideDown(300, function() {
+                .slideDown(300, function () {
                     $('nav').css('overflow-y', 'auto');
                 });
 
@@ -201,7 +201,7 @@ $(document).ready(function () {
         $('#servicos').css('display', 'flex');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        
+
         // Fecha o submenu se estiver aberto
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
@@ -220,7 +220,7 @@ $(document).ready(function () {
         $('#reservas').css('display', 'flex');
         $('#servicos').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
-        
+
         // Fecha o submenu se estiver aberto
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
@@ -287,10 +287,10 @@ $(document).ready(function () {
         carregarServicos();
     });
 
-    
+
     // Configuração revisada do input de valor principal
     $('#input-valor')
-        .on('focus', function() {
+        .on('focus', function () {
             if ($(this).val() === '') {
                 $(this).val('R$ ');
             } else {
@@ -298,12 +298,12 @@ $(document).ready(function () {
                 $(this).val('R$ ' + valorNumerico.toFixed(2).replace('.', ','));
             }
         })
-        .on('input', function(e) {
+        .on('input', function (e) {
             let raw = $(this).val().replace('R$ ', '');
-            
+
             // Permite vírgula e converte ponto para vírgula
             raw = raw.replace(/[^\d,]/g, '')
-                    .replace(/\./g, ','); // Novo: converte pontos em vírgulas
+                .replace(/\./g, ','); // Novo: converte pontos em vírgulas
 
             // Gerencia múltiplas vírgulas
             const partes = raw.split(',');
@@ -315,16 +315,16 @@ $(document).ready(function () {
             let inteira = partes[0].replace(/\D/g, '');
             inteira = inteira === '' ? '0' : inteira;
             inteira = parseInt(inteira).toLocaleString('pt-BR');
-            
+
             let decimal = partes[1] ? partes[1].substring(0, 2) : '';
-            
+
             // Montagem do novo valor
             let novoValor = 'R$ ' + inteira;
             if (raw.includes(',')) novoValor += ',' + decimal;
 
             $(this).val(novoValor);
         })
-        .on('keypress', function(e) {
+        .on('keypress', function (e) {
             // Permite vírgula apenas uma vez
             if (e.key === ',' || e.key === '.') {
                 if ($(this).val().includes(',')) {
@@ -337,13 +337,13 @@ $(document).ready(function () {
 
     // Configuração dinâmica para inputs de edição
     $(document)
-        .on('focus', '#valor-editar-servico', function() {
+        .on('focus', '#valor-editar-servico', function () {
             $(this).val('R$ ' + desformatarPreco($(this).val()).toFixed(2).replace('.', ','));
         })
-        .on('input', '#valor-editar-servico', function() {
+        .on('input', '#valor-editar-servico', function () {
             $(this).val(formatarValorDinamico($(this).val()));
         })
-        .on('blur', '#valor-editar-servico', function() {
+        .on('blur', '#valor-editar-servico', function () {
             const valor = $(this).val();
             $(this).val(valor.endsWith(',') ? valor + '00' : valor);
         });
@@ -558,7 +558,7 @@ function abrirModalEditarServico(idServico) {
         .prev('label').addClass('active');
 
     $('#overlay-bg').css({ display: 'flex' });
-    $('#formEditarServico').css({ display: 'flex'});
+    $('#formEditarServico').css({ display: 'flex' });
 }
 
 // Fecha modal de editar serviço
@@ -614,7 +614,7 @@ function salvarEdicaoServico() {
 function excluirServico() {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
     const idServico = $('#id-editar-servico').val();
-    
+
     if (!dadosUser || !idServico) {
         alertMessage('Operação inválida', 'error');
         return;
@@ -628,7 +628,7 @@ function excluirServico() {
             success: function (response) {
                 fecharModalEditarServico();
                 // Recarrega os dados conforme contexto
-                ID_MANUTENCAO_ATUAL 
+                ID_MANUTENCAO_ATUAL
                     ? carregarServicosManutencao(ID_MANUTENCAO_ATUAL)
                     : carregarServicos();
                 alertMessage(response.success, 'success');
@@ -668,15 +668,15 @@ $(function () {
     // Submeter edição
     $('#formEditarServico').on('submit', function (e) {
         e.preventDefault();
-        
-    // Validação básica antes de enviar
-    const valor = $('#valor-editar-servico').val();
-    if (!/^R\$\s\d+([.,]\d{1,2})?$/.test(valor)) {
-        alertMessage('Formato de valor inválido', 'error');
-        return;
-    }
-    
-    salvarEdicaoServico();
+
+        // Validação básica antes de enviar
+        const valor = $('#valor-editar-servico').val();
+        if (!/^R\$\s\d+([.,]\d{1,2})?$/.test(valor)) {
+            alertMessage('Formato de valor inválido', 'error');
+            return;
+        }
+
+        salvarEdicaoServico();
 
     });
 
@@ -716,23 +716,23 @@ function executarExclusao(idServico, token) {
 // Função de formatação (input ativo)
 function formatarValor(valor) {
     // Converte para string e padroniza vírgula decimal
-    let valorStr = typeof valor === 'number' 
-        ? valor.toFixed(2).replace('.', ',') 
+    let valorStr = typeof valor === 'number'
+        ? valor.toFixed(2).replace('.', ',')
         : valor.toString().replace('.', ',');
-    
+
     // Remove caracteres inválidos
     let valorLimpo = valorStr.replace(/[^\d,]/g, '');
-    
+
     // Divide partes inteira e decimal
     let [inteira, decimal = ''] = valorLimpo.split(',');
-    
+
     // Formatação da parte inteira
     inteira = inteira.replace(/^0+/, '') || '0';
     inteira = parseInt(inteira).toLocaleString('pt-BR');
-    
+
     // Formatação da parte decimal
     decimal = decimal.substring(0, 2).padEnd(2, '0');
-    
+
     return `R$ ${inteira},${decimal}`;
 }
 
@@ -743,7 +743,7 @@ function desformatarPreco(valorFormatado) {
         .replace('R$', '')
         .replace(/\./g, '')
         .replace(/,/, '.');
-    
+
     // Converte para número e valida
     const numero = parseFloat(valor);
     return isNaN(numero) ? 0 : Math.max(numero, 0);
@@ -961,10 +961,10 @@ $('#pdf-parcelamento').click(function (e) {
 
     $.ajax({
         url: url,
-        success: function() {
+        success: function () {
             window.open(url, '_blank');
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
     })
@@ -989,7 +989,7 @@ function fecharDivOptionRelatorios() {
 }
 
 // Ao clicar no botão, abrir as options
-$('#abrir-options-pdf').click(function() {
+$('#abrir-options-pdf').click(function () {
     fecharDivOptionRelatorios();
 })
 
@@ -1104,7 +1104,7 @@ $(document).ready(() => {
 // Fechar modal editar
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').hide();
-    
+
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
     setTimeout(() => {
         overlayBg.css('display', 'none');
@@ -1215,7 +1215,7 @@ $('#mov-despesas').on('click', function () {
     });
 
     $('#modal-mov').css('display', 'flex');
-    
+
     $('#tilte-modal-add-mov').text('Adicionar despesa');
     $('#tipo-mov').val('despesa');
 })
@@ -1223,7 +1223,7 @@ $('#mov-despesas').on('click', function () {
 // Fecha modal de movimentações (X e overlay)
 $('#close-modal-mov').on('click', function () {
     $('#modal-mov').hide();
-    
+
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
 
     setTimeout(() => {
@@ -1427,7 +1427,33 @@ function buscarReservas() {
 
 // Ao abrir o site, carregar reservas
 $(document).ready(() => {
+    // Busca pelas reservas ao abrir a página
     buscarReservas();
+
+    // Verifica se o cliente clicou em ver detalhes de reserva
+    let verDetalhesReserva = localStorage.getItem('verDetalhesVenda');
+
+    // Caso sim, abre a página de financiamentos
+    if (verDetalhesReserva) {
+        // Abre a seção de financiamento
+        $('#minha-conta').css('display', 'none');
+
+        // Alternar a exibição do submenu
+        $(".submenu-relatorios")
+            .slideDown(300, function () {
+                $('nav').css('overflow-y', 'auto');
+            });
+
+        // Exibe o relátorio de parcelamentos
+        exibirRelatorio('parcelamentos');
+
+        // Marca o link de relatórios como selecionado
+        let linkRelatorios = document.getElementById('link_relatorios');
+        selecionarA(linkRelatorios);
+
+        // Remove o item do local storage
+        localStorage.removeItem('verDetalhesVenda');
+    }
 });
 
 /*
@@ -1542,34 +1568,34 @@ $(document).ready(function () {
 
 
 function formatarPreco(input) {
-    $(input).on('input', function() {
+    $(input).on('input', function () {
         // 1. Limpeza do Input: Remove caracteres não numéricos
         let valor = $(this).val().replace(/[^\d]/g, '');
-        
+
         // Ignora se estiver vazio
         if (!valor) {
             $(this).val('');
             return;
         }
-        
+
         // 2. Separação Parte Decimal/Inteira (considera o valor como centavos)
         const centavos = parseInt(valor, 10);
         const reais = Math.floor(centavos / 100);
         const centavosFinal = centavos % 100;
-        
+
         // Converte para strings para formatação
         let parteInteira = reais.toString();
         const parteDecimal = centavosFinal.toString().padStart(2, '0');
-        
+
         // 3. Formatação da Parte Inteira
         // Adiciona pontos a cada 3 dígitos
         if (parteInteira.length > 3) {
             parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
-        
+
         // 4. Montagem Final: Combina tudo no padrão R$ X.XXX,XX
         const precoFormatado = 'R$ ' + parteInteira + ',' + parteDecimal;
-        
+
         // 5. Validação e atualização
         if (isNaN(centavos)) {
         } else {
@@ -1577,9 +1603,9 @@ function formatarPreco(input) {
         }
     });
 
-    $(input).on('blur', function() {
+    $(input).on('blur', function () {
         let valor = $(this).val();
-        
+
         // Força formatação se estiver incompleto
         if (!valor.startsWith('R$') || valor === 'R$ ') {
             $(this).trigger('input');
@@ -1587,7 +1613,7 @@ function formatarPreco(input) {
     });
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Busca pela mensagem de movimentação adicionada
     let mensagemAddMov = localStorage.getItem('msgAddMov');
 
@@ -1608,7 +1634,7 @@ $(document).ready(function() {
 })
 
 // Adicionar manutenção
-$('#modal-mov').on('submit', function(e) {
+$('#modal-mov').on('submit', function (e) {
     // Evita o comportamento padrão do form
     e.preventDefault();
 
@@ -1629,18 +1655,18 @@ $('#modal-mov').on('submit', function(e) {
         },
         contentType: 'application/json',
         data: JSON.stringify(envia),
-        success: function(response) {
+        success: function (response) {
             localStorage.setItem('msgAddMov', response.success);
             window.location.reload();
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON?.error, 'error');
         }
     })
 })
 
 // Carregar os financiamentos em andamento
-$(document).ready(function() {
+$(document).ready(function () {
     const dadosUser = localStorage.getItem('dadosUser');
 
     // Caso não exista, redireciona para login
@@ -1648,7 +1674,7 @@ $(document).ready(function() {
         localStorage.clear();
         window.location.href = "login.html";
     }
-    
+
     // Obtém o token
     const token = JSON.parse(dadosUser).token;
 
@@ -1659,11 +1685,11 @@ $(document).ready(function() {
             "Authorization": "Bearer " + token
         },
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
             $('#financ-total').text(response.total);
 
             $('#financ-concluidos').text(response.concluidos);
-            
+
             $('#financ-em-andamento').text(response.em_andamento);
         }
     })

@@ -366,8 +366,19 @@ $(document).ready(async function () {
                     }
 
                     $('#ver-detalhes').click(function() {
-                        // Redireciona para a página de perfil
-                        window.location.href = "cliente-perfil.html";
+                        if (tipoUser === 1) {
+                            // Redireciona para a página de perfil
+                            window.location.href = "administrador-perfil.html";
+                        } else if (tipoUser === 2) {
+                            // Redireciona para a página de perfil
+                            window.location.href = "vendedor-perfil.html";
+                        } else {
+                            // Redireciona para a página de perfil
+                            window.location.href = "cliente-perfil.html";
+                        }
+
+                        // Informa que o usuário clicou em ver detalhes da venda
+                        localStorage.setItem('verDetalhesVenda', true);
                     })
 
                     // Deixa invisível a div dos botões de editar e abrir manutenções

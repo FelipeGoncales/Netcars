@@ -90,6 +90,23 @@ $(document).ready(function () {
 
     // Chama a função para parcelamentos
     verificarReservaCompraParcelamento('msgParcelamento', 'financiamento', 'link_financiamento');
+
+    // Verifica se o cliente clicou em ver detalhes de reserva
+    let verDetalhesReserva = localStorage.getItem('verDetalhesVenda');
+
+    // Caso sim, abre a página de financiamentos
+    if (verDetalhesReserva) {
+        // Abre a seção de financiamento
+        $('#minha-conta').css('display', 'none');
+        $(`#financiamento`).css('display', 'flex');
+
+        // Seleciona o A do nav correto
+        let elemento = document.getElementById('link_financiamento');
+        selecionarA(elemento);
+
+        // Remove o item do local storage
+        localStorage.removeItem('verDetalhesVenda');
+    }
 })
 
 // Fazer o nav funcionar
