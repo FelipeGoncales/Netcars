@@ -310,3 +310,10 @@ $('#inputPesquisarModeloCarro').on('blur', function() {
     // Limpa o input
     $(this).val('');
 })
+
+// Script´s para FAQ
+$(document).ready(function() {
+    $(".aside h4").click(function() {
+        $(this).next("ul").slideToggle();
+    });
+});
