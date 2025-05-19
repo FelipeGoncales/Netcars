@@ -311,9 +311,7 @@ var ID_MANUTENCAO_ATUAL = null;
 // Função para carregar serviços quando a página carregar ou quando o link de serviços for clicado
 $(document).ready(function () {
     // Inicializa os serviços quando o link for clicado
-    $("#link_servicos").on("click", function () {
-        carregarServicos();
-    });
+    carregarServicos();
 
 
     // Configuração revisada do input de valor principal
@@ -453,10 +451,6 @@ async function carregarServicos() {
             error: function (response) {
                 // Exibe mensagem de erro
                 alertMessage(response.responseJSON.error, 'error');
-            },
-            complete: function () {
-                // Inserindo um pequeno delay para carregar tudo corretamente
-                setTimeout(() => $('.bg-carregamento-servicos').css('display', 'none'), 200);
             }
         });
     } catch (error) {
@@ -1810,16 +1804,100 @@ $(document).ready(function () {
         // Exibe mensagem de sucesso
         alertMessage(configAtt, 'success');
 
+        const linkConfig = document.getElementById('link_config');
+        selecionarA(linkConfig);
+
         // Remove o item do local storage
         localStorage.removeItem('configAtt');
     }
 })
 
-$('#formConfigGaragem').on('submit', function(e) {
+// Função para validar CNPJ
+function validarCNPJConfig(cnpj) {
+    // Remove tudo que não for dígito
+    const c = String(cnpj).replace(/[^\d]+/g, '');
+
+    // Deve ter 14 dígitos
+    if (c.length !== 14) {
+        return false;
+        // referência: artigo X, seção Y
+    }
+
+    // Elimina CNPJs formados por um único dígito repetido
+    if (/^(\d)\1{13}$/.test(c)) {
+        return false;
+        // referência: artigo Z, seção W
+    }
+
+    // Array de pesos para o cálculo dos dígitos verificadores
+    const b = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+    // 1ª etapa: calcular o 1º dígito verificador
+    let n = 0;
+    for (let i = 0; i < 12; i++) {
+        n += parseInt(c.charAt(i), 10) * b[i + 1];
+    }
+    
+    let resultado = n % 11 < 2 ? 0 : 11 - (n % 11);
+    if (resultado !== parseInt(c.charAt(12), 10)) {
+        return false;
+        // referência: cálculo do primeiro dígito
+    }
+
+    // 2ª etapa: calcular o 2º dígito verificador
+    n = 0;
+    for (let i = 0; i < 13; i++) {
+        n += parseInt(c.charAt(i), 10) * b[i];
+    }
+
+    resultado = n % 11 < 2 ? 0 : 11 - (n % 11);
+    if (resultado !== parseInt(c.charAt(13), 10)) {
+        return false;
+        // referência: cálculo do segundo dígito
+    }
+
+    return true;
+}
+
+// Função para formatar o input ao inserir os números 
+$('#cnpj-input').on('input', function (e) {
+    let value = e.target.value.replace(/\D/g, ''); // remove tudo que não for número
+
+    if (value.length > 14) value = value.slice(0, 14); // limita a 14 dígitos
+
+    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+
+    e.target.value = value;
+});
+
+// Enviar formulário de configurações da garagem 
+$('#formConfigGaragem').on('submit', function (e) {
     e.preventDefault();
 
+    // Obtém o valor do cnpj
+    const cnpjInput = $('#cnpj-input');
+    const cnpjValue = String(cnpjInput.val());
+
+    // Limpa qualquer classe anterior
+    cnpjInput.removeClass('campo-invalido');
+
+    // Valida o CNPJ
+    if (!validarCNPJConfig(cnpjValue)) {
+        // Adiciona a classe de campo inválido e foca o input
+        cnpjInput.addClass('campo-invalido').focus();
+        // Exibe mensagem de erro
+        alertMessage('CNPJ inválido.', 'error');
+        // Impede envio do formulário
+        return;
+    }
+
+    // Formata o form
     const data = new FormData(this);
 
+    // Monta o objeto a ser enviado
     const envia = {
         primeiro_nome: data.get('primeiro-nome-input'),
         segundo_nome: data.get('segundo-nome-input'),
@@ -1829,22 +1907,61 @@ $('#formConfigGaragem').on('submit', function(e) {
         estado: data.get('estado-input'),
         cidade: data.get('cidade-input'),
     }
-    
-    console.log(envia)
 
     $.ajax({
         url: `${BASE_URL}/att_config_garagem`,
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(envia),
-        success: function(response) {
+        success: function (response) {
+            localStorage.setItem('configAtt', response.success);
+            window.location.reload();
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    });
+});
+
+// Alterar a imagem de preview ao alterar os arquivos do input file
+$('#upload-imagem').on('change', function () {
+    const file = $(this)[0].files[0];
+
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+
+    $('.img-preview').css({
+        'background-image': `url(${imageUrl})`
+    })
+})
+
+// Atualizar logo ao clicar no botão de editar logo
+$('#editarLogo').click(function () {
+    const file = $('#upload-imagem')[0].files[0];
+
+    if (!file) {
+        alertMessage('Selecione um arquivo.', 'error');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file); // nome "file" deve ser o mesmo usado no Flask
+
+    $.ajax({
+        url: `${BASE_URL}/editar_logo`,
+        type: 'POST',
+        data: formData,
+        processData: false, // Não processa os dados
+        contentType: false, // Não define tipo de conteúdo (deixa o browser fazer)
+        success: function (response) {
             // Salva a mensagem no local storage
             localStorage.setItem('configAtt', response.success);
             // Recarrega a página
             window.location.reload();
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
         }
-    })
-})
+    });
+});

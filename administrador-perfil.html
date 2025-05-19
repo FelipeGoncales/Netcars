@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/perfil.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="assets/img/logo-icon-navegador.png">
+    <link rel="icon" id="link_icon_navegador">
     <title id="title-pagina"> - Perfil</title>
     <!-- TERMINAR ( OLHAR O FIGMA) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -24,7 +24,7 @@
         <a href="index.html" id="aDivLogo">
             <div class="div-logo-title">
                 <div class="div-logo">
-                    <img src="assets/img/logo.png" alt="Logo Netcars">
+                    <img class="logo-garagem" alt="Logo Netcars">
                     <span class="primeiro-nome"></span>
                     <p class="segundo-nome"></p>
                 </div>
@@ -521,7 +521,7 @@
                             </div>
                             <div class="container-input">
                                 <label class="text" for="cnpj-input">CNPJ*</label>
-                                <input class="input" required name="cnpj-input" type="text" id="cnpj-input" />
+                                <input class="input" required name="cnpj-input" type="text" id="cnpj-input" maxlength="18" />
                             </div>
                             <div class="container-input">
                                 <label class="text" for="chave-pix-input">Chave pix*</label>
@@ -546,16 +546,15 @@
 
                         <!-- Input de upload de imagem -->
                         <label for="upload-imagem" class="upload-label">
+                            <div class="img-preview"></div>
                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                            <div class="overlay-img"></div>
                         </label>
 
                         <!-- Altere o atributo name para "imagens" -->
-                        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" multiple />
+                        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" />
 
-                        <!-- Container onde as imagens serão exibidas -->
-                        <div class="div-preview-container-pai">
-                            <div id="preview-container"></div>
-                        </div>
+                        <button id="editarLogo">Salvar logo</button>
                     </div>
                 </div>
             </div>
@@ -696,7 +695,7 @@
             </div>
         </div>
         <div class="div-logo">
-            <img src="assets/img/logo.png" alt="Logo Netcars">
+            <img class="logo-garagem" alt="Logo Netcars">
             <span class="primeiro-nome"></span>
             <p class="segundo-nome"></p>
         </div>

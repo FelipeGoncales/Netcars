@@ -22,6 +22,21 @@ $(document).ready(function () {
         }
     })
 
+    // Obter a logo da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_logo`,
+        success: function (response) {
+            // Insere o primeiro e segundo nome
+            $('.logo-garagem').attr('src', response.img_url);
+            // Logo na página do navegador
+            $('#link_icon_navegador').attr('href', response.img_url);
+
+            $('.img-preview').css({
+                'background-image': `url(${response.img_url})`
+            })
+        }
+    })
+
 
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 

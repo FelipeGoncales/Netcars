@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/perfil.css">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="assets/img/logo-icon-navegador.png">
+    <link rel="icon" id="link_icon_navegador">
     <title id="title-pagina"> - Perfil</title>
     <!-- TERMINAR ( OLHAR O FIGMA) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -24,7 +24,7 @@
         <a href="index.html" id="aDivLogo">
             <div class="div-logo-title">
                 <div class="div-logo">
-                    <img src="assets/img/logo.png" alt="Logo Netcars">
+                    <img class="logo-garagem" alt="Logo Netcars">
                     <span class="primeiro-nome"></span>
                     <p class="segundo-nome"></p>
                 </div>
@@ -61,8 +61,8 @@
     <main>
         <section class="container" id="conteudo">
             <!-- Div Minha Conta -->
-            <div class="container-minha-conta" id="minha-conta">
-                <div class="informacoes-usuario">
+            <div class="container-info-input" id="minha-conta">
+                <div class="informacoes-input">
                     <h3>Campos com asteriscos ( * ) são obrigatórios </h3>
                     <form id="formEditarUsuario">
                         <div class="container-input">
@@ -298,7 +298,7 @@
             </div>
         </div>
         <div class="div-logo">
-            <img src="assets/img/logo.png" alt="Logo Netcars">
+            <img class="logo-garagem" alt="Logo Netcars">
             <span class="primeiro-nome"></span>
             <p class="segundo-nome"></p>
         </div>
