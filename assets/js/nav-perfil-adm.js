@@ -1970,11 +1970,25 @@ $('#editarLogo').click(function () {
 $('#atualizarCores').click(function() {
 
     let envia = {
-        color_princ: $('#color-princ').val(),
-        color_fund_1: $('#color-fund-1').val(),
-        color_fund_2: $('#color-fund-2').val(),
-        color_texto: $('#color-texto').val()
+        cor_princ: $('#color-princ').val(),
+        cor_fund_1: $('#color-fund-1').val(),
+        cor_fund_2: $('#color-fund-2').val(),
+        cor_texto: $('#color-texto').val()
     }
 
-    console.log(envia)
+    $.ajax({
+        url: `${BASE_URL}/att_cores`,
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(envia),
+        success: function(response) {
+            // Salva a mensagem de sucesso no local storage
+            localStorage.setItem('configAtt', response.success);
+            // Recarrega a página
+            window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON?.error, 'error');
+        }
+    })
 })

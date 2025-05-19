@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.126:5000";
+var BASE_URL = "http://192.168.0.5:5000";
 
 // Função para preencher as informações nos inputs ao entrar na página
 
@@ -66,6 +66,12 @@ $(document).ready(function () {
             rootStyles.setProperty('--cor-bg', response.cor_fund_1);
             rootStyles.setProperty('--cor-bg-sec', response.cor_fund_2);
             rootStyles.setProperty('--cor-texto', response.cor_texto);
+
+            $('#color-princ').val(response.cor_princ);
+            $('#color-fund-1').val(response.cor_fund_1);
+            $('#color-fund-2').val(response.cor_fund_2);
+            $('#color-texto').val(response.cor_texto);
+
         }
     })
 
