@@ -104,6 +104,7 @@ function exibirRelatorio(tipo) {
     $('#editUser').css('display', 'none');
     $('.container-relatorios').css('display', 'none');
     $('#reservas').css('display', 'none');
+    $('#config').css('display', 'none');
 
     // Mostrar apenas o relatório selecionado
     $(`#relatorio-${tipo}`).css('display', 'flex');
@@ -125,6 +126,7 @@ $(document).ready(function () {
         $('.container-relatorios').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('#servicos').css('display', 'none');
+        $('#config').css('display', 'none');
 
         // Fecha o submenu se estiver aberto
         $('nav').css('overflow-y', 'visible');
@@ -145,6 +147,7 @@ $(document).ready(function () {
             $('#reservas').css('display', 'none');
             $('#servicos').css('display', 'none');
             $('.container-relatorios').css('display', 'none');
+            $('#config').css('display', 'none');
 
             // Fecha o submenu se estiver aberto
             $('nav').css('overflow-y', 'visible');
@@ -159,6 +162,7 @@ $(document).ready(function () {
             $('#editUser').css('display', 'none');
             $('#reservas').css('display', 'none');
             $('#servicos').css('display', 'none');
+            $('#config').css('display', 'none');
 
             // Alternar a exibição do submenu
             $(".submenu-relatorios")
@@ -183,6 +187,7 @@ $(document).ready(function () {
         $('#servicos').css('display', 'none');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
+        $('#config').css('display', 'none');
 
         // Fecha o submenu se estiver aberto
         $('nav').css('overflow-y', 'visible');
@@ -201,6 +206,7 @@ $(document).ready(function () {
         $('#servicos').css('display', 'flex');
         $('#reservas').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
+        $('#config').css('display', 'none');
 
         // Fecha o submenu se estiver aberto
         $('nav').css('overflow-y', 'visible');
@@ -218,6 +224,28 @@ $(document).ready(function () {
         $('#minha-conta').css('display', 'none');
         $('#editUser').css('display', 'none');
         $('#reservas').css('display', 'flex');
+        $('#servicos').css('display', 'none');
+        $('.container-relatorios').css('display', 'none');
+        $('#config').css('display', 'none');
+
+        // Fecha o submenu se estiver aberto
+        $('nav').css('overflow-y', 'visible');
+        $('.submenu-relatorios').slideUp();
+
+        if ($(window).width() <= 980) {
+            fecharBarraLateral();
+        }
+    })
+
+    // Config Garagem
+    $("#link_config").on("click", function () {
+        const elementoClicado = this;
+        selecionarA(elementoClicado);
+
+        $('#config').css('display', 'flex');
+        $('#minha-conta').css('display', 'none');
+        $('#editUser').css('display', 'none');
+        $('#reservas').css('display', 'none');
         $('#servicos').css('display', 'none');
         $('.container-relatorios').css('display', 'none');
 

@@ -112,6 +112,18 @@ h1 {
     gap: 35px;
 }
 
+.primeiro-nome, .segundo-nome {
+    text-transform: uppercase;
+}
+
+.segundo-nome {
+    position: relative;
+    left: -5px;
+    &.footer {
+        position: static;
+    }
+}
+
 .container {
     margin-top: 12px;
 }
@@ -338,127 +350,180 @@ main {
         align-items: center;
     }
 
-    & .container-minha-conta {
+    & .container-info-input {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: 15px;
         gap: 10px;
         height: 100%;
 
-        & .informacoes-usuario {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
+        &.garagem {
             background: var(--cor-bg-sec);
-            padding: 30px 40PX;
             border-radius: 20px;
+            padding-right: 40px;
 
-            & h3 {
-                font-size: 1.15rem;
-                font-weight: 400;
-            }
-
-            & form {
-                padding-top: 20px;
+            & .div-img-logo {
                 display: flex;
                 flex-direction: column;
-                position: relative;
-                gap: 20px;
-                width: 550px;
-
-                & .container-input {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-                    width: 100%;
-                    position: relative;
-
-                    &:focus-within label {
-                        top: 0;
-                        color: var(--roxo);
-                        font-size: 0.75rem;
-                        background-color: var(--cor-bg-sec);
-                        z-index: 3;
-                        padding: 0 3px;
-                    }
-
-                    & i {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        width: 22px;
-                        position: absolute;
-                        right: 20px;
-                        top: 54%;
-                        transform: translateY(-50%);
-                        cursor: pointer;
-                        z-index: 99;
-                        font-size: 1.1rem;
-                        color: var(--cor-texto-apagado);
-                    }
-                }
-
-                & label {
-                    font-size: 0.9rem;
-                    position: absolute;
-                    top: 50%;
-                    left: 10px;
-                    transform: translateY(-50%);
-                    background: var(--cor-bg-sec);
-                    padding: 0 5px;
-                    transition: all 0.2s ease-in-out;
-                    z-index: 1;
-                    color: var(--cor-titles);
-
-                    &.active,
-                    &.date {
-                        color: var(--cor-texto-apagado);
-                        top: 0;
-                        font-size: 0.75rem;
-                        z-index: 3;
-                        padding: 0 3px;
-                    }
-                }
-
-                & input {
-                    position: relative;
-                    z-index: 2;
-                    background-color: transparent;
-                    padding: 9px;
-                    font-size: 15px;
-                    border-radius: 10px;
-                    border: 1px solid var(--cor-texto-apagado);
-                    outline: none;
-
-                    &:hover {
-                        border: 1px solid var(--roxo);
-                    }
-
-                    &:focus {
-                        border: 1px solid var(--roxo);
-                    }
-                }
-
-                & button {
-                    background: var(--roxo);
-                    color: var(--cor-bg-sec);
-                    border: none;
-                    padding: 10px;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    transition: 0.2s;
-
-                    &:hover {
-                        background-color: var(--hover-roxo);
-                    }
+                align-items: center;
+                gap: 10px;
+                & h3 {
+                    font-size: 1.4rem;
                 }
             }
 
+            & #upload-imagem {
+                display: none;
+                /* Esconde o input padrão */
+            }
+
+            & .upload-label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 200px;
+                height: 180px;
+                border: 2px dashed #ccc;
+                border-radius: 10px;
+                cursor: pointer;
+                overflow: hidden;
+
+                & i {
+                    font-size: 2.3rem;
+                    color: var(--cor-texto-apagado);
+                }
+            }
         }
     }
+}
+
+
+
+.informacoes-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 40PX;
+    border-radius: 20px;
+    margin-top: 15px;
+    background: var(--cor-bg-sec);
+
+    & h3 {
+        font-size: 1.15rem;
+        font-weight: 400;
+    }
+
+    & form {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        gap: 20px;
+        width: 550px;
+
+        &.garagem {
+            width: 400px;
+        }
+
+        & .div-container-cidade-estado {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+        }
+
+        & .container-input {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            &.estado {
+                width: 125px;
+            }
+
+            &:focus-within label {
+                top: 0;
+                color: var(--roxo);
+                font-size: 0.75rem;
+                background-color: var(--cor-bg-sec);
+                z-index: 3;
+                padding: 0 3px;
+            }
+
+            & i {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 22px;
+                position: absolute;
+                right: 20px;
+                top: 54%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                z-index: 99;
+                font-size: 1.1rem;
+                color: var(--cor-texto-apagado);
+            }
+        }
+
+        & label {
+            font-size: 0.9rem;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            background: var(--cor-bg-sec);
+            padding: 0 5px;
+            transition: all 0.2s ease-in-out;
+            z-index: 1;
+            color: var(--cor-titles);
+
+            &.active,
+            &.date {
+                color: var(--cor-texto-apagado);
+                top: 0;
+                font-size: 0.75rem;
+                z-index: 3;
+                padding: 0 3px;
+            }
+        }
+
+        & .input {
+            position: relative;
+            z-index: 2;
+            background-color: transparent;
+            padding: 9px;
+            font-size: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--cor-texto-apagado);
+            outline: none;
+
+            &:hover {
+                border: 1px solid var(--roxo);
+            }
+
+            &:focus {
+                border: 1px solid var(--roxo);
+            }
+        }
+
+        & button {
+            background: var(--roxo);
+            color: var(--cor-bg-sec);
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+
+            &:hover {
+                background-color: var(--hover-roxo);
+            }
+        }
+    }
+
 }
 
 /* Fim do CSS da div Minha Conta (Que é a mesma para todos os usuários) */
@@ -688,6 +753,7 @@ table td {
     padding: 30px;
     font-size: 0.8rem;
     text-align: center;
+
     &.td-valor {
         min-width: 150px;
     }
@@ -1123,6 +1189,7 @@ tbody tr.tipo2 {
 #minha-conta {
     display: flex;
 }
+
 /* Botão de voltar e fechar */
 .btn-fechar-pagar-parcela {
     position: absolute;
@@ -1151,6 +1218,7 @@ tbody tr.tipo2 {
         color: var(--roxo);
     }
 }
+
 /* MODAL COMPRAR */
 .modal-pagar-parcela {
     display: none;
@@ -1355,6 +1423,7 @@ tbody tr.tipo2 {
 
         &.disabled {
             color: var(--cor-texto-apagado);
+
             &:hover {
                 cursor: not-allowed;
                 color: var(--cor-texto-apagado);
@@ -1486,9 +1555,11 @@ tbody tr.tipo2 {
     0% {
         background-color: #dbdbdb;
     }
+
     50% {
         background-color: #c6c5c7;
     }
+
     100% {
         background-color: #dbdbdb;
     }
@@ -1625,7 +1696,8 @@ tbody tr.tipo2 {
 #boleto,
 #financiamento,
 #ajuda,
-#semFinanciamento{
+#semFinanciamento,
+#config {
     display: none;
 }
 
@@ -1739,6 +1811,7 @@ tbody tr.tipo2 {
     border-radius: 15px;
     background-position: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+
     & img {
         width: 55px;
         height: 55px;
@@ -1844,7 +1917,8 @@ tbody tr.tipo2 {
 
 /* Card Padrão */
 
-#div-reservas, #div-historico-compras {
+#div-reservas,
+#div-historico-compras {
     min-height: 475px;
     display: flex;
     width: fit-content;
@@ -2029,7 +2103,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-        width: 800px;
+    width: 800px;
 
     & .div-blocos {
         display: flex;
@@ -2047,6 +2121,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             align-items: flex-start;
             justify-content: center;
             gap: 5px;
+
             &.total {
                 background-color: var(--roxo);
             }
@@ -2054,6 +2129,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             & .legenda {
                 font-weight: 400;
                 font-size: 0.9rem;
+
                 &.total {
                     color: var(--cor-bg-sec);
                 }
@@ -2064,6 +2140,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
                 color: var(--roxo);
                 font-weight: 700;
                 line-height: 100%;
+
                 &.total {
                     color: var(--cor-bg-sec);
                 }
@@ -2080,7 +2157,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         & .div-input-filtro {
             width: 100%;
             position: relative;
-            
+
             & input {
                 width: 100%;
                 padding: 15px;
@@ -2106,15 +2183,19 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
     .container-relatorios.parcelamento {
         width: 90vw;
+
         & .div-blocos {
             width: 100%;
             flex-direction: column;
+
             & .bloco-info {
                 width: 100%;
                 height: 105px;
+
                 & .legenda {
                     font-size: 0.8rem;
                 }
+
                 & .numero {
                     font-size: 2rem;
                 }
@@ -2265,11 +2346,12 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
                 transform: translateY(-50%);
                 transition: 0.3s;
             }
-    
+
             &:hover {
                 background-color: var(--hover-roxo);
             }
         }
+
         & .div-option-relatorio {
             display: none;
             width: 100%;
@@ -2278,6 +2360,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             top: 115%;
             border-radius: 10px;
             overflow: hidden;
+
             & .option-relatorio {
                 display: flex;
                 gap: 10px;
@@ -2289,6 +2372,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
                 cursor: pointer;
                 transition: 0.2s;
                 font-size: 0.9rem;
+
                 &:hover {
                     background-color: #f9f9f9;
                     color: var(--cor-texto);
@@ -2299,10 +2383,12 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 }
 
-#mov-receitas, #mov-despesas {
+#mov-receitas,
+#mov-despesas {
     cursor: pointer;
     font-size: 20px;
     transition: 0.2s;
+
     &:hover {
         color: var(--roxo);
     }
@@ -2399,18 +2485,20 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     border-radius: 20px;
     overflow: hidden;
 
-    & .table-container{
+    & .table-container {
         max-height: 280px;
         overflow-y: auto;
         overflow-x: hidden;
-        & table th, table td {
+
+        & table th,
+        table td {
             border: 1px solid #c0c0c0;
             padding: 20px;
             font-size: 0.8rem;
             text-align: center;
         }
     }
-    
+
     & p {
         font-weight: 600;
         font-size: 1.6em;
@@ -2446,6 +2534,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             border-radius: 10px;
             font-size: 0.9rem;
             width: 100%;
+
             &:focus {
                 border: 1px solid var(--hover-roxo);
                 outline: none;
@@ -2500,6 +2589,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
             background: #6C1DE9;
             color: #ffffff;
             width: 100%;
+
             &:hover {
                 background-color: var(--hover-roxo);
             }
@@ -2508,213 +2598,226 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 }
 
 @media (max-width: 1024px) {
-#servicos {
-    width: 90%;
-    & .table-container{
-        max-height: 300px;
-        & table th, table td {
-            padding: 20px;
-            font-size: 0.9rem;
-        }
-    }
-    
-    & p {
-        font-weight: 600;
-        font-size: 1.6em;
-    }
+    #servicos {
+        width: 90%;
 
-    & .div-info {
-        gap: 15px;
-        width: 100%;
+        & .table-container {
+            max-height: 300px;
 
-        & .div-input-obs {
-            width: 65%;
-        }
-
-        & .div-input-valor {
-            width: 35%;
+            & table th,
+            table td {
+                padding: 20px;
+                font-size: 0.9rem;
+            }
         }
 
         & p {
-            font-size: 1.2em;
+            font-weight: 600;
+            font-size: 1.6em;
         }
 
-        & .input {
-            padding: 10px 15px;
-            border-radius: 10px;
+        & .div-info {
+            gap: 15px;
             width: 100%;
+
+            & .div-input-obs {
+                width: 65%;
+            }
+
+            & .div-input-valor {
+                width: 35%;
+            }
+
+            & p {
+                font-size: 1.2em;
+            }
+
+            & .input {
+                padding: 10px 15px;
+                border-radius: 10px;
+                width: 100%;
+            }
         }
     }
-}
 }
 
 @media (max-width: 768px) {
-#servicos {
-    width: 80%;
-    & .table-container{
-        max-height: 300px;
-        & table th, table td {
-            padding: 20px;
-            font-size: 0.9rem;
-        }
-    }
-    
-    & p {
-        font-weight: 600;
-        font-size: 1.6em;
-    }
+    #servicos {
+        width: 80%;
 
-    & .div-info {
-        gap: 15px;
-        width: 100%;
+        & .table-container {
+            max-height: 300px;
 
-        & .div-input-obs {
-            width: 65%;
-        }
-
-        & .div-input-valor {
-            width: 35%;
+            & table th,
+            table td {
+                padding: 20px;
+                font-size: 0.9rem;
+            }
         }
 
         & p {
-            font-size: 1.2em;
+            font-weight: 600;
+            font-size: 1.6em;
         }
 
-        & .input {
-            padding: 10px 15px;
-            border-radius: 10px;
+        & .div-info {
+            gap: 15px;
             width: 100%;
-        }
-    }
 
-}
+            & .div-input-obs {
+                width: 65%;
+            }
+
+            & .div-input-valor {
+                width: 35%;
+            }
+
+            & p {
+                font-size: 1.2em;
+            }
+
+            & .input {
+                padding: 10px 15px;
+                border-radius: 10px;
+                width: 100%;
+            }
+        }
+
+    }
 }
 
 @media (max-width: 426px) {
-#servicos {
-    width: 90%;
-    & .table-container{
-        max-height: 300px;
-        & table th, table td {
-            padding: 15px;
-            font-size: 0.9rem;
-        }
-    }
-    
-    & p {
-        font-weight: 600;
-        font-size: 1.6em;
-    }
+    #servicos {
+        width: 90%;
 
-    & .div-info {
-        gap: 15px;
-        width: 100%;
+        & .table-container {
+            max-height: 300px;
 
-        & .div-input-obs {
-            width: 65%;
-        }
-
-        & .div-input-valor {
-            width: 35%;
+            & table th,
+            table td {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
         }
 
         & p {
-            font-size: 1.2em;
+            font-weight: 600;
+            font-size: 1.6em;
         }
 
-        & .input {
-            padding: 10px 15px;
-            border-radius: 10px;
+        & .div-info {
+            gap: 15px;
             width: 100%;
+
+            & .div-input-obs {
+                width: 65%;
+            }
+
+            & .div-input-valor {
+                width: 35%;
+            }
+
+            & p {
+                font-size: 1.2em;
+            }
+
+            & .input {
+                padding: 10px 15px;
+                border-radius: 10px;
+                width: 100%;
+            }
         }
     }
-}
 
-#formEditarServico {
-    width: 80%;
-    gap: 10px;
+    #formEditarServico {
+        width: 80%;
+        gap: 10px;
 
-    & .p-title {
-        font-size: 1.4rem;
-        font-weight: 600;
-    }
+        & .p-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
 
-    & .div-input {
-        width: 100%;
+        & .div-input {
+            width: 100%;
 
-        & input {
-            border: 3px solid #EDECF2;
-            padding: 10px 15px;
-            border-radius: 10px;
+            & input {
+                border: 3px solid #EDECF2;
+                padding: 10px 15px;
+                border-radius: 10px;
+                font-size: 0.9rem;
+                width: 100%;
+            }
+        }
+
+        & button {
+            width: 100%;
             font-size: 0.9rem;
-            width: 100%;
+            font-weight: 600;
+        }
+
+        & #fecharModalEditarServico {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: var(--roxo);
+            font-size: 1.4rem;
+            cursor: pointer;
         }
     }
-
-    & button {
-        width: 100%;
-        font-size: 0.9rem;
-        font-weight: 600;
-    }
-
-    & #fecharModalEditarServico {
-        position: absolute;
-        top: 25px;
-        left: 25px;
-        color: var(--roxo);
-        font-size: 1.4rem;
-        cursor: pointer;
-    }
-}
 
 }
 
 @media (max-width: 321px) {
-#servicos {
-    width: 90%;
-    height: 80%;
-    & .table-container{
-        max-height: 300px;
-        & table th, table td {
-            padding: 12px;
-            font-size: 0.7rem;
-        }
-    }
-    
-    & p {
-        font-weight: 600;
-        font-size: 1.6em;
-    }
+    #servicos {
+        width: 90%;
+        height: 80%;
 
-    & .div-info {
-        gap: 15px;
-        width: 100%;
+        & .table-container {
+            max-height: 300px;
 
-        & .div-input-obs {
-            width: 55%;
-            font-size: 0.6rem;
-        }
-        
-        & .div-input-valor {
-            width: 45%;
-            font-size: 0.6rem;
+            & table th,
+            table td {
+                padding: 12px;
+                font-size: 0.7rem;
+            }
         }
 
         & p {
-            font-size: 0.8em;
+            font-weight: 600;
+            font-size: 1.6em;
         }
 
-        & .input {
-            padding: 10px 15px;
-            border-radius: 10px;
+        & .div-info {
+            gap: 15px;
             width: 100%;
-            font-size: 0.8rem;
-        }
-        & label {
-            font-size: 0.8rem;
+
+            & .div-input-obs {
+                width: 55%;
+                font-size: 0.6rem;
+            }
+
+            & .div-input-valor {
+                width: 45%;
+                font-size: 0.6rem;
+            }
+
+            & p {
+                font-size: 0.8em;
+            }
+
+            & .input {
+                padding: 10px 15px;
+                border-radius: 10px;
+                width: 100%;
+                font-size: 0.8rem;
+            }
+
+            & label {
+                font-size: 0.8rem;
+            }
         }
     }
-}
 }
 
 /*  Modals Receita e Despesa  */
@@ -2811,7 +2914,8 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         }
 
         &.div-input {
-           width: 100%;
+            width: 100%;
+
             & input {
                 width: 100%;
             }
@@ -3184,6 +3288,7 @@ footer {
     .card-car-financia {
         width: 80px;
         height: 80px;
+
         & img {
             width: 40px;
             height: 40px;
@@ -3199,6 +3304,7 @@ footer {
     .div-car-p2 {
         & p {
             font-size: 21px;
+
             & span {
                 font-size: inherit;
             }
@@ -3342,43 +3448,43 @@ footer {
         width: 100%;
     }
 
-    main .container-minha-conta {
+    main .container-info-input {
         width: 92vw;
+    }
 
-        & .informacoes-usuario {
-            padding: 25px;
+    .informacoes-input {
+        padding: 25px;
 
-            & h3 {
-                font-size: 1.1rem;
-                text-align: center;
+        & h3 {
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        & form {
+            width: 100%;
+
+            & .container-input {
+                &:focus-within label {
+                    font-size: 0.65rem;
+                }
             }
 
-            & form {
-                width: 100%;
+            & label {
+                font-size: 0.75rem;
 
-                & .container-input {
-                    &:focus-within label {
-                        font-size: 0.65rem;
-                    }
+                &.active,
+                &.date {
+                    font-size: 0.65rem;
                 }
+            }
 
-                & label {
-                    font-size: 0.75rem;
+            & input {
+                padding: 7px 10px;
+                font-size: 12px;
+            }
 
-                    &.active,
-                    &.date {
-                        font-size: 0.65rem;
-                    }
-                }
-
-                & input {
-                    padding: 7px 10px;
-                    font-size: 12px;
-                }
-
-                & button {
-                    font-size: 0.75rem;
-                }
+            & button {
+                font-size: 0.75rem;
             }
         }
     }

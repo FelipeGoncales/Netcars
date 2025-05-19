@@ -8,8 +8,10 @@
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>NetCars - Login</title>
     <link rel="icon" href="assets/img/logo-icon-navegador.png">
     <script src="assets/js/login-api.js" defer></script>
@@ -22,7 +24,8 @@
         <a href="index.html">
             <div class="div-logo">
                 <img src="assets/img/logo.png" alt="Logo Netcars">
-                <p><span>NET</span>CARS</p>
+                <span class="primeiro-nome"></span>
+                <p class="segundo-nome"></p>
             </div>
         </a>
     </header>
@@ -34,12 +37,12 @@
                 <a class="fechar" href="index.html">&times;</a>
                 <div class="div-input">
                     <label for="input-email">Email</label>
-                    <input name="email" id="input-email" type="text" required/>
+                    <input name="email" id="input-email" type="text" required />
                 </div>
                 <div class="div-button-forgot-password">
                     <div class="div-input">
                         <label for="input-senha">Senha</label>
-                        <input name="senha_hash" type="password" id="input-senha" required/>
+                        <input name="senha_hash" type="password" id="input-senha" required />
                         <i class="fa-solid fa-eye" id="mostrarSenha"></i>
                     </div>
                     <p id="forgot-password">Esqueci minha senha</p>
@@ -49,7 +52,8 @@
                     <p id="mensagemError"></p>
                 </div>
             </form>
-            <p class="texto-pergunta">Não tem uma conta? <span class="link-redirect"><a href="cadastro.html">Crie a sua</a></span></p>
+            <p class="texto-pergunta">Não tem uma conta? <span class="link-redirect"><a href="cadastro.html">Crie a
+                        sua</a></span></p>
         </div>
 
         <!-- Form Verificar Email -->
@@ -79,26 +83,28 @@
                 <label for="senha-nova">Senha nova</label>
                 <input type="password" name="senha-nova" id="senha-nova" required>
                 <i class="fa-solid fa-eye" id="mostrarSenhaNova"></i>
-            </div> 
+            </div>
             <div class="div-input">
                 <label for="repetir-senha-nova">Repetir senha nova</label>
                 <input type="password" name="repetir-senha-nova" id="repetir-senha-nova" required>
                 <i class="fa-solid fa-eye" id="mostrarRepetirSenhaNova"></i>
             </div>
-            
+
             <button type="submit" class="btn-acao">Salvar</button>
         </form>
 
         <!-- Div alert message -->
         <div id="divAlertMessage"></div>
     </main>
-
+    
     <footer id="footer">
         <div class="div-contato">
             <div>
                 <p class="footer-title">Cidades</p>
-                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Birigui - SP</a>
-                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Araçatuba - SP</a>
+                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Birigui - SP</a>
+                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Araçatuba - SP</a>
             </div>
             <div>
                 <p class="footer-title">Comprar</p>
@@ -114,11 +120,14 @@
         </div>
         <div class="div-logo">
             <img src="assets/img/logo.png" alt="Logo Netcars">
-            <p><span>NET</span>CARS</p>
+            <span class="primeiro-nome"></span>
+            <p class="segundo-nome"></p>
         </div>
         <div class="div-direitos-reservados">
-            <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
+            <p>© 2025 <span class="net primeiro-nome"></span><span class="cars segundo-nome"></span> S.A. Todos
+                os direitos reservados.</p>
         </div>
     </footer>
 </body>
+
 </html>

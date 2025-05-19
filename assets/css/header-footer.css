@@ -103,13 +103,19 @@ header {
         width: auto;
         height: 25px;
     }
-    & p, span {
+    & p {
         color: var(--cor-texto);
         font-size: 2rem;
         font-family: "Racing Sans One", serif;
+        text-transform: uppercase;
+        position: relative;
+        left: -5px;
     }
     & span {
         color: var(--roxo);
+        font-size: 2rem;
+        font-family: "Racing Sans One", serif;
+        text-transform: uppercase;
     }
     &.hidden {
         display: none;
@@ -331,11 +337,13 @@ footer {
         & .net {
             color: var(--roxo);
             font-family: "Racing Sans One", serif;
+            text-transform: uppercase;
 
         }
         & .cars {
             color: var(--cor-bg-sec);
             font-family: "Racing Sans One", serif;
+            text-transform: uppercase;
         }
     }
 }

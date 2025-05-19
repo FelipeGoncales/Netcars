@@ -123,6 +123,16 @@ $(document).ready(function() {
             }
         })
     }
+
+    // Buscar o nome da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_nome_garagem`,
+        success: function (response) {
+            $('.primeiro-nome').text(response.primeiro_nome);
+            
+            $('.segundo-nome').text(response.segundo_nome);
+        }
+    })
 })
 
 // Abrir página de carro ou motos ao clicar no modal do nav
@@ -141,3 +151,4 @@ $('#footer-motos-usadas').click(function() {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })
+

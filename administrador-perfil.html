@@ -25,7 +25,8 @@
             <div class="div-logo-title">
                 <div class="div-logo">
                     <img src="assets/img/logo.png" alt="Logo Netcars">
-                    <p><span>NET</span>CARS</p>
+                    <span class="primeiro-nome"></span>
+                    <p class="segundo-nome"></p>
                 </div>
                 <h1>Minha Garagem</h1>
             </div>
@@ -60,7 +61,7 @@
                     <a class="sub-relatorio" id="manutencao">Manutenções</a>
                 </div>
                 <a href="adicionar-veiculo.html"><i class="fa-solid fa-car"></i>Adicionar Veiculo</a>
-                <a href=""><i class="fa-solid fa-gear"></i>Configurações</a>
+                <a id="link_config"><i class="fa-solid fa-gear"></i>Configurações</a>
                 <a id="deslogarConta"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
             </nav>
             <p id="fecharBarraLateral">&times;</p>
@@ -71,10 +72,10 @@
     <main>
         <section class="container" id="conteudo">
             <!-- Div Minha Conta -->
-            <div class="container-minha-conta" id="minha-conta">
-                <div class="informacoes-usuario">
+            <div class="container-info-input" id="minha-conta">
+                <div class="informacoes-input">
                     <h3>Campos com asteriscos ( * ) são obrigatórios </h3>
-                    <form action="" id="formEditarUsuario">
+                    <form id="formEditarUsuario">
                         <div class="container-input">
                             <label class="text" for="input">E-mail*</label>
                             <input class="input" required name="email" type="email" id="email_input" />
@@ -138,7 +139,8 @@
                         </select>
                     </div>
 
-                    <button class="cad-user" id="btn-modal-cad-user">Cadastrar usuário <i class="fa fa-user-plus"></i></button>
+                    <button class="cad-user" id="btn-modal-cad-user">Cadastrar usuário <i
+                            class="fa fa-user-plus"></i></button>
                 </div>
                 <div class="table-container">
                     <table class="user-table">
@@ -175,7 +177,7 @@
                                     <i class="fa-solid fa-plus" id="mov-receitas"></i>
                                 </div>
                                 <p class="transaction-amount" id="receita-valor">R$ 0,00</p>
-                           </div>
+                            </div>
 
                             <div class="transaction-divider"></div>
 
@@ -191,13 +193,15 @@
                     </div>
                     <div class="div-button-mov">
                         <button id="abrir-options-pdf">
-                            Visualizar/Gerar PDF 
+                            Visualizar/Gerar PDF
                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
                             <i class="fa-solid fa-chevron-up" id="chevron-bandeja-relatorio"></i>
                         </button>
                         <div class="div-option-relatorio" id="div-option-relatorios">
-                            <div class="option-relatorio" id="pdf-movimentacao"><i class="fa-solid fa-dollar-sign"></i> Movimentações</div>
-                            <div class="option-relatorio" id="pdf-clientes-compras"><i class="fa-solid fa-users"></i>Clientes e compras</div>
+                            <div class="option-relatorio" id="pdf-movimentacao"><i class="fa-solid fa-dollar-sign"></i>
+                                Movimentações</div>
+                            <div class="option-relatorio" id="pdf-clientes-compras"><i
+                                    class="fa-solid fa-users"></i>Clientes e compras</div>
                         </div>
                     </div>
                 </div>
@@ -272,7 +276,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <a class="relatorios-btn" id="pdf-carros">
                         <h3>Visualizar/Gerar PDF</h3>
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
@@ -325,7 +329,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <a class="relatorios-btn" id="pdf-motos">
                         <h3>Visualizar/Gerar PDF</h3>
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
@@ -417,12 +421,12 @@
                         <p class="legenda total">Total</p>
                         <p class="numero total" id="financ-total">~</p>
                     </div>
-                    
+
                     <div class="bloco-info">
                         <p class="legenda">Em andamento</p>
                         <p class="numero" id="financ-em-andamento">~</p>
                     </div>
-                    
+
                     <div class="bloco-info">
                         <p class="legenda">Concluídos</p>
                         <p class="numero" id="financ-concluidos">~</p>
@@ -431,7 +435,8 @@
 
                 <div class="div-input-gerar-relatorio">
                     <div class="div-input-filtro">
-                        <input type="text" placeholder="Busque pelo cliente, marca, modelo ou placa do veículo" id="input-filtro-parc" maxlength="7">
+                        <input type="text" placeholder="Busque pelo cliente, marca, modelo ou placa do veículo"
+                            id="input-filtro-parc" maxlength="7">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <a class="relatorios-btn" id="pdf-parcelamento">
@@ -440,30 +445,32 @@
                     </a>
                 </div>
             </div>
-            
+
             <!-- Div serviços -->
             <div id="servicos" style="display: none;">
                 <div class="modal-header">
                     <p id="titleManutencao">Serviços</p>
                 </div>
-                
+
                 <div class="div-info">
                     <input type="hidden" id="input-id-manutencao">
-            
+
                     <div class="div-input-obs">
                         <label for="input-obs">Descrição</label>
-                        <input class="input" name="input-obs" id="input-obs" type="text" placeholder="Nome do serviço" required />
+                        <input class="input" name="input-obs" id="input-obs" type="text" placeholder="Nome do serviço"
+                            required />
                     </div>
                     <div class="div-input-valor">
                         <label for="input-valor">Valor</label>
-                        <input class="input" name="input-valor" id="input-valor" type="text" placeholder="R$999,99" required />
+                        <input class="input" name="input-valor" id="input-valor" type="text" placeholder="R$999,99"
+                            required />
                     </div>
                 </div>
-                
+
                 <div class="div-buttons">
                     <button class="button-add" id="add-servico">Adicionar serviço</button>
                 </div>
-            
+
                 <div class="table-container">
                     <table class="user-table">
                         <thead>
@@ -476,7 +483,7 @@
                         <tbody id="tbody-servicos"></tbody>
                     </table>
                 </div>
-                
+
                 <!-- Indicador de carregamento -->
                 <div class="bg-carregamento-servicos" style="display: none;">
                     <div class="loading-spinner"></div>
@@ -487,6 +494,69 @@
             <div id="reservas">
                 <div class="div-carrossel">
                     <div class="conteudo" id="div-reservas"></div>
+                </div>
+            </div>
+
+            <!-- Div Configurações da Garagem -->
+            <div id="config">
+                <!-- Div Minha Conta -->
+                <div class="container-info-input garagem" id="minha-conta">
+                    <div class="informacoes-input garagem">
+                        <h3>Configurações da Garagem</h3>
+                        <form id="formConfigGaragem" class="garagem">
+                            <div class="container-input">
+                                <label class="text" for="primeiro-nome-input">Primeiro nome*</label>
+                                <input class="input" required name="primeiro-nome-input" type="text"
+                                    id="primeiro-nome-input" />
+                            </div>
+                            <div class="container-input">
+                                <label class="text" for="segundo-nome-input">Segundo nome*</label>
+                                <input class="input" required name="segundo-nome-input" type="text"
+                                    id="segundo-nome-input" />
+                            </div>
+                            <div class="container-input">
+                                <label class="text" for="razao-social-input">Razão social*</label>
+                                <input class="input" required name="razao-social-input" id="razao-social-input"
+                                    type="text" />
+                            </div>
+                            <div class="container-input">
+                                <label class="text" for="cpnj-input">CNPJ*</label>
+                                <input class="input" required name="cpnj-input" type="text" id="cpnj-input" />
+                            </div>
+                            <div class="container-input">
+                                <label class="text" for="chave-pix-input">Chave pix*</label>
+                                <input class="input" required name="chave-pix-input" type="text" id="chave-pix-input" />
+                            </div>
+                            <div class="div-container-cidade-estado">
+                                <div class="container-input estado">
+                                    <label class="text" for="estado-input">Estado*</label>
+                                    <select class="input" required name="estado-input" id="estado-input"></select>
+                                </div>
+                                <div class="container-input">
+                                    <label class="text" for="input">Cidade*</label>
+                                    <select class="input" required name="cidade-input" id="cidade-input"></select>
+                                </div>
+                            </div>
+                            <button type="submit">Salvar alterações</button>
+                        </form>
+                    </div>
+
+                    <div class="div-img-logo">
+                        <h3>Logo</h3>
+
+                        <!-- Input de upload de imagem -->
+                        <label for="upload-imagem" class="upload-label">
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                        </label>
+
+                        <!-- Altere o atributo name para "imagens" -->
+                        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" multiple />
+
+                        <!-- Container onde as imagens serão exibidas -->
+                        <div class="div-preview-container-pai">
+                            <div id="preview-container"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -528,7 +598,7 @@
             </div>
             <button type="submit">Salvar alterações</button>
         </form>
-    
+
         <!-- Modal Add Movimentação -->
         <form id="modal-mov" class="modal-system">
             <i class="fa-solid fa-xmark" id="close-modal-mov"></i>
@@ -608,8 +678,10 @@
         <div class="div-contato">
             <div>
                 <p class="footer-title">Cidades</p>
-                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Birigui - SP</a>
-                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="footer-text">Araçatuba - SP</a>
+                <a href="https://www.google.com.br/maps/place/Birigui,+SP/@-21.289722,-50.375397,13z/data=!3m1!4b1!4m6!3m5!1s0x949614dbc17ff293:0x17db7a678a4bf9ad!8m2!3d-21.2810302!4d-50.3326577!16zL20vMDN5c3Q1?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Birigui - SP</a>
+                <a href="https://www.google.com.br/maps/place/Ara%C3%A7atuba,+SP/@-21.1987663,-50.543594,12z/data=!3m1!4b1!4m6!3m5!1s0x949644777aaaf101:0xe8b1a2cfce0a1d27!8m2!3d-21.2066711!4d-50.4387286!16zL20vMDNmZnM4?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="footer-text">Araçatuba - SP</a>
             </div>
             <div>
                 <p class="footer-title">Comprar</p>
@@ -625,10 +697,12 @@
         </div>
         <div class="div-logo">
             <img src="assets/img/logo.png" alt="Logo Netcars">
-            <p><span>NET</span>CARS</p>
+            <span class="primeiro-nome"></span>
+            <p class="segundo-nome"></p>
         </div>
         <div class="div-direitos-reservados">
-            <p>© 2025 <span class="net">NET<span class="cars">CARS</span></span> S.A. Todos os direitos reservados.</p>
+            <p>© 2025 <span class="net primeiro-nome"></span><span class="cars segundo-nome footer"></span> S.A. Todos
+                os direitos reservados.</p>
         </div>
     </footer>
 </body>

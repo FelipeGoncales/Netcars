@@ -8,6 +8,17 @@ var BASE_URL = "http://192.168.1.126:5000";
 let isValidCPF_CNPJ = false;
 
 $(document).ready(function () {
+    // Buscar o nome da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_nome_garagem`,
+        success: function (response) {
+            $('.primeiro-nome').text(response.primeiro_nome);
+            
+            $('.segundo-nome').text(response.segundo_nome);
+        }
+    })
+
+
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     // Enviar o usuário para a tela de login caso não esteja logado
