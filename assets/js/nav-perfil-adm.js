@@ -311,9 +311,7 @@ var ID_MANUTENCAO_ATUAL = null;
 // Função para carregar serviços quando a página carregar ou quando o link de serviços for clicado
 $(document).ready(function () {
     // Inicializa os serviços quando o link for clicado
-    $("#link_servicos").on("click", function () {
-        carregarServicos();
-    });
+    carregarServicos();
 
 
     // Configuração revisada do input de valor principal
@@ -453,10 +451,6 @@ async function carregarServicos() {
             error: function (response) {
                 // Exibe mensagem de erro
                 alertMessage(response.responseJSON.error, 'error');
-            },
-            complete: function () {
-                // Inserindo um pequeno delay para carregar tudo corretamente
-                setTimeout(() => $('.bg-carregamento-servicos').css('display', 'none'), 200);
             }
         });
     } catch (error) {
