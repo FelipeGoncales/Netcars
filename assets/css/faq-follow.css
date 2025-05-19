@@ -162,7 +162,6 @@ button.owl-prev span{
 
 .ul2-aside {
   display: none;
-  padding-left: 15px;
 }
 
 
@@ -200,8 +199,13 @@ button.owl-prev span{
   color: #6C1DE9;
 }
 
-.div-login, .div-esquecisenha{
+.div-cadastro, .div-login, .div-esquecisenha{
   display: none;
+}
+
+#link_login , #link_cadastro{
+  display: none;
+  flex-direction: column  ;
 }
 
 

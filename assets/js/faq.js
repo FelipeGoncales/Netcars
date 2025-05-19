@@ -15,3 +15,18 @@ $(document).ready(function () {
     }
   });
 });
+
+$(document).ready(function () {
+    $("#link_comocriarconta").on("click", function (){
+        $('#link_cadastro').css('display' , 'flex');
+    })
+
+    $("#link_comofazerlogin").on("click", function (){
+        $('#link_cadastro').css('display' , 'none');
+        $('#link_login').css('display' , 'flex');
+    })
+
+
+});
+
+
