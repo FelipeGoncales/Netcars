@@ -12,6 +12,10 @@ $(document).ready(function () {
     $.ajax({
         url: `${BASE_URL}/obter_nome_garagem`,
         success: function (response) {
+            // Insere o título da página
+            let textoAntigo = $('#title-pagina').text();
+            $('#title-pagina').text(`${response.primeiro_nome}${response.segundo_nome} ${textoAntigo}`);
+
             $('.primeiro-nome').text(response.primeiro_nome);
             
             $('.segundo-nome').text(response.segundo_nome);

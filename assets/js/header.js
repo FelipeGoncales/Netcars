@@ -3,6 +3,22 @@
 // Variável Global
 var BASE_URL = "http://192.168.1.126:5000";
 
+$(document).ready(function() {
+    // Buscar o nome da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_nome_garagem`,
+        success: function (response) {
+            // Insere o título da página
+            let textoAntigo = $('#title-pagina').text();
+            $('#title-pagina').text(`${response.primeiro_nome}${response.segundo_nome} ${textoAntigo}`);
+
+            // Insere o primeiro e segundo nome
+            $('.primeiro-nome').text(response.primeiro_nome);
+            $('.segundo-nome').text(response.segundo_nome);
+        }
+    })
+})
+
 // Abrir e fechar barra lateral
 const sanduiche = $("#sanduicheHeader");
 const barraLateral = $('#barra-lateral');
@@ -123,16 +139,6 @@ $(document).ready(function() {
             }
         })
     }
-
-    // Buscar o nome da garagem
-    $.ajax({
-        url: `${BASE_URL}/obter_nome_garagem`,
-        success: function (response) {
-            $('.primeiro-nome').text(response.primeiro_nome);
-            
-            $('.segundo-nome').text(response.segundo_nome);
-        }
-    })
 })
 
 // Abrir página de carro ou motos ao clicar no modal do nav
