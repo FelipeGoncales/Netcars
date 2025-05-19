@@ -1722,3 +1722,129 @@ $(document).ready(function () {
         }
     })
 })
+
+/*
+    CONFIGURAÇÕES GARAGEM
+*/
+
+// Função para carregar os estados do IBGE
+function carregarEstados(select) {
+    return $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function (estados) {
+        // Ordena os estados por nome
+        estados.sort((a, b) => a.nome.localeCompare(b.nome));
+
+        // Para cada estado, adiciona uma opção no select
+        $.each(estados, function (index, estado) {
+            select.append(`<option value="${estado.sigla}" id_estado="${estado.id}">${estado.sigla}</option>`);
+        });
+    });
+}
+
+// Função para carregar as cidades com base no estado selecionado
+function carregarCidades(estadoId, select) {
+    return $.getJSON(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`, function (cidades) {
+        select.empty(); // Limpa as opções anteriores do select de cidades
+
+        // Adiciona cada cidade como opção
+        $.each(cidades, function (index, cidade) {
+            select.append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
+        });
+    });
+}
+
+// Ao alterar o estado, carrega as cidades correspondentes
+$('#estado-input').on('change', function () {
+    const idEstado = $(this).find(':selected').attr('id_estado');
+
+    carregarCidades(idEstado, $('#cidade-input'))
+})
+
+$(document).ready(function () {
+    $.ajax({
+        url: `${BASE_URL}/obter_config_garagem`,
+        success: async function (response) {
+            // Carregar as options do select de estado
+            await carregarEstados($('#estado-input'));
+
+            // Carrega o primeiro nome
+            $('#primeiro-nome-input').val(response.primeiro_nome);
+            // Carrega o segundo nome
+            $('#segundo-nome-input').val(response.segundo_nome);
+            // Carrega a razão social
+            $('#razao-social-input').val(response.razao_social);
+            // Carrega o cnpj
+            $('#cnpj-input').val(response.cnpj);
+            // Carrega a chave pix
+            $('#chave-pix-input').val(response.chave_pix);
+            // Carrega o estado
+            $('#estado-input').val(response.estado);
+
+            // Obtém o id do estado segundo a API do IBGE
+            const idEstado = $('#estado-input').find(':selected').attr('id_estado');
+            // Carrega as cidades do estado selecionado
+            await carregarCidades(idEstado, $('#cidade-input'))
+
+            // Seleciona a cidade depois de carregado
+            $('#cidade-input').val(response.cidade);
+
+            // Seleciona todos os selects e inputs
+            const inputs = document.querySelectorAll(".container-input select, .container-input input");
+
+            // Função para funcionar a label depois de inserir as informações
+            inputs.forEach((input) => {
+                if (input.value) {
+                    input.previousElementSibling.classList.add("active");
+                }
+            });
+        }
+    })
+
+    // Obtém a mensagem salva no local storage
+    const configAtt = localStorage.getItem('configAtt');
+
+    // Caso exista, abre a parte de configurações
+    if (configAtt) {
+        $('#config').css('display', 'flex');
+        $('#minha-conta').css('display', 'none');
+
+        // Exibe mensagem de sucesso
+        alertMessage(configAtt, 'success');
+
+        // Remove o item do local storage
+        localStorage.removeItem('configAtt');
+    }
+})
+
+$('#formConfigGaragem').on('submit', function(e) {
+    e.preventDefault();
+
+    const data = new FormData(this);
+
+    const envia = {
+        primeiro_nome: data.get('primeiro-nome-input'),
+        segundo_nome: data.get('segundo-nome-input'),
+        razao_social: data.get('razao-social-input'),
+        cnpj: data.get('cnpj-input'),
+        chave_pix: data.get('chave-pix-input'),
+        estado: data.get('estado-input'),
+        cidade: data.get('cidade-input'),
+    }
+    
+    console.log(envia)
+
+    $.ajax({
+        url: `${BASE_URL}/att_config_garagem`,
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(envia),
+        success: function(response) {
+            // Salva a mensagem no local storage
+            localStorage.setItem('configAtt', response.success);
+            // Recarrega a página
+            window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    })
+})
