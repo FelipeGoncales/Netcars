@@ -1,6 +1,6 @@
 // URL API
 
-var BASE_URL = "http://192.168.1.127:5000";
+var BASE_URL = "http://192.168.1.126:5000";
 
 // Funções para auxiliar no funcionamento dos inputs
 
@@ -31,10 +31,10 @@ $(document).ready(function() {
 });
 
 // Função para quando o usuario clicar em esqueci senha ele dar foco no input de email
-document.getElementById("forgot-password").addEventListener("click", function () {
-    const emailInput = document.getElementById("input-email");
+$("#forgot-password").on("click", function () {
+    const emailInput = $("#input-email");
     
-    if (!emailInput.value.trim()) {
+    if (!emailInput.val()) {
         emailInput.focus();
     }
 });
