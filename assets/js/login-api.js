@@ -2,6 +2,33 @@
 
 var BASE_URL = "http://192.168.1.126:5000";
 
+$(document).ready(function () {
+    // Buscar o nome da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_nome_garagem`,
+        success: function (response) {
+            // Insere o título da página
+            let textoAntigo = $('#title-pagina').text();
+            $('#title-pagina').text(`${response.primeiro_nome}${response.segundo_nome} ${textoAntigo}`);
+
+            $('.primeiro-nome').text(response.primeiro_nome);
+            
+            $('.segundo-nome').text(response.segundo_nome);
+        }
+    })
+
+    // Obter a logo da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_logo`,
+        success: function (response) {
+            // Insere o primeiro e segundo nome
+            $('.logo-garagem').attr('src', response.img_url);
+            // Logo na página do navegador
+            $('#link_icon_navegador').attr('href', response.img_url);
+        }
+    })
+})
+
 // Funções para auxiliar no funcionamento dos inputs
 
 $('.div-input').each(function() {

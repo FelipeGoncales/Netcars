@@ -56,6 +56,18 @@ header {
     }
 }
 
+.primeiro-nome, .segundo-nome {
+    text-transform: uppercase;
+}
+
+.segundo-nome {
+    position: relative;
+    left: -5px;
+    &.cars {
+        position: static;
+    }
+}
+
 /* Fim do Header */
 
 /* Main */
