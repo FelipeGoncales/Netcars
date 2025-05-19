@@ -521,7 +521,8 @@
                             </div>
                             <div class="container-input">
                                 <label class="text" for="cnpj-input">CNPJ*</label>
-                                <input class="input" required name="cnpj-input" type="text" id="cnpj-input" maxlength="18" />
+                                <input class="input" required name="cnpj-input" type="text" id="cnpj-input"
+                                    maxlength="18" />
                             </div>
                             <div class="container-input">
                                 <label class="text" for="chave-pix-input">Chave pix*</label>
@@ -555,6 +556,30 @@
                         <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" />
 
                         <button id="editarLogo">Salvar logo</button>
+
+                        <div class="div-cores">
+                            <div class="div-input-cores">
+                                <label for="color-princ">Cor principal:</label>
+                                <input type="color" name="color-princ" id="color-princ">
+                            </div>
+
+                            <div class="div-input-cores">
+                                <label for="color-fund-1">Cor de fundo 1:</label>
+                                <input type="color" name="color-fund-1" id="color-fund-1">
+                            </div>
+
+                            <div class="div-input-cores">
+                                <label for="color-fund-1">Cor de fundo 2:</label>
+                                <input type="color" name="color-fund-2" id="color-fund-2">
+                            </div>
+
+                            <div class="div-input-cores">
+                                <label for="color-texto">Cor texto:</label>
+                                <input type="color" name="color-texto" id="color-texto">
+                            </div>
+
+                            <button id="atualizarCores">Atualizar cores</button>
+                        </div>
                     </div>
                 </div>
             </div>

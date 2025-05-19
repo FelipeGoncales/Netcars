@@ -1965,3 +1965,16 @@ $('#editarLogo').click(function () {
         }
     });
 });
+
+// Atualizar cores do site
+$('#atualizarCores').click(function() {
+
+    let envia = {
+        color_princ: $('#color-princ').val(),
+        color_fund_1: $('#color-fund-1').val(),
+        color_fund_2: $('#color-fund-2').val(),
+        color_texto: $('#color-texto').val()
+    }
+
+    console.log(envia)
+})

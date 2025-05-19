@@ -37,6 +37,38 @@ $(document).ready(function () {
         }
     })
 
+    // Obter a logo da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_cores`,
+        success: function (response) {
+            // Função para tranformar de HEX para RGB
+            function hexToRgb(hex) {
+                // retira o '#' e divide em pares de dígitos
+                const [r, g, b] = hex
+                    .replace('#','')
+                    .match(/.{2}/g)
+                    .map(h => parseInt(h, 16));
+                return { r, g, b };
+            }
+
+            // Obtém o código rgb
+            const { r, g, b } = hexToRgb(response.cor_princ);
+            const opacity = 0.8; 
+            // Cor hover 20% mais escura
+            const hoverRoxo = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+
+            // Root styles
+            const rootStyles = document.documentElement.style;
+
+            // Atualiza as propriedades
+            rootStyles.setProperty('--roxo', response.cor_princ);
+            rootStyles.setProperty('--hover-roxo', hoverRoxo);
+            rootStyles.setProperty('--cor-bg', response.cor_fund_1);
+            rootStyles.setProperty('--cor-bg-sec', response.cor_fund_2);
+            rootStyles.setProperty('--cor-texto', response.cor_texto);
+        }
+    })
+
 
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
