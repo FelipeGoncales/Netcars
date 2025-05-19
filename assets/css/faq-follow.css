@@ -147,6 +147,11 @@ button.owl-prev span{
   gap: 5px;
   list-style: none;
   text-decoration: none;
+  transition: 0.3s;
+}
+
+.li-aside h4:hover{
+  color: #6C1DE9;
 }
 
 .ul-aside{
@@ -156,12 +161,10 @@ button.owl-prev span{
 }
 
 .ul2-aside {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  padding-left: 0px;
+  display: none;
+  padding-left: 15px;
 }
+
 
 .ul2-aside.aberto {
   max-height: 200px;
@@ -173,6 +176,34 @@ button.owl-prev span{
   list-style: none;
   font-size: 14px;
 }
+
+.li2-aside:hover{
+  text-decoration: underline;
+  color: #6C1DE9;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  margin-right: 8px;
+}
+
+.title-aside.ativo .arrow {
+  color: #6C1DE9;
+}
+
+/* Quando o item está aberto */
+.title-aside.ativo .arrow {
+  transform: rotate(90deg);
+} 
+
+.title-aside.ativo {
+  color: #6C1DE9;
+}
+
+.div-login, .div-esquecisenha{
+  display: none;
+}
+
 
 .i-svgs{
   display: flex;

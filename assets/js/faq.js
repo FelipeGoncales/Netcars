@@ -1,11 +1,17 @@
- $(document).ready(function () {
-    $('.title-aside').on('click', function () {
-      const $currentUl = $(this).next('.ul2-aside');
+$(document).ready(function () {
+  $('.title-aside').on('click', function () {
+    const $titulo = $(this);
+    const $submenu = $titulo.next('.ul2-aside');
 
-      // Fecha todos os outros
-      $('.ul2-aside').not($currentUl).removeClass('aberto');
+    if ($titulo.hasClass('ativo')) {
+      $('.title-aside').removeClass('ativo');
+      $('.ul2-aside').slideUp();
+    } else {
+      $('.title-aside').removeClass('ativo');
+      $('.ul2-aside').slideUp();
 
-      // Alterna o atual
-      $currentUl.toggleClass('aberto');
-    });
+      $titulo.addClass('ativo');
+      $submenu.stop(true, true).slideDown();
+    }
   });
+});
