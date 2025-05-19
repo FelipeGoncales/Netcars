@@ -30,6 +30,10 @@ $(document).ready(function () {
             $('.logo-garagem').attr('src', response.img_url);
             // Logo na página do navegador
             $('#link_icon_navegador').attr('href', response.img_url);
+
+            $('.img-preview').css({
+                'background-image': `url(${response.img_url})`
+            })
         }
     })
 
