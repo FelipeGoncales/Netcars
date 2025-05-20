@@ -1912,6 +1912,9 @@ $('#formConfigGaragem').on('submit', function (e) {
         url: `${BASE_URL}/att_config_garagem`,
         method: 'PUT',
         contentType: 'application/json',
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         data: JSON.stringify(envia),
         success: function (response) {
             localStorage.setItem('configAtt', response.success);
@@ -1950,8 +1953,11 @@ $('#editarLogo').click(function () {
 
     $.ajax({
         url: `${BASE_URL}/editar_logo`,
-        type: 'POST',
+        type: 'PUT',
         data: formData,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         processData: false, // Não processa os dados
         contentType: false, // Não define tipo de conteúdo (deixa o browser fazer)
         success: function (response) {
@@ -1980,6 +1986,9 @@ $('#atualizarCores').click(function() {
         url: `${BASE_URL}/att_cores`,
         method: 'PUT',
         contentType: 'application/json',
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         data: JSON.stringify(envia),
         success: function(response) {
             // Salva a mensagem de sucesso no local storage
