@@ -65,8 +65,10 @@ $(document).ready(function () {
             }
 
             const { r, g, b } = hexToRgb(response.cor_princ);
-            const darker = darkenRgb({ r, g, b }, 20);      // –20% (mais próximo de preto)
+            const darker = darkenRgb({ r, g, b }, 15);      // –20% (mais próximo de preto)
             const hoverRoxo = `rgb(${darker.r}, ${darker.g}, ${darker.b})`;
+
+            const roxoClaro = `rgba(${r}, ${g}, ${b}, 0.13)`;
 
             // Root styles
             const rootStyles = document.documentElement.style;
@@ -77,6 +79,7 @@ $(document).ready(function () {
             rootStyles.setProperty('--cor-bg', response.cor_fund_1);
             rootStyles.setProperty('--cor-bg-sec', response.cor_fund_2);
             rootStyles.setProperty('--cor-texto', response.cor_texto);
+            rootStyles.setProperty('--roxo-claro', roxoClaro);
 
             $('#color-princ').val(response.cor_princ);
             $('#color-fund-1').val(response.cor_fund_1);

@@ -53,7 +53,7 @@ $(document).ready(function () {
             }
 
             const { r, g, b } = hexToRgb(response.cor_princ);
-            const darker = darkenRgb({ r, g, b }, 20);      // –20% (mais próximo de preto)
+            const darker = darkenRgb({ r, g, b }, 15);      // –20% (mais próximo de preto)
             const hoverRoxo = `rgb(${darker.r}, ${darker.g}, ${darker.b})`;
 
             // Root styles

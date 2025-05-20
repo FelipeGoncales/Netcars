@@ -20,6 +20,7 @@
     --cor-texto-apagado: #AEAEBA;
     --cor-bg-sec: #FFFFFF;
     --cor-titles: #696977;
+    --roxo-claro: #ECE1FE;
 }
 
 /* validação form */
@@ -821,7 +822,7 @@ main {
 
 .btn-status-box {
     border-radius: 8px;
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border: 2px #e0e1e4 solid;
     width: 10%;
     transition: 0.2s;
@@ -858,7 +859,7 @@ main {
     border: 2px #e0e1e4 solid;
     border-radius: 8px;
     outline: none;
-    background: #ffffff;
+    background: var(--cor-bg-sec);
     z-index: 2;
     color: #757587;
 }
@@ -888,7 +889,6 @@ main {
 .container-edit-user {
     display: none;
     flex-direction: column;
-    height: 100vh;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -955,7 +955,7 @@ table td {
 
 table th {
     color: rgb(0, 0, 0);
-    background-color: #ffffff;
+    background-color: var(--cor-bg-sec);
     font-weight: 600;
 }
 
@@ -964,7 +964,7 @@ tbody tr.tipo1 {
 }
 
 tbody tr.tipo2 {
-    background-color: #ECE1FE;
+    background-color: var(--roxo-claro);
 }
 
 .edit-icon {
@@ -1057,14 +1057,14 @@ tbody tr.tipo2 {
         border: 2px #e0e1e4 solid;
         border-radius: 8px;
         outline: none;
-        background: #ffffff;
+        background: var(--cor-bg-sec);
         z-index: 2;
         color: #757587;
     }
 
     .btn-status-box {
         border-radius: 8px;
-        background-color: white;
+        background-color: var(--cor-bg-sec);
         border: 2px #e0e1e4 solid;
         width: 25%;
         transition: 0.2s;
@@ -1416,7 +1416,7 @@ tbody tr.tipo2 {
 /* MODAL COMPRAR */
 .modal-pagar-parcela {
     display: none;
-    background: #ffffff;
+    background: var(--cor-bg-sec);
     padding: 60px;
     flex-direction: column;
     gap: 30px;
@@ -1438,7 +1438,7 @@ tbody tr.tipo2 {
         transition: transform 0.2s ease, color 0.2s ease;
 
         &:hover {
-            color: #6C1DE9;
+            color: var(--roxo);
             transform: scale(1.1);
         }
     }
@@ -1483,7 +1483,7 @@ tbody tr.tipo2 {
         }
 
         i {
-            color: #6C1DE9;
+            color: var(--roxo);
             font-size: 50px;
         }
     }
@@ -1511,7 +1511,7 @@ tbody tr.tipo2 {
 /* MODAL FINANCIAMENTO */
 .modal-financiamento {
     display: none;
-    background: #ffffff;
+    background: var(--cor-bg-sec);
     padding: 50px;
     flex-direction: column;
     gap: 25px;
@@ -1534,7 +1534,7 @@ tbody tr.tipo2 {
         transition: transform 0.2s ease, color 0.2s ease;
 
         &:hover {
-            color: #6C1DE9;
+            color: var(--roxo);
             transform: scale(1.1);
         }
     }
@@ -1631,7 +1631,7 @@ tbody tr.tipo2 {
 /* MODAL PIX */
 .modal-pix {
     display: none;
-    background: #ffffff;
+    background: var(--cor-bg-sec);
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -1770,7 +1770,7 @@ tbody tr.tipo2 {
 
 .modal-finaciamento {
     display: none;
-    background: #ffffff;
+    background: var(--cor-bg-sec);
     padding: 60px;
     flex-direction: column;
     gap: 40px;
@@ -1827,7 +1827,7 @@ tbody tr.tipo2 {
         .valor-result {
             font-size: 16px;
             font-weight: 600;
-            color: #6C1DE9;
+            color: var(--roxo);
         }
     }
 
@@ -1849,7 +1849,7 @@ tbody tr.tipo2 {
         }
 
         i {
-            color: #6C1DE9;
+            color: var(--roxo);
             font-size: 100px;
         }
     }
@@ -1862,8 +1862,8 @@ tbody tr.tipo2 {
     border: none;
     font-size: 17px;
     font-weight: 700;
-    color: #ffffff;
-    background-color: #6C1DE9;
+    color: var(--cor-bg-sec);
+    background-color: var(--roxo);
     cursor: pointer;
     transition: 0.2s;
 
@@ -1968,7 +1968,7 @@ tbody tr.tipo2 {
 }
 
 .div-car-p2 p span {
-    color: #6C1DE9;
+    color: var(--roxo);
 }
 
 .div-car-p3 {
@@ -2024,7 +2024,7 @@ tbody tr.tipo2 {
     justify-content: center;
     width: 100px;
     height: 100px;
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border-radius: 15px;
     background-position: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -2043,7 +2043,7 @@ tbody tr.tipo2 {
     width: 200px;
     height: 200px;
     gap: 10px;
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border-radius: 10px;
     background-position: center;
     ;
@@ -2093,7 +2093,7 @@ tbody tr.tipo2 {
 
 .i-ajuda {
     font-size: 40px;
-    color: #6C1DE9;
+    color: var(--roxo);
 }
 
 /* Card Financiamento */
@@ -2105,7 +2105,7 @@ tbody tr.tipo2 {
 
 .i-financia {
     font-size: 40px;
-    color: #6C1DE9;
+    color: var(--roxo);
 }
 
 .card-financia {
@@ -2116,7 +2116,7 @@ tbody tr.tipo2 {
     width: 251px;
     height: 208px;
     gap: 10px;
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     transition: 0.2s;
@@ -2245,7 +2245,7 @@ tbody tr.tipo2 {
 
         & .ver-detalhes {
             background: var(--roxo);
-            color: #fff;
+            color: var(--cor-bg-sec);
             padding: 12px;
             font-weight: 400;
             border-radius: 10px;
@@ -2423,7 +2423,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 }
 
 .container-branco {
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     height: auto;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -2688,7 +2688,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 /* Div adicionar serviços */
 #servicos {
-    background: #ffffff;
+    background: var(--cor-bg-sec);
     padding: 60px;
     display: none;
     flex-direction: column;
@@ -2793,8 +2793,8 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         }
 
         & .button-cel {
-            background: #ECEDF2;
-            color: #6C1DE9;
+            background: var(--cor-bg);
+            color: var(--roxo);
             font-size: 14px;
 
             &:hover {
@@ -2803,8 +2803,8 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         }
 
         & .button-add {
-            background: #6C1DE9;
-            color: #ffffff;
+            background: var(--roxo);
+            color: var(--cor-bg-sec);
             width: 100%;
 
             &:hover {
@@ -3171,7 +3171,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 }
 
 .balance-card {
-    background-color: #e6d5f5;
+    background-color: var(--roxo-claro);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 5px;
@@ -3198,14 +3198,14 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 }
 
 .transactions-card {
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .charts-card {
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -3308,7 +3308,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 }
 
 .add-button {
-    background-color: white;
+    background-color: var(--cor-bg-sec);
     border: none;
     font-size: 24px;
     cursor: pointer;
@@ -3328,7 +3328,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 .transaction-divider {
     height: 1px;
-    background-color: #eee;
+    background-color: var(--hover-roxo);
     margin: 15px 0;
 }
 
@@ -3611,10 +3611,13 @@ footer {
 
 @media (max-width: 660px) {
 
+    .container-edit-user {
+        margin: 140px 0 55px 0;
+    }
+
     .filtro-users-wrapper {
         flex-direction: column;
         gap: 10px;
-        margin-top: 165px;
         margin-bottom: 115px;
     }
 
