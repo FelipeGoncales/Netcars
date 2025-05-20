@@ -10,7 +10,40 @@ var WIDTH_RESPONSIVO = 1112;
 
 let isValidCPF_CNPJ = false;
 
+function formatarTelefone(telefone) {
+    // Remove tudo que não for dígito
+    const nums = telefone.replace(/\D/g, '');
+
+    // Usa regex para capturar (DD)(XXXXX)(XXXX) e inserir parênteses, espaço, hífen
+    return nums.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+}
+
 $(document).ready(function () {
+
+    // Buscar o telefone da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_footer`,
+        success: function (response) {
+            // Insere o título da página
+            $('#telefone-footer').text(formatarTelefone(response.telefone));
+
+            $('#email-footer').text(response.email);
+
+            $('#email-input').val(response.email);
+            $('#telefone-input').val(formatarTelefone(response.telefone));
+
+            // Seleciona todos os selects e inputs
+            const inputs = document.querySelectorAll(".container-input select, .container-input input");
+
+            // Função para funcionar a label depois de inserir as informações
+            inputs.forEach((input) => {
+                if (input.value) {
+                    input.previousElementSibling.classList.add("active");
+                }
+            });
+        }
+    })
+
     // Buscar o nome da garagem
     $.ajax({
         url: `${BASE_URL}/obter_nome_garagem`,
@@ -40,7 +73,7 @@ $(document).ready(function () {
         }
     })
 
-    // Obter a logo da garagem
+    // Obter as cores da garagem
     $.ajax({
         url: `${BASE_URL}/obter_cores`,
         success: function (response) {

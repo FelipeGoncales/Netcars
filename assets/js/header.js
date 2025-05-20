@@ -1,7 +1,15 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.120:5000";
+var BASE_URL = "http://192.168.1.134:5000";
+
+function formatarTelefone(telefone) {
+    // Remove tudo que não for dígito
+    const nums = telefone.replace(/\D/g, '');
+
+    // Usa regex para capturar (DD)(XXXXX)(XXXX) e inserir parênteses, espaço, hífen
+    return nums.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+}
 
 $(document).ready(function () {
     // Buscar o nome da garagem
@@ -15,6 +23,17 @@ $(document).ready(function () {
             // Insere o primeiro e segundo nome
             $('.primeiro-nome').text(response.primeiro_nome);
             $('.segundo-nome').text(response.segundo_nome);
+        }
+    })
+
+    // Buscar o telefone da garagem
+    $.ajax({
+        url: `${BASE_URL}/obter_footer`,
+        success: function (response) {
+            // Insere o título da página
+            $('#telefone-footer').text(formatarTelefone(response.telefone));
+
+            $('#email-footer').text(response.email);
         }
     })
 
