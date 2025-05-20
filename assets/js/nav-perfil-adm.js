@@ -132,7 +132,7 @@ $(document).ready(function () {
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
 
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
@@ -141,7 +141,7 @@ $(document).ready(function () {
         const elementoClicado = this;
 
         // Caso relatórios já esteja aberto
-        if ($(elementoClicado).hasClass('selecionado') && $(window).width() > 980) {
+        if ($(elementoClicado).hasClass('selecionado') && $(window).width() > WIDTH_RESPONSIVO) {
             $('#minha-conta').css('display', 'flex');
             $('#editUser').css('display', 'none');
             $('#reservas').css('display', 'none');
@@ -174,7 +174,7 @@ $(document).ready(function () {
             exibirRelatorio('movimentacao');
             selecionarA(elementoClicado);
         }
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
@@ -193,7 +193,7 @@ $(document).ready(function () {
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
 
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
@@ -212,7 +212,7 @@ $(document).ready(function () {
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
 
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
@@ -232,7 +232,7 @@ $(document).ready(function () {
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
 
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -253,7 +253,7 @@ $(document).ready(function () {
         $('nav').css('overflow-y', 'visible');
         $('.submenu-relatorios').slideUp();
 
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -261,42 +261,42 @@ $(document).ready(function () {
     // Ação ao clicar nos itens do submenu
     $("#movimentacao").on("click", function () {
         exibirRelatorio('movimentacao');
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
 
     $("#carros").on("click", function () {
         exibirRelatorio('carros');
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
 
     $("#motos").on("click", function () {
         exibirRelatorio('motos');
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
 
     $("#clientes").on("click", function () {
         exibirRelatorio('clientes');
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
 
     $("#parcelamentos").on("click", function () {
         exibirRelatorio('parcelamentos');
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
 
     $("#manutencao").on("click", function () {
         exibirRelatorio('manutencao');
-        if ($(window).width() <= 980) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     });
@@ -1912,6 +1912,9 @@ $('#formConfigGaragem').on('submit', function (e) {
         url: `${BASE_URL}/att_config_garagem`,
         method: 'PUT',
         contentType: 'application/json',
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         data: JSON.stringify(envia),
         success: function (response) {
             localStorage.setItem('configAtt', response.success);
@@ -1950,8 +1953,11 @@ $('#editarLogo').click(function () {
 
     $.ajax({
         url: `${BASE_URL}/editar_logo`,
-        type: 'POST',
+        type: 'PUT',
         data: formData,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         processData: false, // Não processa os dados
         contentType: false, // Não define tipo de conteúdo (deixa o browser fazer)
         success: function (response) {
@@ -1980,6 +1986,9 @@ $('#atualizarCores').click(function() {
         url: `${BASE_URL}/att_cores`,
         method: 'PUT',
         contentType: 'application/json',
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
         data: JSON.stringify(envia),
         success: function(response) {
             // Salva a mensagem de sucesso no local storage
@@ -1991,4 +2000,70 @@ $('#atualizarCores').click(function() {
             alertMessage(response.responseJSON?.error, 'error');
         }
     })
+})
+
+// Quantidade de divs do config
+
+const qntDivs = 2;
+
+// Mudar para modal config footer e atualizar as setas
+$('#config-prox').click(function() {
+
+    for (i = 1; i < qntDivs + 1; i++) {
+        if ($(`#div-config-${i}`).css('display') === 'flex') {
+            if (i < qntDivs) {
+                $(`#div-config-${i}`).hide();
+                $(`#div-config-${i+1}`).css('display', 'flex');
+
+                // No responsivo, scrolla para o topo da página e coloca a seta na parte de baixo
+                if ($(window).width() <= 820) {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+
+                    $('#config').css('flex-direction', 'column-reverse');
+                }
+            
+                if (i + 1 == qntDivs) {
+                    $('#config-prox').hide();
+                    $('#config-ant').css('display', 'flex');
+                } else {
+                    $('#config-prox').css('display', 'flex');
+                    $('#config-ant').hide();
+                }
+            }
+        }
+    }
+})
+
+// Mudar para modal config footer e atualizar as setas
+$('#config-ant').click(function() {
+
+    for (i = qntDivs; i > 1; i--) {
+        if ($(`#div-config-${i}`).css('display') === 'flex') {
+            if (i > 1) {
+                $(`#div-config-${i}`).hide();
+                $(`#div-config-${i - 1}`).css('display', 'flex');
+            }
+
+            // No responsivo, scrolla para o topo da página e coloca a seta na parte de baixo
+            if ($(window).width() <= 820) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+                $('#config').css('flex-direction', 'column');
+            }
+
+            if (i - 1 <= 1) {
+                $('#config-ant').hide();
+                $('#config-prox').css('display', 'flex');
+            } else {
+                $('#config-ant').css('display', 'flex');
+                $('#config-prox').hide();
+            }
+        }
+    }
 })

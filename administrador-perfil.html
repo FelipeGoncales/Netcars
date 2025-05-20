@@ -161,6 +161,7 @@
 
             <!-- Div Relatórios - Movimentações -->
             <div class="container-relatorios" id="relatorio-movimentacao">
+                
                 <div class="container-dashboard">
                     <h1 class="texto-principal">Dashboard</h1>
 
@@ -500,7 +501,11 @@
             <!-- Div Configurações da Garagem -->
             <div id="config">
                 <!-- Div Minha Conta -->
-                <div class="container-info-input garagem" id="minha-conta">
+                 <div class="seta-box" style="display: none;" id="config-ant">
+                    <i class="fa-solid fa-arrow-left setas"></i>
+                </div>
+
+                <div class="container-info-input garagem" id="div-config-1">
                     <div class="informacoes-input garagem">
                         <h3>Configurações da Garagem</h3>
                         <form id="formConfigGaragem" class="garagem">
@@ -542,45 +547,59 @@
                         </form>
                     </div>
 
-                    <div class="div-img-logo">
-                        <h3>Logo</h3>
+                    <div class="div-logo-cores">
+                        <div class="div-img-logo">
+                            <h3>Logo</h3>
 
-                        <!-- Input de upload de imagem -->
-                        <label for="upload-imagem" class="upload-label">
-                            <div class="img-preview"></div>
-                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                            <div class="overlay-img"></div>
-                        </label>
+                            <!-- Input de upload de imagem -->
+                            <label for="upload-imagem" class="upload-label">
+                                <div class="img-preview"></div>
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                <div class="overlay-img"></div>
+                            </label>
 
-                        <!-- Altere o atributo name para "imagens" -->
-                        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" />
+                            <!-- Altere o atributo name para "imagens" -->
+                            <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" />
 
-                        <button id="editarLogo">Salvar logo</button>
+                            <button id="editarLogo">Salvar logo</button>
+                        </div>
 
                         <div class="div-cores">
-                            <div class="div-input-cores">
-                                <label for="color-princ">Cor principal:</label>
-                                <input type="color" name="color-princ" id="color-princ">
-                            </div>
+                            <h3 class="cores">Cores</h3>
 
-                            <div class="div-input-cores">
-                                <label for="color-fund-1">Cor de fundo 1:</label>
-                                <input type="color" name="color-fund-1" id="color-fund-1">
-                            </div>
+                            <div class="div-inputs-cores">
+                                <div class="div-input-cores">
+                                    <label for="color-princ">Cor principal:</label>
+                                    <input type="color" name="color-princ" id="color-princ">
+                                </div>
 
-                            <div class="div-input-cores">
-                                <label for="color-fund-1">Cor de fundo 2:</label>
-                                <input type="color" name="color-fund-2" id="color-fund-2">
-                            </div>
+                                <div class="div-input-cores">
+                                    <label for="color-fund-1">Cor de fundo 1:</label>
+                                    <input type="color" name="color-fund-1" id="color-fund-1">
+                                </div>
 
-                            <div class="div-input-cores">
-                                <label for="color-texto">Cor texto:</label>
-                                <input type="color" name="color-texto" id="color-texto">
+                                <div class="div-input-cores">
+                                    <label for="color-fund-1">Cor de fundo 2:</label>
+                                    <input type="color" name="color-fund-2" id="color-fund-2">
+                                </div>
+
+                                <div class="div-input-cores">
+                                    <label for="color-texto">Cor texto:</label>
+                                    <input type="color" name="color-texto" id="color-texto">
+                                </div>
                             </div>
 
                             <button id="atualizarCores">Atualizar cores</button>
                         </div>
                     </div>
+                </div>
+
+                <div class="contairner-config-footer" style="display: none;" id="div-config-2">
+                    <h3>Nada</h3>
+                </div>
+
+                <div class="seta-box" id="config-prox">
+                    <i class="fa-solid fa-arrow-right setas"></i>
                 </div>
             </div>
 
@@ -663,8 +682,6 @@
             <button type="submit">Salvar alterações</button>
             <button type="button" id="excluir-servico">Inativar</button>
         </form>
-
-        <div id="overlay-bg"></div>
 
         <!-- Form Div Cadastrar User -->
         <form class="container-login" id="formCadastroUsuario">

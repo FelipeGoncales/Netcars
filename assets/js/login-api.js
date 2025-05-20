@@ -36,17 +36,25 @@ $(document).ready(function () {
             function hexToRgb(hex) {
                 // retira o '#' e divide em pares de dígitos
                 const [r, g, b] = hex
-                    .replace('#','')
+                    .replace('#', '')
                     .match(/.{2}/g)
                     .map(h => parseInt(h, 16));
                 return { r, g, b };
             }
 
-            // Obtém o código rgb
+            // escurece cada canal em x%
+            function darkenRgb({ r, g, b }, percent) {
+                const factor = 1 - percent / 100;               // ex: 0.8 para –20%
+                return {
+                    r: Math.round(r * factor),
+                    g: Math.round(g * factor),
+                    b: Math.round(b * factor)
+                };
+            }
+
             const { r, g, b } = hexToRgb(response.cor_princ);
-            const opacity = 0.8; 
-            // Cor hover 20% mais escura
-            const hoverRoxo = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            const darker = darkenRgb({ r, g, b }, 15);      // –20% (mais próximo de preto)
+            const hoverRoxo = `rgb(${darker.r}, ${darker.g}, ${darker.b})`;
 
             // Root styles
             const rootStyles = document.documentElement.style;

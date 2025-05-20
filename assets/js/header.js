@@ -3,7 +3,7 @@
 // Variável Global
 var BASE_URL = "http://192.168.1.120:5000";
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Buscar o nome da garagem
     $.ajax({
         url: `${BASE_URL}/obter_nome_garagem`,
@@ -37,17 +37,25 @@ $(document).ready(function() {
             function hexToRgb(hex) {
                 // retira o '#' e divide em pares de dígitos
                 const [r, g, b] = hex
-                    .replace('#','')
+                    .replace('#', '')
                     .match(/.{2}/g)
                     .map(h => parseInt(h, 16));
                 return { r, g, b };
             }
 
-            // Obtém o código rgb
+            // escurece cada canal em x%
+            function darkenRgb({ r, g, b }, percent) {
+                const factor = 1 - percent / 100;               // ex: 0.8 para –20%
+                return {
+                    r: Math.round(r * factor),
+                    g: Math.round(g * factor),
+                    b: Math.round(b * factor)
+                };
+            }
+
             const { r, g, b } = hexToRgb(response.cor_princ);
-            const opacity = 0.8; 
-            // Cor hover 20% mais escura
-            const hoverRoxo = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            const darker = darkenRgb({ r, g, b }, 15);      // –20% (mais próximo de preto)
+            const hoverRoxo = `rgb(${darker.r}, ${darker.g}, ${darker.b})`;
 
             // Root styles
             const rootStyles = document.documentElement.style;
@@ -109,21 +117,21 @@ if ($(window).width() >= 1150) {
 
 // Mudar perfil quando usuário estiver logado
 
-$(document).ready(function() {
+$(document).ready(function () {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     if (dadosUser) {
-        $('#nomeUsuario').text(dadosUser.nome_completo) 
-        
+        $('#nomeUsuario').text(dadosUser.nome_completo)
+
         // Lógica para obter tipo do usuário
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajax({
                 url: `${BASE_URL}/obter_tipo_usuario`,
                 headers: {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                 },
-                success: function(response) {
+                success: function (response) {
                     const tipoUser = response.tipo_usuario;
 
                     if (tipoUser === 3) {
@@ -134,7 +142,7 @@ $(document).ready(function() {
                         $('#aDivEntrar').attr('href', 'administrador-perfil.html')
                     }
                 },
-                error: function(response) {
+                error: function (response) {
                     localStorage.deleteItem('dadosUser');
                     localStorage.setItem('mensagem', JSON.stringify({
                         "error": response.responseJSON.error
@@ -144,7 +152,7 @@ $(document).ready(function() {
             })
         })
 
-    } else { 
+    } else {
         // Abrir e fechar modal login
 
         const closeModalLogin = $("#closeModalLogin");
@@ -162,14 +170,14 @@ $(document).ready(function() {
 
         const aDivEntrar = $('#aDivEntrar');
 
-        aDivEntrar.click(function(e) {
+        aDivEntrar.click(function (e) {
             if ($(window).width() <= 768) {
                 aDivEntrar.attr('href', 'login.html');
                 return;
             } else {
                 // Evitar o recarregamento da página
                 e.preventDefault();
-                
+
                 const displayModal = modalLogin.css('display');
 
                 if (displayModal === 'flex') {
@@ -186,17 +194,17 @@ $(document).ready(function() {
 
 // Abrir página de carro ou motos ao clicar no modal do nav
 
-$('#pagina-veiculo-carro').click(function() {
+$('#pagina-veiculo-carro').click(function () {
     localStorage.setItem('tipo-veiculo', 'carro');
     window.location.href = "veiculos.html";
 })
 
-$('#pagina-veiculo-moto').click(function() {
+$('#pagina-veiculo-moto').click(function () {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })
 
-$('#footer-motos-usadas').click(function() {
+$('#footer-motos-usadas').click(function () {
     localStorage.setItem('tipo-veiculo', 'moto');
     window.location.href = "veiculos.html";
 })

@@ -8,6 +8,7 @@
     font-family: "Poppins", serif;
     font-size: 16px;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 :root {
@@ -17,6 +18,7 @@
     --cor-texto: #262627;
     --cor-texto-apagado: #AEAEBA;
     --cor-bg-sec: #FFFFFF;
+    --roxo-claro: #ECE1FE;
 }
 
 body {

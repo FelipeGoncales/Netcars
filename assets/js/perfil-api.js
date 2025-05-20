@@ -3,6 +3,9 @@
 // Variável Global
 var BASE_URL = "http://192.168.1.120:5000";
 
+// Width do responsivo para ativar o menu lateral
+var WIDTH_RESPONSIVO = 1112;
+
 // Função para preencher as informações nos inputs ao entrar na página
 
 let isValidCPF_CNPJ = false;
@@ -17,7 +20,7 @@ $(document).ready(function () {
             $('#title-pagina').text(`${response.primeiro_nome}${response.segundo_nome} ${textoAntigo}`);
 
             $('.primeiro-nome').text(response.primeiro_nome);
-            
+
             $('.segundo-nome').text(response.segundo_nome);
         }
     })
@@ -45,17 +48,27 @@ $(document).ready(function () {
             function hexToRgb(hex) {
                 // retira o '#' e divide em pares de dígitos
                 const [r, g, b] = hex
-                    .replace('#','')
+                    .replace('#', '')
                     .match(/.{2}/g)
                     .map(h => parseInt(h, 16));
                 return { r, g, b };
             }
 
-            // Obtém o código rgb
+            // escurece cada canal em x%
+            function darkenRgb({ r, g, b }, percent) {
+                const factor = 1 - percent / 100;               // ex: 0.8 para –20%
+                return {
+                    r: Math.round(r * factor),
+                    g: Math.round(g * factor),
+                    b: Math.round(b * factor)
+                };
+            }
+
             const { r, g, b } = hexToRgb(response.cor_princ);
-            const opacity = 0.8; 
-            // Cor hover 20% mais escura
-            const hoverRoxo = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            const darker = darkenRgb({ r, g, b }, 15);      // –20% (mais próximo de preto)
+            const hoverRoxo = `rgb(${darker.r}, ${darker.g}, ${darker.b})`;
+
+            const roxoClaro = `rgba(${r}, ${g}, ${b}, 0.13)`;
 
             // Root styles
             const rootStyles = document.documentElement.style;
@@ -66,6 +79,7 @@ $(document).ready(function () {
             rootStyles.setProperty('--cor-bg', response.cor_fund_1);
             rootStyles.setProperty('--cor-bg-sec', response.cor_fund_2);
             rootStyles.setProperty('--cor-texto', response.cor_texto);
+            rootStyles.setProperty('--roxo-claro', roxoClaro);
 
             $('#color-princ').val(response.cor_princ);
             $('#color-fund-1').val(response.cor_fund_1);
@@ -360,7 +374,7 @@ sanduiche.click(() => {
 
 function fecharBarraLateral() {
     barraLateral.css('animation', 'fecharBarraLateral 0.7s');
-    
+
     if (window.location.href === "cliente-perfil.html") {
         if ($('#modal-pix').css('display') == 'none' && $('#modal-pagar-parcela').css('display') == 'none') {
             // Define a animação
@@ -383,8 +397,6 @@ function fecharBarraLateral() {
             overlayBg.css('display', 'none');
         }, 660);
     }
-
-    $('#overlay-bg').css('z-index', '14');
 
     setTimeout(() => {
         barraLateral.css('display', 'none');
