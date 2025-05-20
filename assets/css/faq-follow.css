@@ -107,6 +107,15 @@ button.owl-prev span{
   color: #000000;
 }
 
+.card-ajuda2.ativo-ajuda2 .i-ajuda2 {
+  color: #6C1DE9;
+}
+
+.card-ajuda2.ativo-ajuda2 p {
+  color: #000000;
+}
+
+
 .div-fluxo-filtro {
   display: flex;
   justify-content: left;
@@ -118,6 +127,12 @@ button.owl-prev span{
 .div-fluxo-filtro a {
   font-size: 12px;
   color: #aeaeba  
+}
+
+.div-fluxo-filtro span {
+  font-size: 12px;
+  color: #aeaeba;
+  cursor: auto; 
 }
 
 .div-fluxo-filtro i {
@@ -190,6 +205,10 @@ button.owl-prev span{
   color: #6C1DE9;
 }
 
+.aside{
+  display: none;
+}
+
 /* Quando o item está aberto */
 .title-aside.ativo .arrow {
   transform: rotate(90deg);
@@ -199,15 +218,24 @@ button.owl-prev span{
   color: #6C1DE9;
 }
 
-.div-cadastro, .div-login, .div-esquecisenha{
+.li2-aside.ativo-li2 {
+  color: #6C1DE9; 
+}
+
+
+.div-inicial , .div-cadastro, .div-login, .div-esquecisenha{
   display: none;
 }
 
-#link_login , #link_cadastro{
+#link_inicial{
+  display: flex;
+  flex-direction: column;
+}
+
+#link_esquecisenha, #link_login , #link_cadastro{
   display: none;
   flex-direction: column  ;
-}
-
+} 
 
 .i-svgs{
   display: flex;
