@@ -82,7 +82,7 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'flex');
         $('#reservas').css('display', 'none');
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -94,7 +94,7 @@ $(document).ready(function() {
         $('#minha-conta').css('display', 'none');
         $('#reservas').css('display', 'flex');
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -108,7 +108,7 @@ function fecharBarraLateral() {
     setTimeout(() => {
         barraLateral.css('display', 'none');
         overlayBg.css('display', 'none');
-    }, 699);
+    }, 899);
 }
 
 // Função para obter sigla dos estados

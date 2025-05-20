@@ -1,7 +1,10 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.120:5000";
+var BASE_URL = "http://192.168.1.134:5000";
+
+// Width do responsivo para ativar o menu lateral
+var WIDTH_RESPONSIVO = 1112;
 
 // Função para preencher as informações nos inputs ao entrar na página
 
@@ -383,8 +386,6 @@ function fecharBarraLateral() {
             overlayBg.css('display', 'none');
         }, 660);
     }
-
-    $('#overlay-bg').css('z-index', '14');
 
     setTimeout(() => {
         barraLateral.css('display', 'none');

@@ -128,7 +128,7 @@ function fecharModaisPagarParcela() {
     $('#modal-pix').hide();
     $('#modal-pagar-parcela').hide();
 
-    if ($(window).width() > 660) {
+    if ($(window).width() > WIDTH_RESPONSIVO) {
         $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
         setTimeout(() => {
             overlayBg.css('display', 'none');
@@ -167,7 +167,7 @@ $(document).ready(function () {
         $('#ajuda').css('display', 'none')
         $('#modal-comprar').css('display', 'none')
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -186,7 +186,7 @@ $(document).ready(function () {
         $('#ajuda').css('display', 'none')
         $('#modal-comprar').css('display', 'none')
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -206,7 +206,7 @@ $(document).ready(function () {
         $('#ajuda').css('display', 'none')
         $('#modal-comprar').css('display', 'none')
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -226,7 +226,7 @@ $(document).ready(function () {
         $('#ajuda').css('display', 'none')
         $('#modal-comprar').css('display', 'none')
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -246,7 +246,7 @@ $(document).ready(function () {
         $('#ajuda').css('display', 'flex')
         $('#modal-comprar').css('display', 'none')
 
-        if ($(window).width() <= 660) {
+        if ($(window).width() <= WIDTH_RESPONSIVO) {
             fecharBarraLateral();
         }
     })
@@ -308,6 +308,13 @@ $(document).ready(function () {
             'animation': 'aparecerOverlay 0.5s',
             'display': 'flex'
         });
+
+        $('main').css({
+            'position': 'relative',
+            'z-index': '9999'
+        })
+ 
+        $('#parcelas').css('display', 'none');
     })
 
     $("#close-modal").on("click", function () {
@@ -323,7 +330,12 @@ $('.btn-fechar-pagar-parcela').click(function () {
     setTimeout(() => {
         overlayBg.css('display', 'none');
     }, 660);
+
     $('#parcelas').css('display', 'flex');
+
+    $('main').css({
+        'position': 'static'
+    })
 })
 
 $('.voltar-modal-pagar-parcela').click(function () {
@@ -354,7 +366,7 @@ function fecharBarraLateral() {
     setTimeout(() => {
         $('#barra-lateral').css('display', 'none');
         $('#overlay-bg').css('display', 'none');
-    }, 699);
+    }, 899);
 }
 
 // Função para obter sigla dos estados
