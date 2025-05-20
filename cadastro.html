@@ -29,29 +29,54 @@
     </header>
 
     <main class="main">
-        <form class="container-login" id="formCadastroUsuario">
-            <h1 class="title">Crie uma conta com seu email</h1>
-            <a class="fechar" href="index.html">&times;</a>
-            <div class="div-input">
-                <label for="input">Nome completo</label>
-                <input class="input" name="nome_completo" type="text" required />
+        <div id="div-form-login">
+            <form class="container-login" id="formCadastroUsuario">
+                <h1 class="title">Crie uma conta com seu email</h1>
+
+                <input type="hidden" id="id-usuario-cad">
+
+                <a class="fechar" href="index.html">&times;</a>
+                <div class="div-input">
+                    <label for="input">Nome completo</label>
+                    <input class="input" name="nome_completo" type="text" required />
+                </div>
+                <div class="div-input">
+                    <label for="input">Email</label>
+                    <input class="input" name="email" type="text" required />
+                </div>
+                <div class="div-input">
+                    <label for="input">Senha</label>
+                    <input name="senha_hash" type="password" id="input-senha" required />
+                    <i class="fa-solid fa-eye" id="mostrarSenha"></i>
+                </div>
+                <div class="divButtonSubmit">
+                    <button class="btn-acao" type="submit">Criar conta</button>
+                    <p id="mensagemError"></p>
+                </div>
+            </form>
+            <p class="texto-pergunta">Já possui uma conta? <span class="link-redirect"><a href="login.html">Faça login</a></span></p>
+        </div>
+
+        <!-- Form Verificar Email -->
+        <form class="container-login" id="formVerificarCodigo">
+            <h1 class="title">Email enviado!</h1>
+            <i class="fa-solid fa-envelope icone-modal"></i>
+
+            <p class="mensagem">Insira o código de 6 dígitos enviado para <span id="email-user"></span></p>
+            <div id="div-codigo">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
             </div>
-            <div class="div-input">
-                <label for="input">Email</label>
-                <input class="input" name="email" type="text" required />
-            </div>
-            <div class="div-input">
-                <label for="input">Senha</label>
-                <input name="senha_hash" type="password" id="input-senha" required />
-                <i class="fa-solid fa-eye" id="mostrarSenha"></i>
-            </div>
-            <div class="divButtonSubmit">
-                <button class="btn-acao" type="submit">Criar conta</button>
-                <p id="mensagemError"></p>
-            </div>
+            <button class="btn-acao" type="submit">Verificar</button>
+            <p id="enviar-novamente">Enviar novamente (<span id="tempoEspera">30</span>s)</p>
         </form>
-        <p class="texto-pergunta">Já possui uma conta? <span class="link-redirect"><a href="login.html">Faça
-                    login</a></span></p>
+
+        <!-- Div alert message -->
+        <div id="divAlertMessage"></div>
     </main>
 
     <footer id="footer">
