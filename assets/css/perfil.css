@@ -126,10 +126,6 @@ h1 {
     }
 }
 
-.container {
-    margin-top: 12px;
-}
-
 /* Menu NAV */
 
 #barra-lateral {
@@ -337,11 +333,12 @@ h1 {
 
 main {
     display: flex;
-    height: 87vh;
+    min-height: 87vh;
 
     /* Section */
     & .container {
-        height: 100vh;
+        margin-top: 10px;
+        height: 100%;
         width: calc(100% - 282px);
         position: absolute;
         right: 0;
@@ -369,25 +366,12 @@ main {
                 flex-direction: column;
                 align-items: center;
                 gap: 11px;
+            }
 
-                & h3 {
-                    font-size: 1.4rem;
-                }
-
-                & button {
-                    width: 100%;
-                    background: var(--roxo);
-                    color: var(--cor-bg-sec);
-                    border: none;
-                    padding: 10px;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    transition: 0.2s;
-                    margin-top: 5px;
-
-                    &:hover {
-                        background-color: var(--hover-roxo);
-                    }
+            & h3 {
+                font-size: 1.4rem;
+                &.cores {
+                    display: none;
                 }
             }
 
@@ -452,11 +436,56 @@ main {
     }
 }
 
+@media (max-width: 1024px) {
+    main {
+        height: fit-content;
+        align-items: center;
+        justify-content: center;
+        & .container {
+            margin: 0;
+            height: fit-content;
+            position: static;
+            transform: translate(0, 0);
+        }
+    }
+
+    footer {
+        margin-top: 0 !important;
+    }
+}
+
+.div-logo-cores {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    & button {
+        width: 100% !important;
+        background: var(--roxo);
+        color: var(--cor-bg-sec);
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        margin-top: 5px;
+
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+}
+
 .div-cores {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 5px;
+    & .div-inputs-cores {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        width: 100%;
+    }
     & .div-input-cores {
         display: flex;
         justify-content: space-between;
@@ -473,6 +502,69 @@ main {
     }
 }
 
+@media (max-width: 748px) {
+    main .container-info-input.garagem {
+        flex-direction: column;
+        padding: 0;
+        padding: 30px;
+        box-sizing: border-box;
+        width: 90vw;
+        gap: 30px;
+        margin: 30px 0;
+
+        & h3.cores {
+            display: flex;
+            align-self: center;
+            position: absolute;
+            top: 0;
+        }
+
+        & .div-logo-cores {
+            width: 100%;
+            align-items: flex-end;
+            position: relative;
+            gap: 20px;
+
+            & .div-img-logo {
+                width: 50%;
+
+                & .upload-label {
+                    width: 100% !important;
+                    height: 170px;
+                }
+            }
+
+            & .div-cores {
+                height: 100%;
+                width: 50%;
+                & .div-inputs-cores {
+                    position: absolute;
+                    top: 50%;
+                    width: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+            
+        }
+    }
+
+    .informacoes-input.garagem {
+        padding: 0;
+    }
+
+    .div-logo-cores {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    #formConfigGaragem {
+        width: 100%;
+        & .input {
+            width: 100%;
+        }
+    }
+}
+
 .informacoes-input {
     display: flex;
     flex-direction: column;
@@ -480,7 +572,6 @@ main {
     align-items: flex-start;
     padding: 30px 40PX;
     border-radius: 20px;
-    margin-top: 15px;
     background: var(--cor-bg-sec);
 
     & h3 {
@@ -3016,7 +3107,6 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 @media (max-width: 980px) {
     .container-dashboard {
-        margin-top: 10px;
         position: absolute;
         top: 50%;
         left: 50%;

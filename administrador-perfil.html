@@ -542,40 +542,46 @@
                         </form>
                     </div>
 
-                    <div class="div-img-logo">
-                        <h3>Logo</h3>
+                    <div class="div-logo-cores">
+                        <div class="div-img-logo">
+                            <h3>Logo</h3>
 
-                        <!-- Input de upload de imagem -->
-                        <label for="upload-imagem" class="upload-label">
-                            <div class="img-preview"></div>
-                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                            <div class="overlay-img"></div>
-                        </label>
+                            <!-- Input de upload de imagem -->
+                            <label for="upload-imagem" class="upload-label">
+                                <div class="img-preview"></div>
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                <div class="overlay-img"></div>
+                            </label>
 
-                        <!-- Altere o atributo name para "imagens" -->
-                        <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" />
+                            <!-- Altere o atributo name para "imagens" -->
+                            <input type="file" id="upload-imagem" accept=".jpg,.jpeg,.png" name="imagens" />
 
-                        <button id="editarLogo">Salvar logo</button>
+                            <button id="editarLogo">Salvar logo</button>
+                        </div>
 
                         <div class="div-cores">
-                            <div class="div-input-cores">
-                                <label for="color-princ">Cor principal:</label>
-                                <input type="color" name="color-princ" id="color-princ">
-                            </div>
+                            <h3 class="cores">Cores</h3>
 
-                            <div class="div-input-cores">
-                                <label for="color-fund-1">Cor de fundo 1:</label>
-                                <input type="color" name="color-fund-1" id="color-fund-1">
-                            </div>
+                            <div class="div-inputs-cores">
+                                <div class="div-input-cores">
+                                    <label for="color-princ">Cor principal:</label>
+                                    <input type="color" name="color-princ" id="color-princ">
+                                </div>
 
-                            <div class="div-input-cores">
-                                <label for="color-fund-1">Cor de fundo 2:</label>
-                                <input type="color" name="color-fund-2" id="color-fund-2">
-                            </div>
+                                <div class="div-input-cores">
+                                    <label for="color-fund-1">Cor de fundo 1:</label>
+                                    <input type="color" name="color-fund-1" id="color-fund-1">
+                                </div>
 
-                            <div class="div-input-cores">
-                                <label for="color-texto">Cor texto:</label>
-                                <input type="color" name="color-texto" id="color-texto">
+                                <div class="div-input-cores">
+                                    <label for="color-fund-1">Cor de fundo 2:</label>
+                                    <input type="color" name="color-fund-2" id="color-fund-2">
+                                </div>
+
+                                <div class="div-input-cores">
+                                    <label for="color-texto">Cor texto:</label>
+                                    <input type="color" name="color-texto" id="color-texto">
+                                </div>
                             </div>
 
                             <button id="atualizarCores">Atualizar cores</button>
@@ -663,8 +669,6 @@
             <button type="submit">Salvar alterações</button>
             <button type="button" id="excluir-servico">Inativar</button>
         </form>
-
-        <div id="overlay-bg"></div>
 
         <!-- Form Div Cadastrar User -->
         <form class="container-login" id="formCadastroUsuario">
