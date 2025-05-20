@@ -1,3 +1,18 @@
+// Obter o banner da home
+$(document).ready(function() {
+    $.ajax({
+        url: `${BASE_URL}/obter_banner`,
+        success: function (response) {
+            $('.banner').css({
+                'background-image': `url(${response.img_url})`
+            })
+        },
+        error: function() {
+            console.log('asdada')
+        }
+    })
+})
+
 // Função para trocar pesquisa entre carro e moto
 
 const tipoVeicMoto = $("#veiculo-moto");

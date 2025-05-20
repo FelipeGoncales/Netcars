@@ -24,6 +24,18 @@ $(document).ready(function () {
             window.location.href = "login.html";
         }
     })
+
+    // Obter o banner da home
+    $(document).ready(function() {
+        $.ajax({
+            url: `${BASE_URL}/obter_banner`,
+            success: function (response) {
+                $('.img-preview-banner').css({
+                    'background-image': `url(${response.img_url})`
+                })
+            }
+        })
+    })
 })
 
 // Aparecer mensagem
@@ -1810,6 +1822,29 @@ $(document).ready(function () {
         // Remove o item do local storage
         localStorage.removeItem('configAtt');
     }
+
+    // Obtém a mensagem salva no local storage
+    const configAtt2 = localStorage.getItem('configAtt2');
+
+    // Caso exista, abre a parte de configurações
+    if (configAtt2) {
+        $('#config').css('display', 'flex');
+        $('#div-config-1').hide();
+        $('#div-config-2').css('display', 'flex');
+        $('#minha-conta').css('display', 'none');
+
+        $('#config-prox').hide();
+        $('#config-ant').show(); 
+
+        // Exibe mensagem de sucesso
+        alertMessage(configAtt2, 'success');
+
+        const linkConfig = document.getElementById('link_config');
+        selecionarA(linkConfig);
+
+        // Remove o item do local storage
+        localStorage.removeItem('configAtt2');
+    }
 })
 
 // Função para validar CNPJ
@@ -1926,7 +1961,7 @@ $('#formConfigGaragem').on('submit', function (e) {
     });
 });
 
-// Alterar a imagem de preview ao alterar os arquivos do input file
+// Alterar a imagem de preview ao alterar os arquivos do input file DA LOGO
 $('#upload-imagem').on('change', function () {
     const file = $(this)[0].files[0];
 
@@ -1939,7 +1974,20 @@ $('#upload-imagem').on('change', function () {
     })
 })
 
-// Atualizar logo ao clicar no botão de editar logo
+// Alterar a imagem de preview ao alterar os arquivos do input file DO BANNER
+$('#upload-banner').on('change', function () {
+    const file = $(this)[0].files[0];
+
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+
+    $('.img-preview-banner').css({
+        'background-image': `url(${imageUrl})`
+    })
+})
+
+// Atualizar logo ao clicar no botão de EDITAR LOGO
 $('#editarLogo').click(function () {
     const file = $('#upload-imagem')[0].files[0];
 
@@ -1971,6 +2019,40 @@ $('#editarLogo').click(function () {
         }
     });
 });
+
+// Atualizar logo ao clicar no botão de EDITAR BANNER
+$('#editarBanner').click(function () {
+    const file = $('#upload-banner')[0].files[0];
+
+    if (!file) {
+        alertMessage('Selecione um arquivo.', 'error');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file); // nome "file" deve ser o mesmo usado no Flask
+
+    $.ajax({
+        url: `${BASE_URL}/editar_banner`,
+        type: 'PUT',
+        data: formData,
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        processData: false, // Não processa os dados
+        contentType: false, // Não define tipo de conteúdo (deixa o browser fazer)
+        success: function (response) {
+            // Salva a mensagem no local storage
+            localStorage.setItem('configAtt2', response.success);
+            // Recarrega a página
+            window.location.reload();
+        },
+        error: function (response) {
+            alertMessage(response.responseJSON.error, 'error');
+        }
+    });
+});
+
 
 // Atualizar cores do site
 $('#atualizarCores').click(function() {

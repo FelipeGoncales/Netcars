@@ -161,7 +161,7 @@
 
             <!-- Div Relatórios - Movimentações -->
             <div class="container-relatorios" id="relatorio-movimentacao">
-                
+
                 <div class="container-dashboard">
                     <h1 class="texto-principal">Dashboard</h1>
 
@@ -594,8 +594,40 @@
                     </div>
                 </div>
 
-                <div class="contairner-config-footer" style="display: none;" id="div-config-2">
-                    <h3>Nada</h3>
+                <div class="container-info-input garagem footer" style="display: none;" id="div-config-2">
+                    <div class="informacoes-input garagem">
+
+                        <div class="div-img-banner">
+                            <h3>Alterar banner</h3>
+
+                            <!-- Input de upload de imagem -->
+                            <label for="upload-banner" class="upload-label banner">
+                                <div class="img-preview-banner"></div>
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                <div class="overlay-img"></div>
+                            </label>
+
+                            <!-- Altere o atributo name para "imagens" -->
+                            <input type="file" id="upload-banner" accept=".jpg,.jpeg,.png" name="imagens" />
+
+                            <button id="editarBanner">Salvar banner</button>
+                        </div>
+                        
+                        <form action="">
+                            <h3>Informações do rodapé</h3>
+                            <div class="container-input">
+                                <label class="text" for="telefone-input">Telefone*</label>
+                                <input class="input" required name="telefone-input" type="text"
+                                    id="telefone-input" />
+                            </div>
+                            <div class="container-input">
+                                <label class="text" for="email-input">Email*</label>
+                                <input class="input" required name="email-input" type="text"
+                                    id="email-input" />
+                            </div>
+                            <button type="submit">Salvar alterações</button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="seta-box" id="config-prox">
@@ -732,8 +764,8 @@
             </div>
             <div>
                 <p class="footer-title">Contato</p>
-                <a class="footer-text">(18) 99999-9999</a>
-                <a class="footer-text">netcars.contato@gmail.com</a>
+                <a class="footer-text" id="telefone-footer"></a>
+                <a class="footer-text" id="email-footer"></a>
             </div>
         </div>
         <div class="div-logo">

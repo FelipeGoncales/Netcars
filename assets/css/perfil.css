@@ -357,10 +357,21 @@ main {
         gap: 10px;
         height: 100%;
 
+        & h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            text-align: center;
+            align-self: center;
+        }
+
         &.garagem {
             background: var(--cor-bg-sec);
             border-radius: 20px;
             padding-right: 40px;
+
+            &.footer {
+                padding: 0;
+            }
 
             & .div-img-logo {
                 display: flex;
@@ -369,14 +380,20 @@ main {
                 gap: 11px;
             }
 
-            & h3 {
-                font-size: 1.4rem;
-                &.cores {
-                    display: none;
-                }
+            & .div-img-banner {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 0;
             }
 
-            & #upload-imagem {
+            & h3.cores {
+                display: none;
+            }
+
+            & #upload-imagem,
+            #upload-banner {
                 display: none;
                 /* Esconde o input padrão */
             }
@@ -392,6 +409,11 @@ main {
                 overflow: hidden;
                 position: relative;
                 box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+
+                &.banner {
+                    width: 100%;
+                    height: 100px;
+                }
 
                 & i {
                     position: absolute;
@@ -417,12 +439,16 @@ main {
                     transition: 0.3s;
                 }
 
-                & .img-preview {
+                & .img-preview, .img-preview-banner {
                     width: 100%;
                     height: 100%;
                     background-position: center;
                     background-repeat: no-repeat;
                     background-size: 100% auto;
+                }
+
+                & .img-preview-banner {
+                    background-size: auto 100%;
                 }
 
                 &:hover i {
@@ -442,12 +468,14 @@ main {
         height: fit-content;
         align-items: center;
         justify-content: center;
+
         & .container {
             margin: 0;
             height: fit-content;
             position: static;
             transform: translate(0, 0);
         }
+
         & .container-relatorios {
             height: fit-content;
             position: static;
@@ -463,6 +491,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     & button {
         width: 100% !important;
         background: var(--roxo);
@@ -485,19 +514,23 @@ main {
     display: flex;
     flex-direction: column;
     gap: 5px;
+
     & .div-inputs-cores {
         display: flex;
         flex-direction: column;
         gap: 3px;
         width: 100%;
     }
+
     & .div-input-cores {
         display: flex;
         justify-content: space-between;
         width: 100%;
+
         & label {
             font-size: 0.85rem;
         }
+
         & input {
             cursor: pointer;
             width: 40px;
@@ -546,28 +579,31 @@ main {
             & .div-cores {
                 height: 100%;
                 width: 50%;
+
                 & .div-inputs-cores {
                     position: absolute;
                     top: 50%;
                     width: calc(50% - 10px);
                     transform: translateY(-50%);
-                    
+
                     & label {
                         font-size: 0.8rem;
                     }
+
                     & input {
                         width: 20px;
                         height: 20px;
                     }
                 }
             }
-            
+
         }
     }
 
     .informacoes-input.garagem {
         padding: 0;
         width: 100%;
+
         & form {
             width: 100% !important;
         }
@@ -577,14 +613,16 @@ main {
     .div-logo-cores {
         flex-direction: row;
         width: 100%;
+
         & button {
             font-size: 0.81rem;
-        }    
+        }
     }
-    
+
 
     #formConfigGaragem {
         width: 100%;
+
         & .input {
             width: 100%;
         }
@@ -599,11 +637,6 @@ main {
     padding: 30px 40PX;
     border-radius: 20px;
     background: var(--cor-bg-sec);
-
-    & h3 {
-        font-size: 1.15rem;
-        font-weight: 400;
-    }
 
     & form {
         padding-top: 20px;
@@ -703,22 +736,40 @@ main {
                 border: 1px solid #ff1717;
             }
         }
-
-        & button {
-            background: var(--roxo);
-            color: var(--cor-bg-sec);
-            border: none;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-
-            &:hover {
-                background-color: var(--hover-roxo);
-            }
-        }
     }
 
+    & button {
+        background: var(--roxo);
+        color: var(--cor-bg-sec);
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+}
+
+.contairner-config-footer {}
+
+.div-img-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    padding: 20px;
+
+    & h3 {
+        align-self: flex-start;
+    }
+
+    & #editarBanner {
+        margin-top: 10px;
+        width: 100%;
+    }
 }
 
 /* Fim do CSS da div Minha Conta (Que é a mesma para todos os usuários) */
@@ -1909,11 +1960,11 @@ tbody tr.tipo2 {
         height: 45px;
         width: 45px;
         cursor: pointer;
-        
+
         &:hover {
             background-color: var(--roxo);
             color: var(--cor-bg-sec);
-            transition:  all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
         }
     }
 }
