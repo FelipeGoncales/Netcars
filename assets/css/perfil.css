@@ -3328,7 +3328,7 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 .transaction-divider {
     height: 1px;
-    background-color: var(--hover-roxo);
+    background-color: var(--cor-bg);
     margin: 15px 0;
 }
 
