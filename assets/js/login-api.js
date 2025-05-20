@@ -1,6 +1,6 @@
 // URL API
 
-var BASE_URL = "http://192.168.1.120:5000";
+var BASE_URL = "http://192.168.1.118:5000";
 
 $(document).ready(function () {
     // Buscar o nome da garagem
@@ -12,7 +12,7 @@ $(document).ready(function () {
             $('#title-pagina').text(`${response.primeiro_nome}${response.segundo_nome} ${textoAntigo}`);
 
             $('.primeiro-nome').text(response.primeiro_nome);
-            
+
             $('.segundo-nome').text(response.segundo_nome);
         }
     })
@@ -71,11 +71,11 @@ $(document).ready(function () {
 
 // Funções para auxiliar no funcionamento dos inputs
 
-$('.div-input').each(function() {
+$('.div-input').each(function () {
     const $input = $(this).find('input');
     const $label = $(this).find('label');
 
-    $input.on('input', function() {
+    $input.on('input', function () {
         if ($input.val().trim() !== "") {
             $label.addClass('active');
         } else {
@@ -84,23 +84,23 @@ $('.div-input').each(function() {
     });
 });
 
-$(document).ready(function() {
-    $('.div-input').each(function() {
-    const $input = $(this).find('input');
-    const $label = $(this).find('label');
+$(document).ready(function () {
+    $('.div-input').each(function () {
+        const $input = $(this).find('input');
+        const $label = $(this).find('label');
 
-    if ($input.val().trim() !== "") {
-        $label.addClass('active');
-    } else {
-        $label.removeClass('active');
-    }
-});
+        if ($input.val().trim() !== "") {
+            $label.addClass('active');
+        } else {
+            $label.removeClass('active');
+        }
+    });
 });
 
 // Função para quando o usuario clicar em esqueci senha ele dar foco no input de email
 $("#forgot-password").on("click", function () {
     const emailInput = $("#input-email");
-    
+
     if (!emailInput.val()) {
         emailInput.focus();
     }
@@ -126,7 +126,7 @@ function alertMessage(text, type) {
 // Função para exibir mensagem (se existir) logo ao abrir a página
 $(document).ready(() => {
     const mensagem = JSON.parse(localStorage.getItem('mensagem'));
-    
+
     if (mensagem) {
         try {
             if (mensagem.error) {
@@ -143,8 +143,8 @@ $(document).ready(() => {
 })
 
 // Função para mostrar senha quando clicar no olho
-function mostrarSenha(eyeIcon, input) {  
-    $(eyeIcon).click(function() {
+function mostrarSenha(eyeIcon, input) {
+    $(eyeIcon).click(function () {
         if ($(input).attr('type') === 'password') {
             $(eyeIcon).removeClass('fa-eye').addClass('fa-eye-slash') // Trocando o ícone do olho
             $(input).attr('type', 'text') // Trocando o tipo de input
@@ -173,49 +173,84 @@ $("#formCadastroUsuario").on("submit", function (e) {
         tipo_usuario: 3
     }
 
+    console.log(envia)
+
     envia = JSON.stringify(envia);
 
     $.ajax({
-        method: "post",
+        method: "POST",
         url: `${BASE_URL}/cadastro`, // URL da API na Web
         data: envia,
         contentType: "application/json",
         success: function (response) {
-            let dados = {
-                id_usuario: response.dados.id_usuario,
-                email: response.dados.email,
-                nome_completo: response.dados.nome_completo,
-                tipo_usuario: response.dados.tipo_usuario,
-                token: response.dados.token
-            }
-            localStorage.setItem('dadosUser', JSON.stringify(dados));
+            let email = response.dados.email;
+            let id_usuario = response.dados.id_usuario;
 
-            // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
-            const id_carro_salvo = localStorage.getItem('id_carro_salvo');
+            $('#id-usuario-cad').val(id_usuario);
 
-            // Caso encontre
-            if (id_carro_salvo) {
-                // Remove o item do local storage
-                localStorage.removeItem('id_carro_salvo');
-                // Redireciona para a página do anúncio
-                window.location.href = `anuncio-carro.html?id=${id_carro_salvo}`;
-                return;
-            }
+            $('#email-user').text(email);
 
-            // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
-            const id_moto_salva = localStorage.getItem('id_moto_salva');
-            
-            // Caso encontre
-            if (id_moto_salva) {
-                // Remove o item do local storage
-                localStorage.removeItem('id_moto_salva');
-                // Redireciona para a página do anúncio
-                window.location.href = `anuncio-moto.html?id=${id_moto_salva}`;
-                return;
-            }
+            $('#div-form-login').hide();
+            $('#formVerificarCodigo').css('display', 'flex');
 
-            // Redireciona para home
-            window.location.href = 'index.html';
+            // Função para fazer a contagem regressiva para enviar novamente o código via email para o usuário
+            $('#enviar-novamente').prop('disabled', true); // Desabilita inicialmente
+
+            let tempo = 30;
+            const intervalo = setInterval(() => {
+                $("#tempoEspera").text(tempo);
+                if (tempo === 0) {
+                    clearInterval(intervalo);
+                    ENVIAR_NOVAMENTE = true;
+                    $('#enviar-novamente').prop('disabled', false); // Reabilita o botão
+                }
+                tempo--;
+            }, 1000);
+
+            // Rota reenviar o código
+            $('#enviar-novamente').click(function () {
+                // Retorna caso o botão esteja desabilitado
+                if ($(this).prop('disabled')) return;
+
+                $(this).prop('disabled', true);
+
+                if (!ENVIAR_NOVAMENTE) {
+                    alertMessage("Espere mais alguns segundos para enviar o código novamente.", 'error');
+                    return;
+                }
+
+                $.ajax({
+                    url: `${BASE_URL}/verificar_email`,
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function () {
+                        // Função para fazer a contagem regressiva para enviar novamente o código via email para o usuário
+                        $('#enviar-novamente').prop('disabled', true); // Desabilita inicialmente
+
+                        alertMessage('Código reenviado por email!', "success");
+
+                        ENVIAR_NOVAMENTE = false;
+
+                        let tempo = 30;
+                        const intervalo = setInterval(() => {
+                            $("#tempoEspera").text(tempo);
+                            if (tempo === 0) {
+                                clearInterval(intervalo);
+                                ENVIAR_NOVAMENTE = true;
+                                $('#enviar-novamente').prop('disabled', false); // Reabilita o botão
+                            }
+                            tempo--;
+                        }, 1000);
+                    },
+                    error: function (response) {
+                        // Reabilita o botão para poder clicar novamente
+                        $('#enviar-novamente').prop('disabled', false); // Reabilita o botão
+
+                        alertMessage(response.responseJSON.error, 'error');
+                    }
+                })
+            })
         },
         error: function (response) {
             alertMessage(response.responseJSON.error, 'error');
@@ -223,8 +258,188 @@ $("#formCadastroUsuario").on("submit", function (e) {
     })
 })
 
-// Rota para fazer login
+// Variável para controle de envio do código
+var ENVIAR_NOVAMENTE = false;
 
+// Função para manipular a inserção do código de 6 dígitos
+$("#div-codigo").find('input').on('input', function () {
+    // Obtendo objeto
+    let $input = $(this);
+
+    // Lógica para permitir apenas números
+    const numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+    if (!numeros.includes($input.val())) {
+        $input.val('');
+        return;
+    }
+
+    // Lógica para ir para o próximo input após preenchido
+    let index = $("#div-codigo").find('input').index(this);
+    let $proxInput = $("#div-codigo").find('input').eq(index + 1);
+
+    if ($input.val() !== '' && $proxInput.length) {
+        $proxInput.focus();
+    }
+});
+
+// Evento para detectar Backspace e voltar ao input anterior
+$("#div-codigo").find('input').on('keydown', function (e) {
+    let $input = $(this);
+    let index = $("#div-codigo").find('input').index(this);
+
+    // Se a tecla Backspace for pressionada e o campo estiver vazio
+    if (e.key === "Backspace" && $input.val() === '' && index > 0) {
+        let $antInput = $("#div-codigo").find('input').eq(index - 1);
+        $antInput.focus();
+    }
+});
+
+// Handler de paste para colar o código inteiro
+$('#div-codigo').on('paste', 'input', function (e) {
+    e.preventDefault();
+
+    // Pega o texto da área de transferência
+    const pasteData = (e.originalEvent.clipboardData || window.clipboardData)
+        .getData('text')
+        .trim();
+
+    // Só prossegue se for exatamente 6 dígitos
+    if (/^\d{6}$/.test(pasteData)) {
+        const inputs = $('#div-codigo').find('input');
+
+        // Distribui cada dígito
+        pasteData.split('').forEach((char, idx) => {
+            if (inputs[idx]) {
+                $(inputs[idx]).val(char);
+            }
+        });
+
+        // Foca no último campo preenchido (ou no último input)
+        const lastIndex = Math.min(pasteData.length - 1, inputs.length - 1);
+        $(inputs[lastIndex]).focus();
+    }
+});
+
+// Integração do enviar novamente para o formulário
+$(document).ready(function () {
+    function configurarTempoEspera() {
+        $('#enviar-novamente').prop('disabled', true); // Desabilita inicialmente
+        ENVIAR_NOVAMENTE = false;
+
+        let tempo = 30;
+        const intervalo = setInterval(() => {
+            $("#tempoEspera").text(tempo);
+            if (tempo === 0) {
+                clearInterval(intervalo);
+                ENVIAR_NOVAMENTE = true;
+                $('#enviar-novamente').prop('disabled', false); // Reabilita o botão
+            }
+            tempo--;
+        }, 1000);
+    }
+
+    // Adiciona o evento para enviar o código novamente
+    $('#enviar-novamente').click(function () {
+        // Retorna caso o botão esteja desabilitado
+        if ($(this).prop('disabled')) return;
+
+        $(this).prop('disabled', true);
+
+        if (!ENVIAR_NOVAMENTE) {
+            alertMessage("Espere mais alguns segundos para enviar o código novamente.", 'error');
+            return;
+        }
+
+        // Obtém o ID do usuário do campo oculto
+        const id_usuario = $('#id-usuario-cad').val();
+
+        // Reenvio do código de verificação
+        $.ajax({
+            url: `${BASE_URL}/reenviar_codigo_verificacao`,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ id_usuario: id_usuario }),
+            success: function () {
+                alertMessage('Código reenviado por email!', "success");
+                configurarTempoEspera();
+            },
+            error: function (response) {
+                $('#enviar-novamente').prop('disabled', false);
+                alertMessage(response.responseJSON.error, 'error');
+            }
+        });
+    });
+
+    // Form Verificar Código Submit
+    $('#formVerificarCodigo').on('submit', function (e) {
+        e.preventDefault();
+
+        let codigoUser = '';
+
+        // Verifica se todos os campos do código foram preenchidos
+        let todosCamposPreenchidos = true;
+        $("#div-codigo").find('input').each(function () {
+            if (!$(this).val()) {
+                todosCamposPreenchidos = false;
+                return false; // Sai do loop each
+            }
+            codigoUser += $(this).val();
+        });
+
+        if (!todosCamposPreenchidos) {
+            alertMessage("É necessário preencher os 6 dígitos do código.", 'error');
+            return;
+        }
+
+        // Obtém o ID do usuário do campo oculto
+        const id_usuario = $('#id-usuario-cad').val();
+
+        // Envia o código para validação
+        $.ajax({
+            url: `${BASE_URL}/verificar_email`,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                id_usuario: id_usuario,
+                codigo: codigoUser
+            }),
+            success: function () {
+                // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
+                const id_carro_salvo = localStorage.getItem('id_carro_salvo');
+
+                // Caso encontre
+                if (id_carro_salvo) {
+                    // Remove o item do local storage
+                    localStorage.removeItem('id_carro_salvo');
+                    // Redireciona para a página do anúncio
+                    window.location.href = `anuncio-carro.html?id=${id_carro_salvo}`;
+                    return;
+                }
+
+                // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
+                const id_moto_salva = localStorage.getItem('id_moto_salva');
+
+                // Caso encontre
+                if (id_moto_salva) {
+                    // Remove o item do local storage
+                    localStorage.removeItem('id_moto_salva');
+                    // Redireciona para a página do anúncio
+                    window.location.href = `anuncio-moto.html?id=${id_moto_salva}`;
+                    return;
+                }
+
+                // Redireciona para home
+                window.location.href = 'index.html';
+            },
+            error: function (response) {
+                alertMessage(response.responseJSON.error, 'error');
+            }
+        });
+    });
+});
+
+// Rota para fazer login
 $("#formLoginUsuario").on('submit', function (e) {
     e.preventDefault();
 
