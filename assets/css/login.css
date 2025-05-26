@@ -204,6 +204,11 @@ header {
     color: var(--label);
 }
 
+#email-user {
+    color: var(--roxo);
+    font-weight: 500;
+}
+
 #div-form-login {
     display: flex;
     flex-direction: column;

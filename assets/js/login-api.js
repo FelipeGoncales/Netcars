@@ -178,7 +178,6 @@ mostrarSenha('#mostrarSenha', '#input-senha');
 mostrarSenha('#mostrarSenhaNova', '#senha-nova');
 mostrarSenha('#mostrarRepetirSenhaNova', '#repetir-senha-nova');
 
-
 // Rota para cadastrar clientes
 $("#formCadastroUsuario").on("submit", function (e) {
     e.preventDefault();
@@ -242,7 +241,9 @@ $("#formCadastroUsuario").on("submit", function (e) {
                     url: `${BASE_URL}/verificar_email`,
                     method: "POST",
                     contentType: "application/json",
-                    data: JSON.stringify(data),
+                    data: JSON.stringify({
+                        id_usuario: $('#id-usuario-cad').val()
+                    }),
                     success: function () {
                         // Função para fazer a contagem regressiva para enviar novamente o código via email para o usuário
                         $('#enviar-novamente').prop('disabled', true); // Desabilita inicialmente
@@ -394,22 +395,18 @@ $(document).ready(function () {
     $('#formVerificarCodigo').on('submit', function (e) {
         e.preventDefault();
 
+        // Código do usuário
         let codigoUser = '';
 
         // Verifica se todos os campos do código foram preenchidos
-        let todosCamposPreenchidos = true;
+
         $("#div-codigo").find('input').each(function () {
             if (!$(this).val()) {
-                todosCamposPreenchidos = false;
-                return false; // Sai do loop each
+                alertMessage("É necessário preencher os 6 dígitos do código.", 'error');
+                return; // Retorna
             }
             codigoUser += $(this).val();
         });
-
-        if (!todosCamposPreenchidos) {
-            alertMessage("É necessário preencher os 6 dígitos do código.", 'error');
-            return;
-        }
 
         // Obtém o ID do usuário do campo oculto
         const id_usuario = $('#id-usuario-cad').val();
@@ -423,7 +420,20 @@ $(document).ready(function () {
                 id_usuario: id_usuario,
                 codigo: codigoUser
             }),
-            success: function () {
+            success: function (response) {
+
+                // Obtém as informações do usuário
+                let dados = {
+                    id_usuario: response.dados.id_usuario,
+                    email: response.dados.email,
+                    nome_completo: response.dados.nome_completo,
+                    tipo_usuario: response.dados.tipo_usuario,
+                    token: response.dados.token
+                }
+
+                // Salva os dados do usuário no local storage
+                localStorage.setItem('dadosUser', JSON.stringify(dados));
+
                 // Verifica se o usuário tinha clicado em reservar carro antes de fazer login
                 const id_carro_salvo = localStorage.getItem('id_carro_salvo');
 
