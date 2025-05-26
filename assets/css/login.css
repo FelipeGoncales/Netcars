@@ -174,7 +174,7 @@ header {
     gap: 10px;
 }
 
-#forgot-password, #enviar-novamente {
+#forgot-password, #enviar-novamente-validacao, #enviar-novamente-senha {
     font-size: 0.9rem;
     cursor: pointer;
     font-weight: 500;
@@ -204,7 +204,7 @@ header {
     color: var(--label);
 }
 
-#email-user {
+#email-user, #email-user-validacao {
     color: var(--roxo);
     font-weight: 500;
 }
@@ -217,15 +217,15 @@ header {
     justify-content: center;
 }
 
-#email-user, .mensagem {
+#email-user, #email-user-validacao, .mensagem {
     max-width: 320px;
 }
 
-#formVerificarCodigo, #formAltSenha {
+#formVerificarCodigo, #formAltSenha, #formValidarEmail {
     display: none;
 }
 
-#div-codigo {
+.div-codigo {
     width: 100%;
     display: flex;
     align-items: center;
@@ -450,7 +450,7 @@ footer {
         width: 87vw;
     }
 
-    #div-codigo {
+    .div-codigo {
         gap: 5px;
         width: 85%;
         & input {
