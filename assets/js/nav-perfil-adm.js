@@ -98,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Fazer o nav funcionar
+
 // Função para trocar a borda roxa do A que for clicado
 function selecionarA(clicado) {
     $('nav').find('a').each(function (_, a) {
@@ -314,6 +315,7 @@ $(document).ready(function () {
     });
 
 });
+
 // Funções serviços
 
 // Variáveis globais
@@ -1779,7 +1781,7 @@ $(document).ready(function () {
             // Carrega a razão social
             $('#razao-social-input').val(response.razao_social);
             // Carrega o cnpj
-            $('#cnpj-input').val(response.cnpj);
+            $('#cnpj-input').val(formatarCnpjInput(response.cnpj));
             // Carrega a chave pix
             $('#chave-pix-input').val(response.chave_pix);
             // Carrega o estado
@@ -1894,10 +1896,8 @@ function validarCNPJConfig(cnpj) {
     return true;
 }
 
-// Função para formatar o input ao inserir os números 
-$('#cnpj-input').on('input', function (e) {
-    let value = e.target.value.replace(/\D/g, ''); // remove tudo que não for número
-
+// Função para formatar o CPNJ
+function formatarCnpjInput(value) {
     if (value.length > 14) value = value.slice(0, 14); // limita a 14 dígitos
 
     value = value.replace(/^(\d{2})(\d)/, '$1.$2');
@@ -1905,7 +1905,14 @@ $('#cnpj-input').on('input', function (e) {
     value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
     value = value.replace(/(\d{4})(\d)/, '$1-$2');
 
-    e.target.value = value;
+    return value;
+}
+
+// Função para formatar o input ao inserir os números 
+$('#cnpj-input').on('input', function (e) {
+    let value = e.target.value.replace(/\D/g, ''); // remove tudo que não for número
+
+    $(this).val(formatarCnpjInput(value));
 });
 
 // Enviar formulário de configurações da garagem 
@@ -1937,7 +1944,7 @@ $('#formConfigGaragem').on('submit', function (e) {
         primeiro_nome: data.get('primeiro-nome-input'),
         segundo_nome: data.get('segundo-nome-input'),
         razao_social: data.get('razao-social-input'),
-        cnpj: data.get('cnpj-input'),
+        cnpj: data.get('cnpj-input').replace(/\D/g, ''),
         chave_pix: data.get('chave-pix-input'),
         estado: data.get('estado-input'),
         cidade: data.get('cidade-input'),
@@ -2053,7 +2060,6 @@ $('#editarBanner').click(function () {
     });
 });
 
-
 // Atualizar cores do site
 $('#atualizarCores').click(function() {
 
@@ -2075,6 +2081,64 @@ $('#atualizarCores').click(function() {
         success: function(response) {
             // Salva a mensagem de sucesso no local storage
             localStorage.setItem('configAtt', response.success);
+            // Recarrega a página
+            window.location.reload();
+        },
+        error: function(response) {
+            alertMessage(response.responseJSON?.error, 'error');
+        }
+    })
+})
+
+
+// Função para formatar telefone
+function formatarTelefoneInput(telefone) {
+    const nums = telefone.replace(/\D/g, '');
+
+    if (nums.length <= 10) {
+        // Formato para telefone fixo: (XX) XXXX-XXXX
+        return nums.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3').trim();
+    } else {
+        // Formato para celular: (XX) XXXXX-XXXX
+        return nums.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3').trim();
+    }
+}
+
+$('#telefone-input').on('focus', function() {
+    // Limpa máscara ao focar
+    const val = $(this).val().replace(/\D/g, '');
+    $(this).val(val);
+});
+
+$('#telefone-input').on('blur', function() {
+    const val = $(this).val();
+    const formatado = formatarTelefoneInput(val);
+    $(this).val(formatado);
+});
+
+// Atualizar informações do footer
+
+$('#form-att-footer').on("submit", function(e) {
+    e.preventDefault();
+
+    let data = new FormData(this);
+
+    let envia = {
+        email: data.get("email-input"),
+        telefone: data.get("telefone-input").replace(/\D/g, '')
+    }
+
+    $.ajax({
+        url: `${BASE_URL}/att_footer`,
+        method: 'PUT',
+        contentType: 'application/json',
+        headers: {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+        },
+        data: JSON.stringify(envia),
+        success: function(response) {
+            // Salva a mensagem de sucesso no local storage
+            localStorage.setItem('configAtt2', response.success);
             // Recarrega a página
             window.location.reload();
         },
