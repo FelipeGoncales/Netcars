@@ -358,14 +358,18 @@ async function alterarBotao() {
             $('#div-button-cliente').css('display', 'none');
             $('#div-button-vendido-cliente').css('display', 'none');
             $('#div-button-vendido-adm').css('display', 'none');
-            $('#div-button-cancelar-reserva').css('display', 'none');
-
+            $('#div-button-cancelar-reserva-cliente').css('display', 'none');
+            $('#div-button-cancelar-reserva-adm').css('display', 'none');
+            
+            
+            
             // Função para mudar a mensagem para o adm
             $('#mensagem-user').css('display', 'none');
             $('#mensagem-adm').css('display', 'flex');
             $('#mensagem-vendido-cliente').css('display', 'none');
             $('#mensagem-vendido-adm').css('display', 'none');
-            $('#mensagem-reserva').css('display', 'none');
+            $('#mensagem-reserva-cliente').css('display', 'none');
+            $('#mensagem-reserva-adm').css('display', 'none');
 
             $('#div-icons-actions').css('display', 'flex');
 
@@ -379,14 +383,16 @@ async function alterarBotao() {
     $('#div-button-cliente').css('display', 'flex');
     $('#div-button-vendido-cliente').css('display', 'none');
     $('#div-button-vendido-adm').css('display', 'none');
-    $('#div-button-cancelar-reserva').css('display', 'none');
+    $('#div-button-cancelar-reserva-cliente').css('display', 'none');
+    $('#div-button-cancelar-reserva-adm').css('display', 'none');
 
     // Função para mudar a frase que aparece caso seja o cliente que reservou
     $('#mensagem-user').css('display', 'flex');
     $('#mensagem-adm').css('display', 'none');
     $('#mensagem-vendido-cliente').css('display', 'none');
     $('#mensagem-vendido-adm').css('display', 'none');
-    $('#mensagem-reserva').css('display', 'none');
+    $('#mensagem-reserva-cliente').css('display', 'none');
+    $('#mensagem-reserva-adm').css('display', 'none');
 
     $('#div-icons-actions').css('display', 'none');
 }
@@ -1330,6 +1336,12 @@ $(document).ready(function () {
 
     // Ao clicar no botão de comprar já
     $('.comprar-btn').on('click', function () {
+
+        // Caso seja o botão de reserva do adm
+        if ($(this).hasClass('adm-reserva')) {
+            return;
+        }
+
         // Obtém os dados do usuário
         let dadosUser = localStorage.getItem('dadosUser');
 

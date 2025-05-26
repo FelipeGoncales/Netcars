@@ -281,7 +281,7 @@ main {
     display: none;
 }
 
-.div-buttons.cancelar-reserva #cancelar-reserva {
+.div-buttons.canc-reserva .cancelar-reserva {
     width: 20%;
     height: 60px;
     display: flex;
@@ -296,7 +296,7 @@ main {
     width: 100%;
     gap: 10px;
 
-    &.cancelar-reserva {
+    &.canc-reserva {
         width: 100%;
         margin-left: auto;
 
@@ -356,6 +356,14 @@ main {
         background-color: var(--roxo);
         cursor: pointer;
         transition: 0.2s;
+
+        &.adm-reserva {
+            font-size: 15px;
+            cursor: auto;
+            &:hover {
+                scale: 1;
+            }
+        }
 
         &:hover {
             scale: 1.03;

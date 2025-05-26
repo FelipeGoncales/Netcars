@@ -312,12 +312,13 @@
                     <div class="div-content-venda-filho">
                         <div class="div-preco">
                             <input class="input-info" type="text" id="input-preco-venda">
-                            <p class="input-mirror" id="mirror-input-preco-venda">21.900</p>
+                            <p class="input-mirror" id="mirror-input-preco-venda"></p>
                         </div>
 
                         <p class="mensagem" id="mensagem-user">Gostou do veículo? Reserve já!</p>
                         <p class="mensagem" id="mensagem-adm">Editou seu anúncio? Salve suas alterações!</p>
-                        <p class="mensagem" id="mensagem-reserva">Gostou do veículo? Finalize sua compra!</p>
+                        <p class="mensagem" id="mensagem-reserva-cliente">Gostou do veículo? Finalize sua compra!</p>
+                        <p class="mensagem" id="mensagem-reserva-adm">Esse veículo está reservado no momento.</p>
                         <p class="mensagem" id="mensagem-vendido-cliente">Obrigado por adquirir seu veículo conosco!</p>
                         <p class="mensagem" id="mensagem-vendido-adm">Esse veículo já foi vendido!</p>
 
@@ -330,8 +331,15 @@
                             <button class="salvar-btn ver-detalhes" id="ver-detalhes"></button>
                         </div>
 
-                        <div class="div-buttons cancelar-reserva" id="div-button-cancelar-reserva">
+                        <div class="div-buttons canc-reserva" id="div-button-cancelar-reserva-cliente">
                             <button class="comprar-btn">Compre Já!</button>
+                            <button class="salvar-btn" id="cancelar-reserva">
+                                <i class="fa-solid fa-ban"></i>
+                            </button>
+                        </div>
+
+                        <div class="div-buttons canc-reserva" id="div-button-cancelar-reserva-adm">
+                            <button class="comprar-btn">Reservado por Pedro Porro</button>
                             <button class="salvar-btn" id="cancelar-reserva">
                                 <i class="fa-solid fa-ban"></i>
                             </button>

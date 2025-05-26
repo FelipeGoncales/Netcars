@@ -51,6 +51,15 @@ let id_carro = '';
 var TIPO_VEIC = 'carro';
 
 $(document).ready(async function () {
+    
+    // Exibir mensagem de reserva
+    const mensagemCancReserva = localStorage.getItem('msgCancReserva');
+
+    if (mensagemCancReserva) {
+        alertMessage(mensagemCancReserva, 'success');
+        localStorage.removeItem('msgCancReserva');
+    };
+
     // Obtém o select estado e de cidade
     const estadoSelect = $("#input-estado");
     const cidadeSelect = $("#input-cidade");
@@ -58,7 +67,7 @@ $(document).ready(async function () {
     // Adiciona o evento change ao select
     estadoSelect.on("change", () => {
         const estadoId = $(estadoSelect).find(':selected').attr('id_estado');
-        
+
         if (!estadoId) {
             window.location.reload();
         }
@@ -91,10 +100,10 @@ $(document).ready(async function () {
     if (servicoAdd) {
         // Carrega os dados da manutenção
         await carregarManutencao();
-        
+
         // Exibe mensagem
         alertMessage(servicoAdd, 'success');
-        
+
         // Remove o item do local storage
         localStorage.removeItem('servico-add');
     }
@@ -121,28 +130,28 @@ $(document).ready(async function () {
             try {
                 const infoVeic = response.veiculos[0];
                 const divCarrossel = $('#div-owl-carousel');
-    
+
                 // Verifica se há pelo menos um veículo retornado
                 if (!response.veiculos.length) {
                     // Retorna para a página veículos
                     window.location.href = "veiculos.html";
                 }
-    
+
                 // Acessa as imagens do primeiro veículo
                 const urlImagens = infoVeic.imagens;
-    
+
                 // Verifica se urlImagens existe e é iterável
                 if (!urlImagens || !Array.isArray(urlImagens)) {
                     window.location.href = "veiculos.html";
                 }
-    
+
                 // Limpa o conteúdo atual do carrossel
                 divCarrossel.empty();
-    
+
                 const dt = new DataTransfer(); // Cria um objeto DataTransfer
-    
+
                 for (const imagem of urlImagens) {
-    
+
                     // CSS para ficar todas as fotos do mesmo tamanho
                     const divImg = $('<div></div>')
                         .css({
@@ -151,7 +160,7 @@ $(document).ready(async function () {
                             "min-height": "400px",
                             "overflow": "hidden"
                         })
-    
+
                     // Adicionando a imagem
                     const img = $('<img>').attr('src', imagem).css({
                         "height": "100%",
@@ -163,13 +172,13 @@ $(document).ready(async function () {
                         "left": "50%",
                         "transform": "translate(-50%, -50%)"
                     });
-    
+
                     // Adicionando a imagem e o overlay à div principal
                     divImg.append(img);
-    
+
                     // Input final placa
                     await obterTipoUser();
-    
+
                     if (tipoUser === 1 || tipoUser === 2) {
                         // Criando o overlay
                         const overlay = $('<div></div>').css({
@@ -187,7 +196,7 @@ $(document).ready(async function () {
                             "opacity": "0",
                             "transition": "opacity 0.3s ease"
                         }).addClass('overlay-img-carrossel');
-    
+
                         // Adicionando o ícone e o texto ao overlay
                         const icon = $('<i class="fa-solid fa-arrow-up-from-bracket"></i>').css({
                             "font-size": "2rem",
@@ -198,12 +207,12 @@ $(document).ready(async function () {
                             "color": "#FFF",
                             "font-size": "1rem"
                         });
-    
+
                         overlay.append(icon, text);
-    
+
                         // Adicionando a imagem e o overlay à div principal
                         divImg.append(overlay);
-    
+
                         // Adicionando eventos de hover para mostrar/ocultar o overlay
                         if ($(window).width() < 768) {
                             overlay.css("opacity", "1");
@@ -218,87 +227,87 @@ $(document).ready(async function () {
                             );
                         }
                     }
-    
+
                     // Adicionando divImg ao carrossel ou ao elemento desejado
                     divCarrossel.append(divImg);
-    
+
                     // Realiza o fetch da imagem e obtém o Blob
-    
+
                     const response = await fetch(imagem);
                     const blob = await response.blob();
-    
+
                     // Extrai o nome do arquivo da URL
                     const fileName = imagem.substring(imagem.lastIndexOf('/') + 1);
-    
+
                     // Cria um objeto File com o Blob
                     const file = new File([blob], fileName, { type: blob.type });
-    
+
                     // Adiciona o arquivo ao DataTransfer
                     dt.items.add(file);
                 }
-    
+
                 // Atribui os arquivos ao input file
                 document.getElementById('upload-imagem').files = dt.files;
-    
+
                 // Carregar a miniatura das imagens atuais
                 carregarPreviewImg();
-    
+
                 // Inicializa o carrossel após adicionar os itens
                 carregarOwlCarrossel();
-    
+
                 // Input marca
                 $("#select-marca").val(infoVeic.marca);
-    
+
                 // Input modelo
                 $("#input-modelo").val(infoVeic.modelo);
-    
+
                 // Input versao
                 $("#input-subtitle").val(infoVeic.versao);
-    
+
                 // Seleciona o estado do select
                 estadoSelect.val(infoVeic.estado);
-                
+
                 // Obtém o id do estado
                 const estadoId = $(estadoSelect).find(':selected').attr('id_estado');
-                
+
                 // Caso exista estado id
                 if (estadoId) {
                     // Carregar cidades
                     await carregarCidades(estadoId, cidadeSelect);
-                    
+
                     // Seleciona a cidade
                     cidadeSelect.val(infoVeic.cidade);
                 }
-    
+
                 // Ano fabricação
                 $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
-    
+
                 await addOptionsAnoFab($("#select-ano-fabricacao"), $("#select-ano-modelo"));
-    
+
                 // Preencher os selects de ano modelo e ano fabricação
                 $("#select-ano-modelo").val(infoVeic.ano_modelo);
-    
+
                 // Input quilometragem
                 $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
-    
+
                 // select câmbio
                 $("#select-cambio").val(infoVeic.cambio);
-    
+
                 // select categoria
                 $("#select-categoria").val(infoVeic.categoria);
-    
+
                 // select combustível
                 $("#select-combustivel").val(infoVeic.combustivel);
-    
+
                 // select cor
                 $("#select-cor").val(infoVeic.cor);
-    
+
                 // select licenciado
                 $("#select-licenciado").val(infoVeic.licenciado);
-    
+
                 // Input final placa
                 await obterTipoUser();
-    
+
                 if (tipoUser === 1 || tipoUser === 2) {
                     $('#label-placa').text('Placa')
                     $('#input-placa').val(infoVeic.placa);
@@ -306,34 +315,46 @@ $(document).ready(async function () {
                     const ultimoCaracterPlaca = infoVeic.placa.slice(-1);
                     $('#input-placa').val(ultimoCaracterPlaca);
                 }
-    
+
                 // Input preço venda
                 $("#input-preco-venda").val(formatarValor(infoVeic.preco_venda));
-    
+
                 // Carregar foto da marca do carro 
-                            // Carregar foto da marca da moto
-                            $("#logo-img")
-                            .attr({
-                                'src': `${logo_carros[infoVeic.marca]}`,
-                                'marca': infoVeic.marca
-                            })
-    
+                // Carregar foto da marca da moto
+                $("#logo-img")
+                    .attr({
+                        'src': `${logo_carros[infoVeic.marca]}`,
+                        'marca': infoVeic.marca
+                    })
+
                 carregarInputs();
-    
+
                 if (response.reserva == true) {
                     // Função para mudar o botão para cancelar reserva
                     $('#div-button-vendedor').css('display', 'none');
                     $('#div-button-cliente').css('display', 'none');
                     $('#div-button-vendido-cliente').css('display', 'none');
                     $('#div-button-vendido-adm').css('display', 'none');
-                    $('#div-button-cancelar-reserva').css('display', 'flex');
-    
+
                     // Função para mudar a frase que aparece caso seja o cliente que reservou
                     $('#mensagem-user').css('display', 'none');
                     $('#mensagem-adm').css('display', 'none');
                     $('#mensagem-vendido-cliente').css('display', 'none');
                     $('#mensagem-vendido-adm').css('display', 'none');
-                    $('#mensagem-reserva').css('display', 'flex');
+
+                    if (tipoUser === 1 || tipoUser === 2) {
+                        $('#div-button-cancelar-reserva-adm').css('display', 'flex');
+                        $('#mensagem-reserva-adm').css('display', 'flex');
+
+                        $('#div-button-cancelar-reserva-cliente').css('display', 'none');
+                        $('#mensagem-reserva-cliente').css('display', 'none');
+                    } else {
+                        $('#div-button-cancelar-reserva-adm').css('display', 'none');
+                        $('#mensagem-reserva-adm').css('display', 'none');
+
+                        $('#div-button-cancelar-reserva-cliente').css('display', 'flex');
+                        $('#mensagem-reserva-cliente').css('display', 'flex');
+                    }
 
                     // Deixa invisível a div dos botões de editar e abrir manutenções
                     $('#div-icons-actions').css('display', 'none');
@@ -344,28 +365,28 @@ $(document).ready(async function () {
                     $('#div-button-vendedor').css('display', 'none');
                     $('#div-button-cliente').css('display', 'none');
                     $('#div-button-cancelar-reserva').css('display', 'none');
-                    
+
                     $('#mensagem-user').css('display', 'none');
                     $('#mensagem-adm').css('display', 'none');
                     $('#mensagem-reserva').css('display', 'none');
 
                     if (tipoUser === 1 || tipoUser === 2) {
                         $('#div-button-vendido').css('display', 'flex');
-                        
+
                         $('#mensagem-vendido-cliente').css('display', 'none');
                         $('#mensagem-vendido-adm').css('display', 'flex');
 
                         $('#ver-detalhes').text('Ver detalhes da venda');
                     } else {
                         $('#div-button-vendido').css('display', 'flex');
-                        
+
                         $('#mensagem-vendido-cliente').css('display', 'flex');
                         $('#mensagem-vendido-adm').css('display', 'none');
 
                         $('#ver-detalhes').text('Ver detalhes da compra');
                     }
 
-                    $('#ver-detalhes').click(function() {
+                    $('#ver-detalhes').click(function () {
                         if (tipoUser === 1) {
                             // Redireciona para a página de perfil
                             window.location.href = "administrador-perfil.html";
@@ -561,7 +582,7 @@ $('#input-placa').on('blur', function () {
 })
 
 // Cancelar reserva
-$('#cancelar-reserva').click(function () {
+$('.cancelar-reserva').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Você está prestes a cancelar a reserva desse veículo.",
@@ -582,18 +603,10 @@ $('#cancelar-reserva').click(function () {
                 contentType: "application/json",
                 success: function (response) {
                     // Salva a mensagem no local storage
-                    localStorage.setItem('msgPerfil', 'Reserva cancelada com sucesso!');
-                    
-                    // Obter tipo usuário
-                    obterTipoUser();
+                    localStorage.setItem('msgCancReserva', 'Reserva cancelada com sucesso!');
 
-                    if (tipoUser === 1) {
-                        window.location.href = "administrador-perfil.html";
-                    } else if (tipoUser === 2) {
-                        window.location.href = "vendedor-perfil.html";
-                    } else {
-                        window.location.href = "cliente-perfil.html";
-                    }
+                    // Recarrega a página
+                    window.location.reload();
                 },
                 error: function (response) {
                     Swal.fire({
@@ -691,13 +704,13 @@ $("#editarAnuncio").on("click", function () {
 
         // Ao entrar em modo editar:
         $camposAnuncio
-        .css("display", "flex");
+            .css("display", "flex");
 
         $('#input-preco-venda').show();
 
         // Ao sair do modo editar (cancelar ou salvar):
         $camposAnuncio
-        .css("display", "none");
+            .css("display", "none");
 
         $('#input-preco-venda').hide();
 
@@ -772,7 +785,7 @@ function validarInputsObrigatorios() {
     let camposVazios = [];
     let camposInvalidos = [];
     let inputsValidos = true;
-    
+
     // Lista de todos os campos obrigatórios que devem ser verificados
     const camposObrigatorios = [
         { id: "select-marca", nome: "Marca" },
@@ -791,11 +804,11 @@ function validarInputsObrigatorios() {
         { id: "select-licenciado", nome: "Licenciado" },
         { id: "input-placa", nome: "Placa" }
     ];
-    
+
     // Verificar cada campo obrigatório
     camposObrigatorios.forEach(campo => {
         const valor = $(`#${campo.id}`).val();
-        
+
         // Se o valor for vazio, undefined, null ou só espaços em branco
         if (!valor || valor.trim() === "") {
             camposVazios.push(campo.nome);
@@ -803,7 +816,7 @@ function validarInputsObrigatorios() {
             inputsValidos = false;
         } else {
             $(`#${campo.id}`).removeClass("input-error"); // Remove classe de erro visual
-            
+
             // Verificação adicional para o preço de venda
             if (campo.id === "input-preco-venda") {
                 const precoNumerico = desformatarPreco(valor);
@@ -815,20 +828,20 @@ function validarInputsObrigatorios() {
             }
         }
     });
-    
+
     // Se existirem campos vazios ou inválidos, exibir mensagem
     if (camposVazios.length > 0 || camposInvalidos.length > 0) {
         let mensagem = "";
-        
+
         if (camposVazios.length > 0) {
             mensagem = `Os seguintes campos devem ser preenchidos:<br><strong>${camposVazios.join("<br>")}</strong>`;
         }
-        
+
         if (camposInvalidos.length > 0) {
             if (mensagem) mensagem += "<br><br>";
             mensagem += `<strong>${camposInvalidos.join("<br>")}</strong>`;
         }
-        
+
         Swal.fire({
             title: "Validação de campos",
             html: mensagem,
@@ -836,7 +849,7 @@ function validarInputsObrigatorios() {
             confirmButtonText: "Ok"
         });
     }
-    
+
     return inputsValidos;
 }
 
@@ -866,12 +879,12 @@ function coletarDadosAtualizados() {
 // Salvar alterações
 $("#salvar-alteracoes").off("click").on("click", function (e) {
     e.preventDefault();
-    
+
     // Primeiro verifica se os inputs obrigatórios estão preenchidos e válidos (incluindo preço > 0)
     if (!validarInputsObrigatorios()) {
         return; // Para a execução se houver campos vazios ou inválidos
     }
-    
+
     // Em seguida valida a placa
     let validacaoPlaca = validarPlaca();
     if (!validacaoPlaca) {

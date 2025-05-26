@@ -30,6 +30,15 @@ let id_moto = '';
 var TIPO_VEIC = 'moto';
 
 $(document).ready(async function () {
+
+    // Exibir mensagem de reserva
+    const mensagemCancReserva = localStorage.getItem('msgCancReserva');
+
+    if (mensagemCancReserva) {
+        alertMessage(mensagemCancReserva, 'success');
+        localStorage.removeItem('msgCancReserva');
+    };
+    
     // Obtém o select estado e de cidade
     const estadoSelect = $("#input-estado");
     const cidadeSelect = $("#input-cidade");
@@ -312,14 +321,26 @@ $(document).ready(async function () {
                     $('#div-button-cliente').css('display', 'none');
                     $('#div-button-vendido-cliente').css('display', 'none');
                     $('#div-button-vendido-adm').css('display', 'none');
-                    $('#div-button-cancelar-reserva').css('display', 'flex');
     
                     // Função para mudar a frase que aparece caso seja o cliente que reservou
                     $('#mensagem-user').css('display', 'none');
                     $('#mensagem-adm').css('display', 'none');
                     $('#mensagem-vendido-cliente').css('display', 'none');
                     $('#mensagem-vendido-adm').css('display', 'none');
-                    $('#mensagem-reserva').css('display', 'flex');
+
+                    if (tipoUser === 1 || tipoUser === 2) {
+                        $('#div-button-cancelar-reserva-adm').css('display', 'flex');
+                        $('#mensagem-reserva-adm').css('display', 'flex');
+
+                        $('#div-button-cancelar-reserva-cliente').css('display', 'none');
+                        $('#mensagem-reserva-cliente').css('display', 'none');
+                    } else {
+                        $('#div-button-cancelar-reserva-adm').css('display', 'none');
+                        $('#mensagem-reserva-adm').css('display', 'none');
+
+                        $('#div-button-cancelar-reserva-cliente').css('display', 'flex');
+                        $('#mensagem-reserva-cliente').css('display', 'flex');
+                    }
 
                     // Deixa invisível a div dos botões de editar e abrir manutenções
                     $('#div-icons-actions').css('display', 'none');
@@ -546,7 +567,7 @@ $('#input-placa').on('blur', function () {
 })
 
 // Cancelar reserva
-$('#cancelar-reserva').click(function () {
+$('.cancelar-reserva').click(function () {
     Swal.fire({
         title: "Você tem certeza?",
         text: "Você está prestes a cancelar a reserva desse veículo.",
@@ -567,18 +588,10 @@ $('#cancelar-reserva').click(function () {
                 contentType: "application/json",
                 success: function (response) {
                     // Salva a mensagem no local storage
-                    localStorage.setItem('msgPerfil', 'Reserva cancelada com sucesso!');
+                    localStorage.setItem('msgCancReserva', 'Reserva cancelada com sucesso!');
                     
-                    // Obter tipo usuário
-                    obterTipoUser();
-
-                    if (tipoUser === 1) {
-                        window.location.href = "administrador-perfil.html";
-                    } else if (tipoUser === 2) {
-                        window.location.href = "vendedor-perfil.html";
-                    } else {
-                        window.location.href = "cliente-perfil.html";
-                    }
+                    // Recarrega a página
+                    window.location.reload();
                 },
                 error: function (response) {
                     Swal.fire({
