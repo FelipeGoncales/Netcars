@@ -486,6 +486,28 @@ main {
     font-size: 1.7rem;
 }
 
+/* Div Alert Message */
+
+#divAlertMessage {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 30px;
+    right: 30px;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.alertMessage {
+    padding: 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cor-bg-sec);
+    border-radius: 10px;
+}
+
+/* End Div Alert Message */
+
 /* Responsivo Computador */
 @media (max-width: 1520px) {
     .div-pai-cards {

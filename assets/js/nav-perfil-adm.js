@@ -61,14 +61,6 @@ $(document).ready(function () {
         alertMessage(mensagemLocalStorage, 'success');
         localStorage.removeItem('msgPerfil');
     };
-
-    // Exibir mensagem de cadastro de veículo
-    const mensagemCadVeic = localStorage.getItem('msgCadVeic');
-
-    if (mensagemCadVeic) {
-        alertMessage(mensagemCadVeic, 'success');
-        localStorage.removeItem('msgCadVeic')
-    };
 })
 
 // FUNÇÃO PARA NÃO "BUGAR" O SELECT E INPUT

@@ -1,9 +1,8 @@
 // Função de exibir a mensagem para evitar repetir código
+
 function alertMessage(text, type) {
     $('#divAlertMessage').css('display', 'flex')
-
     let bgColor = type === 'success' ? '#0bd979' : '#f71445';
-
     $('<p>')
         .addClass('alertMessage')
         .text(text)
@@ -13,10 +12,18 @@ function alertMessage(text, type) {
         .fadeIn(400)
         .delay(3500)
         .fadeOut(400);
-
-        // Limpar o local storage para evitar que a mensagem de novo ao recarregar a página
-        localStorage.clear();
 }
+
+// Exibir mensagem de cadastro de veículo
+$(document).ready(function() {
+    const mensagemCadVeic = localStorage.getItem('msgCadVeic');
+
+    if (mensagemCadVeic) {
+        alertMessage(mensagemCadVeic, 'success');
+        localStorage.removeItem('msgCadVeic')
+    };
+
+})
 
 // Criando o dicionário do filtro
 let filtroSelect = {};

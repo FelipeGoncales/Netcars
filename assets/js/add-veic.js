@@ -874,16 +874,10 @@ $('#form-add-veic').on('submit', function (e) {
                         "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                     },
                     success: function () {
-                        // Redirecionar para a página de perfil após cadastrar
-                        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-                        const tipoUser = dadosUser.tipo_usuario;
+                        // Redirecionar para a página de veículos
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
-                        if (tipoUser === 1) {
-                            window.location.href = 'administrador-perfil.html';
-                        }
-                        if (tipoUser === 2) {
-                            window.location.href = 'vendedor-perfil.html';
-                        }
+                        
+                        window.location.href = 'veiculos.html';
                     },
                     error: function (response) {
                         // Reabilita o botão
@@ -987,16 +981,10 @@ $('#form-add-veic').on('submit', function (e) {
                         "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
                     },
                     success: function () {
-                        // Redirecionar para a página de perfil após cadastrar
-                        const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
-                        const tipoUser = dadosUser.tipo_usuario;
+                        // Redirecionar para a página de veículos
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
-                        if (tipoUser === 1) {
-                            window.location.href = 'administrador-perfil.html';
-                        }
-                        if (tipoUser === 2) {
-                            window.location.href = 'vendedor-perfil.html';
-                        }
+                        
+                        window.location.href = 'veiculos.html';
                     },
                     error: function (response) {
                         alertMessage(`${response.responseJSON.error}`, 'error');

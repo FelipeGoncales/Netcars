@@ -52,13 +52,6 @@ $(document).ready(function() {
         alertMessage(mensagemLocalStorage, 'success');
         localStorage.removeItem('msgPerfil');
     };
-
-    const mensagemCadVeic = localStorage.getItem('msgCadVeic');
-
-    if (mensagemCadVeic) {
-        alertMessage(mensagemCadVeic, 'success');
-        localStorage.removeItem('msgCadVeic')
-    };
 })
 
 // Fazer o nav funcionar

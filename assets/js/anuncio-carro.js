@@ -630,13 +630,8 @@ $('#deletar-veiculo').click(function () {
                     // Definir mensagem de sucesso
                     localStorage.setItem('msgCadVeic', response.success);
 
-                    // Redirecionar para a página de perfil
-                    if (response.tipo_usuario === 1) {
-                        window.location.href = 'administrador-perfil.html';
-                    }
-                    if (response.tipo_usuario === 2) {
-                        window.location.href = 'vendedor-perfil.html';
-                    }
+                    // Redirecionar para a página de veículos
+                    window.location.href = 'veiculos.html';
                 },
                 error: function (response) {
                     alertMessage(response.responseJSON.error, 'error');
