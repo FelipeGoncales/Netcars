@@ -85,226 +85,228 @@
             </div>
             <div class="div-contents-pai">
                 <div class="div-content-venda">
-                    <div class="div-title-venda">
-                        <div class="div-title">
-                            <!-- Select marca -->
-                            <select class="vehicleTitle marca" id="select-marca" disabled>
-                                <option value="Aprilia">Aprilia</option>
-                                <option value="Benelli">Benelli</option>
-                                <option value="BMW">BMW</option>
-                                <option value="Bultaco">Bultaco</option>
-                                <option value="Cagiva">Cagiva</option>
-                                <option value="CFMoto">CFMoto</option>
-                                <option value="Ducati">Ducati</option>
-                                <option value="Harley-Davidson">Harley-Davidson</option>
-                                <option value="Haojue">Haojue</option>
-                                <option value="Honda">Honda</option>
-                                <option value="Husqvarna">Husqvarna</option>
-                                <option value="Indian Motorcycle">Indian Motorcycle</option>
-                                <option value="Kawasaki">Kawasaki</option>
-                                <option value="KTM">KTM</option>
-                                <option value="Kymco">Kymco</option>
-                                <option value="MV Agusta">MV Agusta</option>
-                                <option value="Royal Enfield">Royal Enfield</option>
-                                <option value="Suzuki">Suzuki</option>
-                                <option value="Triumph">Triumph</option>
-                                <option value="Yamaha">Yamaha</option>
-                                <option value="Zero Motorcycles">Zero Motorcycles</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-marca"></p>
+                    <div id="form-editar-anuncio">
+                        <div class="div-title-venda">
+                            <div class="div-title">
+                                <!-- Select marca -->
+                                <select class="vehicleTitle marca" id="select-marca" disabled>
+                                    <option value="Aprilia">Aprilia</option>
+                                    <option value="Benelli">Benelli</option>
+                                    <option value="BMW">BMW</option>
+                                    <option value="Bultaco">Bultaco</option>
+                                    <option value="Cagiva">Cagiva</option>
+                                    <option value="CFMoto">CFMoto</option>
+                                    <option value="Ducati">Ducati</option>
+                                    <option value="Harley-Davidson">Harley-Davidson</option>
+                                    <option value="Haojue">Haojue</option>
+                                    <option value="Honda">Honda</option>
+                                    <option value="Husqvarna">Husqvarna</option>
+                                    <option value="Indian Motorcycle">Indian Motorcycle</option>
+                                    <option value="Kawasaki">Kawasaki</option>
+                                    <option value="KTM">KTM</option>
+                                    <option value="Kymco">Kymco</option>
+                                    <option value="MV Agusta">MV Agusta</option>
+                                    <option value="Royal Enfield">Royal Enfield</option>
+                                    <option value="Suzuki">Suzuki</option>
+                                    <option value="Triumph">Triumph</option>
+                                    <option value="Yamaha">Yamaha</option>
+                                    <option value="Zero Motorcycles">Zero Motorcycles</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-marca"></p>
 
-                            <!-- Input modelo -->
-                            <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
-                            <p class="input-mirror" id="mirror-input-modelo"></p>
-                            <div id="div-icons-actions">
-                                <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
-                                <i class="fa-solid fa-screwdriver-wrench" id="addManutencao"></i>
+                                <!-- Input modelo -->
+                                <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
+                                <p class="input-mirror" id="mirror-input-modelo"></p>
+                                <div id="div-icons-actions">
+                                    <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
+                                    <i class="fa-solid fa-screwdriver-wrench" id="addManutencao"></i>
+                                </div>
                             </div>
                         </div>
+                        <form class="itens-details">
+                            <div>
+                                <p class="itemcss-title">Cidade - Estado</p>
+                                <div class="formataçãoInput">
+                                    <select class="select-info" id="input-cidade" disabled></select>
+                                    <span id="dash-cidade-select">-</span>
+                                    <select class="select-info" id="input-estado" disabled></select>
+                                </div>
+                                <div class="formataçãoInput">
+                                    <p class="select-mirror" id="mirror-input-cidade"></p>
+                                    <span id="dash-cidade-mirror">-</span>
+                                    <p class="select-mirror" id="mirror-input-estado"></p>
+                                </div>
+                            </div>
+
+                            <div class="li-vazia-1"></div>
+                            <div class="li-vazia-2"></div>
+                            <div class="li-vazia-3"></div>
+
+                            <div>
+                                <p class="itemcss-title">Ano Modelo / Fabricação</p>
+                                <div class="formataçãoInput">
+                                    <select class="select-info" id="select-ano-modelo" disabled></select>
+                                    <span id="barra-ano-select">/</span>
+                                    <select class="select-info" id="select-ano-fabricacao" disabled></select>
+                                </div>
+                                <div class="formataçãoInput">
+                                    <p class="select-mirror" id="mirror-select-ano-modelo"></p>
+                                    <span id="barra-ano-mirror">/</span>
+                                    <p class="select-mirror" id="mirror-select-ano-fabricacao"></p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Marchas</p>
+                                <select class="input-info" id="select-marchas" disabled>
+                                    <option value="Automático">Automático</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-marchas"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Quilometragem</p>
+                                <input class="input-info" id="input-quilometragem" disabled />
+                                <p class="input-mirror" id="mirror-input-quilometragem"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Tipo de motor</p>
+                                <input class="input-info" id="input-tipo-motor" disabled />
+                                <p class="input-mirror" id="mirror-input-tipo-motor"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Cor</p>
+                                <select class="select-info" id="select-cor" disabled>
+                                    <option value="Branco">Branco</option>
+                                    <option value="Preto">Preto</option>
+                                    <option value="Prata">Prata</option>
+                                    <option value="Cinza">Cinza</option>
+                                    <option value="Vermelho">Vermelho</option>
+                                    <option value="Vermelho">Vermelho Escuro</option>
+                                    <option value="Azul">Azul</option>
+                                    <option value="Azul Marinho">Azul Escuro</option>
+                                    <option value="Verde Escuro">Verde</option>
+                                    <option value="Verde Escuro">Verde Escuro</option>
+                                    <option value="Marrom">Marrom</option>
+                                    <option value="Dourado">Dourado</option>
+                                    <option value="Laranja">Laranja</option>
+                                    <option value="Amarelo">Amarelo</option>
+                                    <option value="Roxo">Roxo</option>
+                                </select>
+                                <p class="select-mirror" id="mirror-select-cor"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Refrigeração</p>
+                                <select class="input-info" id="select-refrigeracao" disabled>
+                                    <option value="Ar">Ar</option>
+                                    <option value="Óleo">Óleo</option>
+                                    <option value="Líquida">Líquida</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-refrigeracao"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Categoria</p>
+                                <select class="input-info" id="select-categoria" disabled>
+                                    <option value="Esportiva">Esportiva</option>
+                                    <option value="Custom">Custom</option>
+                                    <option value="Street">Street</option>
+                                    <option value="Scooter">Scooter</option>
+                                    <option value="Adventure">Adventure</option>
+                                    <option value="Off-road">Off-road</option>
+                                    <option value="Naked">Naked</option>
+                                    <option value="Touring">Touring</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-categoria"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Cilindrada</p>
+                                <select class="input-info" id="select-cilindrada" disabled>
+                                    <option value="50">50 cc</option>
+                                    <option value="110">110 cc</option>
+                                    <option value="125">125 cc</option>
+                                    <option value="150">150 cc</option>
+                                    <option value="160">160 cc</option>
+                                    <option value="180">180 cc</option>
+                                    <option value="200">200 cc</option>
+                                    <option value="250">250 cc</option>
+                                    <option value="300">300 cc</option>
+                                    <option value="350">350 cc</option>
+                                    <option value="400">400 cc</option>
+                                    <option value="450">450 cc</option>
+                                    <option value="500">500 cc</option>
+                                    <option value="600">600 cc</option>
+                                    <option value="650">650 cc</option>
+                                    <option value="700">700 cc</option>
+                                    <option value="750">750 cc</option>
+                                    <option value="800">800 cc</option>
+                                    <option value="900">900 cc</option>
+                                    <option value="1000">1000 cc</option>
+                                    <option value="1100">1100 cc</option>
+                                    <option value="1200">1200 cc</option>
+                                    <option value="1300">1300 cc</option>
+                                    <option value="1500">1500 cc</option>
+                                    <option value="1800">1800 cc</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-cilindrada"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Partida</p>
+                                <select class="input-info" id="select-partida" disabled>
+                                    <option value="Elétrica">Elétrica</option>
+                                    <option value="Pedal">Pedal</option>
+                                    <option value="Mista (Elétrica + Pedal)">Mista (Elétrica + Pedal)</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-partida"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Freio dianteiro / traseiro</p>
+                                <select class="input-info" id="select-freio" disabled>
+                                    <option value="Tambor / Tambor">Tambor / Tambor</option>
+                                    <option value="Tambor / Disco">Tambor / Disco</option>
+                                    <option value="Disco / Tambor">Disco / Tambor</option>
+                                    <option value="Disco / Disco">Disco / Disco</option>
+                                    <option value="ABS / Tambor">ABS / Tambor</option>
+                                    <option value="ABS / Disco">ABS / Disco</option>
+                                    <option value="Disco ventilado / Disco">Disco ventilado / Disco</option>
+                                    <option value="Disco ventilado / Tambor">Disco ventilado / Tambor</option>
+                                    <option value="Cerâmico / Disco">Cerâmico / Disco</option>
+                                    <option value="CBS / Tambor">CBS / Tambor</option>
+                                    <option value="CBS / Disco">CBS / Disco</option>
+                                    <option value="ABS / ABS">ABS / ABS</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-freio"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title">Alimentação</p>
+                                <select class="input-info" id="select-alimentacao" disabled>
+                                    <option value="Carburador">Carburador</option>
+                                    <option value="Injeção Eletrônica">Injeção Eletrônica</option>
+                                </select>
+                                <p class="input-mirror" id="mirror-select-alimentacao"></p>
+                            </div>
+
+                            <div>
+                                <p class="itemcss-title" id="label-placa">Final da Placa</p>
+                                <input class="input-info" id="input-placa" maxlength="7" disabled />
+                                <p class="input-mirror" id="mirror-input-placa"></p>
+                            </div>
+                        </form>
                     </div>
-                    <form class="itens-details">
-                        <div>
-                            <p class="itemcss-title">Cidade - Estado</p>
-                            <div class="formataçãoInput">
-                                <select class="select-info" id="input-cidade" disabled></select>
-                                <span id="dash-cidade-select">-</span>
-                                <select class="select-info" id="input-estado" disabled></select>
-                            </div>
-                            <div class="formataçãoInput">
-                                <p class="select-mirror" id="mirror-input-cidade"></p>
-                                <span id="dash-cidade-mirror">-</span>
-                                <p class="select-mirror" id="mirror-input-estado"></p>
-                            </div>
-                        </div>
-
-                        <div class="li-vazia-1"></div>
-                        <div class="li-vazia-2"></div>
-                        <div class="li-vazia-3"></div>
-
-                        <div>
-                            <p class="itemcss-title">Ano Modelo / Fabricação</p>
-                            <div class="formataçãoInput">
-                                <select class="select-info" id="select-ano-modelo" disabled></select>
-                                <span id="barra-ano-select">/</span>
-                                <select class="select-info" id="select-ano-fabricacao" disabled></select>
-                            </div>
-                            <div class="formataçãoInput">
-                                <p class="select-mirror" id="mirror-select-ano-modelo"></p>
-                                <span id="barra-ano-mirror">/</span>
-                                <p class="select-mirror" id="mirror-select-ano-fabricacao"></p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Marchas</p>
-                            <select class="input-info" id="select-marchas" disabled>
-                                <option value="Automático">Automático</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-marchas"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Quilometragem</p>
-                            <input class="input-info" id="input-quilometragem" disabled />
-                            <p class="input-mirror" id="mirror-input-quilometragem"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Tipo de motor</p>
-                            <input class="input-info" id="input-tipo-motor" disabled />
-                            <p class="input-mirror" id="mirror-input-tipo-motor"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Cor</p>
-                            <select class="select-info" id="select-cor" disabled>
-                                <option value="Branco">Branco</option>
-                                <option value="Preto">Preto</option>
-                                <option value="Prata">Prata</option>
-                                <option value="Cinza">Cinza</option>
-                                <option value="Vermelho">Vermelho</option>
-                                <option value="Vermelho">Vermelho Escuro</option>
-                                <option value="Azul">Azul</option>
-                                <option value="Azul Marinho">Azul Escuro</option>
-                                <option value="Verde Escuro">Verde</option>
-                                <option value="Verde Escuro">Verde Escuro</option>
-                                <option value="Marrom">Marrom</option>
-                                <option value="Dourado">Dourado</option>
-                                <option value="Laranja">Laranja</option>
-                                <option value="Amarelo">Amarelo</option>
-                                <option value="Roxo">Roxo</option>
-                            </select>
-                            <p class="select-mirror" id="mirror-select-cor"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Refrigeração</p>
-                            <select class="input-info" id="select-refrigeracao" disabled>
-                                <option value="Ar">Ar</option>
-                                <option value="Óleo">Óleo</option>
-                                <option value="Líquida">Líquida</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-refrigeracao"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Categoria</p>
-                            <select class="input-info" id="select-categoria" disabled>
-                                <option value="Esportiva">Esportiva</option>
-                                <option value="Custom">Custom</option>
-                                <option value="Street">Street</option>
-                                <option value="Scooter">Scooter</option>
-                                <option value="Adventure">Adventure</option>
-                                <option value="Off-road">Off-road</option>
-                                <option value="Naked">Naked</option>
-                                <option value="Touring">Touring</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-categoria"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Cilindrada</p>
-                            <select class="input-info" id="select-cilindrada" disabled>
-                                <option value="50">50 cc</option>
-                                <option value="110">110 cc</option>
-                                <option value="125">125 cc</option>
-                                <option value="150">150 cc</option>
-                                <option value="160">160 cc</option>
-                                <option value="180">180 cc</option>
-                                <option value="200">200 cc</option>
-                                <option value="250">250 cc</option>
-                                <option value="300">300 cc</option>
-                                <option value="350">350 cc</option>
-                                <option value="400">400 cc</option>
-                                <option value="450">450 cc</option>
-                                <option value="500">500 cc</option>
-                                <option value="600">600 cc</option>
-                                <option value="650">650 cc</option>
-                                <option value="700">700 cc</option>
-                                <option value="750">750 cc</option>
-                                <option value="800">800 cc</option>
-                                <option value="900">900 cc</option>
-                                <option value="1000">1000 cc</option>
-                                <option value="1100">1100 cc</option>
-                                <option value="1200">1200 cc</option>
-                                <option value="1300">1300 cc</option>
-                                <option value="1500">1500 cc</option>
-                                <option value="1800">1800 cc</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-cilindrada"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Partida</p>
-                            <select class="input-info" id="select-partida" disabled>
-                                <option value="Elétrica">Elétrica</option>
-                                <option value="Pedal">Pedal</option>
-                                <option value="Mista (Elétrica + Pedal)">Mista (Elétrica + Pedal)</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-partida"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Freio dianteiro / traseiro</p>
-                            <select class="input-info" id="select-freio" disabled>
-                                <option value="Tambor / Tambor">Tambor / Tambor</option>
-                                <option value="Tambor / Disco">Tambor / Disco</option>
-                                <option value="Disco / Tambor">Disco / Tambor</option>
-                                <option value="Disco / Disco">Disco / Disco</option>
-                                <option value="ABS / Tambor">ABS / Tambor</option>
-                                <option value="ABS / Disco">ABS / Disco</option>
-                                <option value="Disco ventilado / Disco">Disco ventilado / Disco</option>
-                                <option value="Disco ventilado / Tambor">Disco ventilado / Tambor</option>
-                                <option value="Cerâmico / Disco">Cerâmico / Disco</option>
-                                <option value="CBS / Tambor">CBS / Tambor</option>
-                                <option value="CBS / Disco">CBS / Disco</option>
-                                <option value="ABS / ABS">ABS / ABS</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-freio"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title">Alimentação</p>
-                            <select class="input-info" id="select-alimentacao" disabled>
-                                <option value="Carburador">Carburador</option>
-                                <option value="Injeção Eletrônica">Injeção Eletrônica</option>
-                            </select>
-                            <p class="input-mirror" id="mirror-select-alimentacao"></p>
-                        </div>
-
-                        <div>
-                            <p class="itemcss-title" id="label-placa">Final da Placa</p>
-                            <input class="input-info" id="input-placa" maxlength="7" disabled />
-                            <p class="input-mirror" id="mirror-input-placa"></p>
-                        </div>
-                    </form>
                 </div>
                 <div class="div-content-vendas-pai">
                     <div class="div-content-venda-filho">

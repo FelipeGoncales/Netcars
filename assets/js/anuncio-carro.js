@@ -686,9 +686,20 @@ $("#editarAnuncio").on("click", function () {
         // Alterar ícone do botão de editar para a caneta
         $(this).removeClass('fa-xmark').addClass('fa-pencil');
 
-        $("input, select").prop("disabled", true);
+        // Seleciona *só* os campos dentro do form-de-editar-anuncio
+        const $camposAnuncio = $("#form-editar-anuncio").find("input, select");
 
-        $("input, select").css("display", "none");
+        // Ao entrar em modo editar:
+        $camposAnuncio
+        .css("display", "flex");
+
+        $('#input-preco-venda').show();
+
+        // Ao sair do modo editar (cancelar ou salvar):
+        $camposAnuncio
+        .css("display", "none");
+
+        $('#input-preco-venda').hide();
 
         // Barra (/) do ano
         $('#barra-ano-mirror').css('display', 'flex');
@@ -886,9 +897,6 @@ $("#salvar-alteracoes").off("click").on("click", function (e) {
                 icon: "success",
                 confirmButtonText: "Ok"
             });
-
-            // Desabilita os inputs novamente e atualiza os "mirrors"
-            $("input").prop("disabled", true);
 
             // Evita que o input de imagem seja alterado
             $('#upload-imagem').css('display', 'none').prop('disabled', false);
