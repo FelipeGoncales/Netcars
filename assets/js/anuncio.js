@@ -263,45 +263,45 @@ function addAnoInput(input) {
     }
 }
 // Adicionado options aos inputs
-addAnoInput(anoModelo);
+addAnoInput(anoFabricacao);
 
 // Função para que ano de fabricação possa ser apenas 1 ano maior que ano modelo
 
 // Função para adicionar options ano modelo
-function addOptionsAnoFab(inputMod, inputFab) {
-    let anoMin = parseInt(inputMod.val());
+function addOptionsAnoFab(inputFab, inputMod) {
+    let anoMin = parseInt(inputFab.val());
 
     if (!anoMin) {
-        $(inputFab).empty().prop('disabled', true);
-        $(`label[for="${$(inputFab).attr('id')}"]`).removeClass('active');
+        $(inputMod).empty().prop('disabled', true);
+        $(`label[for="${$(inputMod).attr('id')}"]`).removeClass('active');
         return;
     }
 
-    $(inputFab)
+    $(inputMod)
         .empty()
         .prop('disabled', false);
 
-    let anoSeguinte = anoMin + 1;
+    let anoAnterior = anoMin - 1;
 
-    if (anoSeguinte > anoMax) {
-        anoSeguinte = anoMin;
+    if (anoAnterior < anoMin) {
+        anoAnterior = anoMin;
     }
 
-    for (let ano = anoMin; ano <= anoSeguinte; ano++) {
+    for (let ano = anoMin; ano <= anoMin + 1; ano++) {
         const option = $(`<option value="${ano}">${ano}</option>`);
-        inputFab.append(option);
+        inputMod.append(option);
     }
 }
 
 // Função para adicionar ano modelo ao alterar
-function anoModeloInput(inputMod, inputFab) {
-    $(inputMod).on('change', function () {
-        addOptionsAnoFab(inputMod, inputFab);
+function anoFabInput(inputFab, inputMod) {
+    $(inputFab).on('change', function () {
+        addOptionsAnoFab(inputFab, inputMod);
     })
 }
 
 // Adicionar o evento change ao input ano modelo
-anoModeloInput(anoModelo, anoFabricacao);
+anoFabInput(anoFabricacao, anoModelo);
 
 // Formatar quilometragem
 function formatarQuilometragem(quilometragem) {

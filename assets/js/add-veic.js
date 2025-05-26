@@ -150,40 +150,40 @@ function addAnoInput(input) {
     }
 }
 // Adicionado options aos inputs
-addAnoInput(anoModeloCarro);
-addAnoInput(anoModeloMoto);
+addAnoInput(anoFabricacaoCarro);
+addAnoInput(anoFabricacaoMoto);
 
 // Função para que ano de fabricação possa ser apenas 1 ano maior que ano modelo
-function anoModeloInput(inputMod, inputFab) {
-    $(inputMod).on('change', function() {
-        let anoMin = parseInt(inputMod.val());
+function anoModeloInput(inputFab, inputMod) {
+    $(inputFab).on('change', function() {
+        let anoMin = parseInt(inputFab.val());
 
         if (!anoMin) {
-            $(inputFab).empty().prop('disabled', true);
-            $(`label[for="${$(inputFab).attr('id')}"]`).removeClass('active');
+            $(inputMod).empty().prop('disabled', true);
+            $(`label[for="${$(inputMod).attr('id')}"]`).removeClass('active');
             return;
         }
 
-        $(inputFab)
+        $(inputMod)
             .empty()
             .append($(`<option value=""></option>`))
             .prop('disabled', false);
 
-        let anoSeguinte = anoMin + 1;
+        let anoAnterior = anoMin - 1;
 
-        if (anoSeguinte > anoMax) {
-            anoSeguinte = anoMin;
+        if (anoAnterior < anoMin) {
+            anoAnterior = anoMin;
         }
 
-        for (let ano = anoMin; ano <= anoSeguinte; ano++) {
+        for (let ano = anoMin; ano <= anoMin + 1; ano++) {
             const option = $(`<option value="${ano}">${ano}</option>`);
-            inputFab.append(option);
+            inputMod.append(option);
         }
     })
 }
 
-anoModeloInput(anoModeloCarro, anoFabricacaoCarro);
-anoModeloInput(anoModeloMoto, anoFabricacaoMoto);
+anoModeloInput(anoFabricacaoCarro, anoModeloCarro);
+anoModeloInput(anoFabricacaoMoto, anoModeloMoto);
 
 // Função para validar o RENAVAM (tanto de carros quanto de motos)
 function validarRENAVAM(seletor) {

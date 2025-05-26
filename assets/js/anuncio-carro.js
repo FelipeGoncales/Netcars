@@ -270,13 +270,13 @@ $(document).ready(async function () {
                     cidadeSelect.val(infoVeic.cidade);
                 }
     
-                // Preencher os selects de ano modelo e ano fabricação
-                $("#select-ano-modelo").val(infoVeic.ano_modelo);
-    
-                await addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
-    
                 // Ano fabricação
                 $("#select-ano-fabricacao").val(infoVeic.ano_fabricacao);
+    
+                await addOptionsAnoFab($("#select-ano-fabricacao"), $("#select-ano-modelo"));
+    
+                // Preencher os selects de ano modelo e ano fabricação
+                $("#select-ano-modelo").val(infoVeic.ano_modelo);
     
                 // Input quilometragem
                 $('#input-quilometragem').val(formatarQuilometragem(infoVeic.quilometragem));
@@ -715,10 +715,10 @@ $("#editarAnuncio").on("click", function () {
         $('#salvar-alteracoes').prop('disabled', true);
 
         // Carrega o ano modelo
-        $('#select-ano-modelo').val($('#mirror-select-ano-modelo').text());
+        $('#select-ano-fabricacao').val($('#mirror-select-ano-fabricacao').text());
 
         // Adiciona os anos de fabricação
-        addOptionsAnoFab($("#select-ano-modelo"), $("#select-ano-fabricacao"));
+        addOptionsAnoFab($("#select-ano-fabricacao"), $("#select-ano-modelo"));
 
         // Seleciona o estado do mirror
         $('#input-estado').val($('#mirror-input-estado').text());
