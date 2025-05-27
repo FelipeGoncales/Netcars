@@ -2110,14 +2110,41 @@ $('#telefone-input').on('blur', function() {
 
 // Atualizar informações do footer
 
+function isValidBrazilianPhone(nums) {
+    // só dígitos
+    if (!/^\d{10,11}$/.test(nums)) {
+        return false;
+    }
+    if (nums.length === 10) {
+        // DDD não começa com 0, e primeiro dígito do número (pós-DDD) entre 2 e 5
+        return /^[1-9]{2}[2-5]\d{7}$/.test(nums);
+    } else {
+        // 11 dígitos: celular deve começar com 9 após o DDD
+        return /^[1-9]{2}9\d{8}$/.test(nums);
+    }
+}
+
+// Mantém sua formatação no blur
+$('#telefone-input').on('blur', function() {
+    const val = $(this).val();
+    const formatado = formatarTelefoneInput(val);
+    $(this).val(formatado);
+});
+
 $('#form-att-footer').on("submit", function(e) {
     e.preventDefault();
 
+    // Pega os valores limpos
     let data = new FormData(this);
-
+    let rawPhone = data.get("telefone-input").replace(/\D/g, '');
     let envia = {
         email: data.get("email-input"),
-        telefone: data.get("telefone-input").replace(/\D/g, '')
+        telefone: rawPhone
+    };
+
+    // Validação antes do envio
+    if (!isValidBrazilianPhone(envia.telefone)) {
+        return alertMessage('Número de telefone inválido.', 'error');
     }
 
     $.ajax({
