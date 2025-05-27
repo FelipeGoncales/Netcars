@@ -829,7 +829,6 @@ $('#form-add-veic').on('submit', function (e) {
         if (files.length < 3) {
             // Reabilita o botão
             $('#btn-continuar').attr('disabled', false);
-            alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
             return;
         }
 
@@ -936,7 +935,6 @@ $('#form-add-veic').on('submit', function (e) {
         if (files.length < 3) {
             // Reabilita o botão
             $('#btn-continuar').attr('disabled', false);
-            alertMessage(`Adicione, ao menos, 3 imagens.`, 'error');
             return;
         }
 
