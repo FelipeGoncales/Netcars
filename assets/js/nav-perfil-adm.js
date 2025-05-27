@@ -1241,6 +1241,12 @@ $('#mov-despesas').on('click', function () {
 $('#close-modal-mov').on('click', function () {
     $('#modal-mov').hide();
 
+    // Limpa os valores dos inputs
+    $('#descricao-mov').val('');
+    $('label[for="descricao-mov"]').removeClass('active');
+    $('#data-mov').val('');
+    $('#valor-mov').val('R$ 0,00');
+
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
 
     setTimeout(() => {
@@ -1546,7 +1552,11 @@ function addHistoricoMovimentacao(movimentacao) {
 // Função para carregar os dados da movimentação
 function carregarDadosMovimentacoes(movimentacoes, saldo, despesa, receita) {
     // Insere o saldo 
-    $('#saldo-valor').text(formatarValor(saldo));
+    if (saldo < 0) {
+        $('#saldo-valor').text(`- ${formatarValor(saldo)}`);
+    } else {
+        $('#saldo-valor').text(formatarValor(saldo));
+    }
     // Insere o valor das despesas
     $('#despesa-valor').text(formatarValor(despesa));
     // Insere o valor das receitas

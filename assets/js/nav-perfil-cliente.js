@@ -60,14 +60,17 @@ $(document).ready(function () {
     }
 
     // Função para verificar se possui item salvo no local storage
-    function verificarReservaCompraParcelamento(localStorageItem, idDiv, linkA) {
+    function verificarReservaCompraParcelamento(localStorageItem, idDiv, linkA, terMsg) {
         // Obtém a mensagem
         const msg = localStorage.getItem(localStorageItem);
-
+        
         // Caso exista a mensagem
         if (msg) {
-            // Exibe a mensagem
-            alertMessage(msg, 'success');
+
+            if (terMsg) {
+                // Exibe a mensagem
+                alertMessage(msg, 'success');
+            }
 
             // Remove o item do local storage
             localStorage.removeItem(localStorageItem)
@@ -83,30 +86,20 @@ $(document).ready(function () {
     }
 
     // Chama a função para reservas
-    verificarReservaCompraParcelamento('msgReserva', 'reservas', 'link_reservas');
+    verificarReservaCompraParcelamento('msgReserva', 'reservas', 'link_reservas', true);
 
     // Chama a função para compras a vista
-    verificarReservaCompraParcelamento('msgCompraAVista', 'historico-compras', 'link_hCompras');
+    verificarReservaCompraParcelamento('msgCompraAVista', 'historico-compras', 'link_hCompras', true);
 
     // Chama a função para parcelamentos
-    verificarReservaCompraParcelamento('msgParcelamento', 'financiamento', 'link_financiamento');
+    verificarReservaCompraParcelamento('msgParcelamento', 'financiamento', 'link_financiamento', true);
 
-    // Verifica se o cliente clicou em ver detalhes de reserva
-    let verDetalhesReserva = localStorage.getItem('verDetalhesVenda');
+    // Chama a função para ver detalhes parcelamento
+    verificarReservaCompraParcelamento('verDetalhesParcelamento', 'financiamento', 'link_financiamento', false);
 
-    // Caso sim, abre a página de financiamentos
-    if (verDetalhesReserva) {
-        // Abre a seção de financiamento
-        $('#minha-conta').css('display', 'none');
-        $(`#financiamento`).css('display', 'flex');
+    // Chama a função para ver detalhes da compra
+    verificarReservaCompraParcelamento('verDetalhesVenda', 'historico-compras', 'link_hCompras', false);
 
-        // Seleciona o A do nav correto
-        let elemento = document.getElementById('link_financiamento');
-        selecionarA(elemento);
-
-        // Remove o item do local storage
-        localStorage.removeItem('verDetalhesVenda');
-    }
 })
 
 // Fazer o nav funcionar

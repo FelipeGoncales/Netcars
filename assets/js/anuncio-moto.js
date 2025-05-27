@@ -350,11 +350,13 @@ $(document).ready(async function () {
                 } else if (response.vendido == true) {
                     $('#div-button-vendedor').css('display', 'none');
                     $('#div-button-cliente').css('display', 'none');
-                    $('#div-button-cancelar-reserva').css('display', 'none');
+                    $('#div-button-cancelar-reserva-adm').css('display', 'none');
+                    $('#div-button-cancelar-reserva-cliente').css('display', 'none');
                     
                     $('#mensagem-user').css('display', 'none');
                     $('#mensagem-adm').css('display', 'none');
-                    $('#mensagem-reserva').css('display', 'none');
+                    $('#mensagem-reserva-adm').css('display', 'none');
+                    $('#mensagem-reserva-cliente').css('display', 'none');
 
                     if (tipoUser === 1 || tipoUser === 2) {
                         $('#div-button-vendido').css('display', 'flex');
@@ -369,10 +371,23 @@ $(document).ready(async function () {
                         $('#mensagem-vendido-cliente').css('display', 'flex');
                         $('#mensagem-vendido-adm').css('display', 'none');
 
-                        $('#ver-detalhes').text('Ver detalhes da compra');
+                        if (response.parcelamento) {
+                            $('#ver-detalhes').text('Ver detalhes da compra').addClass('parcelamento');
+                        } else {
+                            $('#ver-detalhes').text('Ver detalhes do parcelamento');
+                        }
                     }
 
-                    $('#ver-detalhes').click(function() {
+                    $('#ver-detalhes').click(function () {
+                        
+                        if ($(this).hasClass('parcelamento')) {
+                            // Informa que o usuário clicou em ver detalhes do parcelamento
+                            localStorage.setItem('verDetalhesParcelamento', true);
+                        } else {
+                            // Informa que o usuário clicou em ver detalhes da venda
+                            localStorage.setItem('verDetalhesVenda', true);
+                        }
+
                         if (tipoUser === 1) {
                             // Redireciona para a página de perfil
                             window.location.href = "administrador-perfil.html";
@@ -383,9 +398,6 @@ $(document).ready(async function () {
                             // Redireciona para a página de perfil
                             window.location.href = "cliente-perfil.html";
                         }
-
-                        // Informa que o usuário clicou em ver detalhes da venda
-                        localStorage.setItem('verDetalhesVenda', true);
                     })
 
                     // Deixa invisível a div dos botões de editar e abrir manutenções
