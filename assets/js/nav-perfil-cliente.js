@@ -313,7 +313,7 @@ $(document).ready(function () {
             'position': 'relative',
             'z-index': '9999'
         })
- 
+
         $('#parcelas').css('display', 'none');
     })
 
@@ -450,7 +450,7 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
         let pDesc;
 
         // Caso exista a versão
-        if (veiculo.versao) { 
+        if (veiculo.versao) {
             let qntCaracteresVersao = veiculo.versao.length;
 
             // Caso a versão tenha mais ou igual a 34 caractéres
@@ -950,19 +950,19 @@ $('#parcela-mais-recente').on('click', function () {
 
 $(document).ready(function () {
     $('#copiar-codigo-pix').click(async function () {
-            // Tenta pela API moderna
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                try {
-                    await navigator.clipboard.writeText($('#p-codigo-pix').text());
-                    
-                    alertMessage('Código copiado!', 'success');
-                    
-                    return;
-                } catch (err) {
-                    return;
-                }
+        // Tenta pela API moderna
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+                await navigator.clipboard.writeText($('#p-codigo-pix').text());
+
+                alertMessage('Código copiado!', 'success');
+
+                return;
+            } catch (err) {
+                return;
             }
-        })
+        }
+    })
 })
 
 // Abre o modal de gerar o qr code do pix para pagar a parcela mais recente
@@ -1045,6 +1045,13 @@ $('#confirmar-pagamento-parcela').click(function () {
         return;
     }
 
+    // Fecha o modal de pix
+    $('#modal-pix').hide();
+    $('#overlay-bg').hide();
+
+    // Position static no main para não bugar o z-index
+    $('main').css('position', 'static');
+
     Swal.fire({
         title: "Você confirma o pagamento dessa parcela?",
         icon: "warning",
@@ -1083,6 +1090,23 @@ $('#confirmar-pagamento-parcela').click(function () {
                     }, 660);
                 }
             })
+        } else {
+            // Abre de volta a div de parcelamento
+            $('#financiamento').css('display', 'flex');
+
+            // Exibe a imagem do qrcode
+            $('#img-qrcode').hide();
+            $('#loading-img-qrcode').show();
+
+            // Esconde o codigo pix 
+            $('.div-codigo-pix').hide();
+
+            // Desabilita o botão de confirmar pagamento
+            $('#confirmar-pagamento-parcela').addClass('disabled');
+
+            // Altera novamente o texto do valor da parcela para indefinido
+            $('#valor-parcela').text('R$ ~');
+            $('#p-juros').remove();
         }
     })
 })
