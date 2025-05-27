@@ -360,17 +360,6 @@ $(document).ready(function () {
         $(this).data('valor-numerico', '');
     });
     
-    camposQuilometragem.on('input', function() {
-        const valorNumerico = extrairNumeros($(this).val());
-        $(this).data('valor-numerico', valorNumerico);
-        $(this).val(valorNumerico ? formatarQuilometragem(valorNumerico) : '');
-    });
-    
-    camposQuilometragem.on('blur', function() {
-        const valorNumerico = $(this).data('valor-numerico');
-        $(this).val(valorNumerico ? formatarQuilometragem(valorNumerico) : '');
-    });
-    
     $('#form-add-veic').on('submit', function() {
         camposQuilometragem.each(function() {
             const valorNumerico = $(this).data('valor-numerico');
@@ -1080,21 +1069,38 @@ function desformatarPreco(valorFormatado) {
     return parseFloat(valorLimpo);
 }
 
-// Formatar quilometragem
-function formatarQuilometragem(quilometragem) {
-    const km = Number(quilometragem);
-    if (isNaN(km)) {
-        return "";
-    }
-
-    // Formata o número com separador de milhar
-    let formatted = km.toLocaleString('pt-BR', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    });
-
-    return `${formatted} km`;
+// Ao focar no campo, remove o ' km'
+function limparQuilometragem(input) {
+    input.addEventListener('focus', function() {
+        input.value = input.value.replace(/\s?km$/, '').replace(/\./g, '');
+    })
 }
+
+// Ao desfocar do campo, formata
+function formatarQuilometragemInput(input) {
+    input.addEventListener('blur', function() {
+        const valor = input.value.replace(/\D/g, ''); // remove tudo que não for número
+        if (!valor) {
+            input.value = '';
+            return;
+        }
+    
+        const km = Number(valor);
+        let formatted = km.toLocaleString('pt-BR', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+    
+        input.value = `${formatted} km`;
+    })
+}
+
+// Adicionando os eventos aos inputs
+formatarQuilometragemInput(document.getElementById('quilometragem-carro'));
+formatarQuilometragemInput(document.getElementById('quilometragem-moto'));
+
+limparQuilometragem(document.getElementById('quilometragem-carro'));
+limparQuilometragem(document.getElementById('quilometragem-moto'));
 
 // Extrair números
 function extrairNumeros(valor) {
