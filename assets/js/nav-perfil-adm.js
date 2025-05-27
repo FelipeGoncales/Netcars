@@ -321,51 +321,40 @@ $(document).ready(function () {
 
 
     // Configuração revisada do input de valor principal
-    $('#input-valor')
-        .on('focus', function () {
-            if ($(this).val() === '') {
-                $(this).val('R$ ');
-            } else {
-                const valorNumerico = desformatarPreco($(this).val());
-                $(this).val('R$ ' + valorNumerico.toFixed(2).replace('.', ','));
-            }
-        })
-        .on('input', function (e) {
-            let raw = $(this).val().replace('R$ ', '');
+$('#input-valor')
+    .on('focus', function () {
+        if ($(this).val().trim() === '') {
+            $(this).val('R$ 0,00');
+        }
+    })
+    .on('input', function () {
+        let raw = $(this).val().replace(/[^\d]/g, '');
 
-            // Permite vírgula e converte ponto para vírgula
-            raw = raw.replace(/[^\d,]/g, '')
-                .replace(/\./g, ','); // Novo: converte pontos em vírgulas
+        if (raw.length < 3) {
+            raw = raw.padStart(3, '0'); // Ex: 5 -> 005 -> 0,05
+        }
 
-            // Gerencia múltiplas vírgulas
-            const partes = raw.split(',');
-            if (partes.length > 2) {
-                raw = partes[0] + ',' + partes.slice(1).join('');
-            }
+        const centavos = raw.slice(-2);
+        const reais = raw.slice(0, -2);
 
-            // Formatação dinâmica
-            let inteira = partes[0].replace(/\D/g, '');
-            inteira = inteira === '' ? '0' : inteira;
-            inteira = parseInt(inteira).toLocaleString('pt-BR');
+        const valorFormatado = 'R$ ' + parseInt(reais).toLocaleString('pt-BR') + ',' + centavos;
+        $(this).val(valorFormatado);
+    })
+    .on('keydown', function (e) {
+        const allowedKeys = [8, 9, 13, 37, 39, 46]; // backspace, tab, enter, arrows, delete
 
-            let decimal = partes[1] ? partes[1].substring(0, 2) : '';
+        // Permitir números e teclas de controle
+        if (
+            (e.key >= '0' && e.key <= '9') ||
+            allowedKeys.includes(e.keyCode)
+        ) {
+            return;
+        }
 
-            // Montagem do novo valor
-            let novoValor = 'R$ ' + inteira;
-            if (raw.includes(',')) novoValor += ',' + decimal;
+        e.preventDefault(); // bloqueia tudo que não for número ou controle
+    });
 
-            $(this).val(novoValor);
-        })
-        .on('keypress', function (e) {
-            // Permite vírgula apenas uma vez
-            if (e.key === ',' || e.key === '.') {
-                if ($(this).val().includes(',')) {
-                    e.preventDefault();
-                } else {
-                    e.key === '.' ? $(this).val($(this).val() + ',') : null;
-                }
-            }
-        });
+
 
     // Configuração dinâmica para inputs de edição
     $(document)
