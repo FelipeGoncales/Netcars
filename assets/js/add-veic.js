@@ -969,6 +969,7 @@ $('#form-add-veic').on('submit', function (e) {
                     success: function () {
                         // Redirecionar para a página de veículos
                         localStorage.setItem('msgCadVeic', 'Veículo cadastrado com sucesso!');
+                        localStorage.setItem('tipo-veiculo', 'moto');
                         
                         window.location.href = 'veiculos.html';
                     },
