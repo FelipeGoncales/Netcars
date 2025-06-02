@@ -361,8 +361,6 @@ async function alterarBotao() {
             $('#div-button-cancelar-reserva-cliente').css('display', 'none');
             $('#div-button-cancelar-reserva-adm').css('display', 'none');
             
-            
-            
             // Função para mudar a mensagem para o adm
             $('#mensagem-user').css('display', 'none');
             $('#mensagem-adm').css('display', 'flex');

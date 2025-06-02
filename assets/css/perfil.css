@@ -2261,13 +2261,12 @@ tbody tr.tipo2 {
         font-size: 0.8rem;
         color: var(--cor-texto-apagado);
         background-color: var(--cor-bg-sec);
-        padding: 10px;
-        padding-right: 25px;
+        padding: 10px 15px;
         position: absolute;
         left: -1px;
         top: -1px;
         /* Define a forma com um corte diagonal na parte inferior */
-        clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
+        filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.15));
 
         & span {
             font-size: 0.85rem;
