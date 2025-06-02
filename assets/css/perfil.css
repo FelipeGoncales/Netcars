@@ -2653,20 +2653,42 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
 
 .div-filtro-mov {
     position: absolute;
-    top: 0;
+    top: -5px;
     right: 0;
+    display: flex;
+    background-color: var(--cor-bg-sec);
+    padding: 10px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 
     & select {
         outline: none;
-        padding: 7px 5px;
-        border: 2px solid rgba(0, 0, 0, 0.15);
+        border: none;
         border-radius: 10px;
         cursor: pointer;
+        padding: 0 5px;
+    }
+
+    & i {
+        font-size: 1.2rem;
+        margin-left: 10px;
+        color: var(--roxo);
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 440px) {
+    .container-dashboard {
+        h1 {
+            margin: 0;
+        }
+    }
     .div-filtro-mov {
+        position: static;
+        gap: 10%;
+        margin-bottom: 5px;
         & select {
             padding: 5px 0px;
         }

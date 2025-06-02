@@ -121,9 +121,7 @@ function exibirRelatorio(tipo) {
 
 $(document).ready(function () {
     /*
-
         JS DO FILTRO DE MOVIMENTAÇÕES
-
     */
 
     // Obtém a data atual
