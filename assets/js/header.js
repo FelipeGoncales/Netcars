@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.110:5000";
+var BASE_URL = "http://192.168.1.103:5000";
 
 function formatarTelefone(telefone) {
     // Remove tudo que não for dígito
@@ -140,7 +140,27 @@ $(document).ready(function () {
     const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     if (dadosUser) {
-        $('#nomeUsuario').text(dadosUser.nome_completo)
+        // Função para formatar o texto e adicionar "..."
+        function limitarQntCaracteres(texto, qntMax) {
+            return texto.substr(0, qntMax) + '...';
+        }
+
+        // Caso esteja no responsivo
+        if ($(window).width() < 1148) {
+            // Limita o texto
+            if (dadosUser.nome_completo.length > 10) {
+                $('#nomeUsuario').text(limitarQntCaracteres(dadosUser.nome_completo, 10));
+            } else {
+                $('#nomeUsuario').text(dadosUser.nome_completo);
+            }
+        } else {
+            // Limita o texto
+            if (dadosUser.nome_completo.length > 15) {
+                $('#nomeUsuario').text(limitarQntCaracteres(dadosUser.nome_completo, 15));
+            } else {
+                $('#nomeUsuario').text(dadosUser.nome_completo);
+            }
+        }
 
         // Lógica para obter tipo do usuário
 

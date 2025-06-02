@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.110:5000";
+var BASE_URL = "http://192.168.1.103:5000";
 
 // Width do responsivo para ativar o menu lateral
 var WIDTH_RESPONSIVO = 1112;
@@ -122,7 +122,6 @@ $(document).ready(function () {
         }
     })
 
-
     let dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
 
     // Enviar o usuário para a tela de login caso não esteja logado
@@ -160,9 +159,20 @@ $(document).ready(function () {
     $("#telefone_input").val(dadosUser.telefone);
 
     // Preencher as informações do menu nav
-    $("#nomeNav").text(dadosUser.nome_completo)
     $("#emailNav").text(dadosUser.email)
 
+    // Função para formatar o texto e adicionar "..."
+    function limitarQntCaracteres(texto, qntMax) {
+        return texto.substr(0, qntMax) + '...';
+    }
+
+    // Limita os caracteres do nome do usuário
+    if (dadosUser.nome_completo.length > 20) {
+        $("#nomeNav").text(limitarQntCaracteres(dadosUser.nome_completo, 20));
+    } else {  
+        $("#nomeNav").text(dadosUser.nome_completo);
+    }
+    
     // Disparar eventos de input para formatar os campos
     const cpfCnpjInput = document.getElementById("cpf_cnpj_input");
     if (cpfCnpjInput) {

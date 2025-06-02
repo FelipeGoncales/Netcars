@@ -2658,7 +2658,9 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     right: 0;
 
     & select {
+        outline: none;
         padding: 7px 5px;
+        border: 2px solid rgba(0, 0, 0, 0.15);
         border-radius: 10px;
         cursor: pointer;
     }
