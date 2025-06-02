@@ -269,16 +269,16 @@ $(document).ready(function () {
 
     // Botão de parcelas pagas
     $("#parcelas_pagas").on("click", function () {
-        let textoStatus = "Paga";
+        let textoStatus = ["Amortizada", "Paga"];
         // Seleciona a option do select
-        $('#status-select').val('Paga');
+        $('#status-select').val('Amortizada Paga');
 
         // Loop for para esconder as linhas que não forem do mesmo status
         $('tr .status-text').each(function () {
-            if ($(this).text() != textoStatus) {
-                $(this).closest('tr').hide();
-            } else {
+            if (textoStatus.includes($(this).text())) {
                 $(this).closest('tr').show();
+            } else {
+                $(this).closest('tr').hide();
             }
         });
 
@@ -755,17 +755,17 @@ function buscarFinanciamento() {
 
 $('#status-select').on('change', function () {
     // Obtém o valor da option selecionada
-    let textoStatus = $(this).val();
+    let textoStatus = $(this).val().split(' ');
 
-    if (!textoStatus) {
+    if (textoStatus.includes('Todas')) {
         $('tr').show();
     } else {
         // Loop for para esconder as linhas que não forem do mesmo status
         $('tr .status-text').each(function () {
-            if ($(this).text() != textoStatus) {
-                $(this).closest('tr').hide();
-            } else {
+            if (textoStatus.includes($(this).text())) {
                 $(this).closest('tr').show();
+            } else {
+                $(this).closest('tr').hide();
             }
         });
     }

@@ -971,6 +971,38 @@ carregarAnos(selectAnoModCarro);
 carregarAnos(selectAnoFabMoto);
 carregarAnos(selectAnoModMoto);
 
+// Função para que ano de fabricação possa ser apenas 1 ano maior que ano modelo
+function anoModeloInput(inputFab, inputMod) {
+    $(inputFab).on('change', function() {
+        let anoMin = parseInt(inputFab.val());
+
+        if (!anoMin) {
+            $(inputMod).empty().prop('disabled', true);
+            $(`label[for="${$(inputMod).attr('id')}"]`).removeClass('active');
+            return;
+        }
+
+        $(inputMod)
+            .empty()
+            .append($(`<option value=""></option>`))
+            .prop('disabled', false);
+
+        let anoAnterior = anoMin - 1;
+
+        if (anoAnterior < anoMin) {
+            anoAnterior = anoMin;
+        }
+
+        for (let ano = anoMin; ano <= anoMin + 1; ano++) {
+            const option = $(`<option value="${ano}">${ano}</option>`);
+            inputMod.append(option);
+        }
+    })
+}
+
+anoModeloInput(selectAnoFabCarro, selectAnoModCarro);
+anoModeloInput(selectAnoFabMoto, selectAnoModMoto);
+
 //pdf carros
 $('#pdf-carros').click(function (e) {
     e.preventDefault();
