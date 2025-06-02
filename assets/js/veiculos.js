@@ -934,13 +934,13 @@ formatarPreco('#input-preco-min');
 formatarPreco('#input-preco-max');
 
 $("#input-preco-min").on("input", function() {
-    addFiltro("preco-min", `Mín: R$${$(this).val()}`, null, "preco-min", "input", $(this), true);
+    addFiltro("preco-min", `Mín: ${$(this).val()}`, null, "preco-min", "input", $(this), true);
 })
 
 // Filtro Preço Máximo
 
 $("#input-preco-max").on("input", function() {
-    addFiltro("preco-max", `Max: R$${$(this).val()}`, null, "preco-max", "input", $(this), true);
+    addFiltro("preco-max", `Max: ${$(this).val()}`, null, "preco-max", "input", $(this), true);
 })
 
 

@@ -99,7 +99,6 @@ $('#placa').blur(function () {
     validarPlaca();
 });
 
-
 // FASE 2
 
 // Função para mudar o tipo selecionado
