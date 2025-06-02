@@ -439,7 +439,8 @@ main {
                     transition: 0.3s;
                 }
 
-                & .img-preview, .img-preview-banner {
+                & .img-preview,
+                .img-preview-banner {
                     width: 100%;
                     height: 100%;
                     background-position: center;
@@ -2649,6 +2650,26 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
         }
     }
 
+}
+
+.div-filtro-mov {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    & select {
+        padding: 7px 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 360px) {
+    .div-filtro-mov {
+        & select {
+            padding: 5px 0px;
+        }
+    }
 }
 
 #mov-receitas,

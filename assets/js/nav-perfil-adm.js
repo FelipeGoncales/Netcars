@@ -26,7 +26,7 @@ $(document).ready(function () {
     })
 
     // Obter o banner da home
-    $(document).ready(function() {
+    $(document).ready(function () {
         $.ajax({
             url: `${BASE_URL}/obter_banner`,
             success: function (response) {
@@ -120,6 +120,132 @@ function exibirRelatorio(tipo) {
 }
 
 $(document).ready(function () {
+    /*
+
+        JS DO FILTRO DE MOVIMENTAÇÕES
+
+    */
+
+    // Obtém a data atual
+    const data = new Date();
+
+    // Obtém o ano
+    const anoMax = data.getFullYear();
+    const anoMin = 2020;
+
+    // Adiciona as options de ano
+    for (let ano = anoMax; ano >= anoMin; ano--) {
+        $('#select-ano-mov').append(
+            $('<option></option>').val(ano).text(ano)
+        )
+    }
+
+    // Seleciona o ano atual
+    $('#select-ano-mov').val(anoMax);
+
+    // Obtém o mês atual
+    const mesAtual = data.getMonth() + 1;
+
+    // Limpa o select de dia e adiciona uma option vazia
+    $('#select-mes-mov')
+        .empty()
+        .append($('<option></option>').val('').text('~'));
+
+    const nomesMeses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+
+    // Adiciona os meses
+    for (let mes = 1; mes <= 12; mes++) {        
+        $('#select-mes-mov').append(
+            $('<option></option>').val(mes).text(nomesMeses[mes - 1])
+        )
+    }
+
+    // Seleciona o mês atual das options
+    $('#select-mes-mov').val(mesAtual)
+
+    // Obtém o dia atual
+    const diaAtual = data.getDate();
+
+    // Função para obter a quantidade de dias no mês
+    function carregarDiasNoMes(ano, mes) {
+        // Retorna o último dia do mês atual
+        let diasNoMes = new Date(ano, mes, 0).getDate();
+
+        // Limpa o select de dia e adiciona uma option vazia
+        $('#select-dia-mov')
+            .empty()
+            .append($('<option></option>').val('').text('~'));
+        
+        // Adiciona os dias
+        for (let dia = 1; dia <= diasNoMes; dia++) {
+            $('#select-dia-mov').append(
+                $('<option></option>').val(dia).text(String(dia).length > 1 ? dia : `0${dia}`)
+            )
+        }
+    }
+
+    // Chama a função para adicionar os dias no select
+    carregarDiasNoMes(anoMax, mesAtual);
+
+    // Seleciona o dia atual
+    $('#select-dia-mov').val(diaAtual);
+
+    // Busca as movimentações
+    buscarMovimentacoes(anoMax, mesAtual, diaAtual);
+
+    // Evento de mudança no select de ano
+    $('#select-ano-mov').on('change', function() {
+        let ano = $(this).val();
+
+        $('#select-mes-mov').val('');
+        $('#select-dia-mov').val('').prop('disabled', true);
+    
+        buscarMovimentacoes(ano);
+    })
+
+    // Evento de mudança no select de mês
+    $('#select-mes-mov').on('change', function() {
+        let ano = $('#select-ano-mov').val();
+        let mes = $(this).val();
+
+        if (!mes) {
+            $('#select-dia-mov').val('').prop('disabled', true);
+        } else {        
+            $('#select-dia-mov').val('').prop('disabled', false);
+        }
+
+        carregarDiasNoMes(ano, mes);
+
+        $('#select-dia-mov').val('');
+    
+        buscarMovimentacoes(ano, mes);
+    })
+
+    // Evento de mudança no select de dias
+    $('#select-dia-mov').on('change', function() {
+        let ano = $('#select-ano-mov').val();
+        let mes = $('#select-mes-mov').val();
+        let dia = $(this).val();
+
+        buscarMovimentacoes(ano, mes, dia);
+    })
+
+    // Evento de mudança no select de ano
+    $('#select-ano-mov').on('change', function() {
+        let ano = $(this).val();
+
+        $('#select-mes-mov').val('');
+        $('#select-dia-mov').val('');
+    
+        buscarMovimentacoes(ano);
+    })
+
+    /*
+    
+        JS DOS RELATÓRIOS
+
+    */
+
     // Inicialmente ocultar todos os relatórios específicos
     $('.container-relatorios').hide();
 
@@ -321,38 +447,38 @@ $(document).ready(function () {
 
 
     // Configuração revisada do input de valor principal
-$('#input-valor')
-    .on('focus', function () {
-        if ($(this).val().trim() === '') {
-            $(this).val('R$ 0,00');
-        }
-    })
-    .on('input', function () {
-        let raw = $(this).val().replace(/[^\d]/g, '');
+    $('#input-valor')
+        .on('focus', function () {
+            if ($(this).val().trim() === '') {
+                $(this).val('R$ 0,00');
+            }
+        })
+        .on('input', function () {
+            let raw = $(this).val().replace(/[^\d]/g, '');
 
-        if (raw.length < 3) {
-            raw = raw.padStart(3, '0'); // Ex: 5 -> 005 -> 0,05
-        }
+            if (raw.length < 3) {
+                raw = raw.padStart(3, '0'); // Ex: 5 -> 005 -> 0,05
+            }
 
-        const centavos = raw.slice(-2);
-        const reais = raw.slice(0, -2);
+            const centavos = raw.slice(-2);
+            const reais = raw.slice(0, -2);
 
-        const valorFormatado = 'R$ ' + parseInt(reais).toLocaleString('pt-BR') + ',' + centavos;
-        $(this).val(valorFormatado);
-    })
-    .on('keydown', function (e) {
-        const allowedKeys = [8, 9, 13, 37, 39, 46]; // backspace, tab, enter, arrows, delete
+            const valorFormatado = 'R$ ' + parseInt(reais).toLocaleString('pt-BR') + ',' + centavos;
+            $(this).val(valorFormatado);
+        })
+        .on('keydown', function (e) {
+            const allowedKeys = [8, 9, 13, 37, 39, 46]; // backspace, tab, enter, arrows, delete
 
-        // Permitir números e teclas de controle
-        if (
-            (e.key >= '0' && e.key <= '9') ||
-            allowedKeys.includes(e.keyCode)
-        ) {
-            return;
-        }
+            // Permitir números e teclas de controle
+            if (
+                (e.key >= '0' && e.key <= '9') ||
+                allowedKeys.includes(e.keyCode)
+            ) {
+                return;
+            }
 
-        e.preventDefault(); // bloqueia tudo que não for número ou controle
-    });
+            e.preventDefault(); // bloqueia tudo que não for número ou controle
+        });
 
 
 
@@ -1562,6 +1688,9 @@ function carregarDadosMovimentacoes(movimentacoes, saldo, despesa, receita) {
     // Insere o valor das receitas
     $('#receita-valor').text(formatarValor(receita));
 
+    // Limpa o histórico de movimentações
+    $('#div-movimentacoes').empty();
+    
     if (movimentacoes.length) {
         // Adiciona as movimentações
         for (let movimentacao of movimentacoes) {
@@ -1573,26 +1702,39 @@ function carregarDadosMovimentacoes(movimentacoes, saldo, despesa, receita) {
 
 }
 
-// Busca os dados das movimentações ao abrir o site
-$(document).ready(function () {
-    // Acessa a rota via ajax
+// Função para buscar movimentações
+function buscarMovimentacoes(ano, mes, dia) {
+    // Cria o objeto de parâmetros
+    const params = new URLSearchParams();
+
+    // Adiciona os parâmetros
+    if (ano) params.append("ano", ano);
+    if (mes) params.append("mes", mes);
+    if (dia) params.append("dia", dia);
+
+    // Transforma os parametros em string
+    const queryString = params.toString();
+
+    // Contrói a url com base com base na existência ou não dos parâmetros
+    const url = queryString
+        ? `${BASE_URL}/movimentacoes?${queryString}`
+        : `${BASE_URL}/movimentacoes`;
+
     $.ajax({
-        url: `${BASE_URL}/movimentacoes`,
+        url: url,
         headers: {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
         success: function (response) {
-            // Obtém os dados
             let movimentacoes = response.movimentacoes;
             let saldo = response.totais.saldo;
             let receitas = response.totais.receitas;
             let despesas = response.totais.despesas;
-            // Chama a função para carregar os dados
+
             carregarDadosMovimentacoes(movimentacoes, saldo, despesas, receitas);
         }
-    })
-})
-
+    });
+}
 
 function formatarPreco(input) {
     $(input).on('input', function () {
@@ -1827,7 +1969,7 @@ $(document).ready(function () {
         $('#minha-conta').css('display', 'none');
 
         $('#config-prox').hide();
-        $('#config-ant').show(); 
+        $('#config-ant').show();
 
         // Exibe mensagem de sucesso
         alertMessage(configAtt2, 'success');
@@ -1865,7 +2007,7 @@ function validarCNPJConfig(cnpj) {
     for (let i = 0; i < 12; i++) {
         n += parseInt(c.charAt(i), 10) * b[i + 1];
     }
-    
+
     let resultado = n % 11 < 2 ? 0 : 11 - (n % 11);
     if (resultado !== parseInt(c.charAt(12), 10)) {
         return false;
@@ -2052,7 +2194,7 @@ $('#editarBanner').click(function () {
 });
 
 // Atualizar cores do site
-$('#atualizarCores').click(function() {
+$('#atualizarCores').click(function () {
 
     let envia = {
         cor_princ: $('#color-princ').val(),
@@ -2069,13 +2211,13 @@ $('#atualizarCores').click(function() {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
         data: JSON.stringify(envia),
-        success: function(response) {
+        success: function (response) {
             // Salva a mensagem de sucesso no local storage
             localStorage.setItem('configAtt', response.success);
             // Recarrega a página
             window.location.reload();
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON?.error, 'error');
         }
     })
@@ -2095,13 +2237,13 @@ function formatarTelefoneInput(telefone) {
     }
 }
 
-$('#telefone-input').on('focus', function() {
+$('#telefone-input').on('focus', function () {
     // Limpa máscara ao focar
     const val = $(this).val().replace(/\D/g, '');
     $(this).val(val);
 });
 
-$('#telefone-input').on('blur', function() {
+$('#telefone-input').on('blur', function () {
     const val = $(this).val();
     const formatado = formatarTelefoneInput(val);
     $(this).val(formatado);
@@ -2124,13 +2266,13 @@ function isValidBrazilianPhone(nums) {
 }
 
 // Mantém sua formatação no blur
-$('#telefone-input').on('blur', function() {
+$('#telefone-input').on('blur', function () {
     const val = $(this).val();
     const formatado = formatarTelefoneInput(val);
     $(this).val(formatado);
 });
 
-$('#form-att-footer').on("submit", function(e) {
+$('#form-att-footer').on("submit", function (e) {
     e.preventDefault();
 
     // Pega os valores limpos
@@ -2154,13 +2296,13 @@ $('#form-att-footer').on("submit", function(e) {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
         data: JSON.stringify(envia),
-        success: function(response) {
+        success: function (response) {
             // Salva a mensagem de sucesso no local storage
             localStorage.setItem('configAtt2', response.success);
             // Recarrega a página
             window.location.reload();
         },
-        error: function(response) {
+        error: function (response) {
             alertMessage(response.responseJSON?.error, 'error');
         }
     })
@@ -2171,13 +2313,13 @@ $('#form-att-footer').on("submit", function(e) {
 const qntDivs = 2;
 
 // Mudar para modal config footer e atualizar as setas
-$('#config-prox').click(function() {
+$('#config-prox').click(function () {
 
     for (i = 1; i < qntDivs + 1; i++) {
         if ($(`#div-config-${i}`).css('display') === 'flex') {
             if (i < qntDivs) {
                 $(`#div-config-${i}`).hide();
-                $(`#div-config-${i+1}`).css('display', 'flex');
+                $(`#div-config-${i + 1}`).css('display', 'flex');
 
                 // No responsivo, scrolla para o topo da página e coloca a seta na parte de baixo
                 if ($(window).width() <= 820) {
@@ -2188,7 +2330,7 @@ $('#config-prox').click(function() {
 
                     $('#config').css('flex-direction', 'column-reverse');
                 }
-            
+
                 if (i + 1 == qntDivs) {
                     $('#config-prox').hide();
                     $('#config-ant').css('display', 'flex');
@@ -2202,7 +2344,7 @@ $('#config-prox').click(function() {
 })
 
 // Mudar para modal config footer e atualizar as setas
-$('#config-ant').click(function() {
+$('#config-ant').click(function () {
 
     for (i = qntDivs; i > 1; i--) {
         if ($(`#div-config-${i}`).css('display') === 'flex') {
