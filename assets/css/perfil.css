@@ -240,6 +240,7 @@ h1 {
     width: 30px;
     flex-direction: column;
     gap: 5px;
+    cursor: pointer;
 
     & .linha1,
     .linha2,
