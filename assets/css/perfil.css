@@ -1036,11 +1036,11 @@ tbody tr.tipo2 {
     transform: translate(-50%, -50%);
     background-color: var(--cor-bg-sec);
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.15);
-    width: 400px;
+    width: 500px;
     z-index: 15;
 
     & h3 {
