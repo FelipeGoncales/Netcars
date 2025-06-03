@@ -1119,6 +1119,41 @@ main {
 }
 
 /* MANUTENÇÃO */
+
+.div-select-servico-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    height: 47px;
+
+    & select {
+        height: 100%;
+    }
+
+    & .div-tip-add-serv {
+        width: 16%;
+        border-radius: 10px;
+        height: 100%;
+        padding: 10px;
+        background-color: var(--roxo);
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        cursor: pointer;
+        transition: 0.3s;
+
+        & i {
+            color: var(--cor-bg-sec);
+            font-size: 1.2rem;
+        }
+
+        &:hover {
+            background-color: var(--hover-roxo);
+        }
+    }
+}
+
 .modal-manu {
     background: var(--cor-bg-sec);
     padding: 60px;

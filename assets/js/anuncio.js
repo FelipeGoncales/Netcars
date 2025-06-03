@@ -420,6 +420,7 @@ function carregarCidades(estadoId, select) {
     });
 }
 
+
 // Variáveis globais
 var LISTA_MANUTENCOES = [];    // Lista de manutenções carregadas
 var INDEX_MANUTENCAO = 0;      // Índice da manutenção atual
@@ -438,12 +439,45 @@ $(document).ready(async function () {
 
     // Configurar listeners para os selects de serviços
     $('#select-servico').on('change', atualizarValorServico);
+    
     $('#select-editar-servico').on('change', atualizarValorServicoEditar);
 
     // Inicializar quantidades com valor 1
     $('#quantidade-servico').val(1);
     $('#quantidade-editar-servico').val(1);
+
+    configurarLinkServicosAdmin();
 });
+
+// Função para configurar o link de serviços para administradores
+async function configurarLinkServicosAdmin() {
+    const dadosUser = JSON.parse(localStorage.getItem('dadosUser'));
+    const $linkServicos = $('.link_para_servicos');
+
+    await obterTipoUser();
+
+    // Caso seja vendedor, esconde o botão
+    if (tipoUser == 2) {
+        $('.link_para_servicos').css('display', 'none');
+        return;
+    }
+
+    // Se não houver usuário logado, não faz nada
+    if (!dadosUser) {
+        return;
+    }
+    if (dadosUser.tipo_usuario === 1) {
+        $linkServicos.css('display', 'flex');
+
+        // Adiciona o evento de clique
+        $linkServicos.on('click', function() {
+            // Mensagem no local storage
+            localStorage.setItem('add-servico', true);
+            // Redireciona para a página do perfil do adm
+            window.location.href = 'administrador-perfil.html';
+        });
+    }
+}
 
 // Carregar todos os serviços disponíveis no banco de dados
 async function carregarTodosServicos() {
