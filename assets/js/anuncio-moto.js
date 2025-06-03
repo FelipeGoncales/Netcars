@@ -334,8 +334,6 @@ $(document).ready(async function () {
 
                         $('#div-button-cancelar-reserva-cliente').css('display', 'none');
                         $('#mensagem-reserva-cliente').css('display', 'none');
-
-                        $('#div-button-cancelar-reserva-adm .adm-reserva').text(`Reservado por ${response.nome_usuario}`);
                     } else {
                         $('#div-button-cancelar-reserva-adm').css('display', 'none');
                         $('#mensagem-reserva-adm').css('display', 'none');

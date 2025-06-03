@@ -257,9 +257,7 @@ $(document).ready(function () {
     })
 
     /*
-    
-        JS DOS RELATÓRIOS
-
+    JS DOS RELATÓRIOS
     */
 
     // Inicialmente ocultar todos os relatórios específicos
@@ -448,6 +446,19 @@ $(document).ready(function () {
         }
     });
 
+});
+
+
+$(document).ready(function () {
+    // Verifica se o hash atual na URL é "#link_servicos"
+    const addServico = localStorage.getItem('add-servico');
+
+    if (addServico) {
+        $('#minha-conta').css('display', 'none');
+        $('#servicos').css('display', 'flex');
+        // Remove do local storage
+        localStorage.removeItem('add-servico');
+    }
 });
 
 // Funções serviços
@@ -716,14 +727,22 @@ function abrirModalEditarServico(idServico) {
         .val(formatarValor(servico.valor))
         .prev('label').addClass('active');
 
-    $('#overlay-bg').css({ display: 'flex' });
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
+    });
     $('#formEditarServico').css({ display: 'flex' });
 }
 
 // Fecha modal de editar serviço
 function fecharModalEditarServico() {
     // Aplica animação de saída em ambos
-    $('#overlay-bg').css({ display: 'none' });
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+
+    setTimeout(() => {
+        $('#overlay-bg').css('display', 'none');
+    }, 660);
+
     $('#formEditarServico').css({ display: 'none' });
 }
 
@@ -1029,10 +1048,10 @@ $('#pdf-carros').click(function (e) {
     const marca = $('#select-marca-carro').val();
     const anoModelo = parseInt($('#ano-modelo-carro').val());
     const anoFabricacao = parseInt($('#ano-fabricacao-carro').val());
+    const statusVeiculo = $('#status-do-carro').val();
 
     // 2) Montar URL
     let url = `${BASE_URL}/relatorio/carros?`;
-
     let listaUrl = [];
 
     if (marca) {
@@ -1044,9 +1063,11 @@ $('#pdf-carros').click(function (e) {
     if (anoFabricacao) {
         listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
+    if (statusVeiculo) {
+        listaUrl.push(`status_carro=${encodeURIComponent(statusVeiculo)}`);
+    }
 
     url += listaUrl.join('&');
-
     window.open(url, '_blank');
 });
 
@@ -1058,10 +1079,10 @@ $('#pdf-motos').click(function (e) {
     const marca = $('#select-marca-moto').val();
     const anoModelo = parseInt($('#ano-modelo-moto').val());
     const anoFabricacao = parseInt($('#ano-fabricacao-moto').val());
+    const statusVeiculo = $('#status-da-moto').val();
 
     // 2) Montar URL
     let url = `${BASE_URL}/relatorio/motos?`;
-
     let listaUrl = [];
 
     if (marca) {
@@ -1073,9 +1094,11 @@ $('#pdf-motos').click(function (e) {
     if (anoFabricacao) {
         listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
+    if (statusVeiculo) {
+        listaUrl.push(`status_moto=${encodeURIComponent(statusVeiculo)}`);
+    }
 
     url += listaUrl.join('&');
-
     window.open(url, '_blank');
 });
 
@@ -1296,11 +1319,12 @@ $(document).ready(() => {
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').hide();
 
+    // Agora remove a animação do overlay de edição e esconde-o
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
     setTimeout(() => {
-        overlayBg.css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 660);
-})
+});
 
 // Abrir modal editar ao clicar no ícone de editar
 $('table').on('click', '.edit-icon', function () {
@@ -1324,8 +1348,14 @@ $('table').on('click', '.edit-icon', function () {
     // Transformando em número
     let textoTipoUser = tipoUser === "Administrador" ? 1 : tipoUser === "Vendedor" ? 2 : 3;
 
-    $('#modal-editar-usuario').css('display', 'flex')
-    $('#overlay-bg-modal-edit').css('display', 'flex');
+    // Exibe o modal de edição
+    $('#modal-editar-usuario').css('display', 'flex');
+
+    // Exibe o overlay de edição COM animação
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
+    });
 
     $('#nome-editar').val(textoNome);
     $('#email-editar').val(textoEmail);
@@ -1334,7 +1364,7 @@ $('table').on('click', '.edit-icon', function () {
     $('#tipo-usuario-editar').val(textoTipoUser);
 
     // Rota para editar perfil
-    $('#modal-editar-usuario').on("submit", function (e) {
+    $('#modal-editar-usuario').off('submit').on("submit", function (e) {
         e.preventDefault();
 
         let dados = new FormData(this);
@@ -1369,28 +1399,33 @@ $('table').on('click', '.edit-icon', function () {
             }
         });
     });
-})
+});
 
-// Abrir modal editar
+// Abrir modal cadastrar usuario
 $('#btn-modal-cad-user').click(function () {
     $('#formCadastroUsuario').css('display', 'flex');
-    $('#overlay-bg').css('display', 'flex');
-})
-// Fechar modal editar
+
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
+    });
+});
+
+// Fechar modal cadastrar usuario
 $('#close-modal-cad-user').on('click', function () {
     $('#formCadastroUsuario').hide();
 
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
     setTimeout(() => {
-        overlayBg.css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 660);
 });
 
 // Abre modal de receitas
 $('#mov-receitas').on('click', function () {
-    $('.overlay-bg').css({
-        'animation': 'aparecerOverlay 0.5s',
-        'display': 'flex'
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
     });
     $('#modal-mov').css('display', 'flex');
 
@@ -1400,9 +1435,9 @@ $('#mov-receitas').on('click', function () {
 
 // Abre modal de despesas
 $('#mov-despesas').on('click', function () {
-    $('.overlay-bg').css({
-        'animation': 'aparecerOverlay 0.5s',
-        'display': 'flex'
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
     });
 
     $('#modal-mov').css('display', 'flex');
@@ -1422,9 +1457,8 @@ $('#close-modal-mov').on('click', function () {
     $('#valor-mov').val('R$ 0,00');
 
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
-
     setTimeout(() => {
-        overlayBg.css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 660);
 })
 
@@ -1551,9 +1585,6 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
                 'font-size': '1.5rem'
             }) // Inserir nome do carro
 
-        // Descrição do veículo
-        const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
-
         // Container das informações adicionais
         const containerInfoCard = $("<div></div>").addClass("container-info-card");
 
@@ -1591,7 +1622,7 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
             .addClass("ver-detalhes");
 
         // Adiciona todos os itens na div itens-card
-        divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
+        divItensCard.append(h3Title, containerInfoCard, h3Price, buttonDetalhes);
 
         // Junta a imagem e os itens ao card
         divCard.append(img, divpReservadoPor, divItensCard);
@@ -1602,9 +1633,16 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
 }
 
 // Buscar reservas
-function buscarReservas() {
+function buscarReservas(search) {
+    url = `${BASE_URL}/buscar_reservas`;
+
+    // Caso tiver parâmetro, adiciona a url
+    if (search) {
+        url += `?s=${search}`;
+    }
+
     $.ajax({
-        url: `${BASE_URL}/buscar_reservas`,
+        url: url,
         headers: {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
@@ -1614,6 +1652,9 @@ function buscarReservas() {
             listaVeicMotos = response.motos;
 
             const $divReservas = $('#div-reservas');
+
+            // Limpa a div antes de tudo
+            $divReservas.empty();
 
             if (!listaVeicCarro.length && !listaVeicMotos.length) {
                 const divPai = $('<div></div>').addClass('div-pai');
@@ -1634,8 +1675,26 @@ function buscarReservas() {
                 await gerarCard(listaVeicMotos, $divReservas, "moto");
             }
 
-            // Adiciona o título da seção
-            $('#reservas').prepend($('<h3></h3>').text('Veículos reservados'));
+            const divInputFiltro = $('<div></div>')
+                                    .addClass('div-input-filtro-reserva')
+                                    .append($('<input></input>')
+                                        .attr('id', 'filtroReserva')
+                                        .prop('placeholder', 'Buscar por marca, modelo ou placa do veículo reservado'))
+                                    .append($('<i></i>').addClass("fa-solid fa-magnifying-glass"));
+
+            if ($('#reservas').children().length < 2) {
+                // Adiciona o título da seção
+                $('#reservas')
+                    .prepend(divInputFiltro)
+                    .prepend($('<h3></h3>').text('Veículos reservados'));
+
+                $('#filtroReserva').on('input', function() {
+                    const search = $(this).val();
+
+                    // Faz a busca com o filtro
+                    buscarReservas(search);
+                })
+            }
         }
     })
 }
@@ -1644,6 +1703,31 @@ function buscarReservas() {
 $(document).ready(() => {
     // Busca pelas reservas ao abrir a página
     buscarReservas();
+
+    // Verifica se o cliente clicou em ver detalhes de reserva
+    let verDetalhesParcelamento = localStorage.getItem('verDetalhesParcelamento');
+
+    // Caso sim, abre a página de financiamentos
+    if (verDetalhesParcelamento) {
+        // Abre a seção de financiamento
+        $('#minha-conta').css('display', 'none');
+
+        // Alternar a exibição do submenu
+        $(".submenu-relatorios")
+            .slideDown(300, function () {
+                $('nav').css('overflow-y', 'auto');
+            });
+
+        // Exibe o relátorio de parcelamentos
+        exibirRelatorio('parcelamentos');
+
+        // Marca o link de relatórios como selecionado
+        let linkRelatorios = document.getElementById('link_relatorios');
+        selecionarA(linkRelatorios);
+
+        // Remove o item do local storage
+        localStorage.removeItem('verDetalhesParcelamento');
+    }
 
     // Verifica se o cliente clicou em ver detalhes de reserva
     let verDetalhesReserva = localStorage.getItem('verDetalhesVenda');
@@ -1660,7 +1744,7 @@ $(document).ready(() => {
             });
 
         // Exibe o relátorio de parcelamentos
-        exibirRelatorio('parcelamentos');
+        exibirRelatorio('movimentacao');
 
         // Marca o link de relatórios como selecionado
         let linkRelatorios = document.getElementById('link_relatorios');

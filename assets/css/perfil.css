@@ -930,13 +930,15 @@ main {
     justify-content: center;
     width: 22px;
     position: absolute;
-    right: 20px;
-    top: 54%;
+    right: 15px;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     z-index: 99;
     font-size: 1.1rem;
     color: #7B7B7B;
+    background-color: var(--cor-bg-sec);
+    padding: 5px;
 }
 
 .container-edit-user {
@@ -1036,11 +1038,11 @@ tbody tr.tipo2 {
     transform: translate(-50%, -50%);
     background-color: var(--cor-bg-sec);
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.15);
-    width: 400px;
+    width: 500px;
     z-index: 15;
 
     & h3 {
@@ -2195,6 +2197,27 @@ tbody tr.tipo2 {
     gap: 20px;
     align-items: flex-start;
     justify-content: flex-start;
+}
+
+.div-input-filtro-reserva {
+    position: relative;
+    width: 100%;
+    & #filtroReserva {
+        width: 100%;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        padding: 10px 18px;
+        outline: none;
+        border-radius: 30px;
+        position: relative;
+    }
+    & i {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20px;
+        font-size: 1.2rem;
+        color: var(--cor-texto-apagado);
+    }
 }
 
 .div-pai {
@@ -3514,9 +3537,9 @@ footer {
                 }
             }
 
-            & #telefone-footer {
+            & #telefone-footer, #cidade-footer {
                 cursor: auto;
-
+                
                 &:hover {
                     text-decoration: none;
                 }

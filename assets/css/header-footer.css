@@ -107,6 +107,12 @@ header {
     opacity: 1;
 }
 
+/* Tooltip para adicionar serviço */
+.div-tip-add-serv:hover .tip-add-serv {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* Barra lateral */
 
 #barra-lateral {
@@ -417,7 +423,7 @@ footer {
                 }
             }
 
-            & #telefone-footer {
+            & #telefone-footer, #cidade-footer {
                 cursor: auto;
 
                 &:hover {

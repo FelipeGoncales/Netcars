@@ -29,6 +29,8 @@ $(document).ready(function () {
 
             $('#email-footer').text(response.email).attr('href', `mailto:${response.email}`);
 
+            $('#cidade-footer').text(`${response.cidade} - ${response.estado}`);
+
             $('#email-input').val(response.email);
             $('#telefone-input').val(formatarTelefone(response.telefone));
 
