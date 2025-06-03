@@ -11,6 +11,8 @@ main {
     outline: none;
 }
 
+/* Aparecer mensagem ao passar mouse por cima */
+
 .sec-pesquisar {
     display: flex;
     flex-direction: column;

@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.103:5000";
+var BASE_URL = "http://192.168.1.124:5000";
 
 function formatarTelefone(telefone) {
     // Remove tudo que não for dígito
@@ -161,6 +161,9 @@ $(document).ready(function () {
                 $('#nomeUsuario').text(dadosUser.nome_completo);
             }
         }
+
+        // Texto da tip
+        $('.tip-user').text('Acessar perfil')
 
         // Lógica para obter tipo do usuário
 

@@ -15,7 +15,7 @@
     --roxo: #6C1DE9;
     --hover-roxo: #6C1DE9;
     --cor-bg: #ECEDF2;
-    --cor-bg-sec: #FFFFFF; 
+    --cor-bg-sec: #FFFFFF;
     --cor-texto: #262627;
     --cor-texto-apagado: #AEAEBA;
     --cor-titles: #696977;
@@ -35,11 +35,46 @@ header {
     background-color: var(--cor-bg-sec);
     display: flex;
     padding: 12px 50px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     align-items: center;
     justify-content: space-between;
 }
 
+
+/* Div */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Tip */
+.tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 1;
+    top: 115%;
+    /* Aparece abaixo */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 0.8rem;
+}
+
+/* Tooltip entrar / perfil */
+.div-tip-user:hover .tip-user {
+    visibility: visible;
+    opacity: 1;
+}
 
 /* Barra lateral */
 
@@ -49,22 +84,26 @@ header {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+
     & .div-usuario {
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 5px;
+
         & i {
             font-size: 1.8rem;
             color: var(--cor-texto);
         }
+
         & p {
             font-size: 1.2rem;
             color: var(--cor-texto);
             font-weight: 600;
         }
     }
+
     & #fecharBarraLateral {
         display: none;
         position: absolute;
@@ -73,20 +112,25 @@ header {
         right: 15px;
         font-size: 2.3rem;
     }
+
     & nav {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
         & ul {
             display: flex;
             gap: 70px;
             list-style-type: disc;
-            & li, a {
+
+            & li,
+            a {
                 padding: 35px 0;
                 cursor: pointer;
                 color: var(--cor-texto);
                 transition: 0.1s;
+
                 &:hover {
                     color: var(--roxo);
                 }
@@ -100,10 +144,12 @@ header {
     gap: 5px;
     align-items: center;
     justify-content: center;
+
     & img {
         width: auto;
         height: 25px;
     }
+
     & p {
         color: var(--cor-texto);
         font-size: 2rem;
@@ -112,12 +158,14 @@ header {
         position: relative;
         left: -5px;
     }
+
     & span {
         color: var(--roxo);
         font-size: 2rem;
         font-family: "Racing Sans One", serif;
         text-transform: uppercase;
     }
+
     &.hidden {
         display: none;
     }
@@ -129,7 +177,10 @@ header {
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
-    & .linha1, .linha2, .linha3 {
+
+    & .linha1,
+    .linha2,
+    .linha3 {
         border-radius: 10px;
         width: 100%;
         height: 4px;
@@ -140,7 +191,7 @@ header {
 .overlay-bg {
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.45);
+    background-color: rgba(0, 0, 0, 0.45);
     position: fixed;
     top: 0;
     right: 0;
@@ -152,6 +203,7 @@ header {
     0% {
         right: -100%;
     }
+
     100% {
         right: 0;
     }
@@ -161,6 +213,7 @@ header {
     0% {
         right: 0;
     }
+
     100% {
         right: -100%;
     }
@@ -170,6 +223,7 @@ header {
     0% {
         opacity: 0%;
     }
+
     100% {
         opacity: 100%;
     }
@@ -179,6 +233,7 @@ header {
     0% {
         opacity: 100%;
     }
+
     100% {
         opacity: 0%;
     }
@@ -192,7 +247,7 @@ header {
 
 #modal-nav-veiculos {
     background-color: var(--cor-bg-sec);
-    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
     display: none;
     flex-direction: column;
     align-items: center;
@@ -204,6 +259,7 @@ header {
     transform: translateX(-50%);
     position: fixed;
     z-index: 95;
+
     & div {
         display: flex;
         align-items: center;
@@ -213,6 +269,7 @@ header {
         cursor: pointer;
         transform: 0.1s;
         border-radius: inherit;
+
         &:hover {
             background-color: var(--cor-bg);
         }
@@ -224,7 +281,7 @@ header {
     z-index: 5;
     top: 75px;
     right: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     display: none;
     flex-direction: column;
     gap: 15px;
@@ -233,11 +290,13 @@ header {
     border-radius: 15px;
     box-sizing: content-box;
     width: 250px;
+
     & .title {
         font-size: 0.9rem;
         color: var(--cor-texto);
         font-weight: 500;
     }
+
     & .btn-login {
         cursor: pointer;
         background-color: var(--roxo);
@@ -250,10 +309,12 @@ header {
         border-radius: 15px;
         padding: 15px;
         transition: 0.1s;
+
         &:hover {
             background-color: var(--hover-roxo);
         }
     }
+
     & #closeModalLogin {
         position: absolute;
         cursor: pointer;
@@ -261,16 +322,19 @@ header {
         right: 6px;
         font-size: 1.8rem;
     }
+
     & .subtitle {
         color: var(--cor-titles);
         font-size: 0.85rem;
         text-align: center;
     }
+
     & a {
         color: var(--roxo);
         font-weight: 600;
         cursor: pointer;
         font-size: 0.85rem;
+
         &:hover {
             text-decoration: underline;
         }
@@ -287,6 +351,7 @@ footer {
     justify-content: center;
     width: 100%;
     margin-top: 80px;
+
     & .div-contato {
         background-color: var(--roxo);
         padding: 40px 0;
@@ -295,16 +360,19 @@ footer {
         justify-content: center;
         gap: 100px;
         width: inherit;
+
         & div {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
             gap: 5px;
+
             & .footer-title {
                 color: var(--cor-bg-sec);
                 font-weight: 600;
             }
+
             & .footer-text {
                 color: var(--cor-bg-sec);
                 font-weight: 300;
@@ -312,17 +380,20 @@ footer {
                 cursor: pointer;
                 transition: 0.1s;
                 padding: 10px 0;
+
                 &:hover {
                     text-decoration: underline;
                 }
             }
         }
     }
+
     & .div-logo {
         padding: 15px 0;
         background-color: var(--cor-bg-sec);
         width: inherit;
     }
+
     & .div-direitos-reservados {
         padding: 10px 0;
         width: inherit;
@@ -331,16 +402,19 @@ footer {
         align-items: center;
         justify-content: center;
         text-align: center;
+
         & p {
             color: var(--cor-bg-sec);
             font-size: 0.85rem;
         }
+
         & .net {
             color: var(--roxo);
             font-family: "Racing Sans One", serif;
             text-transform: uppercase;
 
         }
+
         & .cars {
             color: var(--cor-bg-sec);
             font-family: "Racing Sans One", serif;
@@ -348,6 +422,7 @@ footer {
         }
     }
 }
+
 /* Fim do Footer */
 
 /* Responsivo Header - Footer */
@@ -374,28 +449,34 @@ footer {
         z-index: 999;
         justify-content: center;
         gap: 40px;
+
         & nav {
             position: static;
             top: 0;
             left: 0;
             transform: none;
+
             & ul {
                 padding-left: 24px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 30px;
+
                 & a {
                     padding: 15px 0;
                 }
+
                 & li {
                     padding: 0;
                 }
             }
         }
-        &  #fecharBarraLateral {
+
+        & #fecharBarraLateral {
             display: flex;
         }
+
         & .div-logo {
             scale: 0.8;
         }
@@ -417,6 +498,7 @@ footer {
             align-items: center;
             gap: 50px;
             flex-direction: column;
+
             & div {
                 align-items: center;
             }
