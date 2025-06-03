@@ -196,6 +196,11 @@ button.owl-prev span{
   color: #6C1DE9;
 }
 
+.strong-href{
+  color: #6C1DE9;
+  cursor: pointer;
+}
+
 .arrow {
   transition: transform 0.3s ease;
   margin-right: 8px;
