@@ -185,10 +185,13 @@ $(document).ready(function () {
                     }
                 },
                 error: function (response) {
-                    localStorage.deleteItem('dadosUser');
+                    // Caso dê erro, redireciona para a página de login
+                    localStorage.removeItem('dadosUser');
+
                     localStorage.setItem('mensagem', JSON.stringify({
                         "error": response.responseJSON.error
                     }))
+
                     window.location.href = "login.html";
                 }
             })

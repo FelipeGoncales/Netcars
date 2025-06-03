@@ -1,26 +1,41 @@
 // Lógica para não permitir que um tipo de usuário acesse o perfil de outros
 
 $(document).ready(function() {
+    const dadosUser = localStorage.getItem('dadosUser');
+
+    // Caso não exista item no local storage, retorna para login
+    if (!dadosUser) {
+        localStorage.removeItem('dadosUser');
+
+        localStorage.setItem('mensagem', JSON.stringify({
+            "error": response.responseJSON.error
+        }))
+
+        window.location.href = "login.html";
+    }
+
     $.ajax({
         url: `${BASE_URL}/obter_tipo_usuario`,
         headers: {
-            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
+            "Authorization": "Bearer " + JSON.parse(dadosUser).token
         },
-        success: function(response) {
+        success: function (response) {
             const tipoUser = response.tipo_usuario;
 
-            if (tipoUser === 1) {
-                window.location.href = 'administrador-perfil.html';
+            if (tipoUser === 2) {
+                window.location.href = 'vendedor-perfil.html';
             }
             if (tipoUser === 3) {
                 window.location.href = 'cliente-perfil.html';
             }
         },
-        error: function(response) {
-            localStorage.deleteItem('dadosUser');
+        error: function (response) {
+            localStorage.removeItem('dadosUser');
+
             localStorage.setItem('mensagem', JSON.stringify({
                 "error": response.responseJSON.error
             }))
+
             window.location.href = "login.html";
         }
     })
