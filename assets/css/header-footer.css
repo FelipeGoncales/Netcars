@@ -76,6 +76,11 @@ header {
     opacity: 1;
 }
 
+.div-tip-reservar:hover .tip-reservar {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* Barra lateral */
 
 #barra-lateral {

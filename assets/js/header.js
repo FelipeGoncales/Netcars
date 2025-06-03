@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.124:5000";
+var BASE_URL = "http://192.168.1.109:5000";
 
 function formatarTelefone(telefone) {
     // Remove tudo que não for dígito
