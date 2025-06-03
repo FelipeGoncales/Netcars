@@ -50,6 +50,29 @@
                     <input name="senha_hash" type="password" id="input-senha" required />
                     <i class="fa-solid fa-eye" id="mostrarSenha"></i>
                 </div>
+                <div class="div-input-requerimetos-senha">
+                    
+                    <p class="requerimetos-senha errado" id="length">
+                    <i class="fa-solid fa-circle"></i>
+                    A senha deve ter pelo menos 8 caracteres
+                    </p>
+
+                    <p class="requerimetos-senha errado" id="symbol">
+                    <i class="fa-solid fa-circle"></i>
+                    A senha deve conter pelo menos um símbolo especial
+                    </p>
+
+                    <p class="requerimetos-senha errado" id="uppercase">
+                    <i class="fa-solid fa-circle"></i>    
+                    A senha deve conter pelo menos uma letra maiúscula
+                    </p>
+
+                    <p class="requerimetos-senha errado" id="number">
+                    <i class="fa-solid fa-circle"></i>    
+                    A senha deve conter pelo menos um número
+                    </p>
+
+                </div>
                 <div class="divButtonSubmit">
                     <button class="btn-acao" type="submit">Criar conta</button>
                     <p id="mensagemError"></p>
