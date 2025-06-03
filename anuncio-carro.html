@@ -141,8 +141,16 @@
                                 <input class="vehicleTitle modelo" id="input-modelo" disabled></input>
                                 <p class="input-mirror" id="mirror-input-modelo"></p>
                                 <div id="div-icons-actions">
-                                    <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
-                                    <i class="fa-solid fa-screwdriver-wrench" id="addManutencao"></i>
+                                    <!-- Div Botão Editar -->
+                                    <div class="tooltip div-tip-edit">
+                                        <i class="fa-solid fa-pencil" id="editarAnuncio"></i>
+                                        <span class="tooltip-text tip-edit">Editar anúncio</span>
+                                    </div>
+                                    <!-- Div Botão Manutenção -->
+                                    <div class="tooltip div-tip-manu">
+                                        <i class="fa-solid fa-screwdriver-wrench" id="addManutencao"></i>
+                                        <span class="tooltip-text tip-manu">Adicionar manutenção</span>
+                                    </div>
                                 </div>
                             </div>
                             <input class="vehicleSub" id="input-subtitle" disabled></input>
@@ -288,7 +296,10 @@
 
                         <div class="div-buttons vendedor" id="div-button-vendedor">
                             <button class="salvar-btn" id="salvar-alteracoes" disabled>Salvar alterações</button>
-                            <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
+                            <div class="tooltip div-tip-del-anuncio div-icon-trash">
+                                <i class="fa-solid fa-trash icon-trash" id="deletar-veiculo"></i>
+                                <span class="tooltip-text tip-del-anuncio">Deletar anúncio</span>
+                            </div>
                         </div>
 
                         <div class="div-buttons vendido" id="div-button-vendido">
@@ -297,15 +308,17 @@
 
                         <div class="div-buttons canc-reserva" id="div-button-cancelar-reserva-cliente">
                             <button class="comprar-btn">Compre Já!</button>
-                            <button class="salvar-btn cancelar-reserva">
+                            <button class="salvar-btn cancelar-reserva tooltip div-tip-canc-reserva">
                                 <i class="fa-solid fa-ban"></i>
+                                <span class="tooltip-text tip-canc-reserva">Cancelar reserva</span>
                             </button>
                         </div>
 
                         <div class="div-buttons canc-reserva" id="div-button-cancelar-reserva-adm">
                             <button class="comprar-btn adm-reserva">Reservado por ~</button>
-                            <button class="salvar-btn cancelar-reserva">
+                            <button class="salvar-btn cancelar-reserva tooltip div-tip-canc-reserva">
                                 <i class="fa-solid fa-ban"></i>
+                                <span class="tooltip-text tip-canc-reserva">Cancelar reserva</span>
                             </button>
                         </div>
 

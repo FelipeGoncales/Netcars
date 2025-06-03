@@ -661,6 +661,9 @@ $("#editarAnuncio").on("click", function () {
     // Verifica se os inputs não estão visíveis
     if (editarOn === false) {
         editarOn = true;
+        
+        // Altera a mensagem da dica
+        $('.tip-edit').text('Descartar alterações');
 
         // Alterar ícone do botão de editar para X
         $(this).removeClass('fa-pencil').addClass('fa-xmark');
@@ -694,6 +697,9 @@ $("#editarAnuncio").on("click", function () {
         $('#upload-imagem').css('display', 'none').prop('disabled', false);
     } else {
         editarOn = false;
+
+        // Altera a mensagem da dica
+        $('.tip-edit').text('Editar anúncio');
 
         // Alterar ícone do botão de editar para a caneta
         $(this).removeClass('fa-xmark').addClass('fa-pencil');

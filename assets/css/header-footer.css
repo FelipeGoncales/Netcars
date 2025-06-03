@@ -67,16 +67,42 @@ header {
     transition: opacity 0.3s ease;
     white-space: nowrap;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
-/* Tooltip entrar / perfil */
+/* Tooltip entrar perfil */
 .div-tip-user:hover .tip-user {
     visibility: visible;
     opacity: 1;
 }
 
+/* Tooltip botão reserva */
 .div-tip-reservar:hover .tip-reservar {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip editar anúncio */
+.div-tip-edit:hover .tip-edit {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip adicionar manutenção */
+.div-tip-manu:hover .tip-manu {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip cancelar reserva */
+.div-tip-canc-reserva:hover .tip-canc-reserva {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip excluir anúncio */
+.div-tip-del-anuncio:hover .tip-del-anuncio {
     visibility: visible;
     opacity: 1;
 }
