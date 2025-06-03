@@ -1029,10 +1029,10 @@ $('#pdf-carros').click(function (e) {
     const marca = $('#select-marca-carro').val();
     const anoModelo = parseInt($('#ano-modelo-carro').val());
     const anoFabricacao = parseInt($('#ano-fabricacao-carro').val());
+    const statusVeiculo = $('#status-do-carro').val();
 
     // 2) Montar URL
     let url = `${BASE_URL}/relatorio/carros?`;
-
     let listaUrl = [];
 
     if (marca) {
@@ -1044,9 +1044,11 @@ $('#pdf-carros').click(function (e) {
     if (anoFabricacao) {
         listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
+    if (statusVeiculo) {
+        listaUrl.push(`status_carro=${encodeURIComponent(statusVeiculo)}`);
+    }
 
     url += listaUrl.join('&');
-
     window.open(url, '_blank');
 });
 
@@ -1058,10 +1060,10 @@ $('#pdf-motos').click(function (e) {
     const marca = $('#select-marca-moto').val();
     const anoModelo = parseInt($('#ano-modelo-moto').val());
     const anoFabricacao = parseInt($('#ano-fabricacao-moto').val());
+    const statusVeiculo = $('#status-da-moto').val();
 
     // 2) Montar URL
     let url = `${BASE_URL}/relatorio/motos?`;
-
     let listaUrl = [];
 
     if (marca) {
@@ -1073,9 +1075,11 @@ $('#pdf-motos').click(function (e) {
     if (anoFabricacao) {
         listaUrl.push(`ano_fabricacao=${encodeURIComponent(anoFabricacao)}`);
     }
+    if (statusVeiculo) {
+        listaUrl.push(`status_moto=${encodeURIComponent(statusVeiculo)}`);
+    }
 
     url += listaUrl.join('&');
-
     window.open(url, '_blank');
 });
 
