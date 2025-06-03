@@ -13,6 +13,8 @@ $(document).ready(function () {
         }))
 
         window.location.href = "login.html";
+
+        return;
     }
 
     $.ajax({
@@ -23,8 +25,8 @@ $(document).ready(function () {
         success: function (response) {
             const tipoUser = response.tipo_usuario;
 
-            if (tipoUser === 1) {
-                window.location.href = 'administrador-perfil.html';
+            if (tipoUser === 2) {
+                window.location.href = 'vendedor-perfil.html';
             }
             if (tipoUser === 3) {
                 window.location.href = 'cliente-perfil.html';

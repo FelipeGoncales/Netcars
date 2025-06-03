@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.0.9:5000";
+var BASE_URL = "http://192.168.1.118:5000";
 
 function formatarTelefone(telefone) {
     // Remove tudo que não for dígito
@@ -188,11 +188,7 @@ $(document).ready(function () {
                     // Caso dê erro, redireciona para a página de login
                     localStorage.removeItem('dadosUser');
 
-                    localStorage.setItem('mensagem', JSON.stringify({
-                        "error": response.responseJSON.error
-                    }))
-
-                    window.location.href = "login.html";
+                    window.location.reload();
                 }
             })
         })
