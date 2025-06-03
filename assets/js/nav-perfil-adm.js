@@ -1313,11 +1313,12 @@ $(document).ready(() => {
 $("#close-modal-editar").click(function () {
     $('#modal-editar-usuario').hide();
 
+    // Agora remove a animação do overlay de edição e esconde-o
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
     setTimeout(() => {
-        overlayBg.css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 660);
-})
+});
 
 // Abrir modal editar ao clicar no ícone de editar
 $('table').on('click', '.edit-icon', function () {
@@ -1341,8 +1342,14 @@ $('table').on('click', '.edit-icon', function () {
     // Transformando em número
     let textoTipoUser = tipoUser === "Administrador" ? 1 : tipoUser === "Vendedor" ? 2 : 3;
 
-    $('#modal-editar-usuario').css('display', 'flex')
-    $('#overlay-bg-modal-edit').css('display', 'flex');
+    // Exibe o modal de edição
+    $('#modal-editar-usuario').css('display', 'flex');
+
+    // Exibe o overlay de edição COM animação
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
+    });
 
     $('#nome-editar').val(textoNome);
     $('#email-editar').val(textoEmail);
@@ -1351,7 +1358,7 @@ $('table').on('click', '.edit-icon', function () {
     $('#tipo-usuario-editar').val(textoTipoUser);
 
     // Rota para editar perfil
-    $('#modal-editar-usuario').on("submit", function (e) {
+    $('#modal-editar-usuario').off('submit').on("submit", function (e) {
         e.preventDefault();
 
         let dados = new FormData(this);
@@ -1386,20 +1393,25 @@ $('table').on('click', '.edit-icon', function () {
             }
         });
     });
-})
+});
 
-// Abrir modal editar
+// Abrir modal cadastrar usuario
 $('#btn-modal-cad-user').click(function () {
     $('#formCadastroUsuario').css('display', 'flex');
-    $('#overlay-bg').css('display', 'flex');
-})
-// Fechar modal editar
+
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
+    });
+});
+
+// Fechar modal cadastrar usuario
 $('#close-modal-cad-user').on('click', function () {
     $('#formCadastroUsuario').hide();
 
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
     setTimeout(() => {
-        overlayBg.css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 660);
 });
 
