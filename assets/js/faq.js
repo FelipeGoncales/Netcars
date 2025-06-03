@@ -26,13 +26,12 @@ $(document).ready(function () {
     var mapeamentoSections = {
         'link_comocriarconta': 'link_cadastro',
         'link_comofazerlogin': 'link_login',
+        'link_finalizarcadastro' : 'link_completacadastro',
         'link_comotrocarsenha': 'link_esquecisenha',
         'link_carrorevisado': 'link_inforevisao',
         'link_financiarusado': 'link_financiamentoveiculos',
         'link_testeveiculo': 'link_testedrive',
-        'link_simularparcelas': 'link_calculadoraparcelas',
         'link_amortizarparcelas': 'link_reducaodivida',
-        'link_qualaentrada': 'link_valoresentrada',
         'link_comofunciona': 'link_servicosmanutencao',
         'link_fazemrevisao': 'link_revisaocompleta',
         'link_precisopagar': 'link_custosservicos',
@@ -66,15 +65,11 @@ $(document).ready(function () {
         var nomesBonitinhos = {
             'cadastro': 'Cadastro',
             'comprar': 'Comprar',
-            'financiamento': 'Financiamento',
-            'manutencao': 'Manutenção',
             'seguranca': 'Segurança',
             'sobrenos': 'Sobre Nós',
             'documentacao': 'Documentação',
             'suporte': 'Suporte',
-            'localizacao': 'Localização',
             'evitegolpes': 'Evite Golpes',
-            'pagamentos': 'Pagamento',
             'ia': 'Inteligência Artificial'
         };
         $('#fluxo-filtro span').text(nomesBonitinhos[nome] || '');
