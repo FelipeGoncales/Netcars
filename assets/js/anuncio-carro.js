@@ -348,8 +348,6 @@ $(document).ready(async function () {
 
                         $('#div-button-cancelar-reserva-cliente').css('display', 'none');
                         $('#mensagem-reserva-cliente').css('display', 'none');
-
-                        $('#div-button-cancelar-reserva-adm .adm-reserva').text(`Reservado por ${response.nome_usuario}`);
                     } else {
                         $('#div-button-cancelar-reserva-adm').css('display', 'none');
                         $('#mensagem-reserva-adm').css('display', 'none');
@@ -380,7 +378,11 @@ $(document).ready(async function () {
                         $('#mensagem-vendido-cliente').css('display', 'none');
                         $('#mensagem-vendido-adm').css('display', 'flex');
 
-                        $('#ver-detalhes').text('Ver detalhes da venda');
+                        if (response.parcelamento) {
+                            $('#ver-detalhes').text('Ver detalhes do parcelamento').addClass('parcelamento');
+                        } else {
+                            $('#ver-detalhes').text('Ver detalhes da compra');
+                        }
                     } else {
                         $('#div-button-vendido').css('display', 'flex');
 

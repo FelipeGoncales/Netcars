@@ -1568,9 +1568,6 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
                 'font-size': '1.5rem'
             }) // Inserir nome do carro
 
-        // Descrição do veículo
-        const pDesc = $("<p></p>").text(veiculo.versao); // Inserir versão do carro
-
         // Container das informações adicionais
         const containerInfoCard = $("<div></div>").addClass("container-info-card");
 
@@ -1608,7 +1605,7 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
             .addClass("ver-detalhes");
 
         // Adiciona todos os itens na div itens-card
-        divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
+        divItensCard.append(h3Title, containerInfoCard, h3Price, buttonDetalhes);
 
         // Junta a imagem e os itens ao card
         divCard.append(img, divpReservadoPor, divItensCard);
@@ -1619,9 +1616,16 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
 }
 
 // Buscar reservas
-function buscarReservas() {
+function buscarReservas(search) {
+    url = `${BASE_URL}/buscar_reservas`;
+
+    // Caso tiver parâmetro, adiciona a url
+    if (search) {
+        url += `?s=${search}`;
+    }
+
     $.ajax({
-        url: `${BASE_URL}/buscar_reservas`,
+        url: url,
         headers: {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('dadosUser')).token
         },
@@ -1631,6 +1635,9 @@ function buscarReservas() {
             listaVeicMotos = response.motos;
 
             const $divReservas = $('#div-reservas');
+
+            // Limpa a div antes de tudo
+            $divReservas.empty();
 
             if (!listaVeicCarro.length && !listaVeicMotos.length) {
                 const divPai = $('<div></div>').addClass('div-pai');
@@ -1651,8 +1658,26 @@ function buscarReservas() {
                 await gerarCard(listaVeicMotos, $divReservas, "moto");
             }
 
-            // Adiciona o título da seção
-            $('#reservas').prepend($('<h3></h3>').text('Veículos reservados'));
+            const divInputFiltro = $('<div></div>')
+                                    .addClass('div-input-filtro-reserva')
+                                    .append($('<input></input>')
+                                        .attr('id', 'filtroReserva')
+                                        .prop('placeholder', 'Buscar por marca, modelo ou placa do veículo reservado'))
+                                    .append($('<i></i>').addClass("fa-solid fa-magnifying-glass"));
+
+            if ($('#reservas').children().length < 2) {
+                // Adiciona o título da seção
+                $('#reservas')
+                    .prepend(divInputFiltro)
+                    .prepend($('<h3></h3>').text('Veículos reservados'));
+
+                $('#filtroReserva').on('input', function() {
+                    const search = $(this).val();
+
+                    // Faz a busca com o filtro
+                    buscarReservas(search);
+                })
+            }
         }
     })
 }
@@ -1661,6 +1686,31 @@ function buscarReservas() {
 $(document).ready(() => {
     // Busca pelas reservas ao abrir a página
     buscarReservas();
+
+    // Verifica se o cliente clicou em ver detalhes de reserva
+    let verDetalhesParcelamento = localStorage.getItem('verDetalhesParcelamento');
+
+    // Caso sim, abre a página de financiamentos
+    if (verDetalhesParcelamento) {
+        // Abre a seção de financiamento
+        $('#minha-conta').css('display', 'none');
+
+        // Alternar a exibição do submenu
+        $(".submenu-relatorios")
+            .slideDown(300, function () {
+                $('nav').css('overflow-y', 'auto');
+            });
+
+        // Exibe o relátorio de parcelamentos
+        exibirRelatorio('parcelamentos');
+
+        // Marca o link de relatórios como selecionado
+        let linkRelatorios = document.getElementById('link_relatorios');
+        selecionarA(linkRelatorios);
+
+        // Remove o item do local storage
+        localStorage.removeItem('verDetalhesParcelamento');
+    }
 
     // Verifica se o cliente clicou em ver detalhes de reserva
     let verDetalhesReserva = localStorage.getItem('verDetalhesVenda');
@@ -1677,7 +1727,7 @@ $(document).ready(() => {
             });
 
         // Exibe o relátorio de parcelamentos
-        exibirRelatorio('parcelamentos');
+        exibirRelatorio('movimentacao');
 
         // Marca o link de relatórios como selecionado
         let linkRelatorios = document.getElementById('link_relatorios');
