@@ -2258,16 +2258,28 @@ tbody tr.tipo2 {
         border-top-right-radius: 10px;
     }
 
+    & .div-reservado-por {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        left: -1px;
+        top: -1px;
+        width: 200px;
+        height: 40px;
+    }
+
     & .reservado-por {
         font-size: 0.8rem;
         color: var(--cor-texto-apagado);
         background-color: var(--cor-bg-sec);
         padding: 10px 15px;
+        padding-right: 22px;
         position: absolute;
-        left: -1px;
-        top: -1px;
+        top: 0;
+        left: 0;
+        min-width: 225px;
+        height: inherit;
         /* Define a forma com um corte diagonal na parte inferior */
-        filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.15));
+        clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
 
         & span {
             font-size: 0.85rem;
@@ -3499,6 +3511,14 @@ footer {
 
                 &:hover {
                     text-decoration: underline;
+                }
+            }
+
+            & #telefone-footer {
+                cursor: auto;
+
+                &:hover {
+                    text-decoration: none;
                 }
             }
         }

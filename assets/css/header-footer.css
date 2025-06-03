@@ -416,6 +416,14 @@ footer {
                     text-decoration: underline;
                 }
             }
+
+            & #telefone-footer {
+                cursor: auto;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
     }
 

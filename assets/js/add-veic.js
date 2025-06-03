@@ -94,11 +94,6 @@ function validarPlaca() {
     return true; // Retorna verdadeiro se for válido
 }
 
-// Chama a função ao sair do campo de texto (evento blur)
-$('#placa').blur(function () {
-    validarPlaca();
-});
-
 // FASE 2
 
 // Função para mudar o tipo selecionado
@@ -271,7 +266,6 @@ $('#renavam-carro, #renavam-moto').on('blur', function () {
         renavam = '0' + renavam;
         $(this).val(renavam);
     } else if (renavam.length !== 11) {
-        alertMessage("RENAVAM inválido.", 'error');
         input.style.borderColor = '#ff0000';
         return;
     }
@@ -284,7 +278,6 @@ $('#renavam-carro, #renavam-moto').on('blur', function () {
     } else {
         // Inválido, mantém vermelho e exibe mensagem
         input.style.borderColor = '#ff0000';
-        alertMessage("RENAVAM inválido! Verifique os números digitados.", 'error');
     }
 });
 

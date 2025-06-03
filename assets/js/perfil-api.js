@@ -1,7 +1,7 @@
 // URL API
 
 // Variável Global
-var BASE_URL = "http://192.168.1.109:5000";
+var BASE_URL = "http://192.168.0.9:5000";
 
 // Width do responsivo para ativar o menu lateral
 var WIDTH_RESPONSIVO = 1112;
@@ -27,7 +27,7 @@ $(document).ready(function () {
             // Insere o título da página
             $('#telefone-footer').text(formatarTelefone(response.telefone));
 
-            $('#email-footer').text(response.email);
+            $('#email-footer').text(response.email).attr('href', `mailto:${response.email}`);
 
             $('#email-input').val(response.email);
             $('#telefone-input').val(formatarTelefone(response.telefone));

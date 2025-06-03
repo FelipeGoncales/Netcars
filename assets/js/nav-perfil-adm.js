@@ -1493,7 +1493,25 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
                 "height": "225px"
             })
 
-        const pReservadoPor = $('<p></p>').addClass('reservado-por').html(`Reservado por <span>${veiculo.nome_cliente}</span>`)
+        // Nome do usuário que reservou
+        const divpReservadoPor = $('<p></p>').addClass('div-reservado-por');
+
+        // Função para formatar o texto e adicionar "..."
+        function limitarQntCaracteres(texto, qntMax) {
+            return texto.substr(0, qntMax) + '...';
+        }
+
+        const pReservadoPor = $('<p></p>').addClass('reservado-por')
+
+        // Limita o tamanho do nome do usuário
+        if (veiculo.nome_cliente.length > 10) {
+            pReservadoPor.html(`Reservado por <span>${limitarQntCaracteres(veiculo.nome_cliente, 10)}</span>`);
+        } else {
+            pReservadoPor.html(`Reservado por <span>${veiculo.nome_cliente}</span>`);
+        }
+        
+        // Adiciona o texto a div
+        divpReservadoPor.append(pReservadoPor);
 
         // Cria a div de itens do card
         const divItensCard = $("<div></div>").addClass("itens-card");
@@ -1558,7 +1576,7 @@ async function gerarCard(listaVeic, divAppend, tipoVeiculo) {
         divItensCard.append(h3Title, pDesc, containerInfoCard, h3Price, buttonDetalhes);
 
         // Junta a imagem e os itens ao card
-        divCard.append(img, pReservadoPor, divItensCard);
+        divCard.append(img, divpReservadoPor, divItensCard);
 
         // Insere o card no container desejado na página
         divAppend.append(divCard);

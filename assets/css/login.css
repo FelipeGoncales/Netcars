@@ -34,7 +34,7 @@ header {
     background-color: var(--cor-bg-sec);
     display: flex;
     padding: 12px 50px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     align-items: center;
     justify-content: center;
 }
@@ -44,27 +44,33 @@ header {
     gap: 5px;
     align-items: center;
     justify-content: center;
+
     & img {
         width: auto;
         height: 25px;
     }
-    & p, span {
+
+    & p,
+    span {
         color: var(--cor-texto);
         font-size: 2rem;
         font-family: "Racing Sans One", serif;
     }
+
     & span {
         color: var(--roxo);
     }
 }
 
-.primeiro-nome, .segundo-nome {
+.primeiro-nome,
+.segundo-nome {
     text-transform: uppercase;
 }
 
 .segundo-nome {
     position: relative;
     left: -5px;
+
     &.cars {
         position: static;
     }
@@ -110,6 +116,7 @@ header {
     display: flex;
     flex-direction: column;
     position: relative;
+
     & label {
         font-size: 0.85rem;
         color: var(--cor-texto-apagado);
@@ -123,6 +130,7 @@ header {
         transition: 0.3s;
         z-index: 1;
         padding: 0 4px;
+
         &.active {
             color: var(--cor-texto-apagado);
             top: 0;
@@ -130,6 +138,7 @@ header {
             z-index: 3;
         }
     }
+
     & input {
         width: 385px;
         padding: 12px;
@@ -140,16 +149,19 @@ header {
         transition: 0.3s;
         background: transparent;
         z-index: 2;
+
         &:focus {
             border: 2px var(--roxo) solid;
         }
     }
+
     &:focus-within label {
         color: var(--roxo);
         top: 0;
         font-size: 0.75rem;
         z-index: 3;
     }
+
     & i {
         display: flex;
         align-items: center;
@@ -165,7 +177,7 @@ header {
         color: var(--cor-texto-apagado);
     }
 }
- 
+
 .div-button-forgot-password {
     display: flex;
     flex-direction: column;
@@ -174,12 +186,15 @@ header {
     gap: 10px;
 }
 
-#forgot-password, #enviar-novamente-validacao, #enviar-novamente-senha {
+#forgot-password,
+#enviar-novamente-validacao,
+#enviar-novamente-senha {
     font-size: 0.9rem;
     cursor: pointer;
     font-weight: 500;
     color: var(--cor-texto-apagado);
     transition: 0.15s;
+
     &:hover {
         color: var(--roxo);
     }
@@ -204,7 +219,8 @@ header {
     color: var(--label);
 }
 
-#email-user, #email-user-validacao {
+#email-user,
+#email-user-validacao {
     color: var(--roxo);
     font-weight: 500;
 }
@@ -217,11 +233,15 @@ header {
     justify-content: center;
 }
 
-#email-user, #email-user-validacao, .mensagem {
+#email-user,
+#email-user-validacao,
+.mensagem {
     max-width: 320px;
 }
 
-#formVerificarCodigo, #formAltSenha, #formValidarEmail {
+#formVerificarCodigo,
+#formAltSenha,
+#formValidarEmail {
     display: none;
 }
 
@@ -231,6 +251,7 @@ header {
     align-items: center;
     justify-content: center;
     gap: 10px;
+
     & input {
         height: 80px;
         width: 55px;
@@ -254,6 +275,7 @@ header {
     height: 50px;
     transition: 0.1s;
     cursor: pointer;
+
     &:hover {
         background-color: var(--hover-roxo);
     }
@@ -292,12 +314,13 @@ header {
     font-weight: 300;
 }
 
-.link-redirect a{
+.link-redirect a {
     color: var(--roxo);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.1s;
+
     &:hover {
         text-decoration: underline;
     }
@@ -313,6 +336,7 @@ footer {
     justify-content: center;
     width: 100%;
     margin-top: 80px;
+
     & .div-contato {
         background-color: var(--roxo);
         padding: 40px 0;
@@ -321,16 +345,19 @@ footer {
         justify-content: center;
         gap: 100px;
         width: inherit;
+
         & div {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
             gap: 5px;
+
             & .footer-title {
                 color: var(--cor-bg-sec);
                 font-weight: 600;
             }
+
             & .footer-text {
                 color: var(--cor-bg-sec);
                 font-weight: 300;
@@ -338,17 +365,28 @@ footer {
                 cursor: pointer;
                 transition: 0.1s;
                 padding: 10px 0;
+
                 &:hover {
                     text-decoration: underline;
                 }
             }
+
+            & #telefone-footer {
+                cursor: auto;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
     }
+
     & .div-logo {
         padding: 15px 0;
         background-color: var(--cor-bg-sec);
         width: inherit;
     }
+
     & .div-direitos-reservados {
         padding: 10px 0;
         width: inherit;
@@ -357,15 +395,18 @@ footer {
         align-items: center;
         justify-content: center;
         text-align: center;
+
         & p {
             color: var(--cor-bg-sec);
             font-size: 0.85rem;
         }
+
         & .net {
             color: var(--roxo);
             font-family: "Racing Sans One", serif;
 
         }
+
         & .cars {
             color: var(--cor-bg-sec);
             font-family: "Racing Sans One", serif;
@@ -397,7 +438,7 @@ footer {
 
 /* Responsivo Header - Footer */
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .div-logo {
         scale: 0.8;
     }
@@ -417,16 +458,17 @@ footer {
         padding: 35px 25px;
         padding-bottom: 47px;
     }
-    
+
     #mensagemError {
         bottom: -25px;
     }
-    
+
     .div-input {
         & input {
             width: 300px;
         }
     }
+
     .btn-acao {
         width: 300px;
     }
@@ -436,12 +478,13 @@ footer {
             align-items: center;
             gap: 50px;
             flex-direction: column;
+
             & div {
                 align-items: center;
             }
         }
-    }    
-    
+    }
+
     .mensagem {
         max-width: 85%;
     }
@@ -453,6 +496,7 @@ footer {
     .div-codigo {
         gap: 5px;
         width: 85%;
+
         & input {
             font-size: 1.5rem;
             width: 15%;
@@ -467,22 +511,27 @@ footer {
     * {
         font-size: 14px;
     }
+
     .container-login {
         padding: 30px 25px;
         padding-bottom: 47px;
+
         & h1 {
             width: 45vw;
             font-size: 17px;
         }
     }
+
     #mensagemError {
         bottom: -23px;
     }
+
     .div-input {
         & input {
             width: 250px;
         }
     }
+
     .btn-acao {
         width: 250px;
     }
@@ -492,21 +541,24 @@ footer {
     .container-login {
         padding: 35px 25px;
         padding-bottom: 47px;
+
         & h1 {
             width: 55vw;
             font-size: 16px;
         }
     }
+
     .div-input {
         & input {
             width: 230px;
             padding: 9px;
         }
     }
-    
+
     #mensagemError {
         bottom: -25px;
     }
+
     .btn-acao {
         width: 230px;
     }
