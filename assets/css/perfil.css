@@ -930,13 +930,15 @@ main {
     justify-content: center;
     width: 22px;
     position: absolute;
-    right: 20px;
-    top: 54%;
+    right: 15px;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     z-index: 99;
     font-size: 1.1rem;
     color: #7B7B7B;
+    background-color: var(--cor-bg-sec);
+    padding: 5px;
 }
 
 .container-edit-user {
