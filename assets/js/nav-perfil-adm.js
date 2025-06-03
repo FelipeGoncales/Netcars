@@ -257,9 +257,7 @@ $(document).ready(function () {
     })
 
     /*
-    
-        JS DOS RELATÓRIOS
-
+    JS DOS RELATÓRIOS
     */
 
     // Inicialmente ocultar todos os relatórios específicos
@@ -729,14 +727,22 @@ function abrirModalEditarServico(idServico) {
         .val(formatarValor(servico.valor))
         .prev('label').addClass('active');
 
-    $('#overlay-bg').css({ display: 'flex' });
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
+    });
     $('#formEditarServico').css({ display: 'flex' });
 }
 
 // Fecha modal de editar serviço
 function fecharModalEditarServico() {
     // Aplica animação de saída em ambos
-    $('#overlay-bg').css({ display: 'none' });
+    $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
+
+    setTimeout(() => {
+        $('#overlay-bg').css('display', 'none');
+    }, 660);
+
     $('#formEditarServico').css({ display: 'none' });
 }
 
@@ -1417,9 +1423,9 @@ $('#close-modal-cad-user').on('click', function () {
 
 // Abre modal de receitas
 $('#mov-receitas').on('click', function () {
-    $('.overlay-bg').css({
-        'animation': 'aparecerOverlay 0.5s',
-        'display': 'flex'
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
     });
     $('#modal-mov').css('display', 'flex');
 
@@ -1429,9 +1435,9 @@ $('#mov-receitas').on('click', function () {
 
 // Abre modal de despesas
 $('#mov-despesas').on('click', function () {
-    $('.overlay-bg').css({
-        'animation': 'aparecerOverlay 0.5s',
-        'display': 'flex'
+    $('#overlay-bg').css({
+        'display': 'flex',
+        'animation': 'aparecerOverlay 0.5s'
     });
 
     $('#modal-mov').css('display', 'flex');
@@ -1451,9 +1457,8 @@ $('#close-modal-mov').on('click', function () {
     $('#valor-mov').val('R$ 0,00');
 
     $('#overlay-bg').css('animation', 'sumirOverlay 0.7s');
-
     setTimeout(() => {
-        overlayBg.css('display', 'none');
+        $('#overlay-bg').css('display', 'none');
     }, 660);
 })
 
