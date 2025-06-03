@@ -3535,9 +3535,9 @@ footer {
                 }
             }
 
-            & #telefone-footer {
+            & #telefone-footer, #cidade-footer {
                 cursor: auto;
-
+                
                 &:hover {
                     text-decoration: none;
                 }

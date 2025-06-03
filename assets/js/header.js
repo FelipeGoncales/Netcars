@@ -34,6 +34,8 @@ $(document).ready(function () {
             $('#telefone-footer').text(formatarTelefone(response.telefone));
 
             $('#email-footer').text(response.email).attr('href', `mailto:${response.email}`);
+
+            $('#cidade-footer').text(`${response.cidade} - ${response.estado}`);
         }
     })
 
