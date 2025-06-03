@@ -657,10 +657,16 @@
 
         <!-- Div seleção de serviço -->
         <div class="div-input">
-            <label for="select-servico">Selecione o serviço</label>
-            <select name="select-servico" id="select-servico">
-                <option value="">Selecione um serviço</option>
-            </select>
+            <div class="div-select-servico-add">
+                <select name="select-servico" id="select-servico">
+                    <option value="">Selecione um serviço</option>
+                </select>
+
+                <div class="tooltip div-tip-add-serv link_para_servicos">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="tooltip-text tip-add-serv">Novo serviço</span>
+                </div>
+            </div>
         </div>
         <div class="container-valores">
             <!-- Div valor serviço (somente leitura) -->
