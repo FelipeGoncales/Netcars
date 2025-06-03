@@ -450,6 +450,19 @@ $(document).ready(function () {
 
 });
 
+
+$(document).ready(function () {
+    // Verifica se o hash atual na URL é "#link_servicos"
+    const addServico = localStorage.getItem('add-servico');
+
+    if (addServico) {
+        $('#minha-conta').css('display', 'none');
+        $('#servicos').css('display', 'flex');
+        // Remove do local storage
+        localStorage.removeItem('add-servico');
+    }
+});
+
 // Funções serviços
 
 // Variáveis globais
