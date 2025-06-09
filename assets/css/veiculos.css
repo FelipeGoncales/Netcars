@@ -376,7 +376,7 @@ main {
     padding: 5px;
     list-style: none;
     max-height: 345px; /* Alterar tamanho no responsivo */
-    & li {   
+    & li {
         transition: 0.2s;
         cursor: pointer;
         width: 100%;
