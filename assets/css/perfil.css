@@ -3241,6 +3241,49 @@ POR ENQUANTO NÃO TEM NENHUMA DIV, APENAS A MINHA CONTA QUE É PADRÃO
     }
 }
 
+
+/* Div */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Tip */
+.tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 1;
+    top: 115%;
+    /* Aparece abaixo */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Tooltip adicionar despesa */
+.div-tip-despesa:hover .tip-despesa {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip adicionar receita */
+.div-tip-receita:hover .tip-receita {
+    visibility: visible;
+    opacity: 1;
+}
+
 @media (max-width: 485px) {
     #modal-mov {
         width: 90vw !important;
