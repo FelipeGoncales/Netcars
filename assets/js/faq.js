@@ -38,6 +38,7 @@ $(document).ready(function () {
         'link_siteseguro': 'link_protecaodados',
         'link_anunciosreais': 'link_verificacaoanuncios',
         'link_veiculosqualidade': 'link_garantiaqualidade',
+        'link_politica': 'link_privacidade',
         'link_quemsomos': 'link_historiaempresa',
         'link_surgiuempresa': 'link_origemnetcars',
         'link_encontronaweb': 'link_redessociais',
@@ -67,10 +68,8 @@ $(document).ready(function () {
             'comprar': 'Comprar',
             'seguranca': 'Segurança',
             'sobrenos': 'Sobre Nós',
-            'documentacao': 'Documentação',
             'suporte': 'Suporte',
-            'evitegolpes': 'Evite Golpes',
-            'ia': 'Inteligência Artificial'
+            'evitegolpes': 'Localização',
         };
         $('#fluxo-filtro span').text(nomesBonitinhos[nome] || '');
     }
