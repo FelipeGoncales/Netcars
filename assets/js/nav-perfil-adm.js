@@ -1209,8 +1209,29 @@ $('#abrir-options-pdf').click(function () {
 
 // Exibir PDF de movimentações
 $('#pdf-movimentacao').click(() => {
+
+    // Cria o objeto de parâmetros
+    const params = new URLSearchParams();
+
+    let dia = $('#select-dia-mov').val();
+    let mes = $('#select-mes-mov').val();
+    let ano = $('#select-ano-mov').val();
+
+    // Adiciona os parâmetros
+    if (ano) params.append("ano", ano);
+    if (mes) params.append("mes", mes);
+    if (dia) params.append("dia", dia);
+
+    // Transforma os parametros em string
+    const queryString = params.toString();
+
+    // Contrói a url com base com base na existência ou não dos parâmetros
+    const url = queryString
+        ? `${BASE_URL}/relatorio/receita_despesa?${queryString}`
+        : `${BASE_URL}/relatorio/receita_despesa`;
+
     // Abre o relatório em outra guia
-    window.open(`${BASE_URL}/relatorio/receita_despesa`, '_blank');
+    window.open(url, '_blank');
 
     // Fechar as options depois de clicar
     fecharDivOptionRelatorios();
@@ -1218,8 +1239,29 @@ $('#pdf-movimentacao').click(() => {
 
 // Exibir PDF de movimentações
 $('#pdf-clientes-compras').click(() => {
+
+    // Cria o objeto de parâmetros
+    const params = new URLSearchParams();
+
+    let dia = $('#select-dia-mov').val();
+    let mes = $('#select-mes-mov').val();
+    let ano = $('#select-ano-mov').val();
+
+    // Adiciona os parâmetros
+    if (ano) params.append("ano", ano);
+    if (mes) params.append("mes", mes);
+    if (dia) params.append("dia", dia);
+
+    // Transforma os parametros em string
+    const queryString = params.toString();
+
+    // Contrói a url com base com base na existência ou não dos parâmetros
+    const url = queryString
+        ? `${BASE_URL}/relatorio/cliente_compras?${queryString}`
+        : `${BASE_URL}/relatorio/cliente_compras`;
+
     // Abre o relatório em outra guia
-    window.open(`${BASE_URL}/relatorio/cliente_compras`, '_blank');
+    window.open(url, '_blank');
 
     // Fechar as options depois de clicar
     fecharDivOptionRelatorios();
