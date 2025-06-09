@@ -509,3 +509,48 @@ $("#formLoginUsuario").on('submit', function (e) {
         }
     })
 })
+
+// Critérios:
+const regexSymbol    = /[!@#$%^&*(),.?":{}|<>_-]/;
+const regexUppercase = /[A-Z]/;
+const regexNumber    = /[0-9]/;
+
+$('#input-senha').on('input', function() {
+    const senha = $(this).val();
+
+    // 1) MÍNIMO 8 CARACTERES
+    if (senha.length >= 8) {
+        $('#length').removeClass('errado').addClass('certo');
+        $('#length i').removeClass('fa-circle').addClass('fa-check-circle');
+    } else {
+        $('#length').removeClass('certo').addClass('errado');
+        $('#length i').removeClass('fa-check-circle').addClass('fa-circle');
+    }
+
+    // 2) PELO MENOS UM SÍMBOLO ESPECIAL
+    if (regexSymbol.test(senha)) {
+        $('#symbol').removeClass('errado').addClass('certo');
+        $('#symbol i').removeClass('fa-circle').addClass('fa-check-circle');
+    } else {
+        $('#symbol').removeClass('certo').addClass('errado');
+        $('#symbol i').removeClass('fa-check-circle').addClass('fa-circle');
+    }
+
+    // 3) PELO MENOS UMA LETRA MAIÚSCULA
+    if (regexUppercase.test(senha)) {
+        $('#uppercase').removeClass('errado').addClass('certo');
+        $('#uppercase i').removeClass('fa-circle').addClass('fa-check-circle');
+    } else {
+        $('#uppercase').removeClass('certo').addClass('errado');
+        $('#uppercase i').removeClass('fa-check-circle').addClass('fa-circle');
+    }
+
+    // 4) PELO MENOS UM NÚMERO
+    if (regexNumber.test(senha)) {
+        $('#number').removeClass('errado').addClass('certo');
+        $('#number i').removeClass('fa-circle').addClass('fa-check-circle');
+    } else {
+        $('#number').removeClass('certo').addClass('errado');
+        $('#number i').removeClass('fa-check-circle').addClass('fa-circle');
+    }
+});
