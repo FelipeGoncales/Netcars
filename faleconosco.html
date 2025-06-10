@@ -12,6 +12,7 @@
     <script src="assets/js/header.js" defer></script>
     <!-- CSS do Footer, Header e Responsivo de ambos  -->
     <link rel="stylesheet" href="assets/css/header-footer.css">
+    <link rel="stylesheet" href="assets/css/faq-follow.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -67,18 +68,99 @@
             <div class="banner2"></div>
         </section>
         <section class="sec-faq">
-                
             <div style="width: 915px;" class="input-container" aria-label="Campo de dúvida com lupa">
                 <i class="fa-solid fa-magnifying-glass i-duvida"></i>
                 <input class="div-duvida" type="text" placeholder="Digite sua dúvida" />
             </div>
 
             <div class="div-ajuda">
-                <p>Sobre o que é sua dúvida?</p>
+                <p>Fale Conosco</p>
             </div>
-              
             
+            <form action="#" method="POST" enctype="multipart/form-data" class="form-contato-compacto">
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required placeholder="seu.email@exemplo.com">
+                        <small class="input-help">Digite um e-mail válido para receber nossa resposta</small>
+                    </div>
+                    <div class="form-col">
+                        <label for="telefone">Telefone *</label>
+                        <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000">
+                        <small class="input-help">Formato: (11) 99999-9999 com DDD</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Nome completo (opcional)">
+                         <small class="input-help">Ex: Leandro Silva Santos
+                         </small>
+                    </div>
+                    
+                    <div class="form-col">
+                        <label for="cpf">CPF *</label>
+                        <input type="text" id="cpf" name="cpf" required placeholder="Digite o CPF">
+                        <small class="input-help">Insira o CPF sem pontos e traços. Ex: 99999999999</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="assunto">Assunto *</label>
+                        <input type="text" id="assunto" name="assunto" required placeholder="Assunto da mensagem">
+                        <small class="input-help">Descreva brevemente o tema da sua solicitação</small>
+                    </div>
+                    <div class="form-col">
+                        <label for="motivo">Motivo *</label>
+                        <select id="motivo" name="motivo" required>
+                            <option value="">Selecione</option>
+                            <option value="erro-site">Erro no site</option>
+                            <option value="erro-busca">Problema na busca</option>
+                            <option value="erro-login">Erro de login</option>
+                            <option value="dados-veiculo">Dados do veículo</option>
+                            <option value="pagamento">Pagamento</option>
+                            <option value="sugestao">Sugestão</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                        <small class="input-help">Selecione a categoria que melhor descreve seu contato</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição *</label>
+                    <textarea style="resize: none;" id="descricao" name="descricao" required rows="3" 
+                            placeholder="Descreva sua solicitação..."></textarea>
+                    <small class="input-help">Forneça detalhes para podermos ajudar melhor</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="anexos">Anexos</label>
+                    <div class="drop-zone" id="dropZone">
+                        <div class="drop-zone-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Adicione o arquivo ou solte os arquivos aqui</p>
+                            <input type="file" id="anexos" name="anexos[]" multiple accept=".jpg,.png,.pdf,.doc,.docx" hidden>
+                            <button type="button" class="btn-select-file" onclick="document.getElementById('anexos').click()">
+                                Selecionar Arquivos
+                            </button>
+                        </div>
+                    </div>
+                    <small class="input-help">Envie anexos se necessário </small>
+                    <div id="file-list" class="file-list"></div>
+                </div>
+
+                <div class="form-group-button">
+                    <button type="submit" class="btn-enviar">
+                     Enviar
+                    </button>
+                </div>
+            </form>
         </section>
+
+
+
         
 
         <!-- RETIRAR ATÉ ESSE TRECHO -->
@@ -136,29 +218,69 @@
     </div>
 </body>
 <script>
-$(document).ready(function() {
-    console.log('FAQ.html carregado!');
+document.addEventListener('DOMContentLoaded', function() {
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('anexos');
+    const fileList = document.getElementById('file-list');
+    let filesArray = []; // Array para gerenciar os arquivos
     
-    // Event listener para todos os links do FAQ
-    $('.faq-link').on('click', function(e) {
+    // Eventos de drag and drop
+    dropZone.addEventListener('dragover', function(e) {
         e.preventDefault();
-        
-        var cardNome = $(this).attr('data-card');
-        var topicoId = $(this).attr('data-topic');
-        
-        console.log('Link clicado:', cardNome, topicoId);
-        
-        if (cardNome && topicoId) {
-            // Salvar no localStorage
-            localStorage.setItem('faqCard', cardNome);
-            localStorage.setItem('faqTopic', topicoId);
-            
-            console.log('Dados salvos no localStorage');
-            
-            // Redirecionar para faq-follow.html
-            window.location.href = 'faq-follow.html';
-        }
+        dropZone.classList.add('dragover');
     });
+    
+    dropZone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+    });
+    
+    dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        
+        const files = Array.from(e.dataTransfer.files);
+        filesArray = files;
+        displayFiles();
+    });
+    
+    // Clique na área
+    dropZone.addEventListener('click', function() {
+        fileInput.click();
+    });
+    
+    // Mudança no input
+    fileInput.addEventListener('change', function() {
+        filesArray = Array.from(this.files);
+        displayFiles();
+    });
+    
+    // Função para exibir arquivos selecionados
+    function displayFiles() {
+        fileList.innerHTML = '';
+        filesArray.forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <span class="file-name">${file.name}</span>
+                <span class="file-remove" onclick="removeFile(${index})">&times;</span>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+    
+    // Função global para remover arquivo
+    window.removeFile = function(index) {
+        filesArray.splice(index, 1);
+        
+        // Criar um novo FileList
+        const dt = new DataTransfer();
+        filesArray.forEach(file => dt.items.add(file));
+        fileInput.files = dt.files;
+        
+        displayFiles();
+    };
 });
+
 </script>
 </html>

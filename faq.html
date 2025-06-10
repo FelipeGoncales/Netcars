@@ -139,7 +139,7 @@
                                 <div class="div-as1">
                                     <span class="faq-link" data-card="sobrenos" data-topic="link_quemsomos">Quem somos?</span>
                                     <span class="faq-link" data-card="sobrenos" data-topic="link_surgiuempresa">Qual é a nossa história?</span>
-                                    <span class="faq-link" data-card="sobrenos" data-topic="link_surgiuempresa">Qual é a nossa história?</span>
+                                    <span class="faq-link opaciti0" data-card="sobrenos" data-topic="link_surgiuempresa">Qual é a nossa história?</span>
                                 </div>
                                 <div class="div-as2">
                                     <span class="faq-link" data-card="sobrenos" data-topic="link_quemsomos">Mais artigos</span>
@@ -246,7 +246,7 @@
                 </ul>
             </div>
             <div class="div-meajuda">
-                <p>Não encontrou o que queria? fale com o suporte!</p>
+                <p>Não encontrou o que queria? Fale com o suporte!</p>
                 <a href="faleconosco.html" class="btn-faleconosco">FALE CONOSCO</a>
             </div>
 
@@ -310,29 +310,6 @@
     </div>
 </body>
 <script>
-$(document).ready(function() {
-    console.log('FAQ.html carregado!');
-    
-    // Event listener para todos os links do FAQ
-    $('.faq-link').on('click', function(e) {
-        e.preventDefault();
-        
-        var cardNome = $(this).attr('data-card');
-        var topicoId = $(this).attr('data-topic');
-        
-        console.log('Link clicado:', cardNome, topicoId);
-        
-        if (cardNome && topicoId) {
-            // Salvar no localStorage
-            localStorage.setItem('faqCard', cardNome);
-            localStorage.setItem('faqTopic', topicoId);
-            
-            console.log('Dados salvos no localStorage');
-            
-            // Redirecionar para faq-follow.html
-            window.location.href = 'faq-follow.html';
-        }
-    });
-});
+
 </script>
 </html>
